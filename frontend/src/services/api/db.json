@@ -1,0 +1,38 @@
+{
+    "books": [
+        {
+            "id": "1",
+            "isbn": "8594541759",
+            "numRegistro": "7876565",
+            "nome": "Alice no país das maravilhas",
+            "qtdPaginas": 208,
+            "dataPublicacao": "2019-10-04",
+            "edicao": 1,
+            "publisherId": "1",
+            "classificacaoIndicativa": "Livre",
+            "localizacao": "Aventura",
+            "sinopse": "Uma menina, um coelho e uma história capazes de fazer qualquer um de nós voltar a sonhar. Alice é despertada de um leve sono ao pé de uma árvore por um coelho peculiar. Uma criatura alva e falante com roupas engraçadas, que consulta seu relógio e reclama do próprio atraso. Curiosa como toda criança, Alice segue o animal até cair em um buraco sem fim que mudou para sempre a literatura infantil. Mais de 150 anos depois, Alice no País das Maravilhas continua repleto de ensinamentos para aqueles que ousaram seguir o Coelho Branco até sua toca.",
+            "capa": "https://m.media-amazon.com/images/I/71t+VRA7UhL._SY425_.jp"
+        }
+    ],
+    "authors": [
+        {
+            "id": "1",
+            "nome": "Lewis Carroll",
+            "bookId":"1"
+        }
+    ],
+    "genres": [
+        {
+            "id": "1",
+            "nome": "Aventura",
+            "bookId":"1"
+        }
+    ],
+    "publishers": [
+        {
+            "id": "1",
+            "nome": "DarkSideBooks"
+        }
+    ]
+}
