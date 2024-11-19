@@ -14,7 +14,6 @@ const Navbar = () => {
         {/* Logo */}
         <div className="navbar-logo">
           <Link to="/" className="navbar-logo">
-            {/* Aqui você pode usar seu SVG ou ícones personalizados */}
             <svg
               className="logo-icon"
               width="28"
