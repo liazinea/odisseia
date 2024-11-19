@@ -42,10 +42,10 @@ const Navbar = () => {
         {/* Links principais */}
         <ul className={`navbar-links ${isMenuOpen ? "active" : ""}`}>
           <li>
-            <Link to="/genres">Gêneros</Link>
+            <Link to="/generos">Gêneros</Link>
           </li>
           <li>
-            <Link to="/coming-soon">Em Breve</Link>
+            <Link to="/em-breve">Em Breve</Link>
           </li>
         </ul>
       </div>
