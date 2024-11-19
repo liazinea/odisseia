@@ -7,6 +7,7 @@ $hover-color: #ffffff;
   background-color: $bg-color;
   margin: 0;
   font-family: "Arial", sans-serif;
+  transition: all 0.3s ease;
 
   .navbar-container {
     display: flex;
@@ -15,11 +16,22 @@ $hover-color: #ffffff;
     gap: 2rem;
     padding: 1.5rem 2rem;
     position: relative;
+    transition: padding 0.3s ease;
 
     @media (max-width: 768px) {
       gap: 1rem;
       justify-content: space-between;
     }
+
+    @media (max-width: 480px) {
+      display: block;
+    }
+  }
+
+  .wrapper-logo-hamburguer {
+    display: flex;
+    justify-content: space-between;
+    z-index: 10;
   }
 
   .navbar-logo {
@@ -40,14 +52,6 @@ $hover-color: #ffffff;
       text-decoration: none;
       color: inherit;
       transition: color 0.4s ease-in-out;
-
-      &:hover {
-        color: $hover-color;
-
-        .logo-icon {
-          stroke: $hover-color;
-        }
-      }
     }
   }
 
@@ -71,23 +75,27 @@ $hover-color: #ffffff;
 
     @media (max-width: 480px) {
       display: none;
-      flex-direction: column;
+      justify-content: space-around;
       gap: 1.5rem;
-      position: absolute;
-      top: 4rem;
-      left: 0;
       width: 100%;
       background-color: $bg-color;
-      padding: 1rem 2rem;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: darken($bg-color, 5%) solid 2px;
+      max-height: 0; 
+      overflow: hidden; 
+      opacity: 0; // Adicionando opacidade 0 para esconder no início
 
+      // Quando o menu está ativo
       &.active {
         display: flex;
-        animation: slideDown 0.5s ease-in-out forwards; // Animação ao abrir
+        max-height: 500px;  // Expande o menu
+        opacity: 1;         // Torna visível
+        animation: slideDown 0.5s ease-in-out forwards;
       }
 
       li a {
         font-size: 1.2rem;
-        padding: 0.5rem 0;
         width: 100%;
       }
     }
@@ -128,14 +136,26 @@ $hover-color: #ffffff;
   }
 }
 
-// Keyframes para animação do dropdown
+// Keyframes para animação de entrada (slide para baixo)
 @keyframes slideDown {
   0% {
-    transform: translateY(-20%);
+    max-height: 0;
     opacity: 0;
   }
   100% {
-    transform: translateY(0);
+    max-height: 500px; 
     opacity: 1;
+  }
+}
+
+// Keyframes para animação de saída (slide para cima)
+@keyframes slideUp {
+  0% {
+    max-height: 500px;
+    opacity: 1;
+  }
+  100% {
+    max-height: 0;
+    opacity: 0;
   }
 }

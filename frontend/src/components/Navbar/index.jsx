@@ -12,6 +12,9 @@ const Navbar = () => {
     <nav className={`navbar ${isMenuOpen ? "open" : ""}`}>
       <div className="navbar-container">
         {/* Logo */}
+
+        <div className="wrapper-logo-hamburguer">
+
         <div className="navbar-logo">
           <Link to="/" className="navbar-logo">
             <svg
@@ -38,6 +41,8 @@ const Navbar = () => {
         <button className="navbar-menu-toggle" onClick={toggleMenu}>
           {isMenuOpen ? <FaTimes /> : <FaBars />}
         </button>
+
+        </div>
 
         {/* Links principais */}
         <ul className={`navbar-links ${isMenuOpen ? "active" : ""}`}>
