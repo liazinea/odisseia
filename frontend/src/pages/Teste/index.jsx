@@ -1,7 +1,10 @@
+import Navbar from "../../components/Navbar"
+
 const Teste = () => {
   return (
     <>
-    <h1>Alou</h1>
+    <Navbar/>
+    <h1>TESTE</h1>
     </>
   )
 }

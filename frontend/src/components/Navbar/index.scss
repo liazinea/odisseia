@@ -1,0 +1,141 @@
+// Variáveis de cores
+$bg-color: #ddc1a7;
+$text-color: #432a46;
+$hover-color: #ffffff;
+
+.navbar {
+  background-color: $bg-color;
+  margin: 0;
+  font-family: "Arial", sans-serif;
+
+  .navbar-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2rem;
+    padding: 1.5rem 2rem;
+    position: relative;
+
+    @media (max-width: 768px) {
+      gap: 1rem;
+      justify-content: space-between;
+    }
+  }
+
+  .navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: $text-color;
+    margin: 0;
+
+    .logo-icon {
+      stroke: $text-color;
+      transition: stroke 0.4s ease-in-out;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: color 0.4s ease-in-out;
+
+      &:hover {
+        color: $hover-color;
+
+        .logo-icon {
+          stroke: $hover-color;
+        }
+      }
+    }
+  }
+
+  .navbar-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 2rem;
+
+    li a {
+      text-decoration: none;
+      color: $text-color;
+      font-weight: bold;
+      transition: color 0.4s ease-in-out;
+
+      &:hover {
+        color: $hover-color;
+      }
+    }
+
+    @media (max-width: 480px) {
+      display: none;
+      flex-direction: column;
+      gap: 1.5rem;
+      position: absolute;
+      top: 4rem;
+      left: 0;
+      width: 100%;
+      background-color: $bg-color;
+      padding: 1rem 2rem;
+
+      &.active {
+        display: flex;
+        animation: slideDown 0.5s ease-in-out forwards; // Animação ao abrir
+      }
+
+      li a {
+        font-size: 1.2rem;
+        padding: 0.5rem 0;
+        width: 100%;
+      }
+    }
+  }
+
+  .navbar-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: $text-color;
+    cursor: pointer;
+    padding: 0;
+    width: 28px;
+    height: 28px;
+    transition: color 0.3s ease-in-out;
+
+    svg {
+      font-size: 1.5rem;
+      color: inherit;
+      width: 28px;
+      height: 28px;
+      transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+
+    &:hover {
+      color: $hover-color;
+
+      svg {
+        transform: scale(1.1);
+      }
+    }
+
+    @media (max-width: 480px) {
+      display: flex;
+      justify-items: center;
+      align-items: center;
+    }
+  }
+}
+
+// Keyframes para animação do dropdown
+@keyframes slideDown {
+  0% {
+    transform: translateY(-20%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
