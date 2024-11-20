@@ -1,0 +1,161 @@
+// Variáveis de cores
+$bg-color: #ddc1a7;
+$text-color: #432a46;
+$hover-color: #ffffff;
+
+.navbar {
+  background-color: $bg-color;
+  margin: 0;
+  font-family: "Arial", sans-serif;
+  transition: all 0.3s ease;
+
+  .navbar-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2rem;
+    padding: 1.5rem 2rem;
+    position: relative;
+    transition: padding 0.3s ease;
+
+    @media (max-width: 768px) {
+      gap: 1rem;
+      justify-content: space-between;
+    }
+
+    @media (max-width: 480px) {
+      display: block;
+    }
+  }
+
+  .wrapper-logo-hamburguer {
+    display: flex;
+    justify-content: space-between;
+    z-index: 10;
+  }
+
+  .navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: $text-color;
+    margin: 0;
+
+    .logo-icon {
+      stroke: $text-color;
+      transition: stroke 0.4s ease-in-out;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: color 0.4s ease-in-out;
+    }
+  }
+
+  .navbar-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 2rem;
+
+    li a {
+      text-decoration: none;
+      color: $text-color;
+      font-weight: bold;
+      transition: color 0.4s ease-in-out;
+
+      &:hover {
+        color: $hover-color;
+      }
+    }
+
+    @media (max-width: 480px) {
+      display: none;
+      justify-content: space-around;
+      gap: 1.5rem;
+      width: 100%;
+      background-color: $bg-color;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: darken($bg-color, 5%) solid 2px;
+      max-height: 0; 
+      overflow: hidden; 
+      opacity: 0; // Adicionando opacidade 0 para esconder no início
+
+      // Quando o menu está ativo
+      &.active {
+        display: flex;
+        max-height: 500px;  // Expande o menu
+        opacity: 1;         // Torna visível
+        animation: slideDown 0.5s ease-in-out forwards;
+      }
+
+      li a {
+        font-size: 1.2rem;
+        width: 100%;
+      }
+    }
+  }
+
+  .navbar-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: $text-color;
+    cursor: pointer;
+    padding: 0;
+    width: 28px;
+    height: 28px;
+    transition: color 0.3s ease-in-out;
+
+    svg {
+      font-size: 1.5rem;
+      color: inherit;
+      width: 28px;
+      height: 28px;
+      transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+
+    &:hover {
+      color: $hover-color;
+
+      svg {
+        transform: scale(1.1);
+      }
+    }
+
+    @media (max-width: 480px) {
+      display: flex;
+      justify-items: center;
+      align-items: center;
+    }
+  }
+}
+
+// Keyframes para animação de entrada (slide para baixo)
+@keyframes slideDown {
+  0% {
+    max-height: 0;
+    opacity: 0;
+  }
+  100% {
+    max-height: 500px; 
+    opacity: 1;
+  }
+}
+
+// Keyframes para animação de saída (slide para cima)
+@keyframes slideUp {
+  0% {
+    max-height: 500px;
+    opacity: 1;
+  }
+  100% {
+    max-height: 0;
+    opacity: 0;
+  }
+}
