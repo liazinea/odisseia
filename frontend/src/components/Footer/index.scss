@@ -1,0 +1,80 @@
+@import '../../css/colors.scss';
+@import '../../css/fonts.scss';
+
+.footer {
+    width: 100%;
+    background-color: $bg-color;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .footer-logo {
+        padding-left: 2rem;
+        width: 25%;
+        display: flex;
+        justify-content: start;
+        flex-direction: column;
+        align-items: start;
+
+        .footer-logo-top {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+
+            .logo-icon {
+                color: $text-color
+            }
+
+            ;
+
+            .logo-name {
+                font-size: 48px;
+                font-weight: 600;
+                font-family: 'Montserrat';
+                color: $text-color;
+            }
+        }
+
+        .footer-logo-bottom {
+            width: 100%;
+            display: flex;
+            justify-content: start;
+            padding-left: 12px;
+            align-items: center;
+
+            .logo-text {
+                font-size: 24px;
+                font-family: 'Poppins';
+                color: $text-color;
+            }
+        }
+    }
+
+    .footer-content {
+        padding-right: 2rem;
+        width: 75%;
+        justify-content: end;
+        display: flex;
+        align-items: center;
+
+        .contatos{
+            font-family: 'Poppins';
+            font-weight: 600;
+            color: $text-color;
+            font-size: 24px;
+            padding: 1rem 0;
+        }
+        .lista-de-contatos {
+            width: 100%;
+            list-style: none;
+        }
+
+        .contato-container{
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    }
+
+}
