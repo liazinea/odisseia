@@ -1,10 +1,11 @@
+import HeaderHome from "../../components/HeaderHome"
 import Navbar from "../../components/Navbar"
 
 const Teste = () => {
   return (
     <>
-    <Navbar/>
-    <h1>TESTE</h1>
+      <Navbar/>
+      <HeaderHome />
     </>
   )
 }

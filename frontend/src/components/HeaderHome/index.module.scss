@@ -1,0 +1,123 @@
+@import '../../styles//index.scss';
+
+.principal{
+    background-image: url('../../../public/imagem/header-pc.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Poppins;   
+
+    .titulo{
+        text-align: center;
+        font-weight: 700;
+        font-size: 4rem;
+        color: $branco;
+    }
+    .subtitulo{
+        text-align: center;
+        font-weight: 700;
+        font-size: 4rem;
+        color: $roxo-claro;
+    }
+    .paragrafo{
+        text-align: center;
+        font-weight: 700;
+        font-size: 1.5rem;
+        color: $branco;
+    }
+    .alinha{
+        display: flex;
+        justify-content: center;
+
+        .barra{
+            background-color: $branco;
+            display: flex;
+            justify-content: space-between;
+            vertical-align: center;
+            border-radius: 20px;
+            margin-top: 7%;
+            width: 70%;
+            padding: 10px;
+            padding-right: 20px;
+            padding-left: 20px;
+            
+            .pesquisa{
+                width: 100%;
+                box-shadow: 0 0 0 0;
+                border: none;
+                outline: 0;
+                background-color: $branco;
+            }
+
+            .icon{
+                font-size: 1.5rem;
+                color: $branco;
+                background-color: $roxo-escuro;
+                padding: 12px;
+                padding-left: 27px;
+                padding-right: 27px;
+                border-radius: 18px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:980px) and (min-width: 801px){
+    .principal{
+        background-image: url('../../../public/imagem/header-celular.png');
+        
+        .titulo{
+            font-size: 3rem;
+        }
+        .subtitulo{
+            font-size: 3rem;
+        }
+        .paragrafo{
+            font-size: 1.5rem;
+        }
+    }
+}
+
+@media screen and (max-width:800px) {
+    .principal{
+        height: 45vh;
+        
+        .titulo{
+            font-size: 1.5rem;
+        }
+        .subtitulo{
+            font-size: 1.5rem;
+        }
+        .paragrafo{
+            font-size: 0.7rem;
+        }
+
+        .alinha{
+    
+            .barra{
+                width: 80%;
+                padding: 8px;
+                padding-right: 15px;
+                padding-left: 15px;
+                
+                .pesquisa{
+                    font-size: 0.6rem;
+                }
+    
+                .icon{
+                    font-size: 1rem;
+                    color: $branco;
+                    background-color: $roxo-escuro;
+                    padding: 10px;
+                    padding-left: 20px;
+                    padding-right: 20px;
+                    border-radius: 18px;
+                }
+            }
+        }
+    }
+}
