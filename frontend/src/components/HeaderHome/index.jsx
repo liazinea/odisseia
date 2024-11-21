@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './index.module.scss';
-import { FaSearch } from 'react-icons/fa';
+import BarraPesquisa from './BarraPesquisa';
 
 const HeaderHome = () => {
   return (
@@ -10,10 +10,7 @@ const HeaderHome = () => {
         <p className={styles.subtitulo}>Biblioteca E.E. Ernesto Quissak</p>
         <p className={styles.paragrafo}>Navegue pelos livros dsponíveis na biblioteca!</p>
         <div className={styles.alinha}>
-          <div className={styles.barra}>
-            <input type='text' placeholder='Pesquise por autor, nome do livro ou gênero' className={styles.pesquisa}/>
-            <FaSearch className={styles.icon}/>
-          </div>
+          <BarraPesquisa placeholder={`Pesquise por autor, nome do livro ou gênero`}/>
         </div>
 
       </div>
