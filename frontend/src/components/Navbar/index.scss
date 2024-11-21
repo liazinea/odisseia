@@ -71,7 +71,7 @@
       transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
 
       &:hover {
-        color: color.$roxo-claro;
+        color: color.$branco;
         transform: translateY(-1px); // Suavização do movimento
       }
     }
@@ -109,7 +109,7 @@
           transition: background-color 0.3s ease, color 0.3s ease-in-out, transform 0.3s ease-in-out;
 
           &:hover {
-            background-color: color.$roxo-claro;
+            background-color: color.$roxo-escuro;
             color: color.$bege;
             transform: scale(1.02); // Suavização da escala
           }
@@ -140,7 +140,7 @@
     }
 
     &:hover {
-      color: color.$roxo-claro;
+      color: color.$branco;
     }
 
     @media (max-width: 576px) {
