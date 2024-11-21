@@ -40,26 +40,19 @@
     align-items: center;
     gap: 0.5rem;
     font-size: 1.5rem;
+    font-family: Montserrat, sans-serif;
     font-weight: bold;
     color: color.$roxo-escuro;
 
     .logo-icon {
       stroke: inherit;
       transition: stroke 0.3s ease-in-out;
-
-      &:hover {
-        stroke: color.$roxo-claro;
-      }
     }
 
     a {
       text-decoration: none;
       color: inherit;
       transition: color 0.3s ease-in-out;
-
-      &:hover {
-        color: color.$roxo-claro;
-      }
     }
   }
 
