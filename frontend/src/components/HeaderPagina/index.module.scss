@@ -1,0 +1,49 @@
+@import '../../styles//index.scss';
+
+.principal{
+    background-image: url('../../../public/imagem/header-titulo.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 40vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Poppins;   
+
+    .titulo{
+        font-size: 4rem;
+        font-weight:900;
+        color: $branco;
+    }
+}
+
+@media screen and (max-width: 992px) and (min-width: 769px){
+    .principal{
+        height: 30vh;
+
+        .titulo{
+            font-size: 3rem;
+        }
+    }
+}
+
+@media screen and (max-width: 768px) and (min-width: 577px){
+    .principal{
+        height: 20vh;
+
+        .titulo{
+            font-size: 2rem;
+        }
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .principal{
+        height: 15vh;
+
+        .titulo{
+            font-size: 1.5rem;
+        }
+    }
+}
