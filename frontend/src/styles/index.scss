@@ -1,0 +1,31 @@
+@import './cores/cores.scss';
+
+@font-face {
+    font-family: Inter;
+    src: local(Inter), url('./fonts/Inter.ttf');
+}
+
+@font-face {
+    font-family: Poppins;
+    src: local(Poppins), url('./fonts/Poppins-Regular.ttf');
+}
+
+@font-face {
+    font-family: Poppins;
+    src: local(Poppins), url('./fonts/Poppins-SemiBold.ttf');
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: Montserrat;
+    src: local(Montserrat), url('./fonts/Montserrat-VariableFont_wght.ttf');
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}

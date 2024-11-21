@@ -1,80 +1,144 @@
-@import '../../css/colors.scss';
-@import '../../css/fonts.scss';
+@import '../../styles/index.scss';
 
 .footer {
+    padding: 2rem 0 4rem 0;
     width: 100%;
-    background-color: $bg-color;
+    background-color: $bege;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 
-    .footer-logo {
-        padding-left: 2rem;
-        width: 25%;
+    .footer-container {
+        width: 95.5%;
         display: flex;
-        justify-content: start;
-        flex-direction: column;
-        align-items: start;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: solid 3px $branco;
 
-        .footer-logo-top {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 5px;
-
-            .logo-icon {
-                color: $text-color
-            }
-
-            ;
-
-            .logo-name {
-                font-size: 48px;
-                font-weight: 600;
-                font-family: 'Montserrat';
-                color: $text-color;
-            }
-        }
-
-        .footer-logo-bottom {
-            width: 100%;
+        .footer-logo {
+            width: 35%;
             display: flex;
             justify-content: start;
-            padding-left: 12px;
+            flex-direction: column;
+            align-items: start;
+
+            .footer-logo-top {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 5px;
+
+                .logo-icon {
+                    color: $roxo-escuro;
+
+                    @media (max-width: 800px) {
+                        width: 36px; 
+                        height: 36px;
+                    }
+                    
+                    @media (max-width: 640px) {
+                        width: 32px;
+                        height: 32px;
+                    }
+
+                    @media (max-width: 500px) {
+                        width: 28px;
+                        height: 28px;
+                    }
+                }
+
+                .logo-name {
+                    font-size: 48px; 
+                    font-weight: 600;
+                    font-family: 'Montserrat';
+                    color: $roxo-escuro;
+
+                    @media (max-width: 800px) {
+                        font-size: 36px;
+                    }
+
+                    @media (max-width: 640px) {
+                        font-size: 24px;
+                    }
+                }
+            }
+
+            .footer-logo-bottom {
+                width: 100%;
+                display: flex;
+                justify-content: start;
+                padding-left: 12px;
+                align-items: center;
+
+                @media (max-width: 800px) {
+                    padding-left: 0;
+                }
+
+                @media (max-width: 640px) {
+                    padding-left: 6px;
+                }
+
+                .logo-text {
+                    font-size: 24px; 
+                    font-family: 'Poppins';
+                    color: $roxo-escuro;
+                    font-weight: 600;
+
+                    @media (max-width: 800px) {
+                        font-size: 20px;
+                        padding-left: 6px;
+                    }
+
+                    @media (max-width: 640px) {
+                        font-size: 13px;
+                    }
+
+                    @media (max-width: 500px) {
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+
+        .footer-content {
+            padding-right: 2rem;
+            width: 65%;
+            justify-content: end;
+            display: flex;
             align-items: center;
 
-            .logo-text {
-                font-size: 24px;
+            .contatos {
+                padding-bottom: 2rem;
                 font-family: 'Poppins';
-                color: $text-color;
+                font-weight: 600;
+                color: $roxo-escuro;
+                font-size: 24px;
+
+                @media (max-width: 800px) {
+                    font-size: 20px;
+                }
+
+                @media (max-width: 640px) {
+                    font-size: 18px;
+                    padding-bottom: 1rem;
+                }
+
+                @media (max-width: 500px) {
+                    font-size: 16px;
+                }
+            }
+
+            .lista-de-contatos {
+                width: 100%;
+                list-style: none;
+            }
+
+            .contato-container {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding-bottom: 16px;
             }
         }
     }
-
-    .footer-content {
-        padding-right: 2rem;
-        width: 75%;
-        justify-content: end;
-        display: flex;
-        align-items: center;
-
-        .contatos{
-            font-family: 'Poppins';
-            font-weight: 600;
-            color: $text-color;
-            font-size: 24px;
-            padding: 1rem 0;
-        }
-        .lista-de-contatos {
-            width: 100%;
-            list-style: none;
-        }
-
-        .contato-container{
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-    }
-
 }
