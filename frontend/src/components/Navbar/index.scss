@@ -1,14 +1,13 @@
-// Variáveis de cores
-$bg-color: #ddc1a7;
-$text-color: #432a46;
-$hover-color: #ffffff;
+@use 'src/styles/cores/cores' as color;
 
+// Estilo da barra de navegação principal
 .navbar {
-  background-color: $bg-color;
+  background-color: color.$bege;
   margin: 0;
   font-family: "Arial", sans-serif;
   transition: all 0.3s ease;
 
+  // Container principal da navbar
   .navbar-container {
     display: flex;
     align-items: center;
@@ -18,96 +17,121 @@ $hover-color: #ffffff;
     position: relative;
     transition: padding 0.3s ease;
 
-    @media (max-width: 768px) {
+    @media (max-width: 770px) {
       gap: 1rem;
       justify-content: space-between;
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 576px) {
       display: block;
     }
   }
 
+  // Wrapper para o logo e o botão hamburguer
   .wrapper-logo-hamburguer {
     display: flex;
     justify-content: space-between;
     z-index: 10;
   }
 
+  // Estilo do logo da navbar
   .navbar-logo {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     font-size: 1.5rem;
     font-weight: bold;
-    color: $text-color;
-    margin: 0;
+    color: color.$roxo-escuro;
 
     .logo-icon {
-      stroke: $text-color;
-      transition: stroke 0.4s ease-in-out;
+      stroke: inherit;
+      transition: stroke 0.3s ease-in-out;
+
+      &:hover {
+        stroke: color.$roxo-claro;
+      }
     }
 
     a {
       text-decoration: none;
       color: inherit;
-      transition: color 0.4s ease-in-out;
+      transition: color 0.3s ease-in-out;
+
+      &:hover {
+        color: color.$roxo-claro;
+      }
     }
   }
 
+  // Estilo dos links de navegação
   .navbar-links {
     list-style: none;
-    padding: 0;
-    margin: 0;
     display: flex;
     gap: 2rem;
+    margin: 0;
+    padding: 0;
 
     li a {
       text-decoration: none;
-      color: $text-color;
+      color: color.$roxo-escuro;
       font-weight: bold;
-      transition: color 0.4s ease-in-out;
+      transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
 
       &:hover {
-        color: $hover-color;
+        color: color.$roxo-claro;
+        transform: translateY(-1px); // Suavização do movimento
       }
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 576px) {
       display: none;
-      justify-content: space-around;
-      gap: 1.5rem;
+      position: absolute;
+      top: 100%;
+      left: 0;
       width: 100%;
-      background-color: $bg-color;
-      margin-top: 8px;
-      padding-top: 8px;
-      border-top: darken($bg-color, 5%) solid 2px;
-      max-height: 0; 
-      overflow: hidden; 
-      opacity: 0; // Adicionando opacidade 0 para esconder no início
+      background-color: color.$bege;
+      padding: 8px;
+      border-top: darken(color.$bege, 5%) solid 2px;
+      max-height: 0;
+      overflow: hidden;
+      box-sizing: border-box;
+      opacity: 0;
 
-      // Quando o menu está ativo
       &.active {
         display: flex;
-        max-height: 500px;  // Expande o menu
-        opacity: 1;         // Torna visível
+        opacity: 1;
         animation: slideDown 0.5s ease-in-out forwards;
       }
 
-      li a {
-        font-size: 1.2rem;
+      li {
         width: 100%;
+
+        a {
+          display: block;
+          padding: 1rem 0.5rem;
+          text-align: center;
+          background-color: lighten(color.$bege, 5%);
+          border-radius: 4px;
+          color: color.$roxo-escuro;
+          transition: background-color 0.3s ease, color 0.3s ease-in-out, transform 0.3s ease-in-out;
+
+          &:hover {
+            background-color: color.$roxo-claro;
+            color: color.$bege;
+            transform: scale(1.02); // Suavização da escala
+          }
+        }
       }
     }
   }
 
+  // Botão hamburguer para abrir/fechar menu móvel
   .navbar-menu-toggle {
     display: none;
     background: none;
     border: none;
-    color: $text-color;
+    color: color.$roxo-escuro;
     cursor: pointer;
-    padding: 0;
     width: 28px;
     height: 28px;
     transition: color 0.3s ease-in-out;
@@ -115,40 +139,37 @@ $hover-color: #ffffff;
     svg {
       font-size: 1.5rem;
       color: inherit;
-      width: 28px;
-      height: 28px;
-      transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
-    }
+      transition: transform 0.3s ease-in-out;
 
-    &:hover {
-      color: $hover-color;
-
-      svg {
-        transform: scale(1.1);
+      &:hover {
+        transform: scale(1.1); // Suavização do aumento
       }
     }
 
-    @media (max-width: 480px) {
+    &:hover {
+      color: color.$roxo-claro;
+    }
+
+    @media (max-width: 576px) {
       display: flex;
-      justify-items: center;
       align-items: center;
     }
   }
 }
 
-// Keyframes para animação de entrada (slide para baixo)
+// Animação para exibir o menu (deslizar para baixo)
 @keyframes slideDown {
   0% {
     max-height: 0;
     opacity: 0;
   }
   100% {
-    max-height: 500px; 
+    max-height: 500px;
     opacity: 1;
   }
 }
 
-// Keyframes para animação de saída (slide para cima)
+// Animação para esconder o menu (deslizar para cima)
 @keyframes slideUp {
   0% {
     max-height: 500px;
