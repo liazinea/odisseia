@@ -11,6 +11,12 @@
 }
 
 @font-face {
+    font-family: Poppins;
+    src: local(Poppins), url('./fonts/Poppins-SemiBold.ttf');
+    font-weight: 600;
+}
+
+@font-face {
     font-family: Montserrat;
     src: local(Montserrat), url('./fonts/Montserrat-VariableFont_wght.ttf');
 }

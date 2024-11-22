@@ -1,0 +1,31 @@
+@import '../../../styles/index.scss';
+
+
+.contatos {
+    padding-bottom: 2rem;
+    font-family: 'Poppins';
+    font-weight: 600;
+    color: $roxo-escuro;
+    font-size: 24px;
+
+    @media (max-width: 800px) {
+        font-size: 20px;
+    }
+
+    @media (max-width: 640px) {
+        font-size: 18px;
+        padding-bottom: 1rem;
+    }
+
+    @media (max-width: 500px) {
+        font-size: 16px;
+    }
+}
+
+.lista-de-contatos {
+    width: 100%;
+    list-style: none;
+}
+
+
+
