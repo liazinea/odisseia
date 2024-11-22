@@ -32,10 +32,10 @@
                     color: $roxo-escuro;
 
                     @media (max-width: 800px) {
-                        width: 36px; 
+                        width: 36px;
                         height: 36px;
                     }
-                    
+
                     @media (max-width: 640px) {
                         width: 32px;
                         height: 32px;
@@ -45,10 +45,15 @@
                         width: 28px;
                         height: 28px;
                     }
+
+                    @media (max-width: 420px) {
+                        width: 18px;
+                        height: 18px;
+                    }
                 }
 
                 .logo-name {
-                    font-size: 48px; 
+                    font-size: 48px;
                     font-weight: 600;
                     font-family: 'Montserrat';
                     color: $roxo-escuro;
@@ -59,6 +64,10 @@
 
                     @media (max-width: 640px) {
                         font-size: 24px;
+                    }
+
+                    @media (max-width: 420px) {
+                        font-size: 18px;
                     }
                 }
             }
@@ -79,7 +88,7 @@
                 }
 
                 .logo-text {
-                    font-size: 24px; 
+                    font-size: 24px;
                     font-family: 'Poppins';
                     color: $roxo-escuro;
                     font-weight: 600;
@@ -96,6 +105,10 @@
                     @media (max-width: 500px) {
                         font-size: 12px;
                     }
+                    @media (max-width: 420px) {
+                        font-size: 10px;
+                        padding-left: 0;
+                    }
                 }
             }
         }
@@ -107,37 +120,10 @@
             display: flex;
             align-items: center;
 
-            .contatos {
-                padding-bottom: 2rem;
-                font-family: 'Poppins';
-                font-weight: 600;
-                color: $roxo-escuro;
-                font-size: 24px;
+            @media (max-width: 420px) {
 
-                @media (max-width: 800px) {
-                    font-size: 20px;
-                }
+                padding-right: 0;
 
-                @media (max-width: 640px) {
-                    font-size: 18px;
-                    padding-bottom: 1rem;
-                }
-
-                @media (max-width: 500px) {
-                    font-size: 16px;
-                }
-            }
-
-            .lista-de-contatos {
-                width: 100%;
-                list-style: none;
-            }
-
-            .contato-container {
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                padding-bottom: 16px;
             }
         }
     }
