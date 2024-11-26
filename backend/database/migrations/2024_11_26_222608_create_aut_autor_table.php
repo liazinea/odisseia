@@ -9,9 +9,9 @@ return new class extends Migration
 
     public function up(): void
     {
-        Schema::create('edi_editora', function (Blueprint $table) {
-            $table->id('edi_id');
-            $table->string('edi_nome');
+        Schema::create('aut_autor', function (Blueprint $table) {
+            $table->id('aut_id');
+            $table->string('aut_nome');
             $table->timestamps();
         });
     }
@@ -19,6 +19,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('edi_editora');
+        Schema::dropIfExists('aut_autor');
     }
 };
