@@ -1,40 +1,36 @@
 import React from "react";
-import "./index.scss"; 
+import classNames from "classnames"; // Usando 'classnames' para condicionalmente adicionar classes
+import "./index.scss";
 
 const Button = ({
-  variant = "primary", 
-  size = "medium", 
-  isLoading = false, 
+  variant = "primary",
+  size = "medium",
+  isLoading = false,
   children,
+  disabled = false,
   ...props
 }) => {
-
-  const variantClasses = {
-    primary: "btn-primary",
-    secondary: "btn-secondary",
-    danger: "btn-danger",
-  };
-
-
-  const sizeClasses = {
-    small: "btn-small",
-    medium: "btn-medium",
-    large: "btn-large",
-  };
-
-
-  const buttonClassNames = `btn ${variantClasses[variant]} ${sizeClasses[size]} ${
-    isLoading ? "btn-loading" : ""
-  }`;
+  const buttonClassNames = classNames("btn", {
+    [`btn-${variant}`]: true,
+    [`btn-${size}`]: true,
+    "btn-loading": isLoading,
+    "btn-disabled": disabled || isLoading,
+  });
 
   return (
-    <button className={buttonClassNames} disabled={isLoading || props.disabled} {...props}>
+    <button
+      className={buttonClassNames}
+      disabled={isLoading || disabled}
+      aria-busy={isLoading} // Para melhorar a acessibilidade
+      {...props}
+    >
       {isLoading && (
         <svg
           className="btn-spinner"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
+          aria-hidden="true" // Melhorando a acessibilidade
         >
           <circle
             className="opacity-25"
@@ -54,6 +50,13 @@ const Button = ({
       {!isLoading && children}
     </button>
   );
+};
+
+Button.defaultProps = {
+  variant: "primary",
+  size: "medium",
+  isLoading: false,
+  disabled: false,
 };
 
 export default Button;

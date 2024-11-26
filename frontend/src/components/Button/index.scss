@@ -1,75 +1,103 @@
-/* Button.scss */
-
 .btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+
+  // Variantes de cores para o botão
+  &.btn-primary {
+    background-color: #007bff;
+    color: white;
+
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
+
+  &.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+
+    &:hover {
+      background-color: #5a6268;
+    }
+  }
+
+  &.btn-danger {
+    background-color: #dc3545;
+    color: white;
+
+    &:hover {
+      background-color: #c82333;
+    }
+  }
+
+  // Tamanhos dos botões
+  &.btn-small {
+    font-size: 12px;
+    padding: 0.25rem 0.5rem;
+  }
+
+  &.btn-medium {
+    font-size: 14px;
     padding: 0.5rem 1rem;
-    border-radius: 4px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-  
+  }
+
+  &.btn-large {
+    font-size: 16px;
+    padding: 0.75rem 1.5rem;
+  }
+
+  // Estado de carregamento
+  &.btn-loading {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  // Estado desabilitado
+  &:disabled, &.btn-disabled {
+    opacity: 0.6;  // Reduz a opacidade para dar a sensação de desabilitado
+    cursor: not-allowed;  // Mostra que o botão não pode ser clicado
+    pointer-events: none;  // Desativa completamente a interação com o botão
+    filter: grayscale(0.5);  // Diminui a saturação para um efeito visual de desabilitado
+
+    // Alterando cores de fundo e borda para um estado mais suave
     &.btn-primary {
       background-color: #007bff;
       color: white;
-  
-      &:hover {
-        background-color: #0056b3;
-      }
+      filter: grayscale(0.5) brightness(0.9);  // Torna a cor mais suave
     }
-  
+
     &.btn-secondary {
       background-color: #6c757d;
       color: white;
-  
-      &:hover {
-        background-color: #5a6268;
-      }
+      filter: grayscale(0.5) brightness(0.9);
     }
-  
+
     &.btn-danger {
       background-color: #dc3545;
       color: white;
-  
-      &:hover {
-        background-color: #c82333;
-      }
-    }
-  
-    &.btn-small {
-      font-size: 12px;
-      padding: 0.25rem 0.5rem;
-    }
-  
-    &.btn-medium {
-      font-size: 14px;
-      padding: 0.5rem 1rem;
-    }
-  
-    &.btn-large {
-      font-size: 16px;
-      padding: 0.75rem 1.5rem;
-    }
-  
-    &.btn-loading {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-  
-    .btn-spinner {
-      width: 16px;
-      height: 16px;
-      margin-right: 8px;
-      animation: spin 1s infinite linear;
-    }
-  
-    @keyframes spin {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
+      filter: grayscale(0.5) brightness(0.9);
     }
   }
-  
+
+  // Animação de carregamento (ícone de spinner)
+  .btn-spinner {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    animation: spin 1s infinite linear;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}
