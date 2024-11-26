@@ -3,9 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-
 class Livro extends Model
 {
     protected $table = 'liv_livro';
@@ -31,8 +30,8 @@ class Livro extends Model
         );
     }
 
-    public function editora():HasOne
+    public function editora():BelongsTo
     {
-        return $this->hasOne(Editora::class,'edi_id');
+        return $this->belongsTo(Editora::class,'edi_id');
     }
 }
