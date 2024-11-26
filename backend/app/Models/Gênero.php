@@ -3,8 +3,20 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Gênero extends Model
 {
-    //
+    protected $table = 'gen_genero';
+    protected $primaryKey = 'gen_id';
+
+    public function livros(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Livro::class,
+            'genero_livro',
+            'gen_id',
+            'liv_id'
+        );
+    }
 }
