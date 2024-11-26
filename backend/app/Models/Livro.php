@@ -14,7 +14,7 @@ class Livro extends Model
     public function generos():BelongsToMany
     {
         return $this->belongsToMany(
-            Gênero::class,
+            Genero::class,
             'genero_livro',
             'liv_id',
             'gen_id'
