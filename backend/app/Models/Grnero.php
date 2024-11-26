@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Gênero extends Model
+class Genero extends Model
 {
     protected $table = 'gen_genero';
     protected $primaryKey = 'gen_id';
