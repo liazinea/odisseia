@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import Button from "../../components/Button"; // Certifique-se de que o caminho esteja correto para o arquivo Button.js
-import Navbar from "../../components/Navbar"
-
 
 const App = () => {
   const [isDisabled, setIsDisabled] = useState(false);
@@ -16,28 +14,69 @@ const App = () => {
   };
 
   return (
-    <div style={{backgroundColor: '#111', color: 'white'}}>
-
-      <Navbar></Navbar>
-
+    <div style={{ backgroundColor: "#fff", color: "#000" }}>      
       <h1>Testando Botões</h1>
-      
+
       {/* Variantes */}
       <div>
         <h2>Variantes</h2>
-        <Button variant="primary" isLoading={isLoading} disabled={isDisabled}>Variant primary</Button>
-        <Button variant="secondary" isLoading={isLoading} disabled={isDisabled}>Variant secondary</Button>
-        <Button variant="tertiary" isLoading={isLoading} disabled={isDisabled}>Variant tertiary</Button>
-        <Button variant="quaternary" isLoading={isLoading} disabled={isDisabled}>Variant quaternary</Button>
-        <Button variant="danger" isLoading={isLoading} disabled={isDisabled}>Variant danger</Button>
+        <Button variant="primary" isLoading={isLoading} disabled={isDisabled}>
+          Variant primary
+        </Button>{" "}
+        <br />
+        <Button variant="secondary" isLoading={isLoading} disabled={isDisabled}>
+          Variant secondary
+        </Button>{" "}
+        <br />
+        <Button variant="tertiary" isLoading={isLoading} disabled={isDisabled}>
+          Variant tertiary
+        </Button>{" "}
+        <br />
+        <Button
+          variant="quaternary"
+          isLoading={isLoading}
+          disabled={isDisabled}
+        >
+          Variant quaternary
+        </Button>{" "}
+        <br />
+        <Button variant="danger" isLoading={isLoading} disabled={isDisabled}>
+          Variant danger
+        </Button>
       </div>
 
       {/* Tamanhos */}
       <div>
         <h2>Tamanhos</h2>
-        <Button size="small" isLoading={isLoading} disabled={isDisabled}>Size small</Button>
-        <Button size="medium" isLoading={isLoading} disabled={isDisabled}>Size medium</Button>
-        <Button size="large" isLoading={isLoading} disabled={isDisabled}>Size large</Button>
+        <h3>Tamanho micro</h3>
+        <Button size="micro" isLoading={isLoading} disabled={isDisabled}>
+          Size
+        </Button>{" "}
+        <br />
+        <h3>Tamanho extra-small</h3>
+        <Button size="extra-small" isLoading={isLoading} disabled={isDisabled}>
+          Size
+        </Button>{" "}
+        <br />
+        <h3>Tamanho small</h3>
+        <Button size="small" isLoading={isLoading} disabled={isDisabled}>
+          Size
+        </Button>{" "}
+        <br />
+        <h3>Tamanho medium</h3>
+        <Button size="medium" isLoading={isLoading} disabled={isDisabled}>
+          Size
+        </Button>{" "}
+        <br />
+        <h3>Tamanho large</h3>
+        <Button size="large" isLoading={isLoading} disabled={isDisabled}>
+          Size
+        </Button>{" "}
+        <br />
+        <h3>Tamanho extra-large</h3>
+        <Button size="extra-large" isLoading={isLoading} disabled={isDisabled}>
+          Size
+        </Button>
       </div>
 
       {/* Toggle Disabled */}

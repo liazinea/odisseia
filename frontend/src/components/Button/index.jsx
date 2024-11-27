@@ -1,6 +1,6 @@
 import React from "react";
-import classNames from "classnames"; // Usando 'classnames' para adicionar classes condicionalmente
-import { FaSpinner } from "react-icons/fa"; // Ícone de carregamento do react-icons
+import classNames from "classnames";
+import { FaSpinner } from "react-icons/fa";
 import "./index.scss";
 
 const Button = ({
@@ -22,13 +22,13 @@ const Button = ({
     <button
       className={buttonClassNames}
       disabled={isLoading || disabled}
-      aria-busy={isLoading} // Para melhorar a acessibilidade
+      aria-busy={isLoading}
       {...props}
     >
       {isLoading ? (
         <FaSpinner className="btn-spinner" aria-hidden="true" />
       ) : (
-        children
+        <span className="btn-text">{children}</span>
       )}
     </button>
   );
