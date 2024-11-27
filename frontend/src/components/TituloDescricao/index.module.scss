@@ -1,0 +1,29 @@
+@import "../../styles//index.scss";
+
+.titulo{
+    font-family: Poppins;
+    color: $roxo-escuro;
+    font-size: 55px;
+    font-weight: bold;
+    letter-spacing: -2.5%;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: 30px;
+}
+
+.subtitulo{
+    font-family: Inter;
+    color: $roxo-escuro;
+    font-size: 32px;
+    font-weight: 400;
+    margin-bottom: 50px;
+    margin-left: 30px;
+}
+
+.autor{
+    font-family: Inter;
+    color: $roxo-escuro;
+    font-size: 16px;
+    font-style: italic;
+    margin-left: 30px;
+}
