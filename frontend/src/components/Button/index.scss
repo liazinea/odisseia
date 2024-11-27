@@ -73,6 +73,23 @@
     }
   }
 
+  &.btn-reserve {
+    background-color: color.$roxo-escuro;
+    border-radius: 4px;
+    color: color.$bege-claro;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease-in-out;
+
+    &:hover {
+      background-color: color.$bege;
+      border: solid 2px color.$roxo-escuro;
+      color: color.$roxo-escuro;
+    }
+  }
+
   &.btn-danger {
     background-color: color.$marrom;
     color: color.$branco;

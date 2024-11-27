@@ -40,6 +40,10 @@ const App = () => {
           Variant quaternary
         </Button>{" "}
         <br />
+        <Button variant="reserve" isLoading={isLoading} disabled={isDisabled}>
+          Variant reserve
+        </Button>
+        <br />
         <Button variant="danger" isLoading={isLoading} disabled={isDisabled}>
           Variant danger
         </Button>
