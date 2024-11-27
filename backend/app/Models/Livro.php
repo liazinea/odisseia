@@ -9,6 +9,19 @@ class Livro extends Model
 {
     protected $table = 'liv_livro';
     protected $primaryKey = 'liv_id';
+    protected $fillable = [
+        'liv_isbn',
+        'liv_numRegistro',
+        'liv_nome',
+        'liv_qtdPaginas',
+        'liv_dataPublicacao',
+        'liv_edicao',
+        'liv_classificacaoIndicativa',
+        'liv_localizacao',
+        'liv_sinopse',
+        'liv_capa',
+        'edi_id',
+    ];
 
     public function generos():BelongsToMany
     {
