@@ -1,0 +1,28 @@
+@import "../../styles/index.scss";
+
+.qtd{
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 300;
+    color: $roxo-escuro;
+    display: flex;
+    justify-content: center;
+}
+
+.quadrado{  
+    display: flex;
+    margin-top: 10px;
+    justify-content: center;
+
+    .subquad{
+        background-color: $roxo-escuro;
+        padding-inline: 20px;
+        padding-block: 10px;
+        border-radius: 8px;
+    }
+
+    .numero{
+        color: $bege;
+        font-weight: 200;
+    }
+}
