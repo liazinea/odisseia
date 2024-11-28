@@ -1,57 +1,53 @@
-@use 'src/styles/cores/cores' as color;
+@use "src/styles/cores/cores" as color;
 
 // Estilo da barra de navegação principal
 .navbar {
   background-color: color.$bege;
-  margin: 0;
-  font-family: "Arial", sans-serif;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease;
 
   // Container principal da navbar
   .navbar-container {
     display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 2rem;
+    align-items: center; // Alinha verticalmente os itens
+    justify-content: space-between; // Espaça logo e links
     padding: 1.5rem 2rem;
     position: relative;
-    transition: padding 0.3s ease;
 
-    @media (max-width: 770px) {
-      gap: 1rem;
-      justify-content: space-between;
+    @media (min-width: 770px) {
+      gap: 1.5rem;
+      justify-content: flex-start;
     }
 
     @media (max-width: 576px) {
-      display: block;
+      justify-content: space-between;
     }
-  }
-
-  // Wrapper para o logo e o botão hamburguer
-  .wrapper-logo-hamburguer {
-    display: flex;
-    justify-content: space-between;
-    z-index: 10;
   }
 
   // Estilo do logo da navbar
   .navbar-logo {
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 1.5rem;
-    font-family: Montserrat, sans-serif;
-    font-weight: bold;
+    align-items: center; // Alinha verticalmente ao centro
+    gap: 0.5rem; // Espaçamento entre o ícone e o texto
     color: color.$roxo-escuro;
 
     .logo-icon {
-      stroke: inherit;
-      transition: stroke 0.3s ease-in-out;
+      width: auto;
+      height: 1.5em;
+      display: block;
+    }
+
+    span {
+      line-height: 1; // Remove espaços verticais
+      font-size: 1.5rem;
+      font-family: Montserrat, sans-serif;
+      font-weight: bold;
     }
 
     a {
       text-decoration: none;
       color: inherit;
+      display: flex;
+      align-items: center;
       transition: color 0.3s ease-in-out;
     }
   }
@@ -59,67 +55,83 @@
   // Estilo dos links de navegação
   .navbar-links {
     list-style: none;
-    display: flex;
-    gap: 2rem;
-    margin: 0;
-    padding: 0;
+    display: none;
+    gap: 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
 
     li a {
       text-decoration: none;
       color: color.$roxo-escuro;
-      font-weight: bold;
-      transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+      transition: color 0.3s ease-in-out;
 
       &:hover {
-        color: color.$branco;
-        transform: translateY(-1px); // Suavização do movimento
+        color: color.$roxo-claro;
       }
     }
 
+    @media (min-width: 577px) {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  // Links no menu móvel
+  .navbar-button {
+    list-style: none;
+    display: none;
+    gap: 10px;
+    justify-content: space-around;
+    align-items: center;
+    text-decoration: none;
+  
+    li {
+      display: flex; 
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+  
+    li a {
+      display: flex; // Garante alinhamento correto
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+    }
+  
     @media (max-width: 576px) {
-      display: none;
+      display: grid; 
+      grid-template-columns: repeat(2, 1fr); // Duas colunas
+      gap: 10px; 
       position: absolute;
       top: 100%;
       left: 0;
       width: 100%;
       background-color: color.$bege;
-      padding: 8px;
-      border-top: darken(color.$bege, 5%) solid 2px;
+      padding: 12px; // Espaço extra para toque
+      border-top: solid 2px darken(color.$bege, 5%);
       max-height: 0;
       overflow: hidden;
-      box-sizing: border-box;
       opacity: 0;
-
+      box-sizing: border-box;
+  
+      // Botões extras centralizados
+      & li:nth-child(odd):last-child {
+        grid-column: span 2; // Ocupa duas colunas
+        justify-self: center; // Centraliza no grid
+      }
+  
       &.active {
-        display: flex;
+        max-height: 500px;
         opacity: 1;
         animation: slideDown 0.5s ease-in-out forwards;
         z-index: 10;
       }
-
-      li {
-        width: 100%;
-
-        a {
-          display: block;
-          padding: 1rem 0.5rem;
-          text-align: center;
-          background-color: lighten(color.$bege, 5%);
-          border-radius: 4px;
-          color: color.$roxo-escuro;
-          transition: background-color 0.3s ease, color 0.3s ease-in-out, transform 0.3s ease-in-out;
-
-          &:hover {
-            background-color: color.$roxo-escuro;
-            color: color.$bege;
-            transform: scale(1.02); // Suavização da escala
-          }
-        }
-      }
     }
   }
+  
 
-  // Botão hamburguer para abrir/fechar menu móvel
+  // Botão hambúrguer
   .navbar-menu-toggle {
     display: none;
     background: none;
@@ -129,14 +141,14 @@
     width: 28px;
     height: 28px;
     transition: color 0.3s ease-in-out;
+    align-items: center;
 
     svg {
       font-size: 1.5rem;
-      color: inherit;
       transition: transform 0.3s ease-in-out;
 
       &:hover {
-        transform: scale(1.1); // Suavização do aumento
+        transform: scale(1.1);
       }
     }
 
@@ -146,31 +158,18 @@
 
     @media (max-width: 576px) {
       display: flex;
-      align-items: center;
     }
   }
 }
 
 // Animação para exibir o menu (deslizar para baixo)
 @keyframes slideDown {
-  0% {
+  from {
     max-height: 0;
     opacity: 0;
   }
-  100% {
+  to {
     max-height: 500px;
     opacity: 1;
-  }
-}
-
-// Animação para esconder o menu (deslizar para cima)
-@keyframes slideUp {
-  0% {
-    max-height: 500px;
-    opacity: 1;
-  }
-  100% {
-    max-height: 0;
-    opacity: 0;
   }
 }
