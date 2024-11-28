@@ -1,5 +1,74 @@
 @import '../../styles/index.scss';
 
-.tabela{
-    width: 100%;
+.principal{
+    margin: 20px;
+    font-size: 16px;
+
+    .head{
+        font-family: Inter;
+        font-weight: 600;
+        display: flex;
+        background-color: $bege;
+        border-radius: 15px;
+        padding-block: 10px;
+        text-align: center;
+        color: $roxo-escuro;
+    
+        .data{
+            width: 15%;
+        }
+        .capa{
+            width: 15%;
+        }
+        .titulo{
+            width: 40%;
+        }
+        .num{
+            width: 15%;
+        }
+        .opcoes{
+            width: 15%;
+        }
+    }
+    
+    .body{
+        display: flex;
+        border-radius: 20px;
+        padding-block: 10px;
+        text-align: center;
+        margin-block: 15px;
+        border: 1px $preto solid;
+        align-items: center;
+    
+        .data{
+            width: 15%;
+        }
+        .capa{
+            width: 15%;
+
+            .imagem{
+                width: 150px;
+                height: 240px;
+                padding-block: 5px;
+            }
+        }
+        .titulo{
+            width: 40%;
+        }
+        .num{
+            width: 15%;
+        }
+        .opcoes{
+            width: 15%;
+            display: flex;
+            justify-content: space-around;
+
+            .botao{
+                background-color: $bege-claro;
+                border: 1px solid $preto;
+                border-radius: 20px;
+                padding: 5px 15px;
+            }
+        }
+    }    
 }
