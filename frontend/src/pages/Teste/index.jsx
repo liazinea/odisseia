@@ -1,15 +1,14 @@
-import HeaderHome from "../../components/HeaderHome"
-import Navbar from "../../components/Navbar"
-import Footer from "../../components/Footer"
+import Navbar from "../../components/Navbar";
+import NavbarAdm from "../../components/NavbarAdm"
 
-const Teste = () => {
+const App = () => {
+
   return (
     <>
-    <Navbar/>
-    <h1>TESTE</h1>
-    <Footer/>
+      <Navbar/>
+      <NavbarAdm/>
     </>
-  )
-}
+  );
+};
 
-export default Teste
+export default App;
