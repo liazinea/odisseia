@@ -1,0 +1,91 @@
+@import "../../styles/index.scss";
+
+.fundo {
+
+  background-color: $roxo-escuro;
+  width: 90%;
+  height: 80%;
+  padding-block: 15px;
+  border-radius: 40px;
+  padding-right: 20px;
+
+  .dupla {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-block: 10px;
+    margin-bottom: 25px;
+  }
+  .esquerdo {
+    width: 60%;
+  }
+  .direito {
+    width: 34%;
+  }
+  .ultimaDupla {
+    display: flex;
+    gap: 50px;
+
+    margin-inline: 1.5%;
+    margin-block: 10px;
+    margin-bottom: 25px;
+
+    .classSinopse {
+      width: 62%;
+
+      .classificacao {
+        margin-bottom: 25px;
+      }
+      .sinopse {
+        height: 100%;
+      }
+    }
+
+    .centraliza {
+      display: flex;
+      justify-content: center;
+      width: 34%;
+
+
+    }
+  }
+  @media screen and (max-width: 992px){
+    .dupla{
+        padding-inline: 1.5%;
+    }
+    .ultimaDupla{
+        display: block;
+        .classSinopse{
+            width: 100%;
+        }
+        .centraliza{
+            width: 100%;
+        }
+    }
+  }
+  @media screen and (max-width: 576px){
+    .fundo{
+      width: 80%;
+    }.dupla{
+        padding-inline: 1.5%;
+        display: block;
+    }.direito{
+      margin-bottom: 25px;
+      width: 100%;
+    }.esquerdo{
+      margin-bottom: 25px;
+      width: 100%;
+    }
+    .ultimaDupla{
+        display: block;
+        .classSinopse{
+            width: 100%;
+        }.classificacao{
+          width: 100%;
+        }
+
+    }
+  }
+}
+
+
