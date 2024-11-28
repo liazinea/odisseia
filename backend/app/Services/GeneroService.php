@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service;
+namespace App\Services;
 
 use App\DTOs\GeneroDTO;
 use App\Models\Genero;
@@ -12,7 +12,7 @@ class GeneroService
         protected GeneroRepositoryInterface $generoRepository
     )
     {}
-    public function buscaPorVariosNomes(array $nomes):array
+    public function buscaPorVariosNomesOuCadastra(array $nomes):array
     {
         $generos = [];
         foreach ($nomes as $genero) {

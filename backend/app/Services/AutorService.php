@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service;
+namespace App\Services;
 
 use App\DTOs\AutorDTO;
 use App\Models\Autor;
@@ -12,7 +12,7 @@ class AutorService
         protected AutorRepositoryInterface $autorRepository
     )
     {}
-    public function buscaPorVariosNomes(array $nomes):array
+    public function buscaPorVariosNomesOuCadastra(array $nomes):array
     {
         $autores = [];
         foreach ($nomes as $nome) {
