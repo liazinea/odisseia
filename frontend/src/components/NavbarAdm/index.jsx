@@ -15,8 +15,10 @@ const Navbar = () => {
       setButtonSize("small"); // Tamanho pequeno para telas abaixo de 420px
     } else if (width <= 480) {
       setButtonSize("medium"); // Tamanho médio para telas abaixo de 480px
+    } else if (width <= 685) {
+      setButtonSize("large"); // Tamanho grande para telas menores que 685px
     } else {
-      setButtonSize("large"); // Tamanho grande para telas maiores que 480px
+      setButtonSize("large"); // Tamanho normal para telas maiores que 685px
     }
   };
 
@@ -61,6 +63,12 @@ const Navbar = () => {
         {/* Links principais */}
         <ul className={styles["navbar-links"]}>
           <li>
+            <Link to="/emprestimos">Empréstimos</Link>
+          </li>
+          <li>
+            <Link to="/cadastrar-livros">Cadastrar Livros</Link>
+          </li>
+          <li>
             <Link to="/generos">Gêneros</Link>
           </li>
           <li>
@@ -74,7 +82,25 @@ const Navbar = () => {
         </button>
 
         {/* Botões do dropdown */}
-        <ul className={`${styles["navbar-button"]} ${isMenuOpen ? styles.active : ""}`}>
+        <ul
+          className={`${styles["navbar-button"]} ${
+            isMenuOpen ? styles.active : ""
+          }`}
+        >
+          <li>
+            <Link to="/emprestimos">
+              <Button variant="quaternary" size={buttonSize}>
+                Empréstimos
+              </Button>
+            </Link>
+          </li>
+          <li>
+            <Link to="/cadastrar-livros">
+              <Button variant="quaternary" size={buttonSize}>
+                Cadastrar livros
+              </Button>
+            </Link>
+          </li>
           <li>
             <Link to="/generos">
               <Button variant="quaternary" size={buttonSize}>
