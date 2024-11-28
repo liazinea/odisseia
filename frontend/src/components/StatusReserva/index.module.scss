@@ -1,93 +1,109 @@
-@use "src/styles/cores/cores" as color;
+@use "src/styles/cores/cores" as color; // Importa as variáveis de cores do arquivo 'cores.scss'
 
-// Container geral para o dropdown
+/* Container geral do dropdown */
 .dropdownContainer {
-  font-family: Arial, sans-serif;
-  display: inline-block;
-  color: color.$marrom; // Cor do texto do container
-  position: relative; // Para garantir o posicionamento adequado das opções
+  font-family: Arial, sans-serif; // Define a fonte do texto dentro do container
+  display: inline-block; // Exibe o container como um bloco em linha
+  color: color.$marrom; // Cor do texto do container, utilizando uma variável de cor
+  position: relative; // Define o posicionamento relativo para o dropdown ser posicionado em relação a este container
 }
 
-// Estilo do label, centralizado e com cor roxo-escuro
+/* Estilos para o label que descreve o dropdown */
 .label {
-  font-size: 15px;
-  margin-bottom: 8px; // Espaçamento inferior para separar do dropdown
-  display: block;
+  font-size: 15px; // Tamanho da fonte
+  margin-bottom: 8px; // Espaçamento inferior
+  display: block; // Exibe o label como um bloco, ocupando toda a largura
   color: color.$roxo-escuro; // Cor do texto do label
   font-weight: bold; // Deixa o texto em negrito
-  text-align: center; // Centraliza o texto
-  margin-top: 10px; // Espaçamento superior para separar do conteúdo acima
+  text-align: center; // Alinha o texto no centro
+  margin-top: 10px; // Espaçamento superior
 }
 
-// Estilo principal do botão do dropdown
+/* Estilos do botão principal do dropdown */
 .dropdown {
-  position: relative;
-  background-color: color.$roxo-escuro; // Cor de fundo do botão
-  color: color.$bege; // Cor do texto do botão
-  width: 160px; // Largura ajustada para o botão
+  position: relative; // Necessário para o posicionamento das opções internas
+  background-color: color.$roxo-escuro; // Cor de fundo do dropdown
+  color: color.$bege; // Cor do texto do dropdown
+  width: 160px; // Largura do botão do dropdown
   padding: 10px 16px; // Espaçamento interno do botão
   border-radius: 8px; // Bordas arredondadas
-  cursor: pointer; // Indicador de clique
-  display: flex; // Alinha texto e ícone em linha
-  justify-content: space-between; // Espaço entre o texto e o ícone
-  align-items: center; // Alinha o conteúdo verticalmente
-  box-sizing: border-box; // Inclui bordas e padding no cálculo do tamanho
+  cursor: pointer; // Aponta o cursor para indicar que é clicável
+  display: flex; // Exibe o conteúdo do dropdown em linha
+  justify-content: space-between; // Espaça o conteúdo de forma que o texto e ícone fiquem separados
+  align-items: center; // Alinha verticalmente os itens
+  box-sizing: border-box; // Inclui o padding e border no cálculo da largura total
 
+  /* Estilo quando o dropdown está ativo (aberto) */
   &.active {
-    border-radius: 8px 8px 0 0; // Bordas superiores arredondadas quando ativo
+    border-radius: 8px 8px 0 0; // Arredonda apenas as bordas superiores quando o dropdown está ativo
   }
 }
 
-// Estilo para o texto da opção selecionada dentro do dropdown
+/* Estilos para o texto do status selecionado */
 .selected {
-  font-size: 16px; // Tamanho da fonte do texto
-  font-weight: bold; // Deixa o texto em negrito
-  display: flex; // Garante alinhamento do texto e ícone
-  align-items: center; // Centraliza verticalmente o texto e ícone
-  justify-content: center; // Centraliza o texto horizontalmente
-  flex: 1; // Permite que o texto ocupe o espaço necessário
+  font-size: 16px; // Tamanho da fonte
+  font-weight: bold; // Texto em negrito
+  display: flex; // Exibe em linha com o ícone
+  align-items: center; // Alinha verticalmente
+  justify-content: center; // Alinha horizontalmente
+  flex: 1; // Permite que o texto ocupe o espaço necessário dentro do botão
 }
 
-// Estilo do ícone do dropdown (seta)
+/* Estilo para o ícone do dropdown (seta para abrir/fechar) */
 .icon {
-  margin-left: 8px; // Espaçamento entre o texto e o ícone
+  margin-left: 8px; // Espaço entre o texto e o ícone
   font-size: 18px; // Tamanho do ícone
-  display: flex; // Garante alinhamento do ícone
-  align-items: center; // Centraliza verticalmente o ícone
+  display: flex; // Exibe o ícone em linha
+  align-items: center; // Alinha verticalmente
   justify-content: flex-end; // Alinha o ícone à direita
-  width: auto; // Permite que o ícone ocupe o mínimo de espaço possível
+  width: auto; // O ícone ocupa apenas o espaço necessário
 }
 
-// Estilo das opções do dropdown (aparecem quando o dropdown está aberto)
+/* Estilos para as opções do dropdown */
 .options {
-  position: absolute;
-  top: 100%; // Posiciona as opções logo abaixo do botão
-  left: 0;
-  width: 100%; // Mantém o mesmo tamanho do botão
-  box-sizing: border-box; // Inclui bordas e padding no cálculo do tamanho
+  position: absolute; // As opções são posicionadas absolutamente em relação ao container
+  top: 100%; // As opções aparecem logo abaixo do botão
+  left: 0; // Alinha as opções à esquerda do botão
+  width: 100%; // As opções ocupam toda a largura do botão
+  box-sizing: border-box; // Inclui padding e bordas no cálculo da largura
   background-color: color.$branco; // Cor de fundo das opções
   color: color.$roxo-escuro; // Cor do texto das opções
-  font-weight: bold; // Deixa o texto das opções em negrito
-  border: 1px solid color.$roxo-escuro; // Borda das opções
-  border-radius: 0 0 8px 8px; // Bordas arredondadas inferiores
-  overflow: hidden; // Garante que o conteúdo não transborde
-  z-index: 10; // Garante que o dropdown apareça acima de outros elementos
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); // Sombra para dar destaque
+  font-weight: bold; // Texto em negrito
+  border: 1px solid color.$roxo-escuro; // Borda de cor roxo-escuro
+  border-radius: 0 0 8px 8px; // Bordas arredondadas na parte inferior das opções
+  overflow: hidden; // Garante que o conteúdo das opções não transborde
+  z-index: 10; // Garante que as opções apareçam acima de outros elementos
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); // Sombra sutil para destacar as opções
+  opacity: 0; // Inicialmente as opções estão invisíveis
+  visibility: hidden; // Esconde as opções inicialmente
+
+  /* Estilos quando o dropdown está ativo (aberto) */
+  &.active {
+    opacity: 1; // Torna as opções visíveis
+    visibility: visible; // Torna as opções visíveis
+  }
 }
 
-// Estilo para cada opção dentro do dropdown
+/* Estilos individuais para cada item de opção dentro do dropdown */
 .options div {
   padding: 10px; // Espaçamento interno de cada opção
-  font-size: 16px; // Tamanho da fonte das opções
-  text-align: center; // Alinha o texto ao centro
-  cursor: pointer; // Indicador de clique para as opções
-  
-  // Adicionando um pequeno separador entre as opções
+  font-size: 16px; // Tamanho da fonte
+  text-align: center; // Alinha o texto das opções no centro
+  cursor: pointer; // Indica que as opções são clicáveis
+
+  /* Estilos para adicionar um separador entre as opções */
   &:not(:last-child) {
     border-bottom: 1px solid color.$roxo-escuro; // Linha de separação entre as opções
   }
 
+  /* Estilos de interação com o mouse */
   &:hover {
-    background-color: color.$bege-claro; // Destaque ao passar o mouse
+    background-color: color.$bege-claro; // Muda o fundo ao passar o mouse
+  }
+
+  /* Estilos para quando a opção está focada (com o teclado, por exemplo) */
+  &:focus {
+    outline: 2px solid color.$roxo-escuro; // Contorno roxo-escuro ao focar na opção
+    background-color: color.$bege-claro; // Muda o fundo ao focar
   }
 }
