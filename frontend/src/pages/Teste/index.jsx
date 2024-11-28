@@ -1,11 +1,12 @@
-import React, { useState } from "react";
 import Navbar from "../../components/Navbar";
+import NavbarAdm from "../../components/NavbarAdm"
 
 const App = () => {
 
   return (
     <>
       <Navbar/>
+      <NavbarAdm/>
     </>
   );
 };
