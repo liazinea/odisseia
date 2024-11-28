@@ -7,7 +7,8 @@ import { RiBookLine } from "react-icons/ri";
 import { LuCalendar } from "react-icons/lu";
 
 
-const InfoAdicionais = () => {
+const InfoAdicionais = ({paginas, edicao, editora, data}) => {
+
 
     return (
         <div className={styles.container}>
@@ -18,27 +19,25 @@ const InfoAdicionais = () => {
                 <TextoIcon
                     nome="Número de páginas:"
                     icon={<IoBookOutline />}
-                    descricao="100 páginas"
+                    descricao={`${paginas} páginas`} //PARA NÃO ALTERNAR O TEXTO QUE NÃO MUDA, COLOCAR DESSE JEITO
                 />
 
                 <TextoIcon
                     nome="Edição:"
                     icon={<FaHashtag />}
-                    descricao="4ª"
+                    descricao={`${edicao}ª edição`}
                 />
-
                 <TextoIcon
                     nome="Editora:"
                     icon={<RiBookLine />}
-                    descricao="Nome da Editora"
+                    descricao={editora}
                 />
 
                 <TextoIcon
                     nome="Data de Publicação:"
                     icon={<LuCalendar />}
-                    descricao="dd/mm/aaaa"
+                    descricao={data}
                 />
-
             </div>
 
         </div>
