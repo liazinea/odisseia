@@ -39,20 +39,20 @@ const StatusReserva = () => {
         <span className={styles.icon}>
           {isOpen ? <FaChevronUp /> : <FaChevronDown />}
         </span>
-      </div>
 
-      {/* Exibe as opções quando o dropdown está aberto */}
-      {isOpen && (
-        <div className={styles.options}>
-          {statusOptions
-            .filter((status) => status !== selectedStatus) // Filtra a opção selecionada
-            .map((status) => (
-              <div key={status} onClick={() => handleStatusChange(status)}>
-                {status} {/* Exibe cada opção do dropdown */}
-              </div>
-            ))}
-        </div>
-      )}
+        {/* Exibe as opções quando o dropdown está aberto */}
+        {isOpen && (
+          <div className={styles.options}>
+            {statusOptions
+              .filter((status) => status !== selectedStatus) // Filtra a opção selecionada
+              .map((status) => (
+                <div key={status} onClick={() => handleStatusChange(status)}>
+                  {status} {/* Exibe cada opção do dropdown */}
+                </div>
+              ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
