@@ -1,0 +1,32 @@
+@import '../../styles/index.scss';
+
+.principal{
+    margin: 40px 20px;
+
+    .head{
+        font-family: Inter;
+        font-weight: 600;
+        display: flex;
+        background-color: $bege;
+        border-radius: 15px;
+        padding-block: 10px;
+        text-align: center;
+        color: $roxo-escuro;
+    
+        .data{
+            width: 15%;
+        }
+        .capa{
+            width: 15%;
+        }
+        .titulo{
+            width: 40%;
+        }
+        .num{
+            width: 15%;
+        }
+        .opcoes{
+            width: 15%;
+        }
+    }
+}
