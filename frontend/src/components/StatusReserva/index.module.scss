@@ -1,0 +1,93 @@
+@use "src/styles/cores/cores" as color;
+
+// Container geral para o dropdown
+.dropdownContainer {
+  font-family: Arial, sans-serif;
+  display: inline-block;
+  color: color.$marrom; // Cor do texto do container
+  position: relative; // Para garantir o posicionamento adequado das opções
+}
+
+// Estilo do label, centralizado e com cor roxo-escuro
+.label {
+  font-size: 15px;
+  margin-bottom: 8px; // Espaçamento inferior para separar do dropdown
+  display: block;
+  color: color.$roxo-escuro; // Cor do texto do label
+  font-weight: bold; // Deixa o texto em negrito
+  text-align: center; // Centraliza o texto
+  margin-top: 10px; // Espaçamento superior para separar do conteúdo acima
+}
+
+// Estilo principal do botão do dropdown
+.dropdown {
+  position: relative;
+  background-color: color.$roxo-escuro; // Cor de fundo do botão
+  color: color.$bege; // Cor do texto do botão
+  width: 160px; // Largura ajustada para o botão
+  padding: 10px 16px; // Espaçamento interno do botão
+  border-radius: 8px; // Bordas arredondadas
+  cursor: pointer; // Indicador de clique
+  display: flex; // Alinha texto e ícone em linha
+  justify-content: space-between; // Espaço entre o texto e o ícone
+  align-items: center; // Alinha o conteúdo verticalmente
+  box-sizing: border-box; // Inclui bordas e padding no cálculo do tamanho
+
+  &.active {
+    border-radius: 8px 8px 0 0; // Bordas superiores arredondadas quando ativo
+  }
+}
+
+// Estilo para o texto da opção selecionada dentro do dropdown
+.selected {
+  font-size: 16px; // Tamanho da fonte do texto
+  font-weight: bold; // Deixa o texto em negrito
+  display: flex; // Garante alinhamento do texto e ícone
+  align-items: center; // Centraliza verticalmente o texto e ícone
+  justify-content: center; // Centraliza o texto horizontalmente
+  flex: 1; // Permite que o texto ocupe o espaço necessário
+}
+
+// Estilo do ícone do dropdown (seta)
+.icon {
+  margin-left: 8px; // Espaçamento entre o texto e o ícone
+  font-size: 18px; // Tamanho do ícone
+  display: flex; // Garante alinhamento do ícone
+  align-items: center; // Centraliza verticalmente o ícone
+  justify-content: flex-end; // Alinha o ícone à direita
+  width: auto; // Permite que o ícone ocupe o mínimo de espaço possível
+}
+
+// Estilo das opções do dropdown (aparecem quando o dropdown está aberto)
+.options {
+  position: absolute;
+  top: 100%; // Posiciona as opções logo abaixo do botão
+  left: 0;
+  width: 100%; // Mantém o mesmo tamanho do botão
+  box-sizing: border-box; // Inclui bordas e padding no cálculo do tamanho
+  background-color: color.$branco; // Cor de fundo das opções
+  color: color.$roxo-escuro; // Cor do texto das opções
+  font-weight: bold; // Deixa o texto das opções em negrito
+  border: 1px solid color.$roxo-escuro; // Borda das opções
+  border-radius: 0 0 8px 8px; // Bordas arredondadas inferiores
+  overflow: hidden; // Garante que o conteúdo não transborde
+  z-index: 10; // Garante que o dropdown apareça acima de outros elementos
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); // Sombra para dar destaque
+}
+
+// Estilo para cada opção dentro do dropdown
+.options div {
+  padding: 10px; // Espaçamento interno de cada opção
+  font-size: 16px; // Tamanho da fonte das opções
+  text-align: center; // Alinha o texto ao centro
+  cursor: pointer; // Indicador de clique para as opções
+  
+  // Adicionando um pequeno separador entre as opções
+  &:not(:last-child) {
+    border-bottom: 1px solid color.$roxo-escuro; // Linha de separação entre as opções
+  }
+
+  &:hover {
+    background-color: color.$bege-claro; // Destaque ao passar o mouse
+  }
+}
