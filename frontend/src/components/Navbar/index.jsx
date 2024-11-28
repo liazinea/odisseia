@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa"; // Importando os ícones do react-icons
 import Button from "../Button";
-import "./index.scss";
+import styles from "./index.module.scss"; // Importando o CSS Module
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -31,14 +31,14 @@ const Navbar = () => {
   const toggleMenu = () => setIsMenuOpen((prevState) => !prevState);
 
   return (
-    <nav className={`navbar ${isMenuOpen ? "open" : ""}`}>
-      <div className="navbar-container">
+    <nav className={`${styles.navbar} ${isMenuOpen ? styles.open : ""}`}>
+      <div className={styles["navbar-container"]}>
         {/* Logo */}
-        <div className="navbar-logo">
-          <Link to="/" className="navbar-logo">
-            <div className="logo-icon">
+        <div className={styles["navbar-logo"]}>
+          <Link to="/" className={styles["navbar-logo"]}>
+            <div className={styles["logo-icon"]}>
               <svg
-                className="logo-icon"
+                className={styles["logo-icon"]}
                 width="28"
                 height="26"
                 viewBox="0 0 28 26"
@@ -54,14 +54,12 @@ const Navbar = () => {
                 />
               </svg>
             </div>
-
             <span>Odisseia</span>
           </Link>
         </div>
 
         {/* Links principais */}
-
-        <ul className={`navbar-links`}>
+        <ul className={styles["navbar-links"]}>
           <li>
             <Link to="/generos">Gêneros</Link>
           </li>
@@ -71,12 +69,12 @@ const Navbar = () => {
         </ul>
 
         {/* Botão hambúrguer */}
-        <button className="navbar-menu-toggle" onClick={toggleMenu}>
+        <button className={styles["navbar-menu-toggle"]} onClick={toggleMenu}>
           {isMenuOpen ? <FaTimes /> : <FaBars />}
         </button>
 
         {/* Botões do dropdown */}
-        <ul className={`navbar-button ${isMenuOpen ? "active" : ""}`}>
+        <ul className={`${styles["navbar-button"]} ${isMenuOpen ? styles.active : ""}`}>
           <li>
             <Link to="/generos">
               <Button variant="quaternary" size={buttonSize}>
