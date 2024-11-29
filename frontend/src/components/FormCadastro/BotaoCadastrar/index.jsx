@@ -5,10 +5,7 @@ import React from 'react'
 const BotaoCadastrar = () => {
   return (
     <div>
-
-      <button type='submit' className={styles.btn}>Cadastrar</button>
-
-
+      <button type="submit" className={styles.btn}>Cadastrar</button>
     </div>
   )
 }   

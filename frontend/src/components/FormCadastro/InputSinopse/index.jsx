@@ -2,14 +2,15 @@ import styles from './index.module.scss';
 
 import React from 'react'
 
-const InputSinopse = ({titulo, placeholder}) => {
+const InputSinopse = ({ titulo, placeholder, register, campo, erro}) => {
+
   return (
     <div>
 
-      <p className={styles.label} htmlFor="input">{titulo}</p>
-      <textarea rows="25" 
-                  cols="50"  type="text" id='input' className={styles.input} placeholder={placeholder}/>
-
+      <p className={styles.label} htmlFor={campo}>{titulo}</p>
+      <textarea  {...register(campo,  {required: true})}rows="25" 
+                  cols="50"  type="text" id={campo} className={styles.input} placeholder={placeholder}/>
+            
 
     </div>
   )

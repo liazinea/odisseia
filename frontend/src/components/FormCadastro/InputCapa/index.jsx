@@ -4,11 +4,7 @@ import { useState } from "react";
 
 import React from 'react'
 
-
-
-
-
-const InputCapa = () => {
+const InputCapa = ({register, campo, erro}) => {
   const [preview, setPreview] = useState(null);
 
   const handleFileChange = (event) => {
@@ -24,7 +20,7 @@ const InputCapa = () => {
 
   return (
     <div className={styles.imageinput}>
-      <label htmlFor="fileinput" className={styles.imagelabel}>
+      <label htmlFor={campo} className={styles.imagelabel}>
         <span>Capa do livro</span>
         <div className={styles.imageplaceholder}>
           {preview ? (
@@ -39,12 +35,14 @@ const InputCapa = () => {
         </div>
       </label>
       <input
+        {...register(campo,  {required: true})}
         type="file"
         className={styles.fileinput}
-        id="fileinput"
+        id={campo}
         accept="image/*"
         onChange={handleFileChange} // Adiciona o evento ao input
       />
+     
     </div>
   );
 };
