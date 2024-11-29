@@ -1,0 +1,32 @@
+.classificacaoIndicativa {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 75px;
+  clip-path: polygon(0% 0, 100% 0, 100% 100%, 50% 85%, 0 100%);
+  overflow: hidden;
+  box-sizing: border-box;
+  color: #ffffff;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.container {
+  width: 75px;
+  height: 100px;
+  background-color: transparent;
+  overflow: hidden;
+}
+
+.textoClassificacao {
+  display: block;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  text-align: center;
+  justify-content: center;
+  font-size: 1.30rem;
+}
