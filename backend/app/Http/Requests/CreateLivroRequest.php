@@ -21,7 +21,7 @@ class CreateLivroRequest extends FormRequest
             'liv_nome' => 'required|string|max:255',
             'liv_qtdPaginas' => 'required|integer|min:1',
             'liv_dataPublicacao' => 'required|date',
-            'edi_id' => 'required|exists:edi_editora,edi_id',
+            'liv_editora' => 'required|string|max:255',
             'liv_edicao' => 'required|string|max:100',
             'liv_classificacaoIndicativa' => 'required|string|max:50',
             'liv_localizacao' => 'required|string|max:255',
@@ -56,8 +56,9 @@ class CreateLivroRequest extends FormRequest
             'liv_dataPublicacao.required' => 'A data de publicação é obrigatória.',
             'liv_dataPublicacao.date' => 'A data de publicação deve ser uma data válida.',
 
-            'edi_id.required' => 'O campo editora é obrigatório.',
-            'edi_id.exists' => 'A editora selecionada não existe.',
+            'liv_editora.required' => 'O campo editora é obrigatório.',
+            'liv_editora.string' => 'O campo editora deve ser um texto.',
+            'liv_editora.max' => 'O campo editora não pode ter mais de 255 caracteres.',
 
             'liv_edicao.required' => 'O campo edição é obrigatório.',
             'liv_edicao.string' => 'O campo edição deve ser uma string.',
