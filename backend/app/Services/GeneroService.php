@@ -5,6 +5,7 @@ namespace App\Services;
 use App\DTOs\GeneroDTO;
 use App\Models\Genero;
 use App\Repositories\GeneroRepositoryInterface;
+use Illuminate\Database\Eloquent\Collection;
 
 class GeneroService
 {
@@ -12,6 +13,16 @@ class GeneroService
         protected GeneroRepositoryInterface $generoRepository
     )
     {}
+
+    public function buscarTodos():null|Collection
+    {
+        return $this->generoRepository->buscarTodos();
+    }
+    public function buscaComNome(string $param):null|Collection|Genero
+    {
+        return $this->generoRepository->buscaComNome($param);
+    }
+
     public function buscaPorVariosNomesOuCadastra(array $nomes):array
     {
         $generos = [];
