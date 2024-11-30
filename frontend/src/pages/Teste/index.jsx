@@ -1,4 +1,3 @@
-
 import Navbar from "../../components/Navbar";
 import NavbarAdm from "../../components/NavbarAdm"
 
@@ -11,8 +10,9 @@ const Teste = () => {
     <>
     <FormCadastro/>
     </>
+
   );
-};
+}
 
 export default Teste
 
