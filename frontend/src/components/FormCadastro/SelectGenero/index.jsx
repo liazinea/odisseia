@@ -1,25 +1,77 @@
-import styles from './index.module.scss';
+import styles from './index.module.scss'
+import React, { useState, useEffect } from 'react'
+import CreatableSelect from 'react-select/creatable'
+import { api } from '../../../config/api'
+import { Controller } from 'react-hook-form'
 
-import React from 'react'
+const SelectEstante = ({ titulo, campo, register, control, generos }) => {
+  const [opcoesGeneros, setOpcoesGeneros] = useState()
 
-const SelectEstante= ({ titulo, campo, register}) => {
+  useEffect(() => {
+    if (generos && generos.length > 0) {
+      const opcoes = generos.map((genero) => ({
+        value: genero.nome,
+        label: genero.nome,
+      }));
+      setOpcoesGeneros(opcoes)
+    }
+  }, [generos])
 
-  return (
-    <div>
+  const atualizaGeneros = async (inputValue) => {
+    try {
+        const response = await api.get(`/generos?genero=${inputValue}`);
+        const novasOpcoes = response.data.generos.map((genero) => ({
+            value: genero.gen_nome,
+            label: genero.gen_nome,
+        }));
+        setOpcoesGeneros((prev) => [...prev, ...novasOpcoes])
+    } catch (error) {
+        console.error('Erro ao buscar generos:', error)
+    }
+};
 
-      <p className={styles.label} htmlFor={campo}>{titulo}</p>
-      <select {...register(campo,  {required: true})}type="text" id={campo} className={styles.select}>
-      <option value="">Selecione</option>
-      <option value="história">Matemática</option>
-      <option value="romance">Romance</option>
-      <option value="acao">Ação</option>
-      <option value="história">História</option>
-      </select>
-      
+return (
+  <div>
+      <label className={styles.label} htmlFor={campo}>
+          {titulo}
+      </label>
+      <Controller
+          name={campo}
+          control={control}
+          rules={{ required: true }}
+          render={({ field: { onChange, value } }) => (
+              <CreatableSelect
+                  id={campo}
+                  isMulti
+                  options={opcoesGeneros}
+                  placeholder="Selecione ou adicione generos"
+                  classNamePrefix="react-select"
+                  onChange={(selected) => {
+                      onChange(selected ? selected.map((option) => option.value) : [])
+                  }}
+                  onCreateOption={(inputValue) => {
+                      const novoGenero = { value: inputValue, label: inputValue };
+                      setOpcoesGeneros((prev) => [...prev, novoGenero])
+                      onChange([...(value || []), novoGenero.value])
+                  }}
+                  onInputChange={(inputValue) => {
+                      if (inputValue) {
+                          atualizaGeneros(inputValue);
+                      }
+                  }}
+                  value={
+                      value
+                          ? value.map((valor) => ({
+                                value: valor,
+                                label: valor,
+                            }))
+                          : []
+                  }
+              />
+          )}
+      />
+  </div>
+)
 
-
-
-    </div>
-  )
 }
 export default SelectEstante

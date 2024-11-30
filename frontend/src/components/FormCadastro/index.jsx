@@ -12,10 +12,42 @@ import InputSinopse from "./InputSinopse";
 import BotaoCadastrar from "./BotaoCadastrar";
 
 import { useForm } from 'react-hook-form';
+import useAutores from "../../hooks/useAutores";
+import SelectAutores from "./SelectAutores";
+import useGeneros from "../../hooks/useGeneros";
+import { api } from "../../config/api";
 
 const FormCadastro = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
-  const onSubmit = data => console.log(data);
+  const { register, handleSubmit,control, formState: { errors } } = useForm();
+  const {autores} = useAutores()
+  const {generos} = useGeneros()
+  const onSubmit = async (data) =>{
+
+    const formData = new FormData()
+
+    Object.entries(data).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        value.forEach((item, index) => {
+          formData.append(`${key}[${index}]`, item)
+        });
+      } else if (key === "liv_capa" && value[0]) {
+        formData.append(key, value[0])
+      } else {
+        formData.append(key, value)
+      }
+    })
+
+    try {
+      const response = await api.post('/livros', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log('Sucesso:', response.data)
+    } catch (error) {
+      console.error('Erro ao enviar dados:', error.response.data)
+    }
+  }
 
   return (
 
@@ -65,18 +97,19 @@ const FormCadastro = () => {
             />
           </div>
           <div className={styles.direito}>
-            <InputTexto campo={'liv_autores'} register={register} titulo={"Autor"} placeholder={"Digite o Autor do livro"}
+            <SelectAutores
+            autores={autores} control={control}campo={'liv_autores'} register={register} titulo={"Autor"} placeholder={"Digite o Autor do livro"}
             />
           </div>
         </div>
 
         <div className={styles.dupla}>
           <div className={styles.esquerdo}>
-            <SelectEstante campo={'liv_localizacao'} register={register} titulo={"Prateleira/Estante"}
+            <SelectEstante estantes={generos} campo={'liv_localizacao'} register={register} titulo={"Prateleira/Estante"}
             />
           </div>
           <div className={styles.direito}>
-            <SelectGenero campo={'liv_generos'} register={register} titulo={"Gênero"}
+            <SelectGenero generos={generos} control={control} campo={'liv_generos'} register={register} titulo={"Gênero"}
             />
           </div>
         </div>
