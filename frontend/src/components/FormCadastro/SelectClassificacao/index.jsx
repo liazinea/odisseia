@@ -10,9 +10,9 @@ const Classificacao= ({titulo, campo, register, erro}) => {
       <p className={styles.label} htmlFor={campo}>{titulo}</p>
       <select {...register(campo,  {required: true})}type="text" id={campo} className={styles.select}>
       <option value="">Selecione</option>
-      <option value="romance">Livre</option>
-      <option value="acao">+12</option>
-      <option value="história">+14</option>
+      <option value="Livre">Livre</option>
+      <option value="+12">+12</option>
+      <option value="+14">+14</option>
       </select>
       
 

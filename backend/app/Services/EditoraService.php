@@ -21,7 +21,7 @@ class EditoraService
 
         return $this->editoraRepository->salvar($novaEditora);
     }
-    public function buscaPeloNome(string $nome):Editora
+    public function buscaPeloNome(string $nome):Editora | null
     {
         return $this->editoraRepository->buscaPeloNome($nome);
     }

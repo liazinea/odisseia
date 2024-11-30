@@ -28,15 +28,15 @@ const FormCadastro = () => {
     Object.entries(data).forEach(([key, value]) => {
       if (Array.isArray(value)) {
         value.forEach((item, index) => {
-          formData.append(`${key}[${index}]`, item)
+          formData.append(`${key}[${index}]`, item);
         });
-      } else if (key === "liv_capa" && value[0]) {
-        formData.append(key, value[0])
+      } else if (key === "liv_capa" && value instanceof FileList ) {
+        console.log('Arquivo selecionado:', value[0]);
+        formData.append(key, value[0]); // Adiciona o primeiro arquivo do FileList
       } else {
-        formData.append(key, value)
+        formData.append(key, value);
       }
     })
-
     try {
       const response = await api.post('/livros', formData, {
         headers: {
@@ -138,6 +138,6 @@ const FormCadastro = () => {
 
       </div>
     </form>
-  );
-};
+  )
+}
 export default FormCadastro;

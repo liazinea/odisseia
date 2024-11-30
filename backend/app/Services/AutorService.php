@@ -39,7 +39,7 @@ class AutorService
         return $autores;
     }
 
-    public function buscaPeloNome(string $nome):Autor
+    public function buscaPeloNome(string $nome):Autor|null
     {
         return $this->autorRepository->buscaPeloNome($nome);
     }

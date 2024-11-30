@@ -2,19 +2,17 @@ import styles from './index.module.scss';
 import { FaUpload } from "react-icons/fa6";
 import { useState } from "react";
 
-import React from 'react'
-
-const InputCapa = ({register, campo, erro}) => {
+const InputCapa = ({ register, campo }) => {
   const [preview, setPreview] = useState(null);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = () => {
-        setPreview(reader.result); // Define o preview com o conteúdo da imagem
+      reader.onload = (e) => {
+        setPreview(e.target.result)
       };
-      reader.readAsDataURL(file); // Lê o arquivo como URL base64
+      reader.readAsDataURL(file)
     }
   };
 
@@ -35,14 +33,15 @@ const InputCapa = ({register, campo, erro}) => {
         </div>
       </label>
       <input
-        {...register(campo,  {required: true})}
+        {...register(campo, {
+          required: true,
+          onChange: handleFileChange,
+        })}
         type="file"
         className={styles.fileinput}
         id={campo}
-        accept="image/*"
-        onChange={handleFileChange} // Adiciona o evento ao input
+        accept='image/*'
       />
-     
     </div>
   );
 };
