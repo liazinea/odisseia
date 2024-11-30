@@ -11,14 +11,14 @@ return new class extends Migration
     {
         Schema::create('liv_livro', function (Blueprint $table) {
             $table->id('liv_id');
-            $table->bigInteger('liv_isbn')->unique();
-            $table->bigInteger('liv_numRegistro');
+            $table->string('liv_isbn')->unique();
+            $table->string('liv_numRegistro');
             $table->string('liv_nome');
             $table->integer('liv_qtdPaginas');
-            $table->date('liv_dataPublicacao');
+            $table->date('liv_dataPubli');
             $table->unsignedBigInteger('edi_id');
-            $table->string('liv_edicao');
-            $table->string('liv_classificacaoIndicativa');
+            $table->bigInteger('liv_edicao');
+            $table->string('liv_classIndicativa');
             $table->string('liv_localizacao');
             $table->text('liv_sinopse');
             $table->string('liv_capa');
