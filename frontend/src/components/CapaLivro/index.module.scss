@@ -1,13 +1,18 @@
 .capaLivro {
     position: relative; /* Garantir que o filho absoluto se posicione em relação a ele */
-    width: 198px; /* Largura fixa */
-    height: 317px; /* Altura fixa */
+    width: 396px; /* Largura fixa */
+    height: 634px; /* Altura fixa */
     border-radius: 10px;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #f0f0f0; /* Cor de fundo do container abaixo do esqueleto */
+  
+    @media (max-width: 768px){
+      width: 198px;
+      height: 317px;
+    }
   }
   
   .imagemCapa {
@@ -36,6 +41,6 @@
     position: absolute; /* Posiciona em relação ao contêiner */
     top: 0px; /* Distância do topo */
     left: 0px; /* Distância da esquerda */
-    z-index: 10; /* Coloca sobre tudo */
+    z-index: 5; /* Coloca sobre tudo */
   }
   

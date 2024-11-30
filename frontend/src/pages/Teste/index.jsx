@@ -1,22 +1,27 @@
-// App.jsx
-import React from 'react';
-import CapaLivro from '../../components/CapaLivro';
+import React from "react";
+import Livro from "../../components/Livro"; // Importando o componente Livro
 
 const App = () => {
+  const livro = {
+    titulo: "O Senhor dos Anéis",
+    subtitulo: "A Irmandade do Anel",
+    capa: "https://m.media-amazon.com/images/I/91k0NXj1+wL._AC_UF1000,1000_QL80_.jpg",
+    classIndicativa: "L",
+    autor: "J.R.R. Tolkien",
+    quantidadeLivros: 12,
+    generos: ["Fantasía", "Aventura", "Drama", "Doidera"],
+    paginas: "160",
+    edicao: "4",
+    editora: "Sonhos de Verão",
+    dataPublicacao: "10/06/1990",
+  };
+
   return (
-    <div style={{backgroundColor: 'gray'}}>
-
-      <h1>As classificações indicativas dos livros não estão correspondentes kkkkkk</h1>
-      <h1>Quando nenhuma imagem é inserida, aparece um esqueleto. O esqueleto é exibido lá na classificação +18</h1>
-
-      <CapaLivro imagemCapa="https://imgv2-1-f.scribdassets.com/img/word_document/407633882/original/a2b2cea8ae/1587214774?v=1" classificacao="L" />
-      <CapaLivro imagemCapa="https://s1.static.brasilescola.uol.com.br/be/2021/07/capa-do-livro-campo-geral-de-joao-guimaraes-rosa-publicado-pela-global-editora.jpg" classificacao="+10" />
-      <CapaLivro imagemCapa="http://3.bp.blogspot.com/-u_WpfVS0zpo/Vgw7PK52QDI/AAAAAAAAawE/wWk55VJMS-s/s1600/persepolis.jpg" classificacao="+12" />
-      <CapaLivro imagemCapa="https://m.media-amazon.com/images/I/61k9Y9fwZ6L._AC_UF1000,1000_QL80_.jpg" classificacao="+14" />
-      <CapaLivro imagemCapa="https://m.media-amazon.com/images/I/81USiLZVNuL._SL1500_.jpg" classificacao="+16" />
-      <CapaLivro imagemCapa="" classificacao="+18" />
-    </div>
+    <>
+      {/* Chamando o componente Livro e passando as informações como prop */}
+      <Livro livro={livro} />
+    </>
   );
-}
+};
 
 export default App;
