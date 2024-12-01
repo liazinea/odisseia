@@ -1,22 +1,17 @@
-@import "../../styles/index.scss";
+@use "../../styles/index.scss" as colors;
 
 .sinopseContainer {
-    margin-inline: 40px;
+    margin: 0 40px;
+    padding: 20px;
+    animation: fadeIn 0.5s ease-in-out;
 }
 
 .titulo {
-    font-family: Inter;
-    color: $roxo-escuro;
+    font-family: Inter, sans-serif;
+    color: colors.$roxo-escuro;
     font-size: 18px;
     font-weight: 500;
-    margin-bottom: 20px;
-    margin-top: 20px;
-}
-
-.textoContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    margin: 10px 0;
 }
 
 .texto {
@@ -25,12 +20,35 @@
     font-weight: 300;
     text-align: justify;
     line-height: 1.6;
-    color: $preto; 
+    color: colors.$preto;
+    margin-top: 10px;
+    white-space: pre-line;
 }
 
+@media (max-width: 768px) {
+    .sinopseContainer {
+        margin: 0 20px;
+    }
 
-@media (max-width: 576px){
-    .textoContainer{
-        gap: 15px;
-    };
+    .texto {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .texto {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
