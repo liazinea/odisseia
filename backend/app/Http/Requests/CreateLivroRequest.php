@@ -16,14 +16,14 @@ class CreateLivroRequest extends FormRequest
     public function rules()
     {
         return [
-            'liv_isbn' => 'required|numeric|unique:liv_livro,liv_isbn',
-            'liv_numRegistro' => 'required|numeric',
+            'liv_isbn' => 'required||unique:liv_livro,liv_isbn',
+            'liv_numRegistro' => 'required|',
             'liv_nome' => 'required|string|max:255',
             'liv_qtdPaginas' => 'required|integer|min:1',
-            'liv_dataPublicacao' => 'required|date',
-            'edi_id' => 'required|exists:edi_editora,edi_id',
+            'liv_dataPubli' => 'required|date',
+            'liv_editora' => 'required|string|max:255',
             'liv_edicao' => 'required|string|max:100',
-            'liv_classificacaoIndicativa' => 'required|string|max:50',
+            'liv_classIndicativa' => 'required|string|max:50',
             'liv_localizacao' => 'required|string|max:255',
             'liv_sinopse' => 'required|string',
             'liv_capa' => 'required|image| mimes:jpeg,png,jpg,gif|max:2048',
@@ -38,12 +38,10 @@ class CreateLivroRequest extends FormRequest
     public function messages()
     {
         return [
-            'liv_sibn.required' => 'O campo ISBN é obrigatório.',
-            'liv_sibn.numeric' => 'O campo ISBN deve conter apenas números.',
-            'liv_sibn.unique' => 'O ISBN informado já está cadastrado.',
+            'liv_isbn.required' => 'O campo ISBN é obrigatório.',
+            'liv_isbn.unique' => 'O ISBN informado já está cadastrado.',
 
             'liv_numRegistro.required' => 'O número de registro é obrigatório.',
-            'liv_numRegistro.numeric' => 'O número de registro deve conter apenas números.',
 
             'liv_nome.required' => 'O nome do livro é obrigatório.',
             'liv_nome.string' => 'O nome do livro deve ser uma string.',
@@ -53,19 +51,20 @@ class CreateLivroRequest extends FormRequest
             'liv_qtdPaginas.integer' => 'A quantidade de páginas deve ser um número inteiro.',
             'liv_qtdPaginas.min' => 'A quantidade de páginas deve ser ao menos 1.',
 
-            'liv_dataPublicacao.required' => 'A data de publicação é obrigatória.',
-            'liv_dataPublicacao.date' => 'A data de publicação deve ser uma data válida.',
+            'liv_dataPubli.required' => 'A data de publicação é obrigatória.',
+            'liv_dataPubli.date' => 'A data de publicação deve ser uma data válida.',
 
-            'edi_id.required' => 'O campo editora é obrigatório.',
-            'edi_id.exists' => 'A editora selecionada não existe.',
+            'liv_editora.required' => 'O campo editora é obrigatório.',
+            'liv_editora.string' => 'O campo editora deve ser um texto.',
+            'liv_editora.max' => 'O campo editora não pode ter mais de 255 caracteres.',
 
             'liv_edicao.required' => 'O campo edição é obrigatório.',
             'liv_edicao.string' => 'O campo edição deve ser uma string.',
             'liv_edicao.max' => 'O campo edição não pode ultrapassar 100 caracteres.',
 
-            'liv_classificacaoIndicativa.required' => 'A classificação indicativa é obrigatória.',
-            'liv_classificacaoIndicativa.string' => 'A classificação indicativa deve ser uma string.',
-            'liv_classificacaoIndicativa.max' => 'A classificação indicativa não pode ultrapassar 50 caracteres.',
+            'liv_classIndicativa.required' => 'A classificação indicativa é obrigatória.',
+            'liv_classIndicativa.string' => 'A classificação indicativa deve ser uma string.',
+            'liv_classIndicativa.max' => 'A classificação indicativa não pode ultrapassar 50 caracteres.',
 
             'liv_localizacao.required' => 'O campo localização é obrigatório.',
             'liv_localizacao.string' => 'O campo localização deve ser uma string.',

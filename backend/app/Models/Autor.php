@@ -9,6 +9,9 @@ class Autor extends Model
 {
     protected $table = 'aut_autor';
     protected $primaryKey = 'aut_id';
+    protected $fillable = [
+        'aut_nome'
+    ];
 
     public function livros(): BelongsToMany
     {
