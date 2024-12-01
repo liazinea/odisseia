@@ -1,18 +1,14 @@
-import Navbar from "../../components/Navbar";
-import NavbarAdm from "../../components/NavbarAdm"
+import Sinopse from "../../components/Sinopse"
 
+const App = () => {
 
-import FormCadastro from "../../components/FormCadastro";
+  const sinopse = `O Senhor dos Anéis é um livro de alta fantasia, escrito pelo escritor britânico J. R. R. Tolkien. Escrita entre 1937 e 1949, com muitas partes criadas durante a Segunda Guerra Mundial, a saga é uma continuação de O Hobbit.`
 
-
-const Teste = () => {
   return (
     <>
-    <FormCadastro/>
+      <Sinopse sinopse={sinopse}/>
     </>
-
   );
-}
+};
 
-export default Teste
-
+export default App;
