@@ -8,15 +8,13 @@
   padding: 20px;
   color: $bege;
   text-align: center;
-  margin-inline: 40px;
 }
 
 .titulo {
   font-size: 18px;
-  margin-top: 20px;
   font-weight: 400;
   font-style: italic;
-  margin-top: 50px;
+  margin-top: 20px;
 }
 
 .itens {
@@ -24,7 +22,6 @@
   justify-content: center;
   align-items: center;
   gap: 10%;
-  
 }
 
 /* Media Queries */
@@ -33,13 +30,12 @@
 @media (max-width: 992px) {
 
   .container{
-    height: 650px;
     display: grid;
     align-items: center;
   }
 
   .titulo {
-    margin-top: 0px;
+    margin-top: 20px;
   }
 
   .itens {
@@ -53,13 +49,8 @@
 
 /* Para telas menores que 768px */
 @media (max-width: 768px) {
-  .container {
-    padding: 15px;
-    height: 550px;
-  }
   .titulo {
     font-size: 16px; /* Reduzir tamanho do título */
-    margin-bottom: 15px;
   }
 
   .itens {
@@ -67,18 +58,12 @@
    
   }
 
-  .container {
-    padding: 15px;
-    height: 550px;
-  }
 }
 
 /* Para telas menores que 576px */
 @media (max-width: 576px) {
   .titulo {
     font-size: 16px;
-    margin-bottom: 10px;
-    margin-top: 50px;
     display: flex;
     justify-content: center;
   }
@@ -89,46 +74,27 @@
     align-items: center;
     justify-content: center;
     font-size: 14px;
-    gap: 10px;
   }
 
   .container {
-    padding: 10px;
-    text-align: left;
+    text-align: center;
     display: block;
     justify-content: center;
     align-items: center;
-    padding: 15px;
-    height: 500px;
   }
 }
 
 @media (max-width: 520px) {
   .titulo {
     font-size: 16px;
-    margin-bottom: 10px;
-    margin-top: 50px;
+    margin-top: 20px;
     display: flex;
     justify-content: center;
   }
 
   .itens {
-    grid-template-columns: repeat(2, 1fr); /* Ainda duas colunas */
-    justify-items: center; /* Alinhar itens à esquerda */
-    align-items: center;
-    justify-content: center;
     font-size: 12px;
     gap: 10px;
-  }
-
-  .container {
-    padding: 10px;
-    text-align: left;
-    display: block;
-    justify-content: center;
-    align-items: center;
- 
-    height: 500px;
   }
 }
 

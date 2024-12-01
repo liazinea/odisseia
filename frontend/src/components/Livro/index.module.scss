@@ -1,0 +1,16 @@
+.livro {
+    margin: 30px; // Margem ao redor para evitar bordas coladas à tela
+    background-color: #f5f5f5; // Fundo compartilhado entre os componentes
+    overflow: hidden; // Garante que os elementos internos respeitem o arredondamento
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); // Adiciona sombra para destaque
+}
+
+.descLivro{
+    position: relative;
+    z-index: 1;
+}
+
+.infoAdicional{
+    position: relative;
+    margin: -15px 0px 0px 0px;
+}

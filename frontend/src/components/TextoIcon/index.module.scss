@@ -3,14 +3,14 @@
 
 .geral {
     justify-items: center;
-    padding-block: 138px;
+    padding-block: 40px;
 
     .titulo {
         font-family: Inter;
         color: $bege;
         font-size: 16px;
         font-weight: 200;
-        margin-bottom: 10px;
+       
     }
 
     .icon {
@@ -25,25 +25,12 @@
     }
 }
 
-@media (max-width: 992px) {
-    .geral {
-        padding-block: 70px;
-    }
-}
 
-@media (max-width: 768px) {
-    .geral {
-        padding-block: 60px;
-    }
-}
 
 /* Para telas menores que 576px */
 @media (max-width: 576px) {
     .geral {
-        padding-block: 50px;
         font-size: 12px ;
-        align-items: center;
-        justify-content: center;
 
         .titulo{
             font-size: 14px;
