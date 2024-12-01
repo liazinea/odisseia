@@ -11,6 +11,7 @@ const Livro = ({ livro }) => {
           titulo={livro.titulo}
           subtitulo={livro.subtitulo}
           capa={livro.capa}
+          sinopse={livro.sinopse}
           classIndicativa={livro.classIndicativa}
           autor={livro.autor}
           quantidadeLivros={livro.quantidadeLivros}
