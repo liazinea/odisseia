@@ -1,28 +1,47 @@
 @import "../../styles/index.scss";
 
-.qtd{
-    font-family: Inter;
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  
+    @media (max-width: 520px) {
+      flex-direction: row; /* Organiza os itens em uma linha */
+      justify-content: center; /* Alinha horizontalmente */
+      align-items: center; /* Alinha verticalmente */
+      gap: 10px; /* Espaçamento entre os itens */
+      text-align: center; /* Garante alinhamento do texto */
+    }
+  }
+  
+  .qtd {
+    font-family: Inter, sans-serif;
     font-size: 16px;
     font-weight: 300;
     color: $roxo-escuro;
+    margin-bottom: 5px; 
+
+    @media (max-width: 768px){
+      margin: 0;
+    }
+  }
+  
+  .quadrado {
     display: flex;
     justify-content: center;
-}
-
-.quadrado{  
-    display: flex;
-    margin-top: 10px;
-    justify-content: center;
-
-    .subquad{
-        background-color: $roxo-escuro;
-        padding-inline: 20px;
-        padding-block: 10px;
-        border-radius: 8px;
+    align-items: center; /* Garante que o conteúdo do quadrado esteja centralizado */
+  
+    .subquad {
+      background-color: $roxo-escuro;
+      padding: 10px 20px;
+      border-radius: 8px;
     }
-
-    .numero{
-        color: $bege;
-        font-weight: 200;
+  
+    .numero {
+      color: $bege;
+      font-weight: 200;
+      text-align: center;
     }
-}
+  }
+  

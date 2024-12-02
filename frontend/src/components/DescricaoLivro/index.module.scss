@@ -1,19 +1,27 @@
-@use '../../styles/cores/cores.scss' as colors;
+@use "../../styles/cores/cores.scss" as colors;
 
 .descricaoLivro {
   background-color: colors.$bege;
   padding: 20px 20px 35px 20px;
   border-radius: 0px 15px 0px 15px;
+  display: flex;
+  flex-direction: column;
 }
 
 .quantidade {
-  position: absolute; /* Para garantir que fique no topo à esquerda */
+  position: absolute; /* Posiciona a quantidade no topo à direita */
   top: 20px;
   right: 20px;
-  font-size: 18px; /* Definindo o tamanho da fonte */
+  font-size: 18px;
   font-weight: bold;
-  color: #333; /* Cor do texto */
-  z-index: 8; /* Garantindo que fique acima de outros elementos */
+  color: #333;
+  z-index: 8;
+
+  @media (max-width: 520px) {
+    position: static; /* Remove o posicionamento absoluto */
+    margin-top: 20px; /* Adiciona um espaçamento superior */
+    text-align: center; /* Centraliza o texto */
+  }
 }
 
 .capaInfo {
@@ -32,7 +40,7 @@
 .infoLivro {
   margin-left: 20px;
   width: 100%;
-  margin-top: 75px;
+  margin-top: 65px;
 
   @media (max-width: 768px) {
     margin-left: 0;
@@ -77,5 +85,14 @@
     flex-direction: column; // Empilha os botões em telas pequenas
     gap: 8px; // Ajusta o espaçamento para empilhamento
   }
+}
 
+.divSinopse {
+  margin: 1rem;
+  text-align: justify;
+
+  @media (max-width: 520px) {
+    margin: 0.5rem;
+    text-align: left;
+  }
 }

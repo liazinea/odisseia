@@ -4,19 +4,21 @@ import CapaLivro from "../CapaLivro";
 import TituloDescricao from "../TituloDescricao";
 import Button from "../Button";
 import QuantidadeLivro from "../QuantidadeLivro";
+import Sinopse from "../Sinopse";
 import PropTypes from "prop-types";
 
 const DescricaoLivro = ({
   titulo,
   subtitulo,
   capa,
+  sinopse,
   classIndicativa,
   autor,
   quantidadeLivros,
   generos = [],
 }) => {
   const [buttonSize, setButtonSize] = useState("large");
-
+  const [isAbove520px, setIsAbove520px] = useState(window.innerWidth > 520);
 
   const getButtonSize = (width) => {
     if (width <= 400) return "extra-small";
@@ -29,6 +31,7 @@ const DescricaoLivro = ({
   const updateLayout = useCallback(() => {
     const width = window.innerWidth;
     setButtonSize(getButtonSize(width));
+    setIsAbove520px(width > 520); // Atualiza o estado com base na largura
   }, []);
 
   useEffect(() => {
@@ -42,9 +45,12 @@ const DescricaoLivro = ({
 
   return (
     <div className={styles.descricaoLivro}>
-      <div className={styles.quantidade}>
-        <QuantidadeLivro quantidade={quantidadeLivros} />
-      </div>
+      {/* Renderiza a primeira div de quantidade apenas em telas maiores que 520px */}
+      {isAbove520px && (
+        <div className={styles.quantidade}>
+          <QuantidadeLivro quantidade={quantidadeLivros} />
+        </div>
+      )}
 
       <div className={styles.capaInfo}>
         <div className={styles.capaLivro}>
@@ -68,7 +74,17 @@ const DescricaoLivro = ({
               </Button>
             ))}
           </div>
+
+          {/* Renderiza a segunda div de quantidade apenas em telas menores ou iguais a 520px */}
+          {!isAbove520px && (
+            <div className={styles.quantidade}>
+              <QuantidadeLivro quantidade={quantidadeLivros} />
+            </div>
+          )}
         </div>
+      </div>
+      <div className={styles.divSinopse}>
+        <Sinopse sinopse={sinopse} />
       </div>
     </div>
   );

@@ -1,7 +1,11 @@
-import React from "react";
-import Livro from "../../components/Livro"; // Importando o componente Livro
+import Navbar from "../../components/Navbar";
+import Header from "../../components/HeaderPagina";
+import Button from "../../components/Button";
+import Livro from "../../components/Livro";
+import Footer from "../../components/Footer";
+import styles from "./index.module.scss";
 
-const App = () => {
+const InfoLivro = () => {
   const livro = {
     titulo: "O Senhor dos Anéis",
     subtitulo: "A Sociedade do Anel",
@@ -20,10 +24,17 @@ const App = () => {
 
   return (
     <>
-      {/* Chamando o componente Livro e passando as informações como prop */}
+      <Navbar />
+      <Header titulo="Informações Detalhadas" />
       <Livro livro={livro} />
+      <div className={styles.btn}>
+        <Button variant="reserve" size="extra-large">
+          Realizar reserva
+        </Button>
+      </div>
+      <Footer />
     </>
   );
 };
 
-export default App;
+export default InfoLivro;
