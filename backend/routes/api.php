@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Route;
 Route::controller(LivroController::class)->group(function(){
     Route::get('/livros', 'index');
     Route::post('/livros', 'store');
+    Route::delete('/livros/{livro}', 'delete');
     Route::get('/livros/{livro}', 'show');
+    Route::put('/livros/{livro}', 'update');
 });
 
 Route::controller(AutorController::class)->group(function(){
