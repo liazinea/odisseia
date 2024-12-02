@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateLivroRequest extends FormRequest
+class LivroRequest extends FormRequest
 {
 
     public function authorize()

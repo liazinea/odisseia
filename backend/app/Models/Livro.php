@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
 class Livro extends Model
 {
     protected $table = 'liv_livro';
@@ -23,7 +24,7 @@ class Livro extends Model
         'edi_id',
     ];
 
-    public function generos():BelongsToMany
+    public function generos(): BelongsToMany
     {
         return $this->belongsToMany(
             Genero::class,
@@ -33,7 +34,7 @@ class Livro extends Model
         );
     }
 
-    public function autores():BelongsToMany
+    public function autores(): BelongsToMany
     {
         return $this->belongsToMany(
             Autor::class,
@@ -43,8 +44,17 @@ class Livro extends Model
         );
     }
 
-    public function editora():BelongsTo
+    public function editora(): BelongsTo
     {
-        return $this->belongsTo(Editora::class,'edi_id');
+        return $this->belongsTo(Editora::class, 'edi_id');
+    }
+
+    public function deletear():bool
+    {
+
+        $this->generos()->detach();
+        $this->autores()->detach();
+
+        return parent::delete();
     }
 }

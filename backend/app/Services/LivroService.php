@@ -9,6 +9,7 @@ use App\Services\AutorService;
 use App\Services\GeneroService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\UploadedFile;
+use Termwind\Components\Li;
 
 class LivroService
 {
@@ -18,6 +19,21 @@ class LivroService
         protected LivroRepositoryInterface $livroRepository
     )
     {}
+
+    public function atualizar(LivroDTO $livroDTO, Livro $livro): bool
+    {
+        return $this->livroRepository->atualizar($livroDTO, $livro);
+    }
+
+    public function retorna(Livro $livo):Livro
+    {
+        return $this->livroRepository->retorna($livo);
+    }
+    
+    public function deletar(Livro $livro):bool
+    {
+        return $this->livroRepository->deletar($livro);
+    }
 
     public function buscarTodos():Collection
     {

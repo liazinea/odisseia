@@ -10,6 +10,32 @@ use Illuminate\Http\UploadedFile;
 
 class LivroRepository implements LivroRepositoryInterface
 {
+    public function atualizar(LivroDTO $livroDTO, Livro $livro): bool
+    {
+        $livro->liv_isbn = $livroDTO->isbn;
+        $livro->liv_numRegistro = $livroDTO->numRegistro;
+        $livro->liv_nome = $livroDTO->titulo;
+        $livro->liv_qtdPaginas = $livroDTO->numPaginas;
+        $livro->liv_dataPubli = $livroDTO->dataPubli;
+        $livro->edi_id = $livroDTO->editoraId;
+        $livro->liv_edicao = $livroDTO->edicao;
+        $livro->liv_classIndicativa = $livroDTO->classIndicativa;
+        $livro->liv_localizacao = $livroDTO->localizacao;
+        $livro->liv_sinopse = $livroDTO->sinopse;
+        $livro->liv_capa = $livroDTO->capa;
+        return $livro->save();
+    }
+    
+    public function retorna(Livro $livro): Livro
+    {
+        return $livro->load(['editora', 'autores', 'generos']);
+    }
+
+    public function deletar(Livro $livro): bool
+    {
+        return $livro->deletar();
+    }
+
     public function buscarTodos():Collection
     {
         return Livro::all();
