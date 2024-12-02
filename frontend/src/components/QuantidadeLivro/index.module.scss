@@ -20,7 +20,11 @@
     font-size: 16px;
     font-weight: 300;
     color: $roxo-escuro;
-    margin: 0; /* Remove qualquer margem indesejada */
+    margin-bottom: 5px; 
+
+    @media (max-width: 768px){
+      margin: 0;
+    }
   }
   
   .quadrado {
