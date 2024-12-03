@@ -1,16 +1,18 @@
 import ListaLivros from "../../components/ListaLivros";
-import Capa from '../../assets/jogos-vorazes.jpg';
 import styles from './index.module.scss';
 import Navbar from "../../components/Navbar";
 import HeaderPagina from "../../components/HeaderPagina";
 import Footer from "../../components/Footer";
+import useLivros from "../../hooks/useLivros";
 
 const LivrosCadastrados = () => {
-  
+  const { livros } = useLivros();
+  console.log(livros);
+
   return (
     <>
-      <Navbar/>
-      <HeaderPagina titulo={"Livros Cadastrados"}/>
+      <Navbar />
+      <HeaderPagina titulo={"Livros Cadastrados"} />
       <div className={styles.principal}>
         <div className={styles.head}>
           <div className={styles.data}>Data de Cadastro</div>
@@ -19,12 +21,15 @@ const LivrosCadastrados = () => {
           <div className={styles.num}>Número de Registro</div>
           <div className={styles.opcoes}>Opções</div>
         </div>
-        <ListaLivros titulo={"Jogos Vorazes"} data={'11/05/2013'} capa={Capa} numRegistro={5165456} />
+        {livros.map((livro) => (
+          <div key={livro.id}>
+            <ListaLivros livro={livro} />
+          </div>
+        ))}
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
-
 };
 
 export default LivrosCadastrados;

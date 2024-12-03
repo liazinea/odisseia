@@ -17,10 +17,15 @@ import SelectAutores from "./SelectAutores";
 import useGeneros from "../../hooks/useGeneros";
 import { api } from "../../config/api";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const FormCadastro = () => {
   const { register, handleSubmit,control, formState: { errors } } = useForm();
   const {autores} = useAutores()
   const {generos} = useGeneros()
+  const sucesso = () => toast("Livro cadastrado com sucesso!");
+  const erro = () => toast("Preencha todos os campos!");
   const onSubmit = async (data) =>{
 
     const formData = new FormData()
@@ -32,7 +37,7 @@ const FormCadastro = () => {
         });
       } else if (key === "liv_capa" && value instanceof FileList ) {
         console.log('Arquivo selecionado:', value[0]);
-        formData.append(key, value[0]); // Adiciona o primeiro arquivo do FileList
+        formData.append(key, value[0]);
       } else {
         formData.append(key, value);
       }
@@ -43,20 +48,23 @@ const FormCadastro = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log('Sucesso:', response.data)
+      sucesso();
     } catch (error) {
+      erro();
       console.error('Erro ao enviar dados:', error.response.data)
     }
   }
 
   return (
 
-    <form onSubmit={handleSubmit(onSubmit)}>
-       {Object.keys(errors).length > 0 && (
-              <div className={styles.erroGlobal}>
-                <p>reencha todos os capos do formulário</p>
-              </div>
-            )}
+    <form onSubmit={handleSubmit((data) => {
+      if (Object.keys(errors).length > 0) {
+        console.log('erooou');
+        erro("Preencha todos os campos obrigatórios!");
+      }
+      onSubmit(data);
+    })}>
+      <ToastContainer />
       <div className={styles.fundo}>
         <div className={styles.dupla}>
           <div className={styles.esquerdo}>
@@ -68,7 +76,6 @@ const FormCadastro = () => {
             />
           </div>
         </div>
-
         <div className={styles.dupla}>
           <div className={styles.esquerdo}>
             <InputTexto campo={'liv_numRegistro'} register={register} titulo={"Número de Registro"} placeholder={"Digite o número de registro do livro"}

@@ -8,13 +8,9 @@ const Paths = () => {
         <>
             <BrowserRouter>
                 <Routes>
-                    {/*<Route path={'/'} element={<PageLayout />}>*/}
-                    {/*<Route index element={<Home />} />*/}
                     <Route path={'/t'} element={<Teste />}/>
                     <Route path={'/LivrosCadastrados'} element={<LivrosCadastrados />}/>
                     <Route path='/livros/' element={<InfoLivro/>}/>
-                    {/*</Route>*/}
-                    {/*<Route path={'*'} element={<NotFound />} />*/}
                 </Routes>
             </BrowserRouter>
         </>

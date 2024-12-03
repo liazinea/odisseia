@@ -37,7 +37,7 @@ class GeneroService
 
         return $generos;
     }
-    public function buscaPeloNome(string $nome):Genero
+    public function buscaPeloNome(string $nome):null|Genero
     {
         return $this->generoRepository->buscaPeloNome($nome);
     }
