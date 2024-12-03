@@ -1,0 +1,46 @@
+.capaLivro {
+    position: relative; /* Garantir que o filho absoluto se posicione em relação a ele */
+    width: 396px; /* Largura fixa */
+    height: 634px; /* Altura fixa */
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0; /* Cor de fundo do container abaixo do esqueleto */
+  
+    @media (max-width: 768px){
+      width: 198px;
+      height: 317px;
+    }
+  }
+  
+  .imagemCapa {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ajusta a imagem para cobrir o container */
+    display: block;
+  }
+  
+  .skeleton {
+    display: flex;
+    background-color: #e0e0e0;
+    width: 80%;
+    height: 80%;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+
+    & span{
+        color: gray;
+    }
+  }
+  
+  /* Posicionamento absoluto da classificação */
+  .classIndicativa {
+    position: absolute; /* Posiciona em relação ao contêiner */
+    top: 0px; /* Distância do topo */
+    left: 0px; /* Distância da esquerda */
+    z-index: 5; /* Coloca sobre tudo */
+  }
+  
