@@ -11,8 +11,8 @@ return new class extends Migration
     {
         Schema::create('liv_livro', function (Blueprint $table) {
             $table->id('liv_id');
-            $table->string('liv_isbn')->unique();
-            $table->string('liv_numRegistro');
+            $table->string('liv_isbn');
+            $table->string('liv_numRegistro')->unique();
             $table->string('liv_nome');
             $table->integer('liv_qtdPaginas');
             $table->date('liv_dataPubli');
