@@ -27,7 +27,9 @@ const LivrosCadastrados = () => {
           </div>
         ))}
       </div>
-      <Footer />
+      <div className={styles.footer}>
+        <Footer />
+      </div>
     </>
   );
 };
