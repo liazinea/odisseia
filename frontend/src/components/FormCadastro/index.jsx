@@ -21,11 +21,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const FormCadastro = () => {
-  const { register, handleSubmit,control, formState: { errors } } = useForm();
+  const { register, handleSubmit,control, formState: { errors }, trigger } = useForm();
   const {autores} = useAutores()
   const {generos} = useGeneros()
   const sucesso = () => toast("Livro cadastrado com sucesso!");
-  const erro = () => toast("Preencha todos os campos!");
+  const erro = () => toast();
   const onSubmit = async (data) =>{
 
     const formData = new FormData()
@@ -50,73 +50,96 @@ const FormCadastro = () => {
       });
       sucesso();
     } catch (error) {
-      erro();
+      erro('Erro ao enviar dados');
       console.error('Erro ao enviar dados:', error.response.data)
     }
   }
 
   return (
 
-    <form onSubmit={handleSubmit((data) => {
-      if (Object.keys(errors).length > 0) {
-        console.log('erooou');
-        erro("Preencha todos os campos obrigatórios!");
-      }
-      onSubmit(data);
-    })}>
-      <ToastContainer />
-      <div className={styles.fundo}>
+    <form
+  onSubmit={handleSubmit(async (data) => {
+    const isValid = await trigger(); // Valida todos os campos manualmente
+    if (!isValid) {
+      erro("Preencha todos os campos");
+      return; // Impede o envio se houver erros
+    }
+    onSubmit(data);
+  })}
+>
+  <ToastContainer />
+  <div className={styles.fundo}>
+    <div className={styles.dupla}>
+      <div className={styles.esquerdo}>
+        <InputTexto
+          campo={"liv_nome"}
+          register={register}
+          titulo={"Título"}
+          placeholder={"Digite o nome do livro"}
+          errors={errors}
+        />
+      </div>
+      <div className={styles.direito}>
+        <InputTexto
+          campo={"liv_isbn"}
+          register={register}
+          titulo={"ISBN"}
+          placeholder={"Digite o ISBN do livro"}
+          errors={errors}
+        />
+      </div>
+    </div>
+    <div className={styles.dupla}>
+      <div className={styles.esquerdo}>
+        <InputTexto
+          campo={"liv_numRegistro"}
+          register={register}
+          titulo={"Número de Registro"}
+          placeholder={"Digite o número de registro do livro"}
+          errors={errors}
+        />
+      </div>
+      <div className={styles.direito}>
+        <InputNumero
+          campo={"liv_edicao"}
+          register={register}
+          titulo={"Edição"}
+          placeholder={"Digite a edição do livro"}
+          errors={errors}
+        />
+      </div>
+    </div>
+
         <div className={styles.dupla}>
           <div className={styles.esquerdo}>
-            <InputTexto campo={'liv_nome'} register={register} titulo={"Título"} placeholder={"Digite o nome do livro"}
+            <InputNumero campo={'liv_qtdPaginas'} register={register} errors={errors} titulo={"Quantidade de páginas"} placeholder={"Digite o número de páginas do livro"}
             />
           </div>
           <div className={styles.direito}>
-            <InputTexto campo={'liv_isbn'} register={register} titulo={"ISBN"} placeholder={"Digite o ISBN do livro"}
-            />
-          </div>
-        </div>
-        <div className={styles.dupla}>
-          <div className={styles.esquerdo}>
-            <InputTexto campo={'liv_numRegistro'} register={register} titulo={"Número de Registro"} placeholder={"Digite o número de registro do livro"}
-            />
-          </div>
-          <div className={styles.direito}>
-            <InputNumero campo={'liv_edicao'} register={register} titulo={"Edição"} placeholder={"Digite a edição do livro"}
+            <InputDate register={register} errors={errors} campo={'liv_dataPubli'} titulo={"Data de Publicação"} placeholder={"Digite a data de publicação do livro"}
             />
           </div>
         </div>
 
         <div className={styles.dupla}>
           <div className={styles.esquerdo}>
-            <InputNumero campo={'liv_qtdPaginas'} register={register} titulo={"Quantidade de páginas"} placeholder={"Digite o número de páginas do livro"}
-            />
-          </div>
-          <div className={styles.direito}>
-            <InputDate register={register} campo={'liv_dataPubli'} titulo={"Data de Publicação"} placeholder={"Digite a data de publicação do livro"}
-            />
-          </div>
-        </div>
-
-        <div className={styles.dupla}>
-          <div className={styles.esquerdo}>
-            <InputTexto  campo={'liv_editora'} register={register} titulo={"Editora"} placeholder={"Digite a editora do livro"}
+            <InputTexto  campo={'liv_editora'} register={register} errors={errors} titulo={"Editora"} placeholder={"Digite a editora do livro"}
             />
           </div>
           <div className={styles.direito}>
             <SelectAutores
-            autores={autores} control={control}campo={'liv_autores'} register={register} titulo={"Autor"} placeholder={"Digite o Autor do livro"}
+            autores={autores} control={control} errors={errors} campo={'liv_autores'} register={register} titulo={"Autor"} placeholder={"Digite o Autor do livro"}
             />
           </div>
         </div>
 
         <div className={styles.dupla}>
           <div className={styles.esquerdo}>
-            <SelectEstante estantes={generos} campo={'liv_localizacao'} register={register} titulo={"Prateleira/Estante"}
+            <SelectEstante estantes={generos} errors={errors} campo={'liv_localizacao'} register={register} titulo={"Prateleira/Estante"}
             />
           </div>
           <div className={styles.direito}>
-            <SelectGenero generos={generos} control={control} campo={'liv_generos'} register={register} titulo={"Gênero"}
+            <SelectGenero generos={generos} errors={errors} control={control} campo={'liv_generos'} register={register} titulo={"Gênero"}
             />
           </div>
         </div>
@@ -125,18 +148,18 @@ const FormCadastro = () => {
 
           <div className={styles.classSinopse}>
             <div className={styles.classificacao}>
-              <Classificacao campo={'liv_classIndicativa'} register={register} titulo={"Classificação Indicativa"} placeholder={"Digite a classificação indicativa do livro"}
+              <Classificacao campo={'liv_classIndicativa'} errors={errors} register={register} titulo={"Classificação Indicativa"} placeholder={"Digite a classificação indicativa do livro"}
               />
             </div>
             <div className={styles.classificacao}>
-              <InputSinopse campo={'liv_sinopse'} register={register} titulo={"Sinopse"} placeholder={"Digite a sinopse do livro"}
+              <InputSinopse campo={'liv_sinopse'} errors={errors} register={register} titulo={"Sinopse"} placeholder={"Digite a sinopse do livro"}
               />
             </div>
           </div>
 
           <div className={styles.centraliza}>
             <div className={styles.capa}>
-              <InputCapa campo={'liv_capa'} register={register} titulo={"Capa"}
+              <InputCapa campo={'liv_capa'} register={register} titulo={"Capa"} errors={errors}
               />
               <BotaoCadastrar className={styles.btn} />
             </div>

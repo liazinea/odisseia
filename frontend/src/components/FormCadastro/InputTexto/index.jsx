@@ -1,15 +1,20 @@
 ﻿import styles from './index.module.scss';
 import React from 'react'
 
-const InputTexto = ({ register,campo, titulo, placeholder}) => {
+const InputTexto = ({ register,campo, titulo, placeholder, errors}) => {
 
   return (
     <div>
-
-      <p className={styles.label} htmlFor={campo}>{titulo}</p>
+      <div className={styles.principal}>
+        <p className={styles.label} htmlFor={campo}>{titulo}</p>
+        {errors?.[campo] && <span className={styles.erro}>{errors[campo].message}</span>}
+      </div>
       <input
-        {...register(campo, {required: true})}
-        type="text" id={campo} className={styles.input} placeholder={placeholder}
+        {...register(campo, { required: "*Este campo é obrigatório" })}
+        type="text"
+        id={campo}
+        className={styles.input}
+        placeholder={placeholder}
       />
     </div>
   )

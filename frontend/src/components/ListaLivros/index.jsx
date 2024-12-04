@@ -8,7 +8,7 @@ const ListaLivros = ({livro}) => { // Agora o console.log está fora das chaves
         <div className={styles.body}>
           <div className={styles.data}>{livro.dataPubli}</div>
           <div className={styles.capa}>
-            <img src={livro.capa} className={styles.imagem} alt="Capa do Livro" />
+            <img src={`http://127.0.0.1:8000/storage/${livro.capa}`} className={styles.imagem} alt="Capa do Livro" />
           </div>
           <div className={styles.titulo}>{livro.nome}</div>
           <div className={styles.num}>{livro.numRegistro}</div>
