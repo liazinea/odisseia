@@ -26,11 +26,12 @@
     color: $cinza;
     border-right: 12px solid transparent;
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 700px) {
     .label{
         font-size: small;
     }
     .select{
         font-size: small;
+        height: 40px;
     }
 }

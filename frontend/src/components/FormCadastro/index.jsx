@@ -71,6 +71,7 @@ const FormCadastro = () => {
   })}
 >
   <ToastContainer />
+  <div className={styles.pfv}>
   <div className={styles.fundo}>
     <div className={styles.dupla}>
       <div className={styles.esquerdo}>
@@ -177,7 +178,7 @@ const FormCadastro = () => {
             </div>
           </div>
         </div>
-
+        </div>
       </div>
     </form>
   )

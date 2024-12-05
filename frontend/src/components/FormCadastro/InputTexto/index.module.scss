@@ -28,11 +28,13 @@
     }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 700px) {
     .label{
         font-size: small;
     }
     .input{
         font-size: small;
+        height: 40px;
+        
     }
 }

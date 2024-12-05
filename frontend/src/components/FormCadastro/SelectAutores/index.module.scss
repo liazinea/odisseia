@@ -15,16 +15,7 @@
     }
 }
 
-.select{
-    border-radius: 15px;
-    width: 100%;
-    resize: none;
-    background-color: $bege-claro;
-    padding: 5px;
-    padding-left: 12px;
-    color: $cinza;
-    border-right: 12px solid transparent;
-}
+
 @media screen and (max-width: 768px) {
     .label{
         font-size: small;
@@ -33,3 +24,5 @@
         font-size: small;
     }
 }
+
+
