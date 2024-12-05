@@ -2,7 +2,7 @@ import styles from './index.module.scss';
 import { FaUpload } from "react-icons/fa6";
 import { useState } from "react";
 
-const InputCapa = ({ register, campo }) => {
+const InputCapa = ({ register, campo, errors }) => {
   const [preview, setPreview] = useState(null);
 
   const handleFileChange = (event) => {
@@ -20,6 +20,7 @@ const InputCapa = ({ register, campo }) => {
     <div className={styles.imageinput}>
       <label htmlFor={campo} className={styles.imagelabel}>
         <span>Capa do livro</span>
+        {errors?.[campo] && <span className={styles.erro}>{errors[campo].message}</span>}
         <div className={styles.imageplaceholder}>
           {preview ? (
             <img
@@ -34,7 +35,7 @@ const InputCapa = ({ register, campo }) => {
       </label>
       <input
         {...register(campo, {
-          required: true,
+          required: "*Este campo é obrigatório",
           onChange: handleFileChange,
         })}
         type="file"

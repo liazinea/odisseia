@@ -2,7 +2,7 @@ import styles from './index.module.scss';
 import { MdOutlineEdit } from "react-icons/md";
 import { IoMdTrash } from "react-icons/io";
 
-const ListaLivros = ({livro}) => { // Agora o console.log está fora das chaves
+const ListaLivros = ({livro}) => {
     return (
       <div className={styles.principal}>
         <div className={styles.body}>

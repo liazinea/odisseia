@@ -1,12 +1,18 @@
 @import '../../../styles/index.scss';
 
+.principal{
+    display: flex;
+    justify-content: space-between;
 
-
-.label{
-    font-family: Inter;
-    color: $bege-claro;
-    margin-bottom: 5px;
-    padding-left: 12px;
+    .erro{
+        color: $vermelho;
+    }
+    .label{
+        font-family: Inter;
+        color: $bege-claro;
+        margin-bottom: 5px;
+        padding-left: 12px;
+    }
 }
 
 .input{

@@ -1,26 +1,32 @@
 @import '../../../styles/index.scss';
 
-
-
-.label{
-    font-family: Inter;
-    color: $bege-claro;
-    margin-bottom: 5px;
-    padding-left: 12px;
+.principal{
+    .texto{
+        display: flex;
+        justify-content: space-between;
+    
+        .erro{
+            color: $vermelho;
+        }
+        .label{
+            font-family: Inter;
+            color: $bege-claro;
+            margin-bottom: 5px;
+            padding-left: 12px;
+        }
+    }
+    
+    .input{
+    
+        border-radius: 15px;
+        width: 100%;
+        background-color: $bege-claro;
+        padding: 5px;
+        padding-left: 12px;
+        color: $cinza;
+        box-sizing: border-box 
+    }
 }
-
-.input{
-
-    border-radius: 15px;
-    width: 100%;
-    background-color: $bege-claro;
-    padding: 5px;
-    padding-left: 12px;
-    color: $cinza;
-    box-sizing: border-box 
-}
-
-
 
 @media screen and (max-width: 768px) {
     .label{

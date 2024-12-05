@@ -4,7 +4,7 @@ import CreatableSelect from 'react-select/creatable'
 import { api } from '../../../config/api'
 import { Controller } from 'react-hook-form'
 
-const SelectAutores = ({ titulo, campo, control, autores }) => {
+const SelectAutores = ({register, titulo, campo, control, autores, errors }) => {
     const [opcoesAutores, setOpcoesAutores] = useState([])
     useEffect(() => {
         if (autores && autores.length > 0) {
@@ -31,13 +31,15 @@ const SelectAutores = ({ titulo, campo, control, autores }) => {
 
     return (
         <div>
-            <label className={styles.label} htmlFor={campo}>
-                {titulo}
-            </label>
+            <div className={styles.principal}>
+                <p className={styles.label} htmlFor={campo}>{titulo}</p>
+                {errors?.[campo] && <span className={styles.erro}>{errors[campo].message}</span>}
+            </div>
             <Controller
+                className={styles.select}
                 name={campo}
                 control={control}
-                rules={{ required: true }}
+                {...register(campo, { required: "*Este campo é obrigatório" })}
                 render={({ field: { onChange, value } }) => (
                     <CreatableSelect
                         id={campo}
