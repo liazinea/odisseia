@@ -1,7 +1,7 @@
 @import "../../styles/index.scss";
 
 .fundo {
-font-family: Inter;
+  font-family: Inter;
   background-color: $roxo-escuro;
   width: 90%;
   height: 80%;
@@ -9,6 +9,7 @@ font-family: Inter;
   border-radius: 40px;
   padding-inline: 2%;
   margin: 0 auto;
+  overflow-y: auto;
 
   .dupla {
     display: flex;
