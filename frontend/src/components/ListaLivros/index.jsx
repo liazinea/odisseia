@@ -1,6 +1,25 @@
 import styles from "./index.module.scss";
 import { MdOutlineEdit } from "react-icons/md";
 import { IoMdTrash } from "react-icons/io";
+import { formatDate } from '../../utils/formateDate';
+import React, { useEffect, useState } from 'react';
+import Modal from 'react-modal';
+import { ToastContainer, toast } from "react-toastify";
+import { api } from '../../config/api';
+import InputNumero from "../FormCadastro/InputNumero"; // Corrigido o caminho
+import InputTexto from "../FormCadastro/InputTexto"; // Corrigido o caminho
+import InputDate from "../FormCadastro/InputDate"; // Corrigido o caminho
+import SelectEstante from "../FormCadastro/SelectEstante"; // Corrigido o caminho
+import SelectGenero from "../FormCadastro/SelectGenero"; // Corrigido o caminho
+import Classificacao from "../FormCadastro/SelectClassificacao"; // Corrigido o caminho
+import InputCapa from "../FormCadastro/InputCapa"; // Corrigido o caminho
+import InputSinopse from "../FormCadastro/InputSinopse"; // Corrigido o caminho
+import SelectAutores from "../FormCadastro/SelectAutores"; // Corrigido o caminho
+import { useForm } from "react-hook-form";
+import useAutores from "../../hooks/useAutores";
+import useGeneros from "../../hooks/useGeneros";
+import BotaoCadastrar from "../FormCadastro/BotaoCadastrar";
+import FormModal from '../FormModal';
 import { formatDate } from "../../utils/formateDate";
 import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
@@ -12,6 +31,7 @@ Modal.setAppElement("#root");
 
 const ListaLivros = ({ livro, buscaLivro }) => {
   const [livroSelecionado, setLivroSelecionado] = useState(null);
+  const [modalEditarAberto, setModalEditarAberto] = useState(false);
   const [modalAberto, setModalAberto] = useState(false);
   const navigate = useNavigate();
 
@@ -24,8 +44,18 @@ const ListaLivros = ({ livro, buscaLivro }) => {
     setModalAberto(true);
   };
 
+  const showModal = (livroRelacionado) => {
+    setLivroSelecionado(livroRelacionado);
+    setModalEditarAberto(true);
+  };
+
   const fechaModal = () => {
     setModalAberto(false);
+    setLivroSelecionado(null);
+  };
+
+  const closeModal = () => {
+    setModalEditarAberto(false);
     setLivroSelecionado(null);
   };
 
@@ -34,10 +64,13 @@ const ListaLivros = ({ livro, buscaLivro }) => {
       const response = await api.delete(`/livros/${livroDeletado.id}`);
       console.log("Livro excluído com sucesso:", response.data);
       fechaModal();
+      buscaLivro(); // Atualiza a lista após exclusão
     } catch (error) {
       console.error("Erro ao excluir o livro:", error);
     }
   };
+
+
 
   useEffect(() => {
     buscaLivro();
@@ -57,17 +90,94 @@ const ListaLivros = ({ livro, buscaLivro }) => {
         <div className={styles.titulo} onClick={() => navigate(`/livros/${livro.id}`)}>{livro.nome}</div>
         <div className={styles.num}>{livro.numRegistro}</div>
         <div className={styles.opcoes}>
-          <MdOutlineEdit size={30} />
+          <div className={styles.editar} onClick={() => showModal(livro)}>
+            <MdOutlineEdit size={30} />
+          </div>
           <div className={styles.excluir} onClick={() => abreModal(livro)}>
             <IoMdTrash size={30} color="#C00F0C" />
           </div>
 
+          {/* Modal de Edição */}
+          <Modal
+            isOpen={modalEditarAberto}
+            onRequestClose={closeModal}
+            contentLabel="Confirmar Exclusão"
+            shouldCloseOnOverlayClick={false}
+            style={{
+              content: {
+                width: '400px',
+                margin: 'auto',
+                padding: '20px',
+                borderRadius: '10px',
+                textAlign: 'center',
+                overflowY: 'auto',
+                maxHeight: '80vh',
+              },
+            }}
+          >
+            <div className={`${styles.modal} ${showModal ? styles.exibir : ""}`}>
+              <div className={styles.conteudoModal}>
+                <div className={styles.header}>
+                  <h2>Editar Livro</h2>
+                  <div className={styles.close} onClick={closeModal}>
+                    X
+                  </div>
+                </div>
+                <FormModal modalEditarAberto={modalEditarAberto} livro={livro} closeModal={closeModal}/>
+              </div>
+            </div>
+          </Modal>
+
+
+          {/* Modal de Exclusão */}
           <Modal
             isOpen={modalAberto}
             onRequestClose={fechaModal}
             contentLabel="Confirmar Exclusão"
             style={{
               content: {
+                width: '400px',
+                margin: 'auto',
+                padding: '20px',
+                borderRadius: '10px',
+                textAlign: 'center',
+              },
+            }}
+          >
+            <h2>Confirmação</h2>
+            {livroSelecionado && (
+              <p>
+                Tem certeza de que deseja excluir o livro "<b>{livroSelecionado.nome}</b>"?
+              </p>
+            )}
+            <div>
+              <button
+                style={{
+                  marginRight: '10px',
+                  padding: '10px 20px',
+                  backgroundColor: '#d9534f',
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: '5px',
+                  cursor: 'pointer',
+                }}
+                onClick={() => deletarLivro(livroSelecionado)}
+              >
+                Sim, Excluir
+              </button>
+              <button
+                style={{
+                  padding: '10px 20px',
+                  backgroundColor: '#5bc0de',
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: '5px',
+                  cursor: 'pointer',
+                }}
+                onClick={fechaModal}
+              >
+                Cancelar
+              </button>
                 width: "90%", // Adaptação para dispositivos menores
                 maxWidth: "400px", // Limita a largura máxima
                 margin: "auto",
@@ -138,4 +248,5 @@ const ListaLivros = ({ livro, buscaLivro }) => {
     </div>
   );
 };
+
 export default ListaLivros;

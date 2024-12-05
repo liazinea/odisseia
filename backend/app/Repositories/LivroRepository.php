@@ -40,7 +40,7 @@ class LivroRepository implements LivroRepositoryInterface
 
     public function buscarTodos():Collection
     {
-        return Livro::all();
+        return Livro::with(['autores', 'editora', 'generos'])->get();
     }
 
     public function salvar(LivroDTO $livroDTO):Livro

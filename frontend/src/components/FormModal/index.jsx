@@ -1,32 +1,55 @@
 import styles from "./index.module.scss";
-import InputNumero from "./InputNumero";
-import InputTexto from "./InputTexto";
-import InputDate from "./InputDate";
-import SelectEstante from "./SelectEstante";
-import SelectGenero from "./SelectGenero";
+import InputNumero from "../FormCadastro/InputNumero";
+import InputTexto from "../FormCadastro//InputTexto";
+import InputDate from "../FormCadastro//InputDate";
+import SelectEstante from "../FormCadastro/SelectEstante";
+import SelectGenero from "../FormCadastro/SelectGenero";
 
-import React, { useState } from "react";
-import Classificacao from "./SelectClassificacao";
-import InputCapa from "./InputCapa";
-import InputSinopse from "./InputSinopse";
-import BotaoCadastrar from "./BotaoCadastrar";
+import React, { useEffect, useState } from "react";
+import Classificacao from "../FormCadastro/SelectClassificacao";
+import InputCapa from "../FormCadastro/InputCapa";
+import InputSinopse from "../FormCadastro/InputSinopse";
+import BotaoCadastrar from "../FormCadastro/BotaoCadastrar";
 
 import { useForm } from 'react-hook-form';
 import useAutores from "../../hooks/useAutores";
-import SelectAutores from "./SelectAutores";
+import SelectAutores from "../FormCadastro/SelectAutores";
 import useGeneros from "../../hooks/useGeneros";
 import { api } from "../../config/api";
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const FormCadastro = () => {
-  const { register, handleSubmit, control, formState: { errors }, trigger } = useForm();
+const FormModal = ({modalEditarAberto = false, livro={}, closeModal}) => {
+  
+  const { register, handleSubmit, control, formState: { errors }, trigger, setValue } = useForm();
   const { autores } = useAutores()
   const { generos } = useGeneros()
   const sucesso = () => toast("Livro cadastrado com sucesso!");
   const erro = () => toast();
   const [apiMessage, setApiMessage] = useState([]);
+  
+  useEffect(()=>{
+    if(modalEditarAberto){
+      preencheModal();
+    }
+  }, [modalEditarAberto])
+
+  console.log(livro.generos);
+
+  function preencheModal(){
+    setValue('liv_nome', livro.nome);
+    setValue('liv_isbn', livro.isbn);
+    setValue('liv_numRegistro', livro.numRegistro);
+    setValue('liv_edicao', livro.edicao);
+    setValue('liv_qtdPaginas', livro.qtdPaginas);
+    setValue('liv_dataPubli', livro.dataPubli);
+    //setValue('liv_editora', livro.editora.nome);
+    setValue('liv_localizacao', livro.localizacao);
+    setValue('liv_classIndicativa', livro.classIndicativa);
+    setValue('liv_sinopse', livro.sinopse);
+    setValue('liv_capa', livro.capa);
+  };
   const onSubmit = async (data) => {
     console.log(setApiMessage)
     const formData = new FormData()
@@ -50,20 +73,35 @@ const FormCadastro = () => {
         formData.append(key, value);
       }
     })
-    try {
-      const response = await api.post('/livros', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      sucesso();
-    } catch (error) {
-      setApiMessage(error.response.data.errors);
-      erro('Erro ao enviar dados');
-      scrollToTop()
-      console.error('Erro ao enviar dados:', error)
-    }
+    if(modalEditarAberto){
+      try {
+        await api.put(`/livros/${livro.id}`, formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        sucesso();
+        closeModal();
+      } catch (error) {
+        setApiMessage(error.response.data.errors);
+        erro('Erro ao enviar dados');
+        console.error("Erro ao editar livro:", error.response.data);
+      }
+    }else{
+      try {
+        const response = await api.post('/livros', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        sucesso();
+      } catch (error) {
+        setApiMessage(error.response.data.errors);
+        erro('Erro ao enviar dados');
+        scrollToTop()
+        console.error('Erro ao enviar dados:', error)
+      }
+      }
   }
+  console.log('autores',livro);
 
   return (
 
@@ -76,6 +114,7 @@ const FormCadastro = () => {
         }
         onSubmit(data);
       })}
+      className={styles.fomrulario}
     >
       <ToastContainer />
       <div className={styles.fundo}>
@@ -138,10 +177,12 @@ const FormCadastro = () => {
         <div className={styles.dupla}>
           <div className={styles.esquerdo}>
             <InputTexto errorsApi={apiMessage.liv_editora ? apiMessage.liv_editora : null} campo={'liv_editora'} register={register} errors={errors} titulo={"Editora"} placeholder={"Digite a editora do livro"}
+              
             />
           </div>
           <div className={styles.direito}>
             <SelectAutores
+              defaultValues={livro.autores}
               errorsApi={apiMessage.liv_autores ? apiMessage.liv_autores : null}
               autores={autores} control={control} errors={errors} campo={'liv_autores'} register={register} titulo={"Autor"} placeholder={"Digite o Autor do livro"}
             />
@@ -154,7 +195,7 @@ const FormCadastro = () => {
             />
           </div>
           <div className={styles.direito}>
-            <SelectGenero errorsApi={apiMessage.liv_generos ? apiMessage.liv_generos : null} generos={generos} errors={errors} control={control} campo={'liv_generos'} register={register} titulo={"Gênero"}
+            <SelectGenero defaultValues={livro.generos} errorsApi={apiMessage.liv_generos ? apiMessage.liv_generos : null} generos={generos} errors={errors} control={control} campo={'liv_generos'} register={register} titulo={"Gênero"}
             />
           </div>
         </div>
@@ -176,7 +217,9 @@ const FormCadastro = () => {
             <div className={styles.capa}>
               <InputCapa errorsApi={apiMessage.liv_capa ? apiMessage.liv_capa : null} campo={'liv_capa'} register={register} titulo={"Capa"} errors={errors}
               />
-              <BotaoCadastrar className={styles.btn} texto={"Cadastrar"}/>
+              <div className={styles.botao}>
+                <BotaoCadastrar className={styles.btn} texto="Atualizar"/>
+              </div>
             </div>
           </div>
         </div>
@@ -184,4 +227,4 @@ const FormCadastro = () => {
     </form>
   )
 }
-export default FormCadastro;
+export default FormModal;
