@@ -1,5 +1,140 @@
 @import '../../styles/index.scss';
-
+ 
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.3s ease-in-out;
+  
+    .conteudoModal {
+      background: $roxo-escuro;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 800px;
+      width: 90%;
+      max-height: 80vh;
+      transition: max-height 0.3s ease-in-out;
+  
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+  
+        h2 {
+          margin: 0;
+          font-size: 24px;
+          color: white;
+        }
+  
+        .close:hover {
+          color: #ccc;
+        }
+      }
+  
+      .body {
+        margin-top: 20px;
+        max-height: 60vh;
+        overflow-y: auto;
+        padding: 15px;
+  
+        .dupla {
+          display: flex;
+          justify-content: space-between;
+  
+          .esquerdo, 
+          .direito {
+            width: 48%;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+          }
+        }
+  
+        .ultimaDupla {
+          display: flex;
+          justify-content: space-between;
+          margin-block: 10px;
+          margin-bottom: 25px;
+          width: 100%;
+  
+          .classSinopse {
+            .classificacao {
+              margin-bottom: 25px;
+              width: 90%;
+            }
+            .sinopse {
+              height: 100%;
+            }
+          }
+        }
+  
+        .centraliza {
+          display: flex;
+          justify-content: center;
+  
+          .btn:hover {
+            background-color: #0056b3;
+          }
+        }
+      }
+    }
+  
+    &.exibir {
+      display: flex;
+      opacity: 1;
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .modal{
+      .conteudoModal {
+        width: 100%;
+        padding: 15px;
+      }
+  
+      .body {
+        .dupla,
+        .ultimaDupla {
+          flex-direction: column;
+          
+          .esquerdo,
+          .direito {
+            width: 100% !important;
+            margin-bottom: 10px;
+          }
+        }
+      }
+      .classSinopse {
+        .classificacao {
+          margin-bottom: 25px;
+          width: 100% !important;
+        }
+        .sinopse {
+          height: 100%;
+        }
+      }
+      .header {
+        h2 {
+          font-size: 20px;
+        }
+      }
+  
+      .close {
+        font-size: 16px;
+      }
+  
+      .btn {
+        padding: 15px 20px;
+        font-size: 18px;
+      }
+    }
+  }
 .principal{
     font-size: 16px;
     
@@ -40,6 +175,10 @@
                 border: 1px solid $preto;
                 border-radius: 20px;
                 padding: 5px 15px;
+            }
+
+            .editar{
+                cursor: pointer;
             }
 
             .excluir{
