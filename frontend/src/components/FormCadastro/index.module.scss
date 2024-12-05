@@ -7,7 +7,7 @@ font-family: Inter;
   height: 80%;
   padding-block: 15px;
   border-radius: 40px;
-  padding-right: 20px;
+  padding-inline: 2%;
   margin: 0 auto;
 
   .dupla {
@@ -64,7 +64,7 @@ font-family: Inter;
         }
     }
   }
-  @media screen and (max-width: 576px){
+  @media screen and (max-width: 700px){
     .fundo{
       width: 80%;
     }.dupla{

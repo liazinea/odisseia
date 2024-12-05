@@ -29,3 +29,29 @@
     vertical-align: baseline;
     font-family: Poppins, sans-serif;
 }
+.react-select__control {
+background-color: $bege-claro !important;
+border-radius: 15px !important;
+box-shadow: none !important;
+}
+.react-select__placeholder {
+    color: $cinza !important;
+    border: none; 
+}
+.react-select__dropdown-indicator{
+    color: $cinza !important;
+    border: none; /* Remove qualquer borda */
+    background: none;
+}
+.react-select__indicator-separator {
+    display: none; /* Remove o separador */
+}
+
+
+
+@media (max-width: 790px) {
+    .react-select__placeholder {
+        font-size: small;
+        padding: 0;
+    }
+}
