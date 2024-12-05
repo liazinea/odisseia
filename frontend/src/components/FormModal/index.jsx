@@ -218,7 +218,7 @@ const FormModal = ({modalEditarAberto = false, livro={}, closeModal}) => {
               <InputCapa errorsApi={apiMessage.liv_capa ? apiMessage.liv_capa : null} campo={'liv_capa'} register={register} titulo={"Capa"} errors={errors}
               />
               <div className={styles.botao}>
-                <BotaoCadastrar className={styles.btn} />
+                <BotaoCadastrar className={styles.btn} texto="Atualizar"/>
               </div>
             </div>
           </div>

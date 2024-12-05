@@ -176,7 +176,7 @@ const FormCadastro = () => {
             <div className={styles.capa}>
               <InputCapa errorsApi={apiMessage.liv_capa ? apiMessage.liv_capa : null} campo={'liv_capa'} register={register} titulo={"Capa"} errors={errors}
               />
-              <BotaoCadastrar className={styles.btn} />
+              <BotaoCadastrar className={styles.btn} texto={"Cadastrar"}/>
             </div>
           </div>
         </div>

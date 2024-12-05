@@ -2,10 +2,10 @@ import styles from './index.module.scss';
 
 import React from 'react'
 
-const BotaoCadastrar = () => {
+const BotaoCadastrar = ({texto}) => {
   return (
     <div>
-      <button type="submit" className={styles.btn}>Cadastrar</button>
+      <button type="submit" className={styles.btn}>{texto}</button>
     </div>
   )
 }   
