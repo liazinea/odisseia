@@ -54,8 +54,8 @@ const SelectAutores = ({ register, titulo, campo, control, autores, errors, erro
                         id={campo}
                         isMulti
                         options={opcoesAutores}
-                        placeholder="Selecione ou adicione autores"
                         classNamePrefix="react-select"
+                        placeholder="Selecione os autores"
                         onChange={(selected) => {
                             onChange(selected ? selected.map((option) => option.value) : [])
                         }}

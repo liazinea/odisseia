@@ -54,7 +54,7 @@ return (
                   id={campo}
                   isMulti
                   options={opcoesGeneros}
-                  placeholder="Selecione ou adicione generos"
+                  placeholder="Selecione generos"
                   classNamePrefix="react-select"
                   onChange={(selected) => {
                       onChange(selected ? selected.map((option) => option.value) : [])

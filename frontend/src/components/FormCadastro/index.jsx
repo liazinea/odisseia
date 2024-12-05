@@ -180,7 +180,7 @@ const FormCadastro = () => {
             </div>
           </div>
         </div>
-
+        </div>
       </div>
     </form>
   )
