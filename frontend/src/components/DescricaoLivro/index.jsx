@@ -13,8 +13,7 @@ const DescricaoLivro = ({
   capa,
   sinopse,
   classIndicativa,
-  autor,
-  quantidadeLivros,
+  autores = [],
   generos = [],
 }) => {
   const [buttonSize, setButtonSize] = useState("large");

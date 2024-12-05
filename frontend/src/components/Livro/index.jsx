@@ -8,22 +8,20 @@ const Livro = ({ livro }) => {
     <div className={styles.livro}>
       <div className={styles.descLivro}>
         <DescricaoLivro
-          titulo={livro.titulo}
-          subtitulo={livro.subtitulo}
+          titulo={livro.nome}
           capa={livro.capa}
           sinopse={livro.sinopse}
           classIndicativa={livro.classIndicativa}
-          autor={livro.autor}
-          quantidadeLivros={livro.quantidadeLivros}
+          autores={livro.autores}
           generos={livro.generos}
         />
       </div>
       <div className={styles.infoAdicional}>
         <InfoAdicionais
-          paginas={livro.paginas}
+          paginas={livro.qtdPaginas}
           edicao={livro.edicao}
           editora={livro.editora}
-          data={livro.dataPublicacao}
+          data={livro.dataPubli}
         />
       </div>
     </div>
