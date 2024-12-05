@@ -10,8 +10,7 @@ const Paths = () => {
             <BrowserRouter>
                 <Routes>
                     <Route path={'/t'} element={<Teste />}/>
-                    <Route path={'/LivrosCadastrados'} element={<LivrosCadastrados />}/>
-                    <Route path='/Livros' element={<InfoLivro/>}/>
+                    <Route path='/Livros' element={<LivrosCadastrados/>}/>
                     <Route path='/' element={<CadastroLivro/>}/>
                 </Routes>
             </BrowserRouter>
