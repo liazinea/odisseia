@@ -2,30 +2,12 @@ import styles from "./index.module.scss";
 import { MdOutlineEdit } from "react-icons/md";
 import { IoMdTrash } from "react-icons/io";
 import { formatDate } from '../../utils/formateDate';
-import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
-import { ToastContainer, toast } from "react-toastify";
 import { api } from '../../config/api';
-import InputNumero from "../FormCadastro/InputNumero"; // Corrigido o caminho
-import InputTexto from "../FormCadastro/InputTexto"; // Corrigido o caminho
-import InputDate from "../FormCadastro/InputDate"; // Corrigido o caminho
-import SelectEstante from "../FormCadastro/SelectEstante"; // Corrigido o caminho
-import SelectGenero from "../FormCadastro/SelectGenero"; // Corrigido o caminho
-import Classificacao from "../FormCadastro/SelectClassificacao"; // Corrigido o caminho
-import InputCapa from "../FormCadastro/InputCapa"; // Corrigido o caminho
-import InputSinopse from "../FormCadastro/InputSinopse"; // Corrigido o caminho
-import SelectAutores from "../FormCadastro/SelectAutores"; // Corrigido o caminho
-import { useForm } from "react-hook-form";
-import useAutores from "../../hooks/useAutores";
-import useGeneros from "../../hooks/useGeneros";
-import BotaoCadastrar from "../FormCadastro/BotaoCadastrar";
-import FormModal from '../FormModal';
-import { formatDate } from "../../utils/formateDate";
 import React, { useEffect, useState } from "react";
-import Modal from "react-modal";
-import { api } from "../../config/api";
 import Button from "../Button";
 import { useNavigate } from "react-router-dom";
+import FormModal from '../FormModal'
 
 Modal.setAppElement("#root");
 
@@ -128,56 +110,12 @@ const ListaLivros = ({ livro, buscaLivro }) => {
             </div>
           </Modal>
 
-
-          {/* Modal de Exclusão */}
           <Modal
             isOpen={modalAberto}
             onRequestClose={fechaModal}
             contentLabel="Confirmar Exclusão"
             style={{
               content: {
-                width: '400px',
-                margin: 'auto',
-                padding: '20px',
-                borderRadius: '10px',
-                textAlign: 'center',
-              },
-            }}
-          >
-            <h2>Confirmação</h2>
-            {livroSelecionado && (
-              <p>
-                Tem certeza de que deseja excluir o livro "<b>{livroSelecionado.nome}</b>"?
-              </p>
-            )}
-            <div>
-              <button
-                style={{
-                  marginRight: '10px',
-                  padding: '10px 20px',
-                  backgroundColor: '#d9534f',
-                  color: '#fff',
-                  border: 'none',
-                  borderRadius: '5px',
-                  cursor: 'pointer',
-                }}
-                onClick={() => deletarLivro(livroSelecionado)}
-              >
-                Sim, Excluir
-              </button>
-              <button
-                style={{
-                  padding: '10px 20px',
-                  backgroundColor: '#5bc0de',
-                  color: '#fff',
-                  border: 'none',
-                  borderRadius: '5px',
-                  cursor: 'pointer',
-                }}
-                onClick={fechaModal}
-              >
-                Cancelar
-              </button>
                 width: "90%", // Adaptação para dispositivos menores
                 maxWidth: "400px", // Limita a largura máxima
                 margin: "auto",
@@ -245,7 +183,7 @@ const ListaLivros = ({ livro, buscaLivro }) => {
           </Modal>
         </div>
       </div>
-    </div>
+      </div>
   );
 };
 
