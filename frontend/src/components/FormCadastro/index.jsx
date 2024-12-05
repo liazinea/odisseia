@@ -26,9 +26,11 @@ const FormCadastro = () => {
   const {generos} = useGeneros()
   const sucesso = () => toast("Livro cadastrado com sucesso!");
   const erro = () => toast();
+  const [apiMessage, setApiMessage] = useState([]);
   const onSubmit = async (data) =>{
-
+    console.log(setApiMessage)
     const formData = new FormData()
+
 
     Object.entries(data).forEach(([key, value]) => {
       if (Array.isArray(value)) {
@@ -50,8 +52,9 @@ const FormCadastro = () => {
       });
       sucesso();
     } catch (error) {
+      setApiMessage(error.response.data.errors);
       erro('Erro ao enviar dados');
-      console.error('Erro ao enviar dados:', error.response.data)
+      console.error('Erro ao enviar dados:', error.response.data.message)
     }
   }
 
@@ -77,6 +80,7 @@ const FormCadastro = () => {
           titulo={"Título"}
           placeholder={"Digite o nome do livro"}
           errors={errors}
+          errorsApi={apiMessage.liv_nome}
         />
       </div>
       <div className={styles.direito}>
@@ -85,7 +89,8 @@ const FormCadastro = () => {
           register={register}
           titulo={"ISBN"}
           placeholder={"Digite o ISBN do livro"}
-          errors={errors}
+          errorsApi={apiMessage.liv_isbn}
+          erros={errors}
         />
       </div>
     </div>
@@ -97,6 +102,7 @@ const FormCadastro = () => {
           titulo={"Número de Registro"}
           placeholder={"Digite o número de registro do livro"}
           errors={errors}
+          errorsApi={apiMessage.liv_numRegistro}
         />
       </div>
       <div className={styles.direito}>
@@ -106,17 +112,18 @@ const FormCadastro = () => {
           titulo={"Edição"}
           placeholder={"Digite a edição do livro"}
           errors={errors}
+          errorsApi={apiMessage.liv_edicao}
         />
       </div>
     </div>
 
         <div className={styles.dupla}>
           <div className={styles.esquerdo}>
-            <InputNumero campo={'liv_qtdPaginas'} register={register} errors={errors} titulo={"Quantidade de páginas"} placeholder={"Digite o número de páginas do livro"}
+            <InputNumero  errorsApi={apiMessage.liv_qtdPaginas} campo={'liv_qtdPaginas'} register={register} errors={errors} titulo={"Quantidade de páginas"} placeholder={"Digite o número de páginas do livro"}
             />
           </div>
           <div className={styles.direito}>
-            <InputDate register={register} errors={errors} campo={'liv_dataPubli'} titulo={"Data de Publicação"} placeholder={"Digite a data de publicação do livro"}
+            <InputDate errorsApi={apiMessage.liv_qtdPaginas} register={register} errors={errors} campo={'liv_dataPubli'} titulo={"Data de Publicação"} placeholder={"Digite a data de publicação do livro"}
             />
           </div>
         </div>
@@ -161,6 +168,11 @@ const FormCadastro = () => {
             <div className={styles.capa}>
               <InputCapa campo={'liv_capa'} register={register} titulo={"Capa"} errors={errors}
               />
+              {apiMessage.liv_capa && (
+                apiMessage.liv_capa.map((mensagem) => (
+                  <div key={mensagem}>{mensagem}</div>
+                ))
+              )}
               <BotaoCadastrar className={styles.btn} />
             </div>
           </div>

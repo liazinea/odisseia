@@ -39,7 +39,7 @@ class LivroRequest extends FormRequest
     {
         return [
             'liv_isbn.required' => 'O campo ISBN é obrigatório.',
-            'liv_isbn.unique' => 'O ISBN informado já está cadastrado.',
+            'liv_isbn.unique' => 'ISBN já cadastrado.',
 
             'liv_numRegistro.required' => 'O número de registro é obrigatório.',
 

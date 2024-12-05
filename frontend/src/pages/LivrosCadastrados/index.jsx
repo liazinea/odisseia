@@ -1,6 +1,6 @@
 import ListaLivros from "../../components/ListaLivros";
 import styles from './index.module.scss';
-import Navbar from "../../components/Navbar";
+import Navbar from "../../components/NavbarAdm";
 import HeaderPagina from "../../components/HeaderPagina";
 import Footer from "../../components/Footer";
 import useLivros from "../../hooks/useLivros";
