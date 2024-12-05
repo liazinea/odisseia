@@ -13,6 +13,7 @@ const DescricaoLivro = ({
   capa,
   sinopse,
   classIndicativa,
+  quantidadeLivros = 1,
   autores = [],
   generos = [],
 }) => {
@@ -59,7 +60,7 @@ const DescricaoLivro = ({
           <TituloDescricao
             titulo={titulo}
             subtitulo={subtitulo}
-            autor={autor}
+            autor={autores}
           />
           <div className={styles.generosLivro}>
             {generos.map((genero) => (

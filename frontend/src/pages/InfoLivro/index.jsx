@@ -11,7 +11,6 @@ const InfoLivro = () => {
   const {id} = useParams()
   const {livro} = useLivro(id)
 
-
   return (
     <>
       <Navbar />
