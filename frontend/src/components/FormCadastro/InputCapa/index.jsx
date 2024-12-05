@@ -2,7 +2,7 @@ import styles from './index.module.scss';
 import { FaUpload } from "react-icons/fa6";
 import { useState } from "react";
 
-const InputCapa = ({ register, campo, errors }) => {
+const InputCapa = ({ register, campo, errors, errorsApi }) => {
   const [preview, setPreview] = useState(null);
 
   const handleFileChange = (event) => {
@@ -21,6 +21,17 @@ const InputCapa = ({ register, campo, errors }) => {
       <label htmlFor={campo} className={styles.imagelabel}>
         <span>Capa do livro</span>
         {errors?.[campo] && <span className={styles.erro}>{errors[campo].message}</span>}
+        {
+          typeof errorsApi == 'string' ? (
+            <span className={styles.erro}>{errorsApi}</span>
+          ) : (
+            errorsApi && Array.isArray(errorsApi) && errorsApi.map((erroApi) => (
+              <span className={styles.erro} key={erroApi}>
+                {erroApi}
+              </span>
+            ))
+          )
+        }
         <div className={styles.imageplaceholder}>
           {preview ? (
             <img

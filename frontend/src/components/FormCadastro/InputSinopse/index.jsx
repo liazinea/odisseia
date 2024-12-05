@@ -2,7 +2,7 @@ import styles from './index.module.scss';
 
 import React from 'react'
 
-const InputSinopse = ({ titulo, placeholder, register, campo, errors}) => {
+const InputSinopse = ({ titulo, placeholder, register, campo, errors, errorsApi}) => {
 
   return (
     <div>

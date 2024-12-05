@@ -4,7 +4,7 @@ import CreatableSelect from 'react-select/creatable'
 import { api } from '../../../config/api'
 import { Controller } from 'react-hook-form'
 
-const SelectEstante = ({ titulo, campo, register, control, generos, errors}) => {
+const SelectEstante = ({ titulo, campo, register, control, generos, errors, errorsApi}) => {
   const [opcoesGeneros, setOpcoesGeneros] = useState()
 
   useEffect(() => {
@@ -35,6 +35,15 @@ return (
         <div className={styles.principal}>
             <p className={styles.label} htmlFor={campo}>{titulo}</p>
             {errors?.[campo] && <span className={styles.erro}>{errors[campo].message}</span>}
+            {  typeof errorsApi == 'string' ? (
+            <span className={styles.erro}>{errorsApi}</span>
+          ) : (
+            errorsApi && Array.isArray(errorsApi) && errorsApi.map((erroApi) => (
+              <span className={styles.erro} key={erroApi}>
+                {erroApi}
+              </span>
+            ))
+          )}
         </div>
       <Controller
           name={campo}

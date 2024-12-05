@@ -30,6 +30,12 @@ const FormCadastro = () => {
   const onSubmit = async (data) => {
     console.log(setApiMessage)
     const formData = new FormData()
+    const scrollToTop = () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth', 
+      });
+    };
 
 
     Object.entries(data).forEach(([key, value]) => {
@@ -54,6 +60,7 @@ const FormCadastro = () => {
     } catch (error) {
       setApiMessage(error.response.data.errors);
       erro('Erro ao enviar dados');
+      scrollToTop()
       console.error('Erro ao enviar dados:', error)
     }
   }
