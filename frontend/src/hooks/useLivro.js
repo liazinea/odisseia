@@ -6,11 +6,12 @@ function useLivro(id){
     useEffect(() =>{
         const buscaLivro = async () => {
             const response = await api.get(`/livros/${id}`)
-            setLivro(response.data.livro.data)
+            setLivro(response.data.livro)
+            console.log(response.data.livro);            
         }
         buscaLivro()
     },[])
-
+    console.log("useLivro", livro);
     return {livro}
 }
 export default useLivro

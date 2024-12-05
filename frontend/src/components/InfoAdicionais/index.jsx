@@ -7,12 +7,13 @@ import { RiBookLine } from "react-icons/ri";
 import { LuCalendar } from "react-icons/lu";
 
 const InfoAdicionais = ({
-  paginas = "Não informado",
-  edicao = "Não especificada",
-  editora = "Não informada",
-  data = "Não informada",
+  paginas,
+  edicao,
+  editora = {},
+  data,
 }) => {
-  return (
+
+    return (
     <div className={styles.container}>
       <h3 className={styles.titulo}>Informações Adicionais:</h3>
 
@@ -34,7 +35,7 @@ const InfoAdicionais = ({
         <TextoIcon
           nome="Editora:"
           icon={<RiBookLine />}
-          descricao={editora}
+          descricao={editora.nome}
           ariaLabel="Editora do livro"
         />
 

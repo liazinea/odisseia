@@ -18,7 +18,7 @@ class LivroResource extends JsonResource
             'qtdPaginas' => $this->liv_qtdPaginas,
             'dataPubli' => $this->liv_dataPubli,
             'edicao' => $this->liv_edicao,
-            'classificacaoIndicativa' => $this->liv_classificacaoIndicativa,
+            'classificacaoIndicativa' => $this->liv_classIndicativa,
             'localizacao' => $this->liv_localizacao,
             'sinopse' => $this->liv_sinopse,
             'capa' => $this->liv_capa,

@@ -20,7 +20,7 @@ const InputNumero = ({ register, campo, errors, errorsApi, titulo, placeholder }
               </span>
             ))
           )
-        }r
+        }
       </div>
       <input
         {...register(campo, { required: "*Este campo é obrigatório" })}

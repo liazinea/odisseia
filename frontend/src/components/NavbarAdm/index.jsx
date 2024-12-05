@@ -66,13 +66,13 @@ const Navbar = () => {
             <Link to="/Livros">Livros</Link>
           </li>
           <li>
-            <Link to="/CadastroLivro">Cadastrar Livros</Link>
+            <Link to="/">Cadastrar Livros</Link>
           </li>
           <li>
-            <Link to="/#">Gêneros</Link>
+            <Link to="/">Gêneros</Link>
           </li>
           <li>
-            <Link to="/#">Em breve</Link>
+            <Link to="/">Em breve</Link>
           </li>
         </ul>
 
