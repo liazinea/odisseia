@@ -1,0 +1,157 @@
+@use "src/styles/cores/cores" as cor;
+
+.modal {
+  display: none; /* Oculto por padrão */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+  z-index: 9999; /* Garante que o modal fique acima de outros elementos */
+  transition: opacity 0.3s ease-in-out; /* Animação para exibição suave */
+}
+
+.exibir {
+  display: flex; /* Exibe o modal quando necessário */
+  opacity: 1;
+}
+
+.conteudoModal {
+  background: cor.$roxo-escuro;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 800px;
+  width: 90%;
+  max-height: 80vh; /* Limita a altura do modal */
+  overflow-y: auto; /* Ativa rolagem se o conteúdo for maior */
+  transition: max-height 0.3s ease-in-out;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 24px; /* Tamanho de fonte maior */
+  color: white;
+}
+
+
+.close {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #ccc; /* Adiciona uma cor de hover ao botão de fechar */
+}
+
+.body {
+  margin-top: 20px;
+  max-height: 60vh; /* Limita a altura do corpo do modal */
+  overflow-y: auto; /* Adiciona a rolagem vertical ao conteúdo */
+  padding: 15px;
+}
+
+.dupla {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.esquerdo,
+.direito {
+  width: 48%;
+  box-sizing: border-box;
+}
+
+.ultimaDupla {
+  display: flex;
+  justify-content: space-between;
+}
+
+.centraliza {
+  display: flex;
+  justify-content: center;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+
+  .conteudoModal {
+    max-height: 80vh;
+    width: 95%; /* Ajusta a largura em telas menores */
+  }
+
+  .dupla,
+  .ultimaDupla {
+    flex-direction: column;
+  }
+
+  .esquerdo,
+  .direito {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .body {
+    margin-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .btn {
+    padding: 15px 25px;
+    font-size: 18px;
+  }
+
+  .header h2 {
+    font-size: 22px;
+  }
+
+  .close {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 576px) {
+  .conteudoModal {
+    width: 95%;
+    padding: 15px;
+  }
+
+  .btn {
+    padding: 15px 20px;
+    font-size: 18px;
+  }
+
+  .header h2 {
+    font-size: 20px;
+  }
+
+  .close {
+    font-size: 16px;
+  }
+
+  .dupla,
+  .ultimaDupla {
+    flex-direction: column;
+  }
+
+  .esquerdo,
+  .direito {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}

@@ -1,15 +1,31 @@
-import React from "react";
-import Livro from "../../components/Livro";
-import FormCadastro from "../../components/FormCadastro";
+import React, { useState } from "react";
+import ModalEditarLivro from "../../components/ModalEditar";
 
-const App = () => {
-  
+const Teste = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [livroId, setLivroId] = useState(null);
+
+  const openModal = (id) => {
+    setLivroId(id);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setLivroId(null);
+  };
+
   return (
-    <>
-    <FormCadastro/>
-    </>
+    <div>
+      <button onClick={() => openModal(1)}>Editar Livro</button>{" "}
+      {/* Exemplo de abertura do modal */}
+      <ModalEditarLivro
+        showModal={showModal}
+        onClose={closeModal}
+        livroId={livroId}
+      />
+    </div>
   );
-
 };
 
-export default App;
+export default Teste;
