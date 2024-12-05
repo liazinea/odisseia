@@ -6,12 +6,18 @@ import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { api } from "../../config/api";
 import Button from "../Button";
+import { useNavigate } from "react-router-dom";
 
 Modal.setAppElement("#root");
 
 const ListaLivros = ({ livro, buscaLivro }) => {
   const [livroSelecionado, setLivroSelecionado] = useState(null);
   const [modalAberto, setModalAberto] = useState(false);
+  const navigate = useNavigate();
+
+  /*const onClickDiv = (id) =>{
+    navigate(`/livros/${id}`)
+  }*/
 
   const abreModal = (livroRelacionado) => {
     setLivroSelecionado(livroRelacionado);
@@ -48,7 +54,7 @@ const ListaLivros = ({ livro, buscaLivro }) => {
             alt="Capa do Livro"
           />
         </div>
-        <div className={styles.titulo}>{livro.nome}</div>
+        <div className={styles.titulo} onClick={() => navigate(`/livros/${livro.id}`)}>{livro.nome}</div>
         <div className={styles.num}>{livro.numRegistro}</div>
         <div className={styles.opcoes}>
           <MdOutlineEdit size={30} />

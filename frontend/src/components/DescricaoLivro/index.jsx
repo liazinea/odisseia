@@ -9,14 +9,14 @@ import PropTypes from "prop-types";
 
 const DescricaoLivro = ({
   titulo,
-  subtitulo,
   capa,
   sinopse,
   classIndicativa,
-  quantidadeLivros = 1,
+  quantidadeLivros,
   autores = [],
   generos = [],
-}) => {
+}) => {  
+
   const [buttonSize, setButtonSize] = useState("large");
   const [isAbove520px, setIsAbove520px] = useState(window.innerWidth > 520);
 
@@ -59,20 +59,20 @@ const DescricaoLivro = ({
         <div className={styles.infoLivro}>
           <TituloDescricao
             titulo={titulo}
-            subtitulo={subtitulo}
-            autor={autores}
+            autores={autores}
           />
           <div className={styles.generosLivro}>
-            {generos.map((genero) => (
-              <Button
-                key={genero}
-                variant="primary"
-                size={buttonSize}
-                aria-label={`Gênero: ${genero}`}
-              >
-                {genero}
-              </Button>
-            ))}
+          {generos.map((genero, index) => (
+            <Button
+              key={index} 
+              variant="primary"
+              size={buttonSize}
+              aria-label={`Gênero: ${genero.nome}`}
+            >
+              {genero.nome}
+            </Button>
+          ))}
+          
           </div>
 
           {/* Renderiza a segunda div de quantidade apenas em telas menores ou iguais a 520px */}

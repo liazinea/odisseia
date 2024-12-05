@@ -15,6 +15,7 @@ const ClassificacaoIndicativa = ({ rating }) => {
   const color = colors[rating] || "#080500"; // Preto como padrão
   const displayRating = rating === "Livre" ? "L" : rating; // Exibir "L" se for "Livre"
 
+  console.log('classificacao',rating);
   return (
     <div className={styles.container}>
       <div
