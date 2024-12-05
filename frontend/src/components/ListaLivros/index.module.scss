@@ -13,7 +13,7 @@
         align-items: center;
     
         .data{
-            width: 15%;
+            width: 20%;
         }
         .capa{
             width: 15%;
@@ -25,10 +25,10 @@
             }
         }
         .titulo{
-            width: 40%;
+            width: 30%;
         }
         .num{
-            width: 15%;
+            width: 20%;
         }
         .opcoes{
             width: 15%;
@@ -43,4 +43,50 @@
             }
         }
     }    
+}
+
+@media screen and (max-width: 992px) and (min-width: 768px) {
+    .principal{
+        .body{
+            .data{
+                width: 25%;
+            }
+            .capa{
+                display: none;
+            }
+            .titulo{
+                width: 30%;
+            }
+            .num{
+                width: 25%;
+            }
+            .opcoes{
+                width: 20%;
+            }
+        }    
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .principal{
+        
+        .body{
+            width: 992px;
+            .data{
+                width: 25%;
+            }
+            .capa{
+                display: none;
+            }
+            .titulo{
+                width: 30%;
+            }
+            .num{
+                width: 25%;
+            }
+            .opcoes{
+                width: 20%;
+            }
+        }    
+    }
 }
