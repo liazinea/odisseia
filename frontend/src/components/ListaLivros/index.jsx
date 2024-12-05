@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import { api } from '../../config/api';
 
+<<<<<<< HEAD
 Modal.setAppElement('#root');
 
 const ListaLivros = ({ livro, buscaLivro }) => {
@@ -48,6 +49,20 @@ const ListaLivros = ({ livro, buscaLivro }) => {
         <div className={styles.opcoes}>
           <MdOutlineEdit size={30} />
           <div className={styles.excluir} onClick={() => abreModal(livro)}>
+=======
+const ListaLivros = ({livro}) => {
+    return (
+      <div className={styles.principal}>
+        <div className={styles.body}>
+          <div className={styles.data}>{livro.dataPubli}</div>
+          <div className={styles.capa}>
+            <img src={`http://127.0.0.1:8000/storage/${livro.capa}`} className={styles.imagem} alt="Capa do Livro" />
+          </div>
+          <div className={styles.titulo}>{livro.nome}</div>
+          <div className={styles.num}>{livro.numRegistro}</div>
+          <div className={styles.opcoes}>
+            <MdOutlineEdit size={30} />
+>>>>>>> d2ebd2f21098b3631b9004c765bf456b7677b8de
             <IoMdTrash size={30} color="#C00F0C" />
           </div>
         </div>

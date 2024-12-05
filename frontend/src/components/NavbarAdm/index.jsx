@@ -63,16 +63,16 @@ const Navbar = () => {
         {/* Links principais */}
         <ul className={styles["navbar-links"]}>
           <li>
-            <Link to="/emprestimos">Empréstimos</Link>
+            <Link to="/Livros">Livros</Link>
           </li>
           <li>
-            <Link to="/cadastrar-livros">Cadastrar Livros</Link>
+            <Link to="/CadastroLivro">Cadastrar Livros</Link>
           </li>
           <li>
-            <Link to="/generos">Gêneros</Link>
+            <Link to="/#">Gêneros</Link>
           </li>
           <li>
-            <Link to="/em-breve">Em breve</Link>
+            <Link to="/#">Em breve</Link>
           </li>
         </ul>
 
