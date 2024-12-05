@@ -16,8 +16,8 @@ class LivroRequest extends FormRequest
     public function rules()
     {
         return [
-            'liv_isbn' => 'required|',
-            'liv_numRegistro' => 'required||unique:liv_livro,liv_isbn',
+            'liv_isbn' => 'required||unique:liv_livro,liv_isbn',
+            'liv_numRegistro' => 'required|',
             'liv_nome' => 'required|string|max:255',
             'liv_qtdPaginas' => 'required|integer|min:1',
             'liv_dataPubli' => 'required|date',
@@ -39,12 +39,7 @@ class LivroRequest extends FormRequest
     {
         return [
             'liv_isbn.required' => 'O campo ISBN é obrigatório.',
-<<<<<<< HEAD
-            
-=======
             'liv_isbn.unique' => 'ISBN já cadastrado.',
-
->>>>>>> d2ebd2f21098b3631b9004c765bf456b7677b8de
             'liv_numRegistro.required' => 'O número de registro é obrigatório.',
             'liv_numRegistro.unique' => 'O número de registro informado já está cadastrado.',
 

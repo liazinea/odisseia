@@ -6,7 +6,6 @@ import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import { api } from '../../config/api';
 
-<<<<<<< HEAD
 Modal.setAppElement('#root');
 
 const ListaLivros = ({ livro, buscaLivro }) => {
@@ -27,13 +26,13 @@ const ListaLivros = ({ livro, buscaLivro }) => {
     try {
       const response = await api.delete(`/livros/${livroDeletado.id}`);
       console.log('Livro excluído com sucesso:', response.data);
-      fechaModal(); 
+      fechaModal();
     } catch (error) {
       console.error('Erro ao excluir o livro:', error);
     }
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     buscaLivro()
   }, [modalAberto])
 
@@ -49,78 +48,63 @@ const ListaLivros = ({ livro, buscaLivro }) => {
         <div className={styles.opcoes}>
           <MdOutlineEdit size={30} />
           <div className={styles.excluir} onClick={() => abreModal(livro)}>
-=======
-const ListaLivros = ({livro}) => {
-    return (
-      <div className={styles.principal}>
-        <div className={styles.body}>
-          <div className={styles.data}>{livro.dataPubli}</div>
-          <div className={styles.capa}>
-            <img src={`http://127.0.0.1:8000/storage/${livro.capa}`} className={styles.imagem} alt="Capa do Livro" />
+          <IoMdTrash size={30} color="#C00F0C" />
+           
           </div>
-          <div className={styles.titulo}>{livro.nome}</div>
-          <div className={styles.num}>{livro.numRegistro}</div>
-          <div className={styles.opcoes}>
-            <MdOutlineEdit size={30} />
->>>>>>> d2ebd2f21098b3631b9004c765bf456b7677b8de
-            <IoMdTrash size={30} color="#C00F0C" />
-          </div>
+
+          <Modal
+              isOpen={modalAberto}
+              onRequestClose={fechaModal}
+              contentLabel="Confirmar Exclusão"
+              style={{
+                content: {
+                  width: '400px',
+                  margin: 'auto',
+                  padding: '20px',
+                  borderRadius: '10px',
+                  textAlign: 'center',
+                },
+              }}
+            >
+              <h2>Confirmação</h2>
+              {livroSelecionado && (
+                <p>
+                  Tem certeza de que deseja excluir o livro "<b>{livroSelecionado.nome}</b>"?
+                </p>
+              )}
+              <div>
+                <button
+                  style={{
+                    marginRight: '10px',
+                    padding: '10px 20px',
+                    backgroundColor: '#d9534f',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '5px',
+                    cursor: 'pointer',
+                  }}
+                  onClick={() => deletarLivro(livroSelecionado)}
+                >
+                  Sim, Excluir
+                </button>
+                <button
+                  style={{
+                    padding: '10px 20px',
+                    backgroundColor: '#5bc0de',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '5px',
+                    cursor: 'pointer',
+                  }}
+                  onClick={fechaModal}
+                >
+                  Cancelar
+                </button>
+              </div>
+            </Modal>
         </div>
       </div>
-
-      {/* Modal de confirmação */}
-      <Modal
-        isOpen={modalAberto}
-        onRequestClose={fechaModal}
-        contentLabel="Confirmar Exclusão"
-        style={{
-          content: {
-            width: '400px',
-            margin: 'auto',
-            padding: '20px',
-            borderRadius: '10px',
-            textAlign: 'center',
-          },
-        }}
-      >
-        <h2>Confirmação</h2>
-        {livroSelecionado && (
-          <p>
-            Tem certeza de que deseja excluir o livro "<b>{livroSelecionado.nome}</b>"?
-          </p>
-        )}
-        <div>
-          <button
-            style={{
-              marginRight: '10px',
-              padding: '10px 20px',
-              backgroundColor: '#d9534f',
-              color: '#fff',
-              border: 'none',
-              borderRadius: '5px',
-              cursor: 'pointer',
-            }}
-            onClick={() => deletarLivro(livroSelecionado)}
-          >
-            Sim, Excluir
-          </button>
-          <button
-            style={{
-              padding: '10px 20px',
-              backgroundColor: '#5bc0de',
-              color: '#fff',
-              border: 'none',
-              borderRadius: '5px',
-              cursor: 'pointer',
-            }}
-            onClick={fechaModal}
-          >
-            Cancelar
-          </button>
-        </div>
-      </Modal>
     </div>
   );
 };
-
 export default ListaLivros;

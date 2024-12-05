@@ -11,12 +11,11 @@ const Paths = () => {
                 <Routes>
                     <Route path={'/t'} element={<Teste />}/>
                     <Route path={'/LivrosCadastrados'} element={<LivrosCadastrados />}/>
-<<<<<<< HEAD
+
                     <Route path='/livrosa/:id' element={<InfoLivro/>}/>
-=======
+
                     <Route path='/Livros' element={<InfoLivro/>}/>
                     <Route path='/' element={<CadastroLivro/>}/>
->>>>>>> d2ebd2f21098b3631b9004c765bf456b7677b8de
                 </Routes>
             </BrowserRouter>
         </>

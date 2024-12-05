@@ -8,8 +8,11 @@ import { useEffect, useState } from "react";
 import { api } from "../../config/api";
 
 const LivrosCadastrados = () => {
+  
   const {livros} = useLivros()
   const [livrosBuscados, setLivrosBuscados] = useState(livros)
+  console.log(livros);
+
 
   const buscaLivro = async () =>{
     const response = await api.get(`/livros`)
