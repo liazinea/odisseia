@@ -19,7 +19,7 @@ import { useForm } from "react-hook-form";
 import useAutores from "../../hooks/useAutores";
 import useGeneros from "../../hooks/useGeneros";
 import BotaoCadastrar from "../FormCadastro/BotaoCadastrar";
-import FormCadastro from '../FormCadastro';
+import FormModal from '../FormModal';
 
 Modal.setAppElement('#root');
 
@@ -91,6 +91,7 @@ const ListaLivros = ({ livro, buscaLivro }) => {
             isOpen={modalEditarAberto}
             onRequestClose={closeModal}
             contentLabel="Confirmar Exclusão"
+            shouldCloseOnOverlayClick={false}
             style={{
               content: {
                 width: '400px',
@@ -111,7 +112,7 @@ const ListaLivros = ({ livro, buscaLivro }) => {
                     X
                   </div>
                 </div>
-                <FormCadastro modalEditarAberto={modalEditarAberto} livro={livro} closeModal={closeModal}/>
+                <FormModal modalEditarAberto={modalEditarAberto} livro={livro} closeModal={closeModal}/>
               </div>
             </div>
           </Modal>

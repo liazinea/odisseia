@@ -1,38 +1,40 @@
 @import "../../styles/index.scss";
 
 .fundo {
-font-family: Inter;
+  font-family: Inter;
   background-color: $roxo-escuro;
-  width: 90%;
+  width: 100%;
   height: 80%;
   padding-block: 15px;
   border-radius: 40px;
-  padding-inline: 2%;
   margin: 0 auto;
+  overflow-x: hidden;
+  margin-top: 20px;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 15px;
 
   .dupla {
     display: flex;
     justify-content: center;
-    gap: 50px;
+    gap: 20px;
     margin-block: 10px;
     margin-bottom: 25px;
   }
   .esquerdo {
-    width: 60%;
+    width: 58%;
   }
   .direito {
-    width: 34%;
+    width: 40%;
   }
   .ultimaDupla {
     display: flex;
-    gap: 50px;
-
-    margin-inline: 1.5%;
+    gap: 20px;
     margin-block: 10px;
     margin-bottom: 25px;
 
     .classSinopse {
-      width: 62%;
+      width: 60%;
 
       .classificacao {
         margin-bottom: 25px;
@@ -45,9 +47,14 @@ font-family: Inter;
     .centraliza {
       display: flex;
       justify-content: center;
-      width: 34%;
-
-
+      width: 40%;
+      .capa{
+        width: 80%;
+      }
+      .botao{
+        margin-left: -55px;
+        margin-top: -50px;
+      }
     }
   }
   @media screen and (max-width: 992px){
@@ -61,6 +68,11 @@ font-family: Inter;
         }
         .centraliza{
             width: 100%;
+            .botao{
+                display: flex;
+                justify-content: center;
+                margin-left: -20px;
+            }
         }
     }
   }
