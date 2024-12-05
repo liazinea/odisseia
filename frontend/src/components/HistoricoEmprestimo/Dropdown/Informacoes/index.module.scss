@@ -1,0 +1,22 @@
+@import '../../../../styles/index.scss';
+
+
+
+
+.toggleFechado{
+  visibility: hidden;
+}
+.toggleAberto{
+  visibility: visible;
+  .titulo{
+    font-size: xx-large;
+    color: $roxo-escuro;
+    font-family: Inter;
+    font-weight: 700;
+          
+    }
+  .conteudo{
+    color: $roxo-escuro;
+    font-weight: 300;
+  }
+}

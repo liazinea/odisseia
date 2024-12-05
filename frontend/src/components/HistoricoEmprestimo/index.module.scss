@@ -1,0 +1,25 @@
+@import '../../styles//index.scss';
+
+.fundo{
+    background-color: $bege-claro;
+
+
+.pesquisa{
+    justify-content: center;
+    display: flex;
+}
+.filtro{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 2%;
+    border-bottom: 2px $bege solid;
+}
+
+}
+.dropdown{
+    display: flex;
+    justify-content: center;
+    flex-direction: column; 
+
+}

@@ -1,0 +1,66 @@
+@import '../../../styles/index.scss';
+
+.alinha{
+  justify-content: center;
+  display: flex;
+}
+.principal{
+    display: flex;
+    align-items: center;
+  justify-content: space-around;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 90%;
+  height: 3rem; 
+
+    background-color: $bege-claro;
+    color: $roxo-escuro;
+    font-size: large;
+    transition: background-color 0.3s ease, color 0.3s ease-in-out;
+
+    margin-bottom: 20px;
+
+    &:hover {
+
+      border: solid $roxo-escuro 1px;
+      
+    }
+    .dataPubli{
+      text-align: center;
+    }
+    .label{
+      width: 100%;
+
+    }
+}
+.aberto{
+  display: flex;
+  align-items: center;
+justify-content: space-around;
+padding: 0.5rem 1rem;
+border-radius: 10px;
+font-weight: 500;
+cursor: pointer;
+transition: all 0.3s ease;
+width: 90%;
+height: 3rem; 
+
+  background-color: $roxo-escuro;
+  color: $bege;
+  font-size: large;
+  transition: background-color 0.3s ease, color 0.3s ease-in-out;
+
+  margin-bottom: 20px;
+
+  &:hover {
+    background-color: $roxo-escuro;
+    color: $bege;
+}
+.toggle{
+  display: flex;
+  background-color: aqua;
+}
+}
