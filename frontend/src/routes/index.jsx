@@ -11,6 +11,9 @@ const Paths = () => {
                 <Routes>
                     <Route path={'/t'} element={<Teste />}/>
                     <Route path={'/LivrosCadastrados'} element={<LivrosCadastrados />}/>
+
+                    <Route path='/livrosa/:id' element={<InfoLivro/>}/>
+
                     <Route path='/Livros' element={<InfoLivro/>}/>
                     <Route path='/' element={<CadastroLivro/>}/>
                 </Routes>

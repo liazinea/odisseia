@@ -4,10 +4,24 @@ import Navbar from "../../components/NavbarAdm";
 import HeaderPagina from "../../components/HeaderPagina";
 import Footer from "../../components/Footer";
 import useLivros from "../../hooks/useLivros";
+import { useEffect, useState } from "react";
+import { api } from "../../config/api";
 
 const LivrosCadastrados = () => {
-  const { livros } = useLivros();
+  
+  const {livros} = useLivros()
+  const [livrosBuscados, setLivrosBuscados] = useState(livros)
   console.log(livros);
+
+
+  const buscaLivro = async () =>{
+    const response = await api.get(`/livros`)
+    setLivrosBuscados(response.data.livros.data)
+  }
+
+  useEffect(()=>{
+    buscaLivro()
+  }, [])
 
   return (
     <>
@@ -21,9 +35,9 @@ const LivrosCadastrados = () => {
           <div className={styles.num}>Número de Registro</div>
           <div className={styles.opcoes}>Opções</div>
         </div>
-        {livros.map((livro) => (
+        {livrosBuscados.map((livro) => (
           <div key={livro.id}>
-            <ListaLivros livro={livro} />
+            <ListaLivros livro={livro} buscaLivro={buscaLivro}/>
           </div>
         ))}
       </div>
