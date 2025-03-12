@@ -12,6 +12,7 @@ return new class extends Migration
         Schema::create('edi_editora', function (Blueprint $table) {
             $table->id('edi_id');
             $table->string('edi_nome');
+            $table->integer('edi_status_ativo');
             $table->timestamps();
         });
     }
