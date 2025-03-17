@@ -1,0 +1,18 @@
+@import '../cores/cores';
+
+// $footer-size: 190px;
+$footer-size: 280px;
+$header-size: 64px;
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    letter-spacing: 1px;
+    border: none;
+    text-decoration: none;
+    text-transform: none;
+    &:visited {
+        color: inherit;
+    }
+}
