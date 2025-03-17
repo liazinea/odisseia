@@ -1,18 +1,36 @@
 @import './base/reset';
 
-.wrapper {
-    max-width: 1200px;
-    margin: auto;
+@font-face {
+    font-family: Inter;
+    src: local(Inter), url('./fonts/Inter.ttf');
 }
 
-html {
-    font-size: 100%;
-    scroll-padding-top: 9rem;
-    scroll-behavior: smooth;
+@font-face {
+    font-family: Poppins;
+    src: local(Poppins), url('./fonts/Poppins-Regular.ttf');
 }
 
-body {
-    min-height: 100vh;
-    display:flex;
-    flex-direction: column;
+@font-face {
+    font-family: Poppins;
+    src: local(Poppins), url('./fonts/Poppins-SemiBold.ttf');
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: Montserrat;
+    src: local(Montserrat), url('./fonts/Montserrat-VariableFont_wght.ttf');
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    letter-spacing: 1px;
+    border: none;
+    text-decoration: none;
+    text-transform: none;
+    font-family: Poppins, sans-serif;
+    &:visited {
+        color: inherit;
+    }
 }
