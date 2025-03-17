@@ -12,6 +12,7 @@ return new class extends Migration
         Schema::create('gen_genero', function (Blueprint $table) {
             $table->id('gen_id');
             $table->string('gen_nome');
+            $table->integer('gen_status_ativo');
             $table->timestamps();
         });
     }

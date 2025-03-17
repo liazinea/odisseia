@@ -12,6 +12,7 @@ return new class extends Migration
         Schema::create('aut_autor', function (Blueprint $table) {
             $table->id('aut_id');
             $table->string('aut_nome');
+            $table->integer('aut_status_ativo');
             $table->timestamps();
         });
     }
