@@ -10,8 +10,8 @@ export const Paths = () => {
         <>
             <BrowserRouter basename={"/"}>
                 <Routes>
+                    <Route index element={<Login />} />
                     <Route path={'/'} element={<PageLayout />}>
-                        <Route index element={<Login />} />
                         <Route path={'/t'} element={<Teste />}/>
                     </Route>
                     <Route path={'*'} element={<NotFound />} />
