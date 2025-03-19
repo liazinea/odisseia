@@ -10,7 +10,8 @@ class Genero extends Model
     protected $table = 'gen_genero';
     protected $primaryKey = 'gen_id';
     protected $fillable = [
-        'gen_nome'
+        'gen_nome',
+        'gen_status_ativo',
     ];
 
     public function livros(): BelongsToMany
