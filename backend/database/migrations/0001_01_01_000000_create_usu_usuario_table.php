@@ -15,7 +15,7 @@ return new class extends Migration
             $table->date('usu_dataNasc');
             $table->string('usu_email');
             $table->string('usu_senha');
-            $table->integer('usu_nivel');
+            $table->integer('usu_nivel')->default(0);
             $table->integer('usu_ra');
             $table->integer('usu_status');
             $table->rememberToken();
@@ -43,7 +43,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('usu_usuario');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
     }
