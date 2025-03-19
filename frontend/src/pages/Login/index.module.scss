@@ -1,0 +1,56 @@
+@import '../../styles/index.scss';
+
+.principal{
+    background-color: $azul-escuro;
+    display: flex;
+    overflow: hidden;
+
+    .logo{
+        height: 100vh;
+        position: relative;
+
+        .logoFundo{
+            width: 44vw;
+            min-height: 90%;
+        }
+        .logoTexto{
+            position: absolute;
+            top: 15%;
+            left: 15%;
+
+            .logoImagem{
+                width: 20vw;
+            }
+            .logoTitulo{
+                font-family: Montserrat;
+                font-size: 3.5rem;
+                color: $branco;
+                text-align: center;
+            }
+            .logoSubtitulo{
+                z-index: 1;
+                font-family: Poppins;
+                font-size: 1.3rem;
+                color: $branco;
+                text-align: center;
+            }
+        }
+    }
+    .form{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media (max-width: 992px) {
+    .principal{
+        .logo{
+            height: 100vh;
+            .logoFundo{
+                width: 50vw;
+            }
+        }
+    }
+}

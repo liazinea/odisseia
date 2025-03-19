@@ -1,3 +1,5 @@
+@import 'cores/_cores.scss';
+
 @font-face {
     font-family: Inter;
     src: local(Inter), url('./fonts/Inter.ttf');
@@ -9,7 +11,7 @@
 }
 
 @font-face {
-    font-family: Poppins;
+    font-family: 'Poppins-Semi';
     src: local(Poppins), url('./fonts/Poppins-SemiBold.ttf');
     font-weight: 600;
 }
