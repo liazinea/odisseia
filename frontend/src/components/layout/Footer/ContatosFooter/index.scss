@@ -1,0 +1,51 @@
+@use "../../../../styles/cores/cores" as color;
+
+.contato-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-direction: column;
+  text-align: center;
+
+  @media (min-width: 641px) {
+    flex-direction: row;
+    text-align: left;
+  }
+
+  .contatos {
+    font-family: "Poppins";
+    font-weight: 600;
+    color: color.$azul-escuro;
+    font-size: 24px;
+
+    @media (max-width: 800px) {
+      font-size: 20px;
+    }
+
+    @media (max-width: 640px) {
+      font-size: 18px;
+      padding-bottom: 1rem;
+    }
+
+    @media (max-width: 500px) {
+      font-size: 16px;
+    }
+  }
+
+  .lista-de-contatos {
+    width: 100%;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    @media (min-width: 641px) {
+      flex-direction: row;
+      gap: 1rem;
+    }
+  }
+}
