@@ -15,6 +15,9 @@ Route::controller(LivroController::class)->group(function(){
 
 Route::controller(AutorController::class)->group(function(){
     Route::get('/autores', 'index');
+    Route::post('/autores', 'store');
+    Route::patch('/autores/{autor}', 'delete');
+
 });
 
 Route::controller(GeneroController::class)->group(function(){
