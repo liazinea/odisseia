@@ -1,0 +1,86 @@
+@import "../../../styles/index.scss";
+
+.form {
+  width: 40vw;
+  margin-bottom: 20px;
+
+  .cardFundo {
+    min-height: 50vh;
+    padding: 30px 50px;
+    background-color: $branco-rosado;
+    border-top-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+    flex-direction: column;
+    display: flex;
+    justify-content: space-around;
+
+    .cardTitulo {
+      color: $azul-escuro;
+      text-align: center;
+      font-weight: bolder;
+      font-family: Poppins;
+      font-size: 3rem;
+    }
+
+    .botao {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-top: 35px;
+    }
+    .texto {
+      display: flex;
+      justify-content: space-around;
+      padding-top: 25px;
+      color: $azul-escuro;
+      a {
+        color: $azul-escuro;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .form {
+    width: 80vw;
+
+    .cardFundo {
+      padding: 30px 20px;
+      background-color: $branco-rosado;
+      border-top-left-radius: 40px;
+      border-bottom-right-radius: 40px;
+
+      .cardTitulo {
+        color: $azul-escuro;
+        text-align: center;
+        font-weight: bolder;
+        font-family: Poppins;
+      }
+      .botao {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 35px;
+      }
+      .texto {
+        display: flex;
+        justify-content: space-around;
+        padding-top: 25px;
+        color: $azul-escuro;
+        a {
+          color: $azul-escuro;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 576px) {
+  .form {
+    .cardFundo {
+      .texto {
+        display: block;
+        text-align: center;
+      }
+    }
+  }
+}
