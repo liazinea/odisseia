@@ -22,4 +22,8 @@ Route::controller(AutorController::class)->group(function(){
 
 Route::controller(GeneroController::class)->group(function(){
     Route::get('/generos', 'index');
+    Route::get('/generos/{genero}', 'show');
+    Route::post('/generos', 'store');
+    Route::patch('/generos/{genero}', 'delete');
+    Route::put('/generos/{genero}', 'update');
 });
