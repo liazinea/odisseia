@@ -4,96 +4,46 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
+  gap: 0px;
 
   .footer-logo-top {
     display: flex;
-    justify-content: center; // Garante centralização horizontal
-    align-items: flex-end; // Alinha os itens ao verticalmente ao final
+    justify-content: center;
+    align-items: center;
     text-align: center;
     padding: 0;
     margin: 0;
     gap: 5px;
-
     .logo-icon {
-      color: color.$azul-escuro;
-
-      @media (max-width: 800px) {
-        width: 32px;
-        height: 32px;
-      }
-
-      @media (max-width: 640px) {
-        width: 28px;
-        height: 28px;
-      }
-
-      @media (max-width: 500px) {
-        width: 24px;
-        height: 24px;
-      }
-
-      @media (max-width: 420px) {
-        width: 16px;
-        height: 16px;
-      }
+      color: color.$branco-rosado;
+      height: 40px;
+      width: 40px;
     }
 
     .logo-name {
       font-size: 36px;
       font-weight: 600;
       font-family: "Montserrat";
-      color: color.$azul-escuro;
-
-      @media (max-width: 800px) {
-        font-size: 28px;
-      }
-
-      @media (max-width: 640px) {
-        font-size: 20px;
-      }
-
-      @media (max-width: 420px) {
-        font-size: 16px;
-      }
+      color: color.$branco-rosado;
     }
   }
 
   .footer-logo-bottom {
     width: 100%;
     display: flex;
-    justify-content: center; // Alinha horizontalmente ao centro
-    padding: 0; // Remove padding para centralização
+    justify-content: center;
+    padding: 0;
     margin: 0;
     align-items: center;
 
-    @media (max-width: 800px) {
-      justify-content: center; // Garante centralização em telas menores
-    }
 
     .logo-text {
-      font-size: 18px; // Reduz o tamanho da fonte
+      font-size: 18px;
       font-family: "Poppins";
-      color: color.$azul-escuro;
+      color: color.$branco-rosado;
       font-weight: 600;
-      text-align: center; // Centraliza o texto
-      padding-left: 0; // Remove padding para evitar desalinhamento
-
-      @media (max-width: 800px) {
-        font-size: 16px;
-        padding-left: 6px;
-      }
-
-      @media (max-width: 640px) {
-        font-size: 12px;
-      }
-
-      @media (max-width: 500px) {
-        font-size: 10px;
-      }
-      @media (max-width: 420px) {
-        font-size: 8px;
-        padding-left: 0;
-      }
+      text-align: center; 
+      padding-left: 0; 
     }
   }
 }

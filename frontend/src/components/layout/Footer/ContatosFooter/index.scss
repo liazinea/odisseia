@@ -4,34 +4,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
-  flex-direction: column;
+  gap: 20px;
   text-align: center;
-
-  @media (min-width: 641px) {
-    flex-direction: row;
-    text-align: left;
-  }
 
   .contatos {
     font-family: "Poppins";
     font-weight: 600;
-    color: color.$azul-escuro;
+    color: color.$branco-rosado;
     font-size: 24px;
-
-    @media (max-width: 800px) {
-      font-size: 20px;
-    }
-
-    @media (max-width: 640px) {
-      font-size: 18px;
-      padding-bottom: 1rem;
-    }
-
-    @media (max-width: 500px) {
-      font-size: 16px;
-    }
-  }
+   }
 
   .lista-de-contatos {
     width: 100%;
@@ -39,13 +20,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
-    flex-direction: column;
-    gap: 0.5rem;
-
-    @media (min-width: 641px) {
-      flex-direction: row;
-      gap: 1rem;
-    }
+    text-align: center;
+    gap: 20px;    
   }
 }

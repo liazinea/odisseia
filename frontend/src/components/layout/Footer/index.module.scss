@@ -1,54 +1,22 @@
 @use "../../../styles/cores/_cores.scss" as color;
 
 .footer {
-  background-color: color.$marrom-laranja;
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  text-align: center;
-  padding: 1rem 0;
+  background-color: color.$cinza;
 
   .footer-container {
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 0 1rem;
+    padding: 2rem 2rem;
 
-    @media (max-width: 640px) {
-      flex-direction: column;
-      gap: 1rem;
-    }
-  }
+    .logo-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;    }
 
-  .logo-container {
-    display: flex;
-    align-items: center;
-    padding-left: 2rem;
-    width: 100%;
-    justify-content: center;
-
-    @media (min-width: 500px) {
-      width: 35%;
-      justify-content: flex-start;
-    }
-  }
-
-  .footer-content {
-    width: 100%;
-    justify-content: center;
-    display: flex;
-    align-items: center;
-
-    @media (min-width: 500px) {
-      width: 65%;
-      justify-content: flex-end;
-    }
-
-    @media (max-width: 420px) {
-      padding-right: 0;
+    .footer-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 }
