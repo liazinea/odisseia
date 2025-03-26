@@ -22,12 +22,10 @@ return new class extends Migration
             $table->string('liv_localizacao');
             $table->text('liv_sinopse');
             $table->string('liv_capa');
-            $table->integer('liv_status_ativo');
-            $table->unsignedBigInteger('emp_id');
+            $table->integer('liv_status_ativo')->default(1);
             $table->timestamps();
 
             $table->foreign('edi_id')->references('edi_id')->on('edi_editora');
-            $table->foreign('emp_ip')->references('emp_id')->on('emp_emprestimo');
         });
     }
 

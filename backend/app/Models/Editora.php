@@ -11,7 +11,8 @@ class Editora extends Model
     protected $primaryKey = 'edi_id';
 
     protected $fillable = [
-        'edi_nome'
+        'edi_nome',
+        'edi_status_ativo',
     ];
 
     public function livros(): HasMany

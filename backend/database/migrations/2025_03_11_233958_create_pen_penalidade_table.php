@@ -12,6 +12,8 @@ return new class extends Migration
         Schema::create('pen_penalidade', function (Blueprint $table) {
             $table->id('pen_id');
             $table->date('pen_data');
+            $table->unsignedBigInteger('usu_id');
+            $table->unsignedBigInteger('emp_id');
             $table->timestamps();
 
             $table->foreign('usu_id')->references('usu_id')->on('usu_usuario');

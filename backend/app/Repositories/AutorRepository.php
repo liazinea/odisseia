@@ -20,9 +20,15 @@ class AutorRepository implements AutorRepositoryInterface
     {
         return Autor::create($autorDTO->toArray());
     }
-    
+
     public function buscaPeloNome(string $nome):Autor|null
     {
         return Autor::where('aut_nome', $nome)->first();
+    }
+
+    public function deletar(Autor $autor): bool
+    {
+        $autor->aut_status_ativo = 0;
+        return $autor->save();
     }
 }

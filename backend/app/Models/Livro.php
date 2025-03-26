@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use HashContext;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Testing\Fluent\Concerns\Has;
 
 class Livro extends Model
 {
@@ -21,9 +24,14 @@ class Livro extends Model
         'liv_localizacao',
         'liv_sinopse',
         'liv_capa',
+        'liv_status_ativo',
         'edi_id',
     ];
 
+    public function emprestimo():HasOne
+    {
+        return $this->hasOne(Emprestimo::class,'emp_id');
+    }
     public function generos(): BelongsToMany
     {
         return $this->belongsToMany(
