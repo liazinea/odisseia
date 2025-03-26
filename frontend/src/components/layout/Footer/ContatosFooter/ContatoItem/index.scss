@@ -1,0 +1,40 @@
+@use "../../../../../styles/cores/cores.scss" as color;
+
+.item-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  text-align: left;
+
+
+
+  .contato-bg {
+    background-color: color.$branco-rosado;
+    min-width: 35px;
+    min-height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+
+    .svg-div {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: color.$cinza;
+
+    }
+
+  }
+
+  .contato-text {
+    font-family: Poppins;
+    font-weight: 500;
+    font-size: 12px;
+    max-width: 10rem;
+    color: color.$branco-rosado;
+    }
+}

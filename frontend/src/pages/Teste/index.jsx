@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import Footer from "../../components/layout/Footer";
 
 const Teste = () => {
   return (
-    <div>Teste</div>
-  )
-}
+    <>
+      <Footer />
+    </>
+  );
+};
 
-export default Teste
+export default Teste;
