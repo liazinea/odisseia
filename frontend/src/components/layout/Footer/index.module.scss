@@ -8,10 +8,19 @@
     justify-content: space-between;
     padding: 2rem 2rem;
 
+    @media (max-width: 679px) {
+      flex-direction: column;
+      gap: 20px;
+    }
+
     .logo-container {
       display: flex;
       align-items: center;
-      justify-content: center;    }
+      justify-content: center;
+      height: 100%;
+      width: 100%;
+      align-self: center;
+    }
 
     .footer-content {
       display: flex;

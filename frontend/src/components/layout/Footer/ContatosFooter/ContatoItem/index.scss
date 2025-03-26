@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: center;
   gap: 20px;
-  text-align: center;
+  text-align: left;
 
 
 
@@ -35,9 +35,6 @@
     font-weight: 500;
     font-size: 12px;
     max-width: 10rem;
-    display: flex;
-    align-items: center;
-    text-align: center;
     color: color.$branco-rosado;
     }
 }

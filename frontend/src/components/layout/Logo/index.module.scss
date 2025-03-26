@@ -2,14 +2,14 @@
 
 .footer-logo {
   display: flex;
-  justify-content: center;
-  flex-direction: column;
+  justify-content: center;  
+  flex-direction: column; 
   gap: 0px;
-
+  height: 100%; 
   .footer-logo-top {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; 
+    align-items: center;  
     text-align: center;
     padding: 0;
     margin: 0;
@@ -36,14 +36,14 @@
     margin: 0;
     align-items: center;
 
-
     .logo-text {
       font-size: 18px;
       font-family: "Poppins";
       color: color.$branco-rosado;
       font-weight: 600;
-      text-align: center; 
-      padding-left: 0; 
+      text-align: center;
+      padding-left: 0;
     }
   }
 }
+
