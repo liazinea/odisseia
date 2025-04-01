@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -18,8 +17,8 @@ class Usuario extends Authenticatable
     protected $fillable = [
         'usu_nome',
         'usu_dataNasc',
-        'usu_email',
-        'usu_senha',
+        'email',
+        'password',
         'usu_nivel',
         'usu_ra',
         'usu_status',

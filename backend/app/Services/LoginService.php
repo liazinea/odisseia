@@ -15,8 +15,8 @@ class LoginService
 
     public function login(LoginDTO $loginDTO):string
     {
-        if($this->autenticar($loginDTO)){
-
+        if($this->autenticar($loginDTO->toArray())){
+            return $this->geraToken(Auth::user());
         }
 
         throw new \Exception('Email ou senhas incorretos');
@@ -27,7 +27,11 @@ class LoginService
         return $this->loginRepository->autenticar($loginDTO->toArray());
     }
 
-    public function geraToken()
+    public function geraToken(Auth $usuarioAutenticado):string
     {
+        if($usuarioAutenticado->usu_nivel == 0){
+            return $this->loginRepository->geraTokenAluno($usuarioAutenticado);
+        }
+        return $this->loginRepository->geraTokenProfessorSalaDeLeitura($usuarioAutenticado);
     }
 }

@@ -7,14 +7,14 @@ class LoginDTO
     public function __construct
     (
         protected readonly string $email,
-        protected readonly string $senha
+        protected readonly string $password,
     ){}
 
     public function toArray():array
     {
         return [
-            'usu_email'=>$this->email,
-            'usu_senha'=>$this->senha
+            'email'=>$this->email,
+            'password'=>$this->password
         ];
     }
 }
