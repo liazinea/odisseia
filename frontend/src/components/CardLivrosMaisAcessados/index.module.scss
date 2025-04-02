@@ -1,0 +1,28 @@
+@use '../../styles/cores/cores' as color;
+
+.card {
+    display: flex;
+    flex-direction: column;
+    background-color: color.$laranja;
+    padding: 5vh;
+    justify-content: center;
+    max-width: 500px;
+    gap: 10px;
+    border-radius: 0px 20px 0px 20px;
+
+    .titulo {
+        text-align: center;
+    }
+
+    .paragrafo {
+        text-align: justify;
+        max-height: 200px;
+        overflow: hidden; 
+        text-overflow: ellipsis; 
+    }
+
+    .imagem {
+        display: flex;
+        justify-content: center;
+    }
+}
