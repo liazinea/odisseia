@@ -4,6 +4,8 @@ import styles from './index.module.scss'
 import {Link} from 'react-router-dom'
 
 const CardLogin = () => {
+
+  
   return (
     <div className={styles.form}>
         <div className={styles.cardFundo}>
@@ -18,7 +20,7 @@ const CardLogin = () => {
               <Link to={`/primeiro-acesso`}>
                 <p>Primeiro acesso?</p>
               </Link>
-              <Link to={`/esqueci-minha-senhaa`}>
+              <Link to={`/esqueci-minha-senha`}>
                 <p>Esqueci minha senha</p>
               </Link>
             </div>
