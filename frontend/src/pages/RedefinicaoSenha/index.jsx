@@ -1,12 +1,11 @@
-import React from 'react'
-import styles from './index.module.scss'
-import CardLogin from '../../components/Cards/CardLogin'
+import CardAcesso from '../../components/Cards/CardPrimeiroAcesso';
+import styles from './index.module.scss';
 
-const Login = () => {
+const RedefinicaoSenha = () => {
   return (
     <div className={styles.principal}>
       <div className={styles.logo}>
-        <div className={styles.logoFundo}> 
+        <div className={styles.logoFundo}></div>
         <div className={styles.logoTexto}>
           <div className={styles.centraliza}>
             <img src="/logo-odisseia.svg" alt="" className={styles.logoImagem}/>
@@ -15,14 +14,13 @@ const Login = () => {
             <h2 className={styles.logoTitulo}>Odisseia</h2>
             <p className={styles.logoSubtitulo}>E.E Ernesto Quissak</p>
           </div>
-          </div>
         </div>
       </div>
       <div className={styles.form}>
-        <CardLogin/>
+        <CardAcesso tituloCard={'Esqueci minha senha'} typeInput={'email'} nomeCampoInput={'email'} placeholder={'Digite seu e-mail institucional'} required={true} nomeBotao={'enviar'} textoBotao={'Enviar Código'}/>
       </div>
     </div>
   )
 }
 
-export default Login
+export default RedefinicaoSenha

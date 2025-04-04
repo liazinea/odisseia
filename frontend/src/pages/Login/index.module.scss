@@ -1,0 +1,125 @@
+@import '../../styles/index.scss';
+
+.principal{
+    background-color: $azul-escuro;
+    display: flex;
+    overflow: hidden;
+
+    .logo{
+        height: 100vh;
+        position: relative;
+
+        .logoFundo{
+            width: 40vw;
+            height: 100vh;
+            background-image: url('../../../public/forma-login.svg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: right;
+        }
+        .logoTexto{
+            position: fixed;
+            top: 50%;
+            left: 15%;
+            transform: translate(-50%, -50%);
+
+            .logoImagem{
+                width: 20vw;
+            }
+            .logoTitulo{
+                font-family: Montserrat;
+                font-size: 3.5rem;
+                color: $branco;
+                text-align: center;
+            }
+            .logoSubtitulo{
+                z-index: 1;
+                font-family: Poppins;
+                font-size: 1.3rem;
+                color: $branco;
+                text-align: center;
+            }
+        }
+    }
+    .form{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 992px) {
+    .principal{
+        .logo{    
+            width: 45vw;
+            .logoFundo{
+                width: 45vw;
+            }
+            .logoTexto{
+                left: 18%;
+
+                .centraliza{
+                    display: flex;
+                    justify-content: center;
+                    .logoImagem{
+                        width: 20vw;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .principal{
+        background-color: $azul-escuro;
+        display: block;
+        overflow: visible;
+        position: relative;
+        height: auto;
+        
+        .logo{
+            height: 100vh;
+            position: relative;
+    
+            .logoFundo{
+                width: 100vw;
+                max-height: 50vh;
+                background-image: url('../../../public/forma-login-mobile.svg');
+                background-position: bottom;
+                display: flex;
+                justify-content: center;
+                align-items: start;
+            }
+            .logoTexto{
+                position: relative;
+                display: flex;
+                justify-items: center;
+                align-items: center;
+                top: auto;
+                left: auto;
+                transform: none;
+                margin-top: 50px;
+                .logoTitulo{
+                    font-family: Montserrat;
+                    font-size: 2.8rem;
+                    color: $branco;
+                    text-align: center;
+                }
+                .logoSubtitulo{
+                    z-index: 1;
+                    font-family: Poppins;
+                    font-size: 1.3rem;
+                    color: $branco;
+                    text-align: center;
+                }
+            }
+        }
+        .form{
+            width: 100%;
+            position: absolute;
+            top: 25%;
+        }
+    }
+}
