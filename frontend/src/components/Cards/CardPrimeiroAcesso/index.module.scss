@@ -28,14 +28,11 @@
       justify-content: center;
       margin-top: 35px;
     }
+
     .texto {
       display: flex;
-      justify-content: space-around;
       padding-top: 25px;
       color: $azul-escuro;
-      a {
-        color: $azul-escuro;
-      }
     }
   }
 }

@@ -25,7 +25,7 @@ const CardAcesso = ({
         <div className={styles.botao}>
           <BotaoForm type={"submit"} nomeBotao={nomeBotao} texto={textoBotao} />
         </div>
-        <Link to={`/`}>
+        <Link className={styles.texto} to={`/`}>
           <p>Voltar para Login</p>
         </Link>
       </form>

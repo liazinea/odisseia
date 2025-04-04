@@ -19,7 +19,7 @@ const PrimeiroAcesso = () => {
         </div>
       </div>
       <div className={styles.form}>
-        <CardAcesso tituloCard={'Esqueci minha senha'} typeInput={'email'} nomeCampoInput={'email'} placeholder={'Digite seu e-mail institucional'} required={true} nomeBotao={'enviar'} textoBotao={'Enviar Código'}/>
+        <CardAcesso tituloCard={'Primeiro Acesso'} typeInput={'email'} nomeCampoInput={'email'} placeholder={'Digite seu e-mail institucional'} required={true} nomeBotao={'enviar'} textoBotao={'Enviar Código'}/>
       </div>
     </div>
   )
