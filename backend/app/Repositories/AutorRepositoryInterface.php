@@ -12,4 +12,5 @@ interface AutorRepositoryInterface
     public function buscaComPesquisa(string $param):null|Collection|Autor;
     public function buscaPeloNome(string $nome):Autor|null;
     public function salvar(AutorDTO $autorDTO):Autor;
+    public function deletar(Autor $autor):bool;
 }

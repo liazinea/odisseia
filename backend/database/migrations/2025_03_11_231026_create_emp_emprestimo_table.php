@@ -10,7 +10,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('emp_emprestimo', function (Blueprint $table) {
-            $table->id('edp_id');
+            $table->id('emp_id');
             $table->date('emp_dataInicio');
             $table->date('emp_dataFim');
             $table->integer('emp_status');

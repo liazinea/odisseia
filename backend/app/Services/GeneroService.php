@@ -14,6 +14,7 @@ class GeneroService
     )
     {}
 
+
     public function buscarTodos():null|Collection
     {
         return $this->generoRepository->buscarTodos();
@@ -30,7 +31,7 @@ class GeneroService
             if($generoNome = $this->buscaPeloNome($genero)){
                 $generos[] = $generoNome;
             }else{
-                $novoGenero = new GeneroDTO($genero);
+                $novoGenero = new GeneroDTO($genero, 1);
                 $generos[] = $this->generoRepository->salvar($novoGenero);
             }
         }

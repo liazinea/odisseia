@@ -1,0 +1,124 @@
+@use '../../../styles/cores/cores' as color;
+
+.principal{
+    background-color: color.$azul-escuro;
+    background-image: url('../../../../public/img/image.svg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: 0vh -10vh;
+    height: 70vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Poppins;   
+
+    .titulo{
+        text-align: center;
+        font-weight: 700;
+        font-size: 4rem;
+        color: color.$branco;
+    }
+    .subtitulo{
+        text-align: center;
+        font-weight: 700;
+        font-size: 4rem;
+        color: color.$laranja;
+    }
+    .paragrafo{
+        text-align: center;
+        font-weight: 700;
+        font-size: 1.5rem;
+        color: color.$branco;
+    }
+    .alinha{
+        display: flex;
+        justify-content: center;
+
+        .barra{
+            background-color: color.$branco;
+            display: flex;
+            justify-content: space-between;
+            vertical-align: center;
+            border-radius: 20px;
+            margin-top: 7%;
+            width: 70%;
+            padding: 10px;
+            padding-right: 20px;
+            padding-left: 20px;
+            
+            .pesquisa{
+                width: 100%;
+                box-shadow: 0 0 0 0;
+                border: none;
+                outline: 0;
+                background-color: color.$branco;
+            }
+
+            .icon{
+                font-size: 1.5rem;
+                color: color.$branco;
+                background-color: color.$azul-escuro;
+                padding: 12px;
+                padding-left: 27px;
+                padding-right: 27px;
+                border-radius: 18px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:992px) and (min-width: 769px){
+    .principal{
+        
+        .titulo{
+            font-size: 3rem;
+        }
+        .subtitulo{
+            font-size: 3rem;
+        }
+        .paragrafo{
+            font-size: 1.5rem;
+        }
+    }
+}
+
+@media screen and (max-width:768px) {
+    .principal{
+        height: 45vh;
+        
+        .titulo{
+            font-size: 1.5rem;
+        }
+        .subtitulo{
+            font-size: 1.5rem;
+        }
+        .paragrafo{
+            font-size: 0.7rem;
+        }
+
+        .alinha{
+    
+            .barra{
+                width: 80%;
+                padding: 8px;
+                padding-right: 15px;
+                padding-left: 15px;
+                
+                .pesquisa{
+                    font-size: 0.6rem;
+                }
+    
+                .icon{
+                    font-size: 1rem;
+                    color: color.$branco;
+                    background-color: color.$azul-escuro;
+                    padding: 10px;
+                    padding-left: 20px;
+                    padding-right: 20px;
+                    border-radius: 18px;
+                }
+            }
+        }
+    }
+}
