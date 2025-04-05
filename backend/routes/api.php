@@ -10,6 +10,8 @@ Route::controller(LoginController::class)->group(function () {
     Route::post('/login', 'autenticar');
 });
 
+Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth:sanctum');
+
 Route::controller(LivroController::class)->group(function(){
     Route::get('/livros', 'index');
     Route::post('/livros', 'store');

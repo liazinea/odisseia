@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\DTOs\LoginDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
+use Exception;
 use Illuminate\Http\JsonResponse;
-use Auth;
-use Illuminate\Http\Request;
 use App\Services\LoginService;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -30,5 +31,14 @@ class LoginController extends Controller
                 'message'=>$e->getMessage(),
             ], 400);
        }
+    }
+
+    public function logout(Request $request):JsonResponse
+    {
+        $this->loginService->logout($request->user());
+
+        return response()->json([
+            'message'=>'Logout feito com sucesso'
+        ], 200);
     }
 }
