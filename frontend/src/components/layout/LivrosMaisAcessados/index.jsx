@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './index.module.scss';
-import CardLivrosMaisAcessados from '../../CardLivrosMaisAcessados';
+import CardLivrosMaisAcessados from '../../Cards/CardLivrosMaisAcessados';
 
 const LivrosMaisAcessados = () => {
   return (
