@@ -3,7 +3,14 @@
 use App\Http\Controllers\AutorController;
 use App\Http\Controllers\GeneroController;
 use App\Http\Controllers\LivroController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
+
+Route::controller(LoginController::class)->group(function () {
+    Route::post('/login', 'autenticar');
+});
+
+Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth:sanctum');
 
 Route::controller(LivroController::class)->group(function(){
     Route::get('/livros', 'index');
