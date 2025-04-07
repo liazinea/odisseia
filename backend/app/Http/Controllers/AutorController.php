@@ -59,4 +59,9 @@ class AutorController extends Controller
             ], 500);
         }
     }
+
+    public function show(Autor $autor):JsonResponse
+    {
+        
+    }
 }

@@ -51,7 +51,7 @@ class AutorService
 
     public function deletar(Autor $autor):bool
     {
-        if($this->autorRepository->deletar($autor)) {
+        if($autor) {
             return $this->autorRepository->deletar($autor);
         }
 
