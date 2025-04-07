@@ -13,7 +13,7 @@ return new class extends Migration
             $table->id('usu_id');
             $table->string('usu_nome');
             $table->date('usu_dataNasc');
-            $table->string('email');
+            $table->string('email')->unique();
             $table->string('password');
             $table->integer('usu_nivel')->default(0);
             $table->integer('usu_ra');
