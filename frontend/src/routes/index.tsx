@@ -7,6 +7,7 @@ import Home from "../pages/Home"
 import PageLayout from "../layouts/PageLayout";
 import PrimeiroAcesso from "../pages/PrimeiroAcesso";
 import RedefinicaoSenha from "../pages/RedefinicaoSenha";
+import HomeAdm from "../pages/HomeAdm";
 
 export const Paths = () => {
     return (
@@ -17,6 +18,7 @@ export const Paths = () => {
                     <Route path={'/'} element={<PageLayout />}>
                         <Route path={'/t'} element={<Teste />}/>
                         <Route path={'/primeiro-acesso'} element={<PrimeiroAcesso />}/>
+                        <Route path={'/adm'} element={<HomeAdm />}/>
                         <Route path={'/esqueci-minha-senha'} element={<RedefinicaoSenha />}/>
                         <Route path={'/home'} element={<Home/>}/>
                     </Route>
