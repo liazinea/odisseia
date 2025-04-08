@@ -15,6 +15,7 @@ class LoginController extends Controller
     public function __construct(
         protected LoginService $loginService,
     ){}
+    
     public function autenticar(LoginRequest $request):JsonResponse
     {
        try{
@@ -24,7 +25,8 @@ class LoginController extends Controller
                         email: $request->validated('email'),
                         password: $request->validated('password')
                     )
-                )
+                    ),
+                'usuario' => Auth::user()    
             ],200);
        } catch(Exception $e){
             return response()->json([
