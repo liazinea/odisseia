@@ -11,11 +11,11 @@ Route::controller(LoginController::class)->group(function () {
 });
 
 Route::middleware('auth:sanctum')->group(function(){
-    Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth:sanctum');
+    Route::post('/logout', [LoginController::class, 'logout']);
 
     Route::controller(LivroController::class)->group(function(){
         Route::get('/livros', 'index');
-        Route::post('/livros', 'store');
+        Route::post('/livros', 'store')->midd;
         Route::delete('/livros/{livro}', 'delete');
         Route::get('/livros/{livro}', 'show');
         Route::put('/livros/{livro}', 'update');
@@ -26,6 +26,7 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::get('/autores/{autor}', 'show');
         Route::post('/autores', 'store');
         Route::patch('/autores/{autor}', 'delete');
+        Route::put('/autores/{autor}', 'update');
     });
 
     Route::controller(GeneroController::class)->group(function(){

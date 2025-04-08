@@ -47,4 +47,14 @@ class GeneroService
     {
         return $this->generoRepository->salvar($generoDTO);
     }
+
+    public function deletar(Genero $genero):bool
+    {
+        return $this->generoRepository->deletar($genero);
+    }
+
+    public function atualizar(Genero $genero, GeneroDTO $generoDTO):bool
+    {
+        return $this->generoRepository->atualizar($genero, $generoDTO);
+    }
 }

@@ -6,23 +6,25 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class GeneroRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
+    
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
-            //
+            'gen_nome'=>'required|string|max:255',
+        ];
+    }
+
+    public function messages():array
+    {
+        return [
+            'gen_nome.required'=>'É obrigatório o envio do nome do gênero.',
+            'gen_nome.string'=>'O campo deve ser do tipo string.',
+            'gen_nome.max'=>'O campo não pode ter mais de 255 caracteres.'
         ];
     }
 }
