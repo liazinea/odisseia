@@ -56,7 +56,12 @@ class AutorController extends Controller
         }catch(Exception $e){
             return response()->json([
                 'error' => $e->getMessage()
-            ], 500);
+            ], 400);
         }
+    }
+
+    public function show(Autor $autor):JsonResponse
+    {
+        
     }
 }

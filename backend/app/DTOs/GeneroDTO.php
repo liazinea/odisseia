@@ -6,7 +6,7 @@ class GeneroDTO
 {
     public function __construct(
         public readonly string $nome, 
-        public readonly int $statusAtivo, 
+        public readonly int $statusAtivo = 1, 
     )
     {}
 
