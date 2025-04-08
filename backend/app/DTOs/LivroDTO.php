@@ -16,6 +16,7 @@ class LivroDTO
         readonly string $localizacao,
         readonly string $sinopse,
         readonly ?string $capa,
+        public readonly int $statusAtivo = 1,  
         readonly array $autores,
         readonly array $generos,
     ) {}
@@ -34,6 +35,7 @@ class LivroDTO
             'localizacao' => $this->localizacao,
             'sinopse' => $this->sinopse,
             'capa' => $this->capa,
+            'status_ativo' => $this->statusAtivo
         ];
     }
 }

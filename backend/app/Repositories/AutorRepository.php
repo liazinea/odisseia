@@ -10,11 +10,13 @@ class AutorRepository implements AutorRepositoryInterface
 {
     public function buscarTodos():null|Collection
     {
-        return Autor::all();
+        return Autor::where('aut_status_ativo', '=', 1)->get();
     }
     public function buscaComPesquisa(string $param): null|Collection|Autor
     {
-        return Autor::where('aut_nome', 'like', '%' . $param . '%')->get();
+        return Autor::where('aut_nome', 'like', '%' . $param . '%')
+        ->where('aut_status_ativo', '=', 1)
+        ->get();
     }
     public function salvar(AutorDTO $autorDTO):Autor
     {
@@ -23,7 +25,9 @@ class AutorRepository implements AutorRepositoryInterface
 
     public function buscaPeloNome(string $nome):Autor|null
     {
-        return Autor::where('aut_nome', $nome)->first();
+        return Autor::where('aut_nome', $nome)
+        ->where('aut_status_ativo', '=', 1)
+        ->first();
     }
 
     public function deletar(Autor $autor): bool

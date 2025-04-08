@@ -15,7 +15,7 @@ Route::middleware('auth:sanctum')->group(function(){
 
     Route::controller(LivroController::class)->group(function(){
         Route::get('/livros', 'index');
-        Route::post('/livros', 'store')->midd;
+        Route::post('/livros', 'store');
         Route::delete('/livros/{livro}', 'delete');
         Route::get('/livros/{livro}', 'show');
         Route::put('/livros/{livro}', 'update');
