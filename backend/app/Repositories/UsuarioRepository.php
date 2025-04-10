@@ -16,7 +16,7 @@ class UsuarioRepository implements UsuarioRepositoryInterface
     public function buscaTodosComPesquisa(string $campo, string $valor):Collection
     {
         return Usuario::where($campo, 'like', "%".$valor."%")
-        ->where("usu")
+        ->where('usu_status', '=', 1)
         ->get();
     }
    

@@ -22,6 +22,10 @@ class UsuarioController extends Controller
             ], 200);
         }
 
+        return response()->json([
+            'usuarios'=> new UsuarioCollection($this->usuarioService->buscaTodos())
+        ], 200);
+
         return response()->json('receba');
     }
 }
