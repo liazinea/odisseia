@@ -5,11 +5,13 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class UsuarioResource extends ResourceCollection
+class UsuarioCollection extends ResourceCollection
 {
-    
+
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'data' => $this->collection,
+        ];
     }
 }
