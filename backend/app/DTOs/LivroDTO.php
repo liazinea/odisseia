@@ -5,20 +5,20 @@ namespace App\DTOs;
 class LivroDTO
 {
     public function __construct(
-        readonly ?string $isbn,
-        readonly string $numRegistro,
-        readonly ?string $titulo,
-        readonly int $numPaginas,
-        readonly string $dataPubli,
-        readonly int $edicao,
-        readonly int $editoraId,
-        readonly string $classIndicativa,
-        readonly string $localizacao,
-        readonly string $sinopse,
-        readonly ?string $capa,
-        public readonly int $statusAtivo = 1,  
-        readonly array $autores,
-        readonly array $generos,
+        protected ?string $isbn,
+        protected string $numRegistro,
+        protected ?string $titulo,
+        protected int $numPaginas,
+        protected $dataPubli,
+        protected int $edicao,
+        protected int $editoraId,
+        protected string $classIndicativa,
+        protected string $localizacao,
+        protected string $sinopse,
+        protected ?string $capa,
+        protected readonly int $statusAtivo = 1,
+        protected array $autores,
+        protected array $generos,
     ) {}
 
     public function toArray(): array

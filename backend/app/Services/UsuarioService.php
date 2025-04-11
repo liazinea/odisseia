@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\DTOs\UsuarioDTO;
+use App\Models\Usuario;
 use App\Repositories\UsuarioRepository;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -20,5 +22,14 @@ class UsuarioService
     public function buscaTodos():Collection
     {
         return $this->usuarioRepository->buscaTodos();
+    }
+
+    public function salvar(UsuarioDTO $usuarioDTO):Usuario
+    {
+        if($usuario = $this->usuarioRepository->salvar($usuarioDTO)) {
+            return $usuario;
+        }
+
+        throw new \Exception('Erro ao salvar usuário.');
     }
 }
