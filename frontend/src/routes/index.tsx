@@ -7,6 +7,7 @@ import Home from "../pages/Home"
 import PageLayout from "../layouts/PageLayout";
 import PrimeiroAcesso from "../pages/PrimeiroAcesso";
 import RedefinicaoSenha from "../pages/RedefinicaoSenha";
+import Generos from "../pages/Generos";
 import HomeAdm from "../pages/HomeAdm";
 
 export const Paths = () => {
@@ -21,6 +22,7 @@ export const Paths = () => {
                         <Route path={'/adm'} element={<HomeAdm />}/>
                         <Route path={'/esqueci-minha-senha'} element={<RedefinicaoSenha />}/>
                         <Route path={'/home'} element={<Home/>}/>
+                        <Route path={'/generos'} element={<Generos/>}/>
                     </Route>
                     <Route path={'*'} element={<NotFound />} />
                 </Routes>

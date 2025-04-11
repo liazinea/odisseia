@@ -1,0 +1,21 @@
+@use "../../../styles/index.scss" as color;
+
+.botao {
+  background-color: color.$laranja;
+  color: color.$azul-escuro;
+  font-weight: bold;
+  padding: 10px 50px;
+  font-size: 1.7rem;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.01);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
