@@ -13,6 +13,7 @@
   justify-content: space-around;
   background-color: color.$azul-escuro;
   color: color.$laranja;
+  padding-bottom: 5vh;
 
   .container-exibir {
     width: 100%;
@@ -50,6 +51,8 @@
       color: color.$branco;
       width: 80%;
       padding: 5vh 0;
+      font-size: 20px;
+      gap: 5px;
     }
 
     .botao {

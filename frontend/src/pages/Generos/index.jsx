@@ -5,6 +5,7 @@ import Footer from "../../components/layout/Footer";
 import styles from "./index.module.scss";
 import Button from "../../components/Botao/BotaoLaranja";
 import Input from "../../components/Inputs/Input";
+import BarraPesquisa from "../../components/layout/HeaderHome/BarraPesquisa";
 
 const Generos = () => {
   const [inputValue, setInputValue] = useState("");
@@ -21,7 +22,12 @@ const Generos = () => {
     <>
       <Navbar />
       <HeaderPagina titulo="Gêneros de Livros" />
-      <div className={styles["barra-pesquisa"]}>Navbar</div>
+      <div className={styles["barra-pesquisa"]}>
+        <BarraPesquisa
+          placeholder="Pesquise por gênero"
+          onChange={handleInputChange}
+        />
+      </div>
       <div className={styles["container-geral"]}>
         <div className={styles["container-exibir"]}>
           <div className={styles["titulo"]}>
@@ -38,7 +44,7 @@ const Generos = () => {
             <Input
               type="text"
               nomeCampo="nome"
-              placeholder="Nome do gênero"
+              placeholder="Digite o nome do gênero"
               required={true}
               onChange={handleInputChange}
             />
@@ -47,7 +53,7 @@ const Generos = () => {
             <Button
               type="button"
               nomeBotao="cadastrar"
-              texto="Cadastrar"
+              texto="Adicionar Gênero"
               onClick={handleButtonClick}
             />
           </div>

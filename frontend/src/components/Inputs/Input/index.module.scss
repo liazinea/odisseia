@@ -1,19 +1,15 @@
+@use "../../../styles/cores/cores" as color;
+
 .input {
   width: 100%;
   padding: 10px 15px;
   font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 20px;
   outline: none;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 
-  &:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-  }
-
   &::placeholder {
-    color: #aaa;
+    color: color.$cinza;
     font-style: italic;
   }
 }
