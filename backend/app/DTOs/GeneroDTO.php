@@ -6,6 +6,7 @@ class GeneroDTO
 {
     public function __construct(
         public readonly string $nome, 
+        public readonly int $statusAtivo = 1, 
     )
     {}
 
@@ -13,6 +14,7 @@ class GeneroDTO
     {
         return [
             'gen_nome' => $this->nome,
+            'gen_status_ativo' => $this->statusAtivo,
         ];
     }        
 }

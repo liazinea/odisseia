@@ -5,7 +5,8 @@ namespace App\DTOs;
 class EditoraDTO
 {
     public function __construct(
-        public readonly string $nome, 
+        public readonly string $nome,
+        public readonly int $statusAtivo = 1,  
     )
     {}
 
@@ -13,6 +14,7 @@ class EditoraDTO
     {
         return [
             'edi_nome' => $this->nome,
+            'edi_status_ativo' => $this->statusAtivo,
         ];
     }        
 }
