@@ -1,0 +1,30 @@
+@import '../../../styles/index.scss';
+
+.btn{
+  background-color: $azul-escuro;
+  font-family: Inter, sans-serif;
+  color: $branco-rosado;
+  font-size: 18px;
+  transition: background-color 0.3s ease, color 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 150px; 
+  height: 1rem; 
+  min-width: 8rem; 
+  box-sizing: border-box;
+  margin-left: 20px;
+  margin-top: 10%;
+
+
+  &:hover {
+    background-color: $laranja-claro;
+    color: $azul-escuro;
+    border: solid $laranja-claro 2px;
+  }
+}
