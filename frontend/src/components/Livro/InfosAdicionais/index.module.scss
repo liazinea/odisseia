@@ -1,0 +1,108 @@
+@import "../../../styles/index.scss";
+
+/* Estilos padrão para dispositivos grandes (desktop) */
+
+.container {
+  background-color: $azul-escuro;
+  border-radius: 0px 0px 0px 20px;
+  padding:80px;
+  color: $branco-rosado;
+  text-align: center;
+  width: 80%;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  margin-inline: 10%;
+}
+
+.titulo {
+  font-size: 24px;
+  font-weight: 700;
+  font-style: italic;
+  padding-top: 25px;
+
+}
+
+.itens {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5%;
+}
+
+/* Media Queries */
+
+/* Para telas menores que 992px */
+@media (max-width: 992px) {
+
+  .container{
+    display: grid;
+    align-items: center;
+    height: 80%;
+  }
+
+  .titulo {
+    margin-top: 10px;
+  }
+
+  .itens {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    margin-inline: 40px;
+    gap: 0%;
+  }
+}
+
+/* Para telas menores que 768px */
+@media (max-width: 768px) {
+  .titulo {
+    font-size: 16px; /* Reduzir tamanho do título */
+  }
+
+  .itens {
+    grid-template-columns: repeat(2, 1fr); /* Manter duas colunas */
+   
+  }
+
+}
+
+/* Para telas menores que 576px */
+@media (max-width: 576px) {
+  .titulo {
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .itens {
+    grid-template-columns: repeat(2, 1fr); /* Ainda duas colunas */
+    justify-items: center; /* Alinhar itens à esquerda */
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+
+  .container {
+    text-align: center;
+    display: block;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@media (max-width: 520px) {
+  .titulo {
+    font-size: 16px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .itens {
+    font-size: 12px;
+    gap: 10px;
+  }
+}

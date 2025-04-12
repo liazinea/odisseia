@@ -1,0 +1,67 @@
+@import "../../../styles/index.scss";
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  
+    @media (max-width: 1240px) {
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* Alinha verticalmente */
+      gap: 10px; /* Espaçamento entre os itens */
+      text-align: center; 
+      width: 100%;
+    }
+
+    @media (max-width: 520px) {
+      flex-direction: row; /* Organiza os itens em uma linha */
+      justify-content: center; /* Alinha horizontalmente */
+      align-items: center; /* Alinha verticalmente */
+      gap: 10px; /* Espaçamento entre os itens */
+      text-align: center; /* Garante alinhamento do texto */
+    }
+  }
+  
+  .qtd {
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    color: $azul-escuro;
+    margin-bottom: 5px; 
+
+    @media (max-width: 1240px) {
+      .qtd {
+        font-family: Inter, sans-serif;
+        font-size: 14px;
+        font-weight: 300;
+        color: $azul-escuro;
+        margin-bottom: 5px;
+      }
+    }
+
+    @media (max-width: 768px){
+      margin: 0;
+    }
+  }
+  
+  .quadrado {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Garante que o conteúdo do quadrado esteja centralizado */
+  
+    .subquad {
+      background-color: $azul-escuro;
+      padding: 10px 20px;
+      border-radius: 8px;
+    }
+  
+    .numero {
+      color: $branco-rosado;
+      font-weight: 200;
+      text-align: center;
+    }
+  }
+
+  
