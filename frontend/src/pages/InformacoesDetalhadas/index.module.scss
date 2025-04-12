@@ -3,20 +3,20 @@
     flex-direction: column;
     position: relative;
     margin: 20px;
+    .parteLaranja {
+      z-index: 10;
+      position: relative;
+    }
+    
+    /* Parte laranja (vai invadir pra cima e ficar por cima da azul) */
+    .parteAzul {
+      margin-top: -30px;
+      z-index: 2;
+      position: relative;
+    }
   }
   
   /* Parte azul (ficará por baixo) */
-  .part-azul {
-    z-index: 10;
-    position: relative;
-  }
-  
-  /* Parte laranja (vai invadir pra cima e ficar por cima da azul) */
-  .part-laranja {
-    margin-top: -60px; // invade a parte azul
-    z-index: 2;
-    position: relative;
-  }
 
 
   @media (max-width: 992px) {

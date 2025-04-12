@@ -22,10 +22,10 @@ const InformacoesDetalhadas = () => {
 
   return (
     <div className={styles.container}>
-     <div className={styles['part-azul']}>
+     <div className={styles.parteLaranja}>
       <InfosLivro livro={livro} />
       </div>
-      <div className={styles['part-laranja']}>
+      <div className={styles.parteAzul}>
       <div className={styles.infoAdicionalWrapper}>
         <InfoAdicionais
           paginas={livro.paginas}
