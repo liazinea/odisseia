@@ -27,17 +27,42 @@
 
     .tabela {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      width: 100%;
+      width: 80%;
       padding: 5vh 0;
+      gap: 5px;
+
+      .head {
+        font-weight: 600;
+        width: 100%;
+        display: flex;
+        background-color: color.$laranja;
+        border-radius: 15px;
+        padding: 2vh 5vh;
+        justify-content: center;
+        align-items: center;
+        color: color.$azul-escuro;
+
+        .nome {
+          width: 80%;
+        }
+        .opcoes {
+          width: 20%;
+          text-align: center;
+        }
+      }
+
+      .conteudo {
+        width: 100%;
+      }
     }
   }
 
   .container-cadastro {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     width: 100%;
 
