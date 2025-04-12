@@ -1,0 +1,19 @@
+@import "../../../styles/index.scss";
+
+.img{
+background-color: $azul-escuro;
+position: relative;
+overflow: hidden;
+
+}
+h1{
+    color: $branco-rosado;
+    font-family: Poppins;
+    font-size: 56px;
+    font-weight: bolder;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+}
