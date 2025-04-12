@@ -5,13 +5,13 @@ namespace App\DTOs;
 class UsuarioDTO
 {
     public function __construct(
-        protected string $nome,
-        protected string $dataNascimento,
-        protected string $email,
-        protected string $senha,
-        protected int $nivel,
-        protected string $ra,
-        protected int $status,
+        readonly string $nome,
+        readonly string $dataNascimento,
+        readonly string $email,
+        readonly string $senha,
+        readonly int $nivel,
+        readonly string $ra,
+        readonly int $status,
     ){}
 
     public function toArray():array

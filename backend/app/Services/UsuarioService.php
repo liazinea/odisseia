@@ -32,4 +32,14 @@ class UsuarioService
 
         throw new \Exception('Erro ao salvar usuário.');
     }
+
+    public function deletar(Usuario $usuario):bool
+    {
+        return $this->usuarioRepository->deletar($usuario);
+    }
+
+    public function editar(Usuario $usuario, UsuarioDTO $usuarioDTO):bool
+    {
+        return $this->usuarioRepository->editar($usuario,$usuarioDTO);
+    }
 }

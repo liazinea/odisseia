@@ -23,5 +23,22 @@ class UsuarioRepository implements UsuarioRepositoryInterface
     {
         return Usuario::create($usuario->toArray());
     }
+    public function deletar(Usuario $usuario): bool
+    {
+        $usuario->usu_status = 0;
+        return $usuario->save();
+    }
+    public function editar(Usuario $usuario, UsuarioDTO $usuarioDTO):bool
+    {
+        $usuario->usu_nome = $usuarioDTO->nome;
+        $usuario->usu_dataNasc = $usuarioDTO->dataNascimento;
+        $usuario->email = $usuarioDTO->email;
+        $usuario->password = $usuarioDTO->senha;
+        $usuario->usu_nivel = $usuarioDTO->nivel;
+        $usuario->usu_ra = $usuarioDTO->ra;
+        $usuario->usu_status = $usuarioDTO->status;
+
+        return $usuario->save();
+    }
 
 }
