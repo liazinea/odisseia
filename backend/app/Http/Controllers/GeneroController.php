@@ -10,7 +10,7 @@ use App\Models\Genero;
 use App\Services\GeneroService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-
+use Exception;
 class GeneroController extends Controller
 {
     public function __construct(
@@ -55,6 +55,9 @@ class GeneroController extends Controller
     {
         try{
             $this->generoService->deletar($genero);
+            return response()->json([
+                'message'=>'Gênero deletado com sucesso'
+            ], 200);
         }catch(Exception $e){
             return response()->json([
                 'message'=> $e->getMessage()
@@ -66,6 +69,9 @@ class GeneroController extends Controller
     {
         try{
             $this->generoService->atualizar($genero, new GeneroDTO($request->validated()));
+            return response()->json([
+                'message' =>'Gênero atualizado com sucesso.'
+            ], 200);
         }catch(Exception $e){
             return response()->json([
                 'message'=> $e->getMessage()

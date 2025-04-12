@@ -9,12 +9,14 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use App\Services\LoginService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
     public function __construct(
         protected LoginService $loginService,
     ){}
+
     public function autenticar(LoginRequest $request):JsonResponse
     {
        try{
@@ -24,7 +26,8 @@ class LoginController extends Controller
                         email: $request->validated('email'),
                         password: $request->validated('password')
                     )
-                )
+                    ),
+                'usuario' => Auth::user()
             ],200);
        } catch(Exception $e){
             return response()->json([

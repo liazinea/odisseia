@@ -12,6 +12,9 @@ use App\Repositories\LivroRepository;
 use App\Repositories\LivroRepositoryInterface;
 use App\Repositories\LoginRepository;
 use App\Repositories\LoginRepositoryInterface;
+use App\Repositories\UsuarioRepository;
+use App\Repositories\UsuarioRepositoryInterface;
+
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -33,6 +36,9 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->bind(LoginRepositoryInterface::class, function(){
             return new LoginRepository();
+        });
+        $this->app->bind(UsuarioRepositoryInterface::class, function(){
+            return new UsuarioRepository();
         });
     }
 

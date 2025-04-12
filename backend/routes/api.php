@@ -4,6 +4,7 @@ use App\Http\Controllers\AutorController;
 use App\Http\Controllers\GeneroController;
 use App\Http\Controllers\LivroController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(LoginController::class)->group(function () {
@@ -35,5 +36,13 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::post('/generos', 'store');
         Route::patch('/generos/{genero}', 'delete');
         Route::put('/generos/{genero}', 'update');
+    });
+
+    Route::controller(UsuarioController::class)->group(function(){
+        Route::get('/usuarios', 'index');
+        Route::get('/usuarios/{usuario}', 'show');
+        Route::post('/usuarios', 'store');
+        Route::patch('/usuarios/{usuario}', 'delete');
+        Route::put('/usuarios/{usuario}', 'update');
     });
 });
