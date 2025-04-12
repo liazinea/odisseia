@@ -2,6 +2,7 @@ import React from 'react';
 import InfosLivro from '../../components/Livro/InfosLivro';
 import InfoAdicionais from '../../components/Livro/InfosAdicionais';
 import styles from './index.module.scss';
+import HeaderPagina from '../../components/layout/HeaderPagina';
 
 const InformacoesDetalhadas = () => {
     const livro = {
@@ -21,6 +22,8 @@ const InformacoesDetalhadas = () => {
     
 
   return (
+    <div>
+    <HeaderPagina titulo={'Informações Detalhadas'}/>
     <div className={styles.container}>
      <div className={styles.parteLaranja}>
       <InfosLivro livro={livro} />
@@ -35,6 +38,7 @@ const InformacoesDetalhadas = () => {
         />
         </div>
       </div>
+    </div>
     </div>
   );
 };

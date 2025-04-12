@@ -7,10 +7,8 @@ import Footer from "../../components/layout/Footer";
 const HomeAdm = () => {
   return (
     <>
-        <Navbar/>
         <HeaderPagina titulo={"Página do Administrador"}/>
         <SessaoAdmHome/>
-        <Footer />
     </>
   );
 };
