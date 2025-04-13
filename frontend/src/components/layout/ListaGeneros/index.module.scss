@@ -21,9 +21,23 @@
 
     .editar {
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .icon {
+        width: 30px;
+        height: 30px;
+      }
     }
     .excluir {
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .icon {
+        width: 30px;
+        height: 30px;
+      }
     }
   }
 

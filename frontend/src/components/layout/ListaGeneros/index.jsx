@@ -45,11 +45,11 @@ const ListaGeneros = ({ genero }) => {
     <div className={styles.row}>
       <div className={styles.nome}>{genero.nome}</div>
       <div className={styles.opcoes}>
-        <div className={styles.editar} onClick={handleEditClick}>
-          <MdOutlineEdit size={30} />
-        </div>
         <div className={styles.excluir} onClick={handleDeleteClick}>
-          <IoMdTrash size={30} color="#C00F0C" />
+          <img className={styles.icon} src="/excluir-icon.svg"></img>
+        </div>
+        <div className={styles.editar} onClick={handleEditClick}>
+          <img className={styles.icon} src="/editar-icon.svg"></img>
         </div>
       </div>
 
