@@ -9,6 +9,7 @@ import PageLayout from "../layouts/PageLayout";
 import PrimeiroAcesso from "../pages/PrimeiroAcesso";
 import RedefinicaoSenha from "../pages/RedefinicaoSenha";
 import HomeAdm from "../pages/HomeAdm";
+import LivrosCadastrados from "../pages/LivrosCadastrados";
 
 
 export const Paths = () => {
@@ -22,6 +23,7 @@ export const Paths = () => {
                         <Route path={'/infos'} element={<InformacoesDetalhadas />}/>
                         <Route path={'/primeiro-acesso'} element={<PrimeiroAcesso />}/>
                         <Route path={'/adm'} element={<HomeAdm />}/>
+                        <Route path={'/livros-cadastrados'} element={<LivrosCadastrados />}/>
                         <Route path={'/esqueci-minha-senha'} element={<RedefinicaoSenha />}/>
                         <Route path={'/home'} element={<Home/>}/>
                     </Route>
