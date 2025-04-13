@@ -1,0 +1,50 @@
+@import '../../../styles/index.scss';
+
+.principal{
+    font-size: 16px;
+    
+    .body{
+        display: flex;
+        border-radius: 20px;
+        padding-block: 10px;
+        text-align: center;
+        margin-block: 15px;
+        align-items: center;
+        color: $azul-escuro;
+        font-weight: 600;
+        background-color: $laranja-claro;
+    
+        .data{
+            width: 20%;
+        }
+        .capa{
+            width: 15%;
+
+            .imagem{
+                width: 150px;
+                height: 240px;
+                padding-block: 5px;
+            }
+        }
+        .titulo{
+            width: 30%;
+            cursor: pointer;
+        }
+        .num{
+            width: 20%;
+        }
+        .opcoes{
+            width: 15%;
+            display: flex;
+            justify-content: space-around;
+
+            .editar{
+                cursor: pointer;
+            }
+
+            .excluir{
+                cursor: pointer;
+            }
+        }
+    }    
+}

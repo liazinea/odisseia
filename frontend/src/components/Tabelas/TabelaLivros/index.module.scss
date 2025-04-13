@@ -1,0 +1,62 @@
+@import "../../../styles/index.scss";
+
+.principal {
+  margin: 0 auto 20px;
+  width: 90%;
+
+  .divPesquisa{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    padding-block: 100px;
+
+    .pesquisa{
+        outline: $azul-escuro 1px solid;
+        border-radius: 12px;
+        font-size: 2rem;
+        width: 50%;
+        padding: 10px;
+        color: $azul-escuro;
+    }
+  }
+  .secao{
+    font-size: 2rem;
+    color: $azul-escuro;
+    border-bottom: 3px $laranja solid;
+    margin-bottom: 20px;
+    font-weight: 600;
+    padding-bottom: 8px;
+  }
+
+  .head {
+    font-family: Inter;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    background-color: $laranja;
+    border-radius: 15px;
+    padding-block: 10px;
+    text-align: center;
+    color: $azul-escuro;
+
+    .data {
+      width: 20% !important;
+    }
+    .capa {
+      width: 15%;
+    }
+    .titulo {
+      width: 30%;
+    }
+    .num {
+      width: 20%;
+    }
+    .opcoes {
+      width: 15%;
+    }
+  }
+  .botao{
+    display: flex;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,17 @@
+@import '../../../styles/index.scss';
+
+.btn{
+  background-color: $laranja;
+  font-family: Inter, sans-serif;
+  color: $azul-escuro;
+  font-size: 18px;
+  padding: 20px;
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $laranja-claro;
+    color: $azul-escuro;
+  }
+}
