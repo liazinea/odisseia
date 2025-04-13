@@ -56,6 +56,14 @@
 
       .conteudo {
         width: 100%;
+        max-height: 350px;
+        overflow-y: auto;
+
+        scrollbar-color: color.$laranja-claro color.$azul-escuro;
+
+        .linha {
+          margin-bottom: 5px;
+        }
       }
     }
   }

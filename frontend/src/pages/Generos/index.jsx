@@ -36,6 +36,7 @@ const Generos = () => {
       { id: 3, nome: "Romance" },
       { id: 4, nome: "Terror" },
       { id: 5, nome: "Biografia" },
+      { id: 6, nome: "Filosofia" },
     ]);
   }, []);
 
@@ -59,11 +60,13 @@ const Generos = () => {
               <div className={styles.nome}>Nome</div>
               <div className={styles.opcoes}>Opções</div>
             </div>
-            {generosBuscados.map((genero) => (
-              <div className={styles.conteudo} key={genero.id}>
-                <ListaGeneros genero={genero} buscaGenero={buscaGenero} />
-              </div>
-            ))}
+            <div className={styles.conteudo}>
+              {generosBuscados.map((genero) => (
+                <div className={styles["linha"]} key={genero.id}>
+                  <ListaGeneros genero={genero} buscaGenero={buscaGenero} />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
         <div className={styles["container-cadastro"]}>
