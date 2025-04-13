@@ -3,7 +3,7 @@ import Navbar from "../../components/layout/Navbar";
 import HeaderPagina from "../../components/layout/HeaderPagina";
 import Footer from "../../components/layout/Footer";
 import styles from "./index.module.scss";
-import Button from "../../components/Botao/BotaoLaranja";
+import Button from "../../components/Botao/Botao";
 import Input from "../../components/Inputs/Input";
 import useGeneros from "../../hooks/useGeneros";
 import BarraPesquisa from "../../components/layout/HeaderHome/BarraPesquisa";
@@ -22,7 +22,6 @@ const Generos = () => {
 
   const { generos } = useGeneros();
   const [generosBuscados, setGenerosBuscados] = useState([]);
-  console.log(generos);
 
   const buscaGenero = async () => {
     const response = await api.get(`/generos`);
