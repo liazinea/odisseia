@@ -41,7 +41,6 @@ const Generos = () => {
 
   return (
     <>
-      <Navbar />
       <HeaderPagina titulo="Gêneros de Livros" />
       <div className={styles["barra-pesquisa"]}>
         <BarraPesquisa
@@ -92,7 +91,6 @@ const Generos = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 };
