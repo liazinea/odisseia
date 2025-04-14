@@ -8,9 +8,11 @@ import Home from "../pages/Home"
 import PageLayout from "../layouts/PageLayout";
 import PrimeiroAcesso from "../pages/PrimeiroAcesso";
 import RedefinicaoSenha from "../pages/RedefinicaoSenha";
+import Generos from "../pages/Generos";
 import HomeAdm from "../pages/HomeAdm";
 import LivrosCadastrados from "../pages/LivrosCadastrados";
 
+import CadastroLivro from "../pages/CadastroLivro";
 
 export const Paths = () => {
     return (
@@ -26,6 +28,8 @@ export const Paths = () => {
                         <Route path={'/livros-cadastrados'} element={<LivrosCadastrados />}/>
                         <Route path={'/esqueci-minha-senha'} element={<RedefinicaoSenha />}/>
                         <Route path={'/home'} element={<Home/>}/>
+                        <Route path={'/c'} element={<CadastroLivro />}/>
+                        <Route path={'/generos'} element={<Generos/>}/>
                     </Route>
                     <Route path={'*'} element={<NotFound />} />
                 </Routes>
