@@ -10,6 +10,7 @@ import PrimeiroAcesso from "../pages/PrimeiroAcesso";
 import RedefinicaoSenha from "../pages/RedefinicaoSenha";
 import HomeAdm from "../pages/HomeAdm";
 
+import CadastroLivro from "../pages/CadastroLivro";
 
 export const Paths = () => {
     return (
@@ -24,6 +25,7 @@ export const Paths = () => {
                         <Route path={'/adm'} element={<HomeAdm />}/>
                         <Route path={'/esqueci-minha-senha'} element={<RedefinicaoSenha />}/>
                         <Route path={'/home'} element={<Home/>}/>
+                        <Route path={'/c'} element={<CadastroLivro />}/>
                     </Route>
                     <Route path={'*'} element={<NotFound />} />
                 </Routes>
