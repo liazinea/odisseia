@@ -1,4 +1,4 @@
-import BotaoForm from '../../Botao/BotaoForm'
+import BotaoFormLogin from '../../Botao/BotaoFormLogin'
 import InputForm from '../../Inputs/InputForm'
 import styles from './index.module.scss'
 import {Link} from 'react-router-dom'
@@ -14,7 +14,7 @@ const CardLogin = () => {
             <InputForm type={'email'} nomeCampo={"email"} placeholder={"E-mail"} required={true}/>
             <InputForm type={'password'} nomeCampo={"senha"} placeholder={"Senha"} required={true}/>
             <div className={styles.botao}>
-              <BotaoForm type={"submit"} nomeBotao={'entrar'} texto={'Entrar'}/>
+              <BotaoFormLogin type={"submit"} nomeBotao={'entrar'} texto={'Entrar'}/>
             </div>
             <div className={styles.texto}>
               <Link to={`/primeiro-acesso`}>

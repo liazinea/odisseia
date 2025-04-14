@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import BotaoForm from "../../Botao/BotaoForm";
+import BotaoFormLogin from "../../Botao/BotaoFormLogin";
 import InputFormAcesso from "../../Inputs/InputFormAcesso";
 import styles from "./index.module.scss";
 
@@ -23,7 +23,7 @@ const CardAcesso = ({
           required={required}
         />
         <div className={styles.botao}>
-          <BotaoForm type={"submit"} nomeBotao={nomeBotao} texto={textoBotao} />
+          <BotaoFormLogin type={"submit"} nomeBotao={nomeBotao} texto={textoBotao} />
         </div>
         <Link className={styles.texto} to={`/`}>
           <p>Voltar para Login</p>
