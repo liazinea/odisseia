@@ -9,6 +9,8 @@
   border-radius: 10px;
   font-weight: 500;
   cursor: pointer;
+  position: absolute;
+  z-index: 2;
 
   &:hover {
     background-color: $laranja-claro;

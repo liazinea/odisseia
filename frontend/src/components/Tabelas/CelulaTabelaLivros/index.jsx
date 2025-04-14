@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./index.module.scss";
+import { IoPencil, IoTrash, IoTrashOutline } from "react-icons/io5";
 
 const CelulaTabelaLivros = ({ livro }) => {
   const [livroSelecionado, setLivroSelecionado] = useState(null);
@@ -39,10 +40,10 @@ const CelulaTabelaLivros = ({ livro }) => {
         <div className={styles.num}>{livro.liv_numRegistro}</div>
         <div className={styles.opcoes}>
           <div className={styles.editar}>
-            editar
+            <IoPencil/>
           </div>
           <div className={styles.excluir}>
-            excluir
+            <IoTrash/>
           </div>
         </div>
       </div>

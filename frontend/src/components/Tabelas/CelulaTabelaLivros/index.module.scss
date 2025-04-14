@@ -40,10 +40,13 @@
 
             .editar{
                 cursor: pointer;
+                font-size: 30px;
             }
-
+            
             .excluir{
                 cursor: pointer;
+                font-size: 30px;
+                color: $vermelho;
             }
         }
     }    

@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-table";
 import CelulaTabelaLivros from "../CelulaTabelaLivros";
 import BotaoVerMais from "../../Botao/BotaoVerMais";
+import { IoSearch } from "react-icons/io5";
 
 const TabelaLivros = ({ livros }) => {
   const [livro, setLivro] = useState([]);
@@ -96,14 +97,20 @@ const TabelaLivros = ({ livros }) => {
   
   return (
     <div className={styles.principal}>
+      <div className={styles.wrapper}>
+
       <div className={styles.divPesquisa}>
-        <input
-          className={styles.pesquisa}
-          type="text"
-          onChange={(e) => setGlobalFilter(e.target.value)}
-          placeholder="Pesquise o livro que deseja"
-        />
-        <i className={`ol-search`} />
+        <div className={styles.pesquisa}>
+          <input
+            className={styles.pesquisaInput}
+            type="text"
+            onChange={(e) => setGlobalFilter(e.target.value)}
+            placeholder="Pesquise o livro que deseja"
+          />
+          <div className={styles.icon}>
+            <IoSearch/>
+          </div>
+        </div>
       </div>
       <div className={styles.secao}>
         <p>Livros já cadastrados</p>
@@ -120,13 +127,13 @@ const TabelaLivros = ({ livros }) => {
           ))}
         </div>
       ))}
-
       {table
         .getRowModel()
         .rows.slice(0, pagesLoaded * itemsPerPage)
         .map((row) => (
           <CelulaTabelaLivros key={row.original.liv_id} livro={row.original} />
         ))}
+        <div className={styles.sombra}></div>
       <div className={styles.botao}>
         {pagesLoaded * itemsPerPage < table.getRowModel().rows.length && (
           <BotaoVerMais
@@ -135,6 +142,7 @@ const TabelaLivros = ({ livros }) => {
             texto={"Ver mais"}
           />
         )}
+      </div>
       </div>
     </div>
   );

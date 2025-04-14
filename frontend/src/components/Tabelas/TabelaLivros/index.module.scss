@@ -1,62 +1,97 @@
 @import "../../../styles/index.scss";
-
+  
 .principal {
-  margin: 0 auto 20px;
-  width: 90%;
+  position: relative;
+  background-color: $branco;
 
-  .divPesquisa{
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    padding-block: 100px;
+  .wrapper{
+    margin: 0 auto;
+    width: 90%;
 
-    .pesquisa{
+    .divPesquisa{
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      padding-block: 100px;
+  
+      .pesquisa{
         outline: $azul-escuro 1px solid;
-        border-radius: 12px;
-        font-size: 2rem;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         width: 50%;
-        padding: 10px;
-        color: $azul-escuro;
+  
+        .pesquisaInput{
+            font-size: 2rem;
+            padding: 10px;
+            color: $azul-escuro;
+            outline: none;
+            width: 100%;
+            background-color: $branco;
+        }
+        .icon {
+          color: $branco-rosado;
+          font-size: 30px;
+          margin: 10px;
+          background-color: $azul-escuro;
+          border-radius: 25px;
+          padding: 10px 25px 0;
+      }
+      }
+      
     }
-  }
-  .secao{
-    font-size: 2rem;
-    color: $azul-escuro;
-    border-bottom: 3px $laranja solid;
-    margin-bottom: 20px;
-    font-weight: 600;
-    padding-bottom: 8px;
-  }
-
-  .head {
-    font-family: Inter;
-    font-weight: 600;
-    display: flex;
-    justify-content: space-between;
-    background-color: $laranja;
-    border-radius: 15px;
-    padding-block: 10px;
-    text-align: center;
-    color: $azul-escuro;
-
-    .data {
-      width: 20% !important;
+  
+    .secao{
+      font-size: 2rem;
+      color: $azul-escuro;
+      border-bottom: 3px $laranja solid;
+      margin-bottom: 20px;
+      font-weight: 600;
+      padding-bottom: 8px;
     }
-    .capa {
-      width: 15%;
+  
+    .head {
+      font-family: Inter;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      background-color: $laranja;
+      border-radius: 15px;
+      padding-block: 10px;
+      text-align: center;
+      color: $azul-escuro;
+  
+      .data {
+        width: 20%;
+      }
+      .capa {
+        width: 15%;
+      }
+      .titulo {
+        width: 30%;
+      }
+      .num {
+        width: 20%;
+      }
+      .opcoes {
+        width: 15%;
+      }
     }
-    .titulo {
-      width: 30%;
+    .botao{
+      display: flex;
+      justify-content: center;
+      position: relative;
+      height: 75px;
     }
-    .num {
-      width: 20%;
+    .sombra{
+      width: 100%;
+      height: 360px;
+      z-index: 1;
+      background: $branco;
+      background: linear-gradient(0deg, rgba(248, 247, 244, 0.41) 0%, rgba(248, 247, 244, 0.34) 100%);
+      position: absolute;
+      bottom: 0;
     }
-    .opcoes {
-      width: 15%;
-    }
-  }
-  .botao{
-    display: flex;
-    justify-content: center;
-  }
+}
 }
