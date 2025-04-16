@@ -10,6 +10,7 @@ import PrimeiroAcesso from "../pages/PrimeiroAcesso";
 import RedefinicaoSenha from "../pages/RedefinicaoSenha";
 import Generos from "../pages/Generos";
 import HomeAdm from "../pages/HomeAdm";
+import LivrosCadastrados from "../pages/LivrosCadastrados";
 
 import CadastroLivro from "../pages/CadastroLivro";
 
@@ -19,12 +20,13 @@ export const Paths = () => {
             <BrowserRouter basename={"/"}>
                 <Routes>
                     <Route index element={<Login />} />
+                    <Route path={'/primeiro-acesso'} element={<PrimeiroAcesso />}/>
+                    <Route path={'/esqueci-minha-senha'} element={<RedefinicaoSenha />}/>
                     <Route path={'/'} element={<PageLayout />}>
                         <Route path={'/t'} element={<Teste />}/>
                         <Route path={'/infos'} element={<InformacoesDetalhadas />}/>
-                        <Route path={'/primeiro-acesso'} element={<PrimeiroAcesso />}/>
                         <Route path={'/adm'} element={<HomeAdm />}/>
-                        <Route path={'/esqueci-minha-senha'} element={<RedefinicaoSenha />}/>
+                        <Route path={'/livros-cadastrados'} element={<LivrosCadastrados />}/>
                         <Route path={'/home'} element={<Home/>}/>
                         <Route path={'/c'} element={<CadastroLivro />}/>
                         <Route path={'/generos'} element={<Generos/>}/>

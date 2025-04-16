@@ -1,0 +1,87 @@
+@import "../../../styles/index.scss";
+
+.principal {
+  position: relative;
+  background-color: $branco;
+
+  .wrapper {
+    margin: 0 auto;
+    width: 90%;
+
+    .divPesquisa {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      padding-block: 100px;
+
+      .pesquisa {
+        outline: $azul-escuro 1px solid;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 50%;
+
+        .pesquisaInput {
+          font-size: 2rem;
+          padding: 10px;
+          color: $azul-escuro;
+          outline: none;
+          width: 100%;
+          background-color: $branco;
+        }
+        .icon {
+          color: $branco-rosado;
+          font-size: 30px;
+          margin: 10px;
+          background-color: $azul-escuro;
+          border-radius: 25px;
+          padding: 10px 25px 0;
+        }
+      }
+    }
+
+    .secao {
+      font-size: 2rem;
+      color: $azul-escuro;
+      border-bottom: 3px $laranja solid;
+      margin-bottom: 20px;
+      font-weight: 600;
+      padding-bottom: 8px;
+    }
+
+    .head {
+      font-family: Inter;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      background-color: $laranja;
+      border-radius: 15px;
+      padding-block: 10px;
+      text-align: center;
+      color: $azul-escuro;
+
+      .data {
+        width: 20%;
+      }
+      .capa {
+        width: 15%;
+      }
+      .titulo {
+        width: 30%;
+      }
+      .num {
+        width: 20%;
+      }
+      .opcoes {
+        width: 15%;
+      }
+    }
+    .botao {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      height: 75px;
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import styles from './index.module.scss'
 
-const SelectLivro = ({type, nomeCampo, placeholder, required}) => {
+const SelectLivro = ({nomeCampo, placeholder, required}) => {
     const isRequired = required;
       const [filled, setFilled] = useState(false);
     
@@ -15,8 +15,14 @@ const SelectLivro = ({type, nomeCampo, placeholder, required}) => {
       }
   return (
     <label className={styles.label}>
-        <select type={type} className={`${styles.input} ${filled ? styles.filled : null}`} 
-        name={nomeCampo} id={nomeCampo} onChange={toggleFilled} {...(isRequired ? { required: true } : {})}/>
+      <input type="text" list="sla" id='ihi' multiple className={`${styles.input} ${filled ? styles.filled : null}`} onChange={toggleFilled} {...(isRequired ? { required: true } : {})}/>
+        <datalist 
+        name={nomeCampo} id={'sla'} >
+          <option value={'hahahaha'}></option>
+          <option value={'hohoho'}></option>
+          <option value={'hahahaha'}></option>
+          <option value={'hahahaha'}></option>
+          </datalist>
         <span className={styles.placeholder}>{placeholder}</span>
     </label>
   )
