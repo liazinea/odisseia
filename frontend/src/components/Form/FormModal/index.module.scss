@@ -1,0 +1,42 @@
+@import "../../../styles/index.scss";
+
+.fundo {
+  width: 100%;
+  background-color: $azul-escuro;
+  border-radius: 40px;
+  display: flex;
+  justify-content: center;
+
+  form {
+    width: 100%; 
+  }
+  .alinhaCapa {
+    display: flex;
+    justify-content: space-between;
+
+    .capaBtn{
+      width: 45%;
+    }
+    .ultimoInput{
+      width: 45%;
+    }
+
+      .btn {
+        display: flex;
+        justify-content: center;
+        margin-top: 2vh;
+      }
+  }
+  .dupla {
+    display: flex;
+    gap: 70px;
+
+    .input {
+      width: 50%;
+      margin-bottom: 2%;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+}

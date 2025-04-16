@@ -94,55 +94,56 @@ const TabelaLivros = ({ livros }) => {
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
-  
+
   return (
     <div className={styles.principal}>
       <div className={styles.wrapper}>
-
-      <div className={styles.divPesquisa}>
-        <div className={styles.pesquisa}>
-          <input
-            className={styles.pesquisaInput}
-            type="text"
-            onChange={(e) => setGlobalFilter(e.target.value)}
-            placeholder="Pesquise o livro que deseja"
-          />
-          <div className={styles.icon}>
-            <IoSearch/>
+        <div className={styles.divPesquisa}>
+          <div className={styles.pesquisa}>
+            <input
+              className={styles.pesquisaInput}
+              type="text"
+              onChange={(e) => setGlobalFilter(e.target.value)}
+              placeholder="Pesquise o livro que deseja"
+            />
+            <div className={styles.icon}>
+              <IoSearch />
+            </div>
           </div>
         </div>
-      </div>
-      <div className={styles.secao}>
-        <p>Livros já cadastrados</p>
-      </div>
-      {table.getHeaderGroups().map((headerGroup) => (
-        <div className={styles.head} key={headerGroup.id}>
-          {headerGroup.headers.map((header) => (
-            <p
-              className={`${styles[header.column.columnDef.id]}`}
-              key={header.id}
-            >
-              {header.column.columnDef.header}
-            </p>
-          ))}
+        <div className={styles.secao}>
+          <p>Livros já cadastrados</p>
         </div>
-      ))}
-      {table
-        .getRowModel()
-        .rows.slice(0, pagesLoaded * itemsPerPage)
-        .map((row) => (
-          <CelulaTabelaLivros key={row.original.liv_id} livro={row.original} />
+        {table.getHeaderGroups().map((headerGroup) => (
+          <div className={styles.head} key={headerGroup.id}>
+            {headerGroup.headers.map((header) => (
+              <p
+                className={`${styles[header.column.columnDef.id]}`}
+                key={header.id}
+              >
+                {header.column.columnDef.header}
+              </p>
+            ))}
+          </div>
         ))}
-        <div className={styles.sombra}></div>
-      <div className={styles.botao}>
-        {pagesLoaded * itemsPerPage < table.getRowModel().rows.length && (
-          <BotaoVerMais
-            className={styles.botaoVerMais}
-            onClick={verMais}
-            texto={"Ver mais"}
-          />
-        )}
-      </div>
+        {table
+          .getRowModel()
+          .rows.slice(0, pagesLoaded * itemsPerPage)
+          .map((row) => (
+            <CelulaTabelaLivros
+              key={row.original.liv_id}
+              livro={row.original}
+            />
+          ))}
+        <div className={styles.botao}>
+          {pagesLoaded * itemsPerPage < table.getRowModel().rows.length && (
+            <BotaoVerMais
+              className={styles.botaoVerMais}
+              onClick={verMais}
+              texto={"Ver mais"}
+            />
+          )}
+        </div>
       </div>
     </div>
   );
