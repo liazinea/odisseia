@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import styles from './index.module.scss'
 
-const InputLivro = ({type, nomeCampo, placeholder, required}) => {
+const InputLivro = ({register, type, nomeCampo, placeholder, required, errors, errorsApi}) => {
     const isRequired = required;
       const [filled, setFilled] = useState(false);
     
@@ -16,7 +16,7 @@ const InputLivro = ({type, nomeCampo, placeholder, required}) => {
   return (
     <label className={styles.label}>
         <input type={type} className={`${styles.input} ${filled ? styles.filled : null}`} 
-        name={nomeCampo} id={nomeCampo} onChange={toggleFilled} {...(isRequired ? { required: true } : {})}/>
+        name={nomeCampo} id={nomeCampo} onChange={toggleFilled} {...(isRequired ? { required: true } : {})} {...register(campo, { required: "*Este campo é obrigatório" })}/>
         <span className={styles.placeholder}>{placeholder}</span>
     </label>
   )
