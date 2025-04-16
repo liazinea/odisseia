@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import styles from './index.module.scss'
 
-const SelectLivro = ({nomeCampo, placeholder, required}) => {
+const SelectLivro = ({nomeCampo, placeholder, required, errors, errorsApi, register}) => {
     const isRequired = required;
       const [filled, setFilled] = useState(false);
     
