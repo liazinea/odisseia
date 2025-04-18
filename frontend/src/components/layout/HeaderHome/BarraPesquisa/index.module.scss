@@ -1,0 +1,30 @@
+@use "../../../../styles/cores/cores" as color;
+
+.barra {
+  background-color: color.$branco;
+  display: flex;
+  justify-content: space-between;
+  vertical-align: center;
+  border-radius: 20px;
+  width: 70%;
+  height: 50px;
+  padding: 5px 20px;
+
+  .pesquisa {
+    width: 100%;
+    box-shadow: 0 0 0 0;
+    border: none;
+    outline: 0;
+    background-color: color.$branco;
+  }
+
+  .icon {
+    font-size: 1.5rem;
+    color: color.$branco;
+    background-color: color.$azul-escuro;
+    width: 8%;
+    height: 100%;
+    border-radius: 18px;
+    padding: 10px;
+  }
+}

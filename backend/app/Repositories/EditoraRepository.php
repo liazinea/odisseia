@@ -14,6 +14,8 @@ class EditoraRepository implements EditoraRepositoryInterface
     
     public function buscaPeloNome(string $nome):Editora|null
     {
-        return Editora::where('edi_nome', $nome)->first();
+        return Editora::where('edi_nome', $nome)
+        ->where('edi_status_ativo', '=', 1)
+        ->first();
     }
 }

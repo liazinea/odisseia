@@ -1,0 +1,25 @@
+@import '../../../styles/index.scss';
+
+.modal{
+
+  .conteudoModal{
+    width: 90%;
+    margin: 0 auto;
+
+    .header{
+      display: flex;
+      justify-content: space-between;
+      margin-block: 20px;
+      
+      .close{
+        font-size: 30px;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.exibir{
+  display: flex;
+  opacity: 1;
+}

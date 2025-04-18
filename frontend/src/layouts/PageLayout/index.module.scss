@@ -1,1 +1,5 @@
-@import '../../styles/index.scss';
+@use '../../styles/index.scss';
+
+.principal{
+    min-height: 100vh;
+}

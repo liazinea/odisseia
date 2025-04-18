@@ -1,0 +1,28 @@
+@import "../../../styles/index.scss";
+
+
+.geral {
+    justify-items: center;
+    padding-block: 40px;
+
+    .titulo {
+        font-family: Inter;
+        color: $branco-rosado;
+        font-size: 18px;
+        font-weight: 200;
+       
+    }
+
+    .icon {
+        color: $branco-rosado;
+        font-size: 40px;
+        margin-top: 10px;
+    }
+
+    .info {
+        font-family: Inter;
+        color: $branco-rosado;
+        font-weight: bold;
+    }
+}
+

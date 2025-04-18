@@ -9,13 +9,14 @@ class LivroDTO
         readonly string $numRegistro,
         readonly ?string $titulo,
         readonly int $numPaginas,
-        readonly string $dataPubli,
+        readonly $dataPubli,
         readonly int $edicao,
         readonly int $editoraId,
         readonly string $classIndicativa,
         readonly string $localizacao,
         readonly string $sinopse,
         readonly ?string $capa,
+        readonly readonly int $statusAtivo = 1,
         readonly array $autores,
         readonly array $generos,
     ) {}
@@ -34,6 +35,7 @@ class LivroDTO
             'localizacao' => $this->localizacao,
             'sinopse' => $this->sinopse,
             'capa' => $this->capa,
+            'status_ativo' => $this->statusAtivo
         ];
     }
 }

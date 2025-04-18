@@ -1,0 +1,30 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin: 20px;
+    .parteLaranja {
+      z-index: 10;
+      position: relative;
+    }
+    
+    /* Parte laranja (vai invadir pra cima e ficar por cima da azul) */
+    .parteAzul {
+      margin-top: -30px;
+      z-index: 2;
+      position: relative;
+    }
+  }
+  
+  /* Parte azul (ficará por baixo) */
+
+
+  @media (max-width: 992px) {
+    .container{
+        width: 80%;
+    }
+  }
+  
+  
+  
+  

@@ -14,6 +14,7 @@ class GeneroService
     )
     {}
 
+
     public function buscarTodos():null|Collection
     {
         return $this->generoRepository->buscarTodos();
@@ -30,7 +31,7 @@ class GeneroService
             if($generoNome = $this->buscaPeloNome($genero)){
                 $generos[] = $generoNome;
             }else{
-                $novoGenero = new GeneroDTO($genero);
+                $novoGenero = new GeneroDTO($genero, 1);
                 $generos[] = $this->generoRepository->salvar($novoGenero);
             }
         }
@@ -45,5 +46,15 @@ class GeneroService
     public function salvar(GeneroDTO $generoDTO):Genero
     {
         return $this->generoRepository->salvar($generoDTO);
+    }
+
+    public function deletar(Genero $genero):bool
+    {
+        return $this->generoRepository->deletar($genero);
+    }
+
+    public function atualizar(Genero $genero, GeneroDTO $generoDTO):bool
+    {
+        return $this->generoRepository->atualizar($genero, $generoDTO);
     }
 }

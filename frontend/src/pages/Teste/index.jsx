@@ -1,13 +1,12 @@
-import React from 'react'
-import Header from '../../components/layout/Header'
-import CadastroLivro from '../CadastroLivro'
-import InputCapa from '../../components/Inputs/InputCapa'
+import React from "react";
+import Footer from "../../components/layout/Footer";
 
 const Teste = () => {
   return (
-    <div>
-    </div>
-  )
-}
+    <>
+      <Footer />
+    </>
+  );
+};
 
-export default Teste
+export default Teste;

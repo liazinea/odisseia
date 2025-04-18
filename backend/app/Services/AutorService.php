@@ -48,4 +48,13 @@ class AutorService
     {
         return $this->autorRepository->salvar($autorDTO);
     }
+
+    public function deletar(Autor $autor):bool
+    {
+        if($autor) {
+            return $this->autorRepository->deletar($autor);
+        }
+
+        throw new \Exception('Erro ao excluir autor.');
+    }
 }

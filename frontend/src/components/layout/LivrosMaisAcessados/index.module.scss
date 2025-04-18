@@ -1,0 +1,17 @@
+@use '../../../styles/cores/cores' as color;
+
+.container{
+    background-color: color.$branco-rosado;
+    padding: 5vh 5vh;
+
+    .titulo{
+        color: color.$azul-escuro;
+        font-weight: bold;
+        font-size: 50px;
+    }
+    .cards_container{
+        display: flex;
+        padding: 5vh;
+        justify-content: space-around;
+    }
+}
