@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./index.module.scss";
 import InputForm from "../../Inputs/InputForm";
 import InputLivro from "../../Inputs/InputLivro";
@@ -6,14 +6,21 @@ import SelectLivro from "../../Inputs/SelectLivro";
 import InputCapa from "../../Inputs/InputCapa";
 import BotaoForm from "../../Botao/BotaoForm";
 import InputTextArea from "../../Inputs/InputTextArea";
+import {useForm} from 'react-hook-form'
 
 const CardCadastro = () => {
+
+  const [errorsApi, setErrorsApi] = useState();
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm();
+
+  const onSubmit = () =>{
+
+  }
 
   return (
     <div className={styles.form}>
