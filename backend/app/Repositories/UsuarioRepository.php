@@ -5,6 +5,8 @@ namespace App\Repositories;
 use App\DTOs\UsuarioDTO;
 use App\Models\Usuario;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UsuarioRepository implements UsuarioRepositoryInterface
 {
@@ -17,6 +19,10 @@ class UsuarioRepository implements UsuarioRepositoryInterface
         return Usuario::where($campo, 'like', "%".$valor."%")
         ->where('usu_status', '=', 1)
         ->get();
+    }
+    public function checkSenha($password):bool
+    {
+        return Hash::check($password, Auth::user()->password);
     }
 
     public function salvar(UsuarioDTO $usuario):Usuario

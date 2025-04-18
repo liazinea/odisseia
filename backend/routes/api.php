@@ -41,6 +41,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::controller(UsuarioController::class)->group(function(){
         Route::get('/usuarios', 'index');
         Route::get('/usuarios/{usuario}', 'show');
+        Route::get('/check-senha', 'check');
         Route::post('/usuarios', 'store');
         Route::patch('/usuarios/{usuario}', 'delete');
         Route::put('/usuarios/{usuario}', 'update');

@@ -68,7 +68,7 @@ class GeneroController extends Controller
     public function update(Genero $genero, GeneroRequest $request):JsonResponse
     {
         try{
-            $this->generoService->atualizar($genero, new GeneroDTO($request->validated()));
+            $this->generoService->atualizar($genero, new GeneroDTO($request->validated('gen_nome')));
             return response()->json([
                 'message' =>'Gênero atualizado com sucesso.'
             ], 200);
