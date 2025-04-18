@@ -6,7 +6,7 @@ import SelectLivro from "../../Inputs/SelectLivro";
 import styles from "./index.module.scss";
 import { useForm } from "react-hook-form";
 
-const FormModal = ({ modalEditarAberto = false, livro = {}, closeModal }) => {
+const FormModal = ({ modalEditarAberto = false, livro = {}, closeModal, errorsApi }) => {
   const {
     register,
     handleSubmit,

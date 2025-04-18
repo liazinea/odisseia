@@ -3,7 +3,7 @@ import { FaUpload } from "react-icons/fa6";
 import { useState } from 'react';
 
 
-InputCapa = ({campo, errors, errorsApi, register}) => {
+const InputCapa = ({campo, errors, errorsApi, register}) => {
   const [preview, setPreview] = useState(null);
 
   const handleFileChange = (event) => {
