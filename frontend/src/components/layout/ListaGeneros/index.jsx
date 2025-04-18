@@ -9,6 +9,7 @@ const ListaGeneros = ({ genero }) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [password, setPassword] = useState("");
+  const [nomeGenero, setNomeGenero] = useState("");
 
   const handleEditClick = () => {
     setIsEditModalOpen(true);
@@ -41,6 +42,11 @@ const ListaGeneros = ({ genero }) => {
     closePasswordModal();
   };
 
+  const handleConfirmEdit = () => {
+    console.log("Novo nome do gênero:", nomeGenero);
+    closeEditModal();
+  };
+
   return (
     <div className={styles.row}>
       <div className={styles.nome}>{genero.nome}</div>
@@ -68,14 +74,13 @@ const ListaGeneros = ({ genero }) => {
                 type="text"
                 defaultValue={genero.nome}
                 disabled={false}
-                onChange={(value) => console.log("Novo nome:", value)}
+                onChange={(value) => setNomeGenero(value)}
               />
             </div>
             <div className={styles.botoes}>
               <button
                 onClick={() => {
-                  console.log("Salvando alterações...");
-                  closeEditModal();
+                  handleConfirmEdit();
                 }}
                 className={styles.saveButton}
               >

@@ -7,6 +7,7 @@ const Input = ({
   placeholder,
   required,
   disabled,
+  value,
   onChange,
 }) => {
   return (
@@ -19,7 +20,8 @@ const Input = ({
       placeholder={placeholder}
       required={required}
       disabled={disabled}
-      onChange={(e) => onChange && onChange(e.target.value)}
+      value={value} // Adicionado para controlar o valor do input
+      onChange={(e) => onChange && onChange(e.target.value)} // Corrigido para passar o valor
     />
   );
 };

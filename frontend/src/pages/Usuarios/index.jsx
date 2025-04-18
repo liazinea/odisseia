@@ -34,11 +34,6 @@ const Usuarios = () => {
 
   const [usuariosBuscados, setUsuariosBuscados] = useState([]);
 
-  const buscaUsuarios = async () => {
-    const response = await api.get(`/usuarios`);
-    setUsuariosBuscados(response.data.usuarios.data);
-  };
-
   useEffect(() => {
     // Define os dados manualmente no estado inicial
     setUsuariosBuscados([
@@ -81,10 +76,7 @@ const Usuarios = () => {
             <div className={styles.conteudo}>
               {usuariosBuscados.map((usuario) => (
                 <div className={styles["linha"]} key={usuario.id}>
-                  <ListaUsuarios
-                    usuario={usuario}
-                    buscaUsuarios={buscaUsuarios}
-                  />
+                  <ListaUsuarios usuario={usuario} />
                 </div>
               ))}
             </div>
@@ -102,7 +94,8 @@ const Usuarios = () => {
                 name="nome"
                 placeholder="Digite o nome completo do aluno"
                 required={true}
-                onChange={handleCadastroInputChange}
+                value={formData.nome}
+                onChange={(value) => setFormData({ ...formData, nome: value })} // Corrigido
               />
             </div>
             <div className={styles["input"]}>
@@ -112,7 +105,10 @@ const Usuarios = () => {
                 name="dataNascimento"
                 placeholder="dd/mm/aaaa"
                 required={true}
-                onChange={handleCadastroInputChange}
+                value={formData.dataNascimento}
+                onChange={(value) =>
+                  setFormData({ ...formData, dataNascimento: value })
+                } // Corrigido
               />
             </div>
             <div className={styles["input"]}>
@@ -122,7 +118,8 @@ const Usuarios = () => {
                 name="email"
                 placeholder="Digite o e-mail do aluno"
                 required={true}
-                onChange={handleCadastroInputChange}
+                value={formData.email}
+                onChange={(value) => setFormData({ ...formData, email: value })} // Corrigido
               />
             </div>
             <div className={styles["input"]}>
@@ -132,7 +129,8 @@ const Usuarios = () => {
                 name="rg"
                 placeholder="xx.xxx.xxx-x"
                 required={true}
-                onChange={handleCadastroInputChange}
+                value={formData.rg}
+                onChange={(value) => setFormData({ ...formData, rg: value })} // Corrigido
               />
             </div>
           </div>
