@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
-import Navbar from "../../components/layout/Navbar";
 import HeaderPagina from "../../components/layout/HeaderPagina";
-import Footer from "../../components/layout/Footer";
 import styles from "./index.module.scss";
 import Button from "../../components/Botao/Botao";
 import Input from "../../components/Inputs/Input";

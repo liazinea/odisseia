@@ -23,6 +23,6 @@ const BarraPesquisa = ({placeholder,  buscaGeneros, setGeneros }) => {
         <FaSearch className={styles.icon} onClick={handleSearch}/>
     </div>
   );
-}
+};
 
-export default BarraPesquisa
+export default BarraPesquisa;

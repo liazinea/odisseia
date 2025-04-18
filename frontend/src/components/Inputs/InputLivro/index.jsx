@@ -1,25 +1,36 @@
-import {useState} from 'react'
-import styles from './index.module.scss'
+import { useState } from "react";
+import styles from "./index.module.scss";
 
-const InputLivro = ({register, type, nomeCampo, placeholder, required, errors, errorsApi}) => {
-    const isRequired = required;
-      const [filled, setFilled] = useState(false);
-    
-      const toggleFilled = () =>{
-    
-        if(document.getElementById(nomeCampo).value != ''){
-          setFilled(true)
-        }else{
-          setFilled(false)
-        }
-      }
+const InputLivro = ({
+  props,
+  type,
+  nomeCampo,
+  placeholder,
+  required,
+  errors,
+  errorsApi,
+}) => {
+  const isRequired = required;
+  const [filled, setFilled] = useState(false);
+
+  const handleChange = (e) => {
+    setFilled(e.target.value.trim() !== "");
+    if (onChange) onChange(e);
+  };
   return (
     <label className={styles.label}>
-        <input type={type} className={`${styles.input} ${filled ? styles.filled : null}`} 
-        name={nomeCampo} id={nomeCampo} onChange={toggleFilled} {...(isRequired ? { required: true } : {})} {...register(campo, { required: "*Este campo é obrigatório" })}/>
-        <span className={styles.placeholder}>{placeholder}</span>
+      <input
+        type={type}
+        className={`${styles.input} ${filled ? styles.filled : null}`}
+        name={nomeCampo}
+        id={nomeCampo}
+        onChange={handleChange}
+        {...(isRequired ? { required: true } : {})}
+        {...props}
+      />
+      <span className={styles.placeholder}>{placeholder}</span>
     </label>
-  )
-}
+  );
+};
 
-export default InputLivro
+export default InputLivro;

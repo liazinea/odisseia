@@ -9,6 +9,7 @@ import PageLayout from "../layouts/PageLayout";
 import PrimeiroAcesso from "../pages/PrimeiroAcesso";
 import RedefinicaoSenha from "../pages/RedefinicaoSenha";
 import Generos from "../pages/Generos";
+import Usuarios from "../pages/Usuarios";
 import HomeAdm from "../pages/HomeAdm";
 import LivrosCadastrados from "../pages/LivrosCadastrados";
 
@@ -30,6 +31,8 @@ export const Paths = () => {
                         <Route path={'/home'} element={<Home/>}/>
                         <Route path={'/c'} element={<CadastroLivro />}/>
                         <Route path={'/generos'} element={<Generos/>}/>
+                        <Route path={'/usuarios'} element={<Usuarios/>}/>
+                        
                     </Route>
                     <Route path={'*'} element={<NotFound />} />
                 </Routes>
