@@ -11,6 +11,7 @@ import { useAuth } from "../../context/AuthContext";
 const Home = () => {
   const navigate = useNavigate()
   const {token} = useAuth()
+  
   const {logout} = useAuth()
   useEffect(() => {
     if(!token){

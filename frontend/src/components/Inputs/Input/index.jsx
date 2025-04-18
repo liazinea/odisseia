@@ -8,6 +8,7 @@ const Input = ({
   required,
   disabled,
   onChange,
+  ...props
 }) => {
   return (
     <input
@@ -20,6 +21,7 @@ const Input = ({
       required={required}
       disabled={disabled}
       onChange={(e) => onChange && onChange(e.target.value)}
+      {...props}
     />
   );
 };

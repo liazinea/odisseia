@@ -60,7 +60,7 @@ const ListaGeneros = ({ genero }) => {
             <h3 className={styles.titulo}>Editar Gênero</h3>
             <div>
               <label htmlFor="nomeAtual">Nome atual</label>
-              <Input type="text" defaultValue={genero.nome} disabled={true} />
+              <Input type="text" defaultValue={genero.gen_nome} disabled={true} />
             </div>
             <div>
               <label htmlFor="nomeNovo">Novo nome</label>
@@ -96,7 +96,7 @@ const ListaGeneros = ({ genero }) => {
             <h3 className={styles.titulo}>Excluir Gênero</h3>
             <p className={styles.mensagem}>
               Tem certeza de que deseja excluir permanentemente o gênero
-              <span className={styles.nome}> "{genero.nome}"</span>?
+              <span className={styles.nome}> "{genero.gen_nome}"</span>?
             </p>
 
             <div className={styles.botoes}>

@@ -25,7 +25,7 @@ export const Paths = () => {
                     <Route path={'/'} element={<PageLayout />}>
                         <Route path={'/t'} element={<Teste />}/>
                         <Route path={'/infos'} element={<InformacoesDetalhadas />}/>
-                        <Route path={'/adm'} element={<HomeAdm />}/>
+                        <Route path={'/home-adm'} element={<HomeAdm />}/>
                         <Route path={'/livros-cadastrados'} element={<LivrosCadastrados />}/>
                         <Route path={'/home'} element={<Home/>}/>
                         <Route path={'/c'} element={<CadastroLivro />}/>
