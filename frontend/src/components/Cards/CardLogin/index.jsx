@@ -1,4 +1,4 @@
-import BotaoForm from '../../Botao/BotaoForm'
+import BotaoFormLogin from '../../Botao/BotaoFormLogin'
 import InputForm from '../../Inputs/InputForm'
 import styles from './index.module.scss'
 import { Link } from 'react-router-dom'

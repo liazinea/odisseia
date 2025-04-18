@@ -1,0 +1,89 @@
+@import "../../../styles/index.scss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  @media (max-width: 1024px) {
+    align-items: center; // Centraliza no breakpoint médio
+  }
+
+
+  @media (max-width: 768px) {
+    align-items: center; // Alinha ao centro em telas pequenas
+  }
+}
+
+.titulo {
+    font-family: Poppins;
+    color: $azul-escuro;
+    font-size: 3.50rem; // Aproximadamente 56px em rem
+    font-weight: 900;
+    letter-spacing: -0.030em;
+    margin-bottom: 20px;
+    white-space: pre-line;
+
+    @media (max-width: 1240px) {
+        font-size: 2.0rem; // Ajuste suave para telas médias
+        margin-bottom: 2.5rem; // Diminui a margem inferior
+    }
+
+    @media (max-width: 1024px) {
+        font-size: 2.875rem; // Ajuste suave para telas de tamanho médio
+        margin-bottom: 1.5rem; // Diminui a margem inferior para telas maiores
+    }
+
+    @media (max-width: 992px) {
+        font-size: 1.875rem; // Ajuste suave para telas de tamanho médio
+        margin-bottom: 1.5rem;
+      }
+
+    @media (max-width: 768px) {
+        font-size: 2.5rem; // Ajuste mais acentuado em telas pequenas
+        margin-bottom: 1.25rem; // Reduz a margem inferior
+        text-align: center; // Centraliza o título em telas pequenas
+    }
+}
+
+.subtitulo {
+    font-family: Inter;
+    color: $azul-escuro;
+    font-size: 2.25rem; // Aproximadamente 36px em rem
+    font-weight: 400;
+    margin-bottom: 1.25rem; // Aproximadamente 20px em rem
+
+    @media (max-width: 1200px) {
+        font-size: 2.125rem; // Ajusta para telas médias
+        margin-bottom: 1.5rem; // Aumenta ligeiramente a margem
+    }
+
+    @media (max-width: 1024px) {
+        font-size: 1.8rem; // Ajuste para telas médias menores
+        margin-bottom: 1.25rem; // Ajuste a margem inferior
+    }
+
+    @media (max-width: 768px) {
+        font-size: 1.75rem; // Ajuste para telas menores
+        margin-bottom: 1rem; // Reduz margem inferior
+        text-align: center; // Centraliza o subtítulo
+    }
+}
+
+.autor {
+    font-family: Inter;
+    color: $azul-escuro;
+    font-size: 2rem; // Aproximadamente 18px em rem
+    font-style: italic;
+    font-weight: 600;
+    margin-bottom: 0;
+
+    @media (max-width: 1024px) {
+        font-size: 1rem; // Ajuste para telas médias
+    }
+
+    @media (max-width: 768px) {
+        font-size: 1.125rem; // Aumenta um pouco o tamanho da fonte no celular
+        text-align: center; // Centraliza o nome do autor
+    }
+}

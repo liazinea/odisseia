@@ -1,0 +1,22 @@
+@use "../../../styles/cores/cores" as color;
+
+.principal {
+  background-color: color.$azul-escuro;
+  background-image: url("../../../../public/img/image.svg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: 0vh -40vh;
+  height: 40vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Poppins;
+
+  .titulo {
+    text-align: center;
+    font-weight: 700;
+    font-size: 4rem;
+    color: color.$branco;
+  }
+}

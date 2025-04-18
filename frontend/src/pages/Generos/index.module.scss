@@ -1,0 +1,98 @@
+@use "../../styles/cores/cores" as color;
+
+.barra-pesquisa {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5vh;
+  background-color: color.$azul-escuro;
+}
+
+.container-geral {
+  display: flex;
+  justify-content: space-around;
+  background-color: color.$azul-escuro;
+  color: color.$laranja;
+  padding-bottom: 5vh;
+
+  .container-exibir {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .titulo {
+      width: 80%;
+    }
+
+    .tabela {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 80%;
+      padding: 5vh 0;
+      gap: 5px;
+
+      .head {
+        font-weight: 600;
+        width: 100%;
+        display: flex;
+        background-color: color.$laranja;
+        border-radius: 15px;
+        padding: 2vh 5vh;
+        justify-content: center;
+        align-items: center;
+        color: color.$azul-escuro;
+
+        .nome {
+          width: 80%;
+        }
+        .opcoes {
+          width: 20%;
+          text-align: center;
+        }
+      }
+
+      .conteudo {
+        width: 100%;
+        max-height: 350px;
+        overflow-y: auto;
+
+        scrollbar-color: color.$laranja-claro color.$azul-escuro;
+
+        .linha {
+          margin-bottom: 5px;
+        }
+      }
+    }
+  }
+
+  .container-cadastro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    .titulo {
+      width: 80%;
+    }
+
+    .input {
+      display: flex;
+      flex-direction: column;
+      color: color.$branco;
+      width: 80%;
+      padding: 5vh 0;
+      font-size: 20px;
+      gap: 5px;
+    }
+
+    .botao {
+      display: flex;
+      width: 80%;
+      justify-content: end;
+      align-items: center;
+    }
+  }
+}

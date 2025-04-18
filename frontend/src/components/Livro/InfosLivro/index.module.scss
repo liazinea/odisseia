@@ -1,0 +1,121 @@
+@import "../../../styles/index.scss";
+
+.card {
+  background-color: $laranja;
+  padding: 40px 60px;
+  border-radius: 00px 20px 0px 20px;
+  color: $azul-escuro;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  margin-inline: 10%;
+
+  .topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+
+    .textos {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      position: relative;
+      flex: 1;
+      margin-left: 60px;
+      
+      .qtdWrapper {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+    }
+
+    .generos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 60px;
+    }
+  }
+  
+  .sinopse {
+    margin-top: 20px;
+    font-size: 14px;
+  
+    h4 {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.card :global(button[class*="qtd"]) {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  padding: 10px 15px;
+  font-weight: bold;
+  font-size: 14px;
+  border-radius: 10px;
+}
+
+@media (max-width: 1240px) {
+  .card {
+    padding: 30px 40px;
+    gap: 15px;
+  }
+
+  .topo {
+    gap: 10px;
+  }
+
+  .textos {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-left: 10px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .qtdWrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  
+
+  .card :global(button[class*="qtd"]) {
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+
+  .generos {
+    width: 100%;
+    margin-top: 20px;
+    justify-content: flex-start;
+  }
+
+}
+
+
+@media (max-width: 768px) {
+  .topo {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .generos {
+    justify-content: center;
+    margin-top: 50px;
+  }
+
+  .card :global(button[class*="qtd"]) {
+    position: static;
+    margin-top: 15px;
+    align-self: center;
+  }
+}
