@@ -1,25 +1,25 @@
-import { useEffect, useState } from "react"
+import { useAuth } from "../context/AuthContext"
 import { api } from "../config/api"
 
-function useGeneros(param){
-    const [generos, setGeneros] = useState([])
-    useEffect(() =>{
-        if(param){
-            const buscaGeneros = async () => {
-                const response = await api.get(`/generos?genero=${param}`)
-                setGeneros(response.data.generos.data)
-            }
-            buscaGeneros()
-        }else{
-            const buscaGeneros = async () => {
-                const response = await api.get(`/generos`)
-                setGeneros(response.data.generos.data)
-            }
-            buscaGeneros()
-        }
-    },[])
+function useGeneros() {
+    const { token } = useAuth()
 
-    return {generos}
+    const buscaGeneros = async (param) => {
+        try {
+            const url = param ? `/generos?genero=${param}` : `/generos`
+            const response = await api.get(url, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            return response.data.generos.data
+        } catch (error) {
+            console.error("Erro ao buscar gêneros:", error)
+            return []
+        }
+    }
+
+    return { buscaGeneros }
 }
 
 export default useGeneros

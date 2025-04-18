@@ -43,6 +43,13 @@ class UsuarioController extends Controller
         ], 400);
     }
 
+    public function check(Request $request):JsonResponse
+    {
+        return response()->json([
+            'status' => $this->usuarioService->checkSenha($request->password)
+        ], 200);
+    }
+
     public function store(UsuarioRequest $request): JsonResponse
     {
         try {

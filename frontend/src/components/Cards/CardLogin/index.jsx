@@ -15,8 +15,6 @@ const CardLogin = () => {
   const navigate = useNavigate(); 
   const [error, setError] = useState(null)
   const { login } = useAuth();
-  const {user } = useAuth()
-  const { token } = useAuth();
   const { register, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
       email: '',
@@ -29,23 +27,20 @@ const CardLogin = () => {
       await login(data.email, data.password);
       console.log('Token atual:', localStorage.getItem('token'));
       console.log('Usuário logado:', localStorage.getItem('user'));
-      await redirectByType(localStorage.getItem('user'))
+      redirectByType()
     } catch (error) {
       console.error('Erro ao fazer login:', error.response?.data || error.message);
       setError(error.response.data.message)
     }
   };
 
-  const redirectByType = async (id) => {
-    const response = await api.get(`/usuarios/${id}`,{
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      }
-    })
-    if(response.data.usuario.usu_nivel == 1){
+  const redirectByType = () => {
+    if(localStorage.getItem('type') == 1){
+      console.log(localStorage.getItem('type'))
       navigate('/home-adm')
+    }else{
+      navigate('/home')
     }
-    navigate('/home')
   }
 
   return (
