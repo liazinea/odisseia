@@ -6,7 +6,7 @@ const Header = ({titulo}) => {
     <div>
         <div className= {styles.img}>
             <img src="/forma-header.svg" alt="" />
-            <h1 className='titulo'>{titulo}</h1>
+            <h1 className={styles.titulo}>{titulo}</h1>
         </div>
     </div>
   )
