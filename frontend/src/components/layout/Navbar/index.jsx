@@ -2,9 +2,13 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import styles from "./index.module.scss";
+import { useAuth } from "../../../context/AuthContext";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { token } = useAuth();
+
+  const { logout } = useAuth();
 
   const toggleMenu = () => setIsMenuOpen((prevState) => !prevState);
 
@@ -46,7 +50,11 @@ const Navbar = () => {
   );
 
   const renderDropdownButtons = () => (
-    <ul className={`${styles["navbar-button"]} ${isMenuOpen ? styles.active : ""}`}>
+    <ul
+      className={`${styles["navbar-button"]} ${
+        isMenuOpen ? styles.active : ""
+      }`}
+    >
       <li>
         <Link to="/generos">
           <button className="btn-dropdown">Gêneros</button>
@@ -66,6 +74,12 @@ const Navbar = () => {
     </button>
   );
 
+  const renderLogoutButton = () => (
+    <button className={styles["logout-button"]} onClick={logout}>
+      Logout
+    </button>
+  );
+
   return (
     <nav className={`${styles.navbar} ${isMenuOpen ? styles.open : ""}`}>
       <div className={styles["navbar-container"]}>
@@ -73,6 +87,7 @@ const Navbar = () => {
         {renderLinks()}
         {renderMenuToggle()}
         {renderDropdownButtons()}
+        {renderLogoutButton()}
       </div>
     </nav>
   );
