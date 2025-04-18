@@ -2,22 +2,23 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-class UsuarioResource extends ResourceCollection
+class UsuarioResource extends JsonResource
 {
 
-    public function toArray(Request $request): array
+    public function toArray($request)
     {
         return [
-            'id'=> $this->usu_id,
-            'nome'=> $this->usu_nome,
-            'data_nascimento'=>$this->usu_dataNasc,
-            'email'=>$this->email,
-            'nivel'=>$this->usu_nivel,
-            'ra'=>$this->usu_ra,
-            'status'=>$this->usu_status,
+            'usu_id' => $this->usu_id,
+            'usu_nome' => $this->usu_nome,
+            'usu_dataNasc' => $this->usu_dataNasc,
+            'email' => $this->email,
+            'usu_nivel' => $this->usu_nivel,
+            'usu_ra' => $this->usu_ra,
+            'usu_status' => $this->usu_status,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }
