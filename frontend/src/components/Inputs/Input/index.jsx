@@ -21,8 +21,6 @@ const Input = ({
       placeholder={placeholder}
       required={required}
       disabled={disabled}
-      value={value} // Adicionado para controlar o valor do input
-      onChange={(e) => onChange && onChange(e.target.value)} // Corrigido para passar o valor
       {...props}
     />
   );

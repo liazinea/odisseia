@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./index.module.scss";
 import { MdOutlineEdit } from "react-icons/md";
 import { IoMdTrash } from "react-icons/io";

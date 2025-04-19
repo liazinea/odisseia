@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, use } from "react";
 import styles from "./index.module.scss";
 import Input from "../../Inputs/Input";
+import api from "../../../services/api";
+import { useAuth } from "../../../context/AuthContext";
+import { useForm } from "react-hook-form";
 
-const ListaUsuarios = ({ usuario }) => {
+const ListaUsuarios = ({ usuario, setMessage, buscaUsuarios, setUsuarios }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [password, setPassword] = useState("");
+  const [passwordMessage, setPasswordMessage] = useState(null)
+  const { token } = useAuth()
 
   // Estado local para armazenar os valores editados
   const [editedData, setEditedData] = useState({
@@ -14,6 +19,13 @@ const ListaUsuarios = ({ usuario }) => {
     email: usuario.email,
     dataNascimento: usuario.dataNascimento,
     rg: usuario.rg,
+  });
+
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
   });
 
   const handleEditClick = () => {
@@ -30,11 +42,13 @@ const ListaUsuarios = ({ usuario }) => {
 
   const closeDeleteModal = () => {
     setIsDeleteModalOpen(false);
+    setPasswordMessage('')
   };
 
   const openPasswordModal = () => {
     setIsDeleteModalOpen(false);
     setIsPasswordModalOpen(true);
+    setPasswordMessage(null)
   };
 
   const closePasswordModal = () => {
@@ -42,10 +56,34 @@ const ListaUsuarios = ({ usuario }) => {
     setPassword("");
   };
 
-  const handleConfirmDelete = () => {
-    console.log("Senha digitada:", password);
-    closePasswordModal();
-  };
+  const handleConfirmDelete = async (data) => {
+    const response = await api.get(`/check-senha?password=${data.password}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    console.log(password)
+    if (response.data.status) {
+      console.log('olaa')
+      const responseDelete = await api.patch(`/usuarios/${usuario.usu_id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+
+      setMessage(responseDelete.data.message)
+      closePasswordModal();
+    } else {
+      setPasswordMessage('Senha incorreta')
+    }
+  }
+  useEffect(() => {
+    const carregarUsuarios = async () => {
+      const dados = await buscaUsuarios();
+      setUsuarios(dados);
+    };
+    carregarUsuarios();
+  }, [passwordMessage]);
 
   // Função para capturar as alterações nos inputs
   const handleInputChange = (e) => {
@@ -61,6 +99,23 @@ const ListaUsuarios = ({ usuario }) => {
     closeEditModal();
   };
 
+  const onSubmit = async (data) => {
+    try {
+      const response = await api.put(`/usuarios/${usuario.usu_id}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      setMessage(response.data.message)
+      closeEditModal()
+      console.log(response);
+    } catch (error) {
+      console.error('Erro ao fazer login:', error.response?.data || error.message);
+      setError(error.response.data.message)
+    }
+  };
+
+  console.log(usuario.email)
   return (
     <div className={styles.row}>
       <div className={styles.nome}>{usuario.usu_nome}</div>
@@ -75,7 +130,7 @@ const ListaUsuarios = ({ usuario }) => {
       {/* Modal de Edição */}
       {isEditModalOpen && (
         <div className={styles.modal}>
-          <div className={styles.modalEdicao}>
+          <form onSubmit={handleSubmit(onSubmit)} className={styles.modalEdicao}>
             <h3 className={styles.titulo}>Editar usuário</h3>
             <div>
               <label htmlFor="nome">Nome</label>
@@ -86,8 +141,14 @@ const ListaUsuarios = ({ usuario }) => {
                 onChange={(value) =>
                   setEditedData({ ...editedData, nome: value })
                 } // Corrigido
-                defaultValue={usuario.nome}
+                defaultValue={usuario.usu_nome}
+                {...register('usu_nome', {
+                  required: 'O novo nome do usuário é obrigatório'
+                })}
               />
+              {errors.usu_nome && (
+                <p style={{ color: 'red' }}>{errors.usu_nome.message}</p>
+              )}
             </div>
             <div>
               <label htmlFor="email">E-mail</label>
@@ -99,7 +160,13 @@ const ListaUsuarios = ({ usuario }) => {
                   setEditedData({ ...editedData, email: value })
                 } // Corrigido
                 defaultValue={usuario.email}
+                {...register('email', {
+                  required: 'O email usuário é obrigatório'
+                })}
               />
+              {errors.email && (
+                <p style={{ color: 'red' }}>{errors.email.message}</p>
+              )}
             </div>
             <div>
               <label htmlFor="dataNascimento">Data de nascimento</label>
@@ -110,8 +177,14 @@ const ListaUsuarios = ({ usuario }) => {
                 onChange={(value) =>
                   setEditedData({ ...editedData, dataNascimento: value })
                 } // Corrigido
-                defaultValue={usuario.dataNascimento}
+                defaultValue={usuario.usu_dataNasc}
+                {...register('usu_dataNasc', {
+                  required: 'A data de nasimento é obrigatória'
+                })}
               />
+              {errors.usu_dataNasc && (
+                <p style={{ color: 'red' }}>{errors.usu_dataNasc.message}</p>
+              )}
             </div>
             <div>
               <label htmlFor="rg">RG</label>
@@ -122,19 +195,26 @@ const ListaUsuarios = ({ usuario }) => {
                 onChange={(value) =>
                   setEditedData({ ...editedData, rg: value })
                 } // Corrigido
-                defaultValue={usuario.rg}
+                defaultValue={usuario.usu_ra}
+                {...register('usu_ra', {
+                  required: ' O RA do usuário é obrigatório'
+                })}
               />
+              {errors.usu_ra && (
+                <p style={{ color: 'red' }}>{errors.usu_ra.message}</p>
+              )}
             </div>
 
+
             <div className={styles.botoes}>
-              <button onClick={handleSaveChanges} className={styles.saveButton}>
+              <button type='submit 'className={styles.saveButton}>
                 Salvar
               </button>
               <button onClick={closeEditModal} className={styles.closeButton}>
                 Cancelar
               </button>
             </div>
-          </div>
+          </form>
         </div>
       )}
       {/* Modal de Exclusão */}
@@ -144,7 +224,7 @@ const ListaUsuarios = ({ usuario }) => {
             <h3 className={styles.titulo}>Excluir Usuário</h3>
             <p className={styles.mensagem}>
               Tem certeza de que deseja excluir permanentemente o usuário
-              <span className={styles.nome}> "{usuario.nome}"</span>?
+              <span className={styles.nome}> "{usuario.usu_nome}"</span>?
             </p>
 
             <div className={styles.botoes}>
@@ -167,7 +247,7 @@ const ListaUsuarios = ({ usuario }) => {
       {/* Modal de Confirmação de Senha */}
       {isPasswordModalOpen && (
         <div className={styles.modal}>
-          <div className={styles.modalSenha}>
+          <form onSubmit={handleSubmit(handleConfirmDelete)} className={styles.modalSenha}>
             <h3 className={styles.titulo}>Confirmar Exclusão</h3>
             <p className={styles.mensagem}>Por favor, digite sua senha:</p>
             <div>
@@ -176,12 +256,19 @@ const ListaUsuarios = ({ usuario }) => {
                 type="password"
                 placeholder="Digite sua senha"
                 value={password}
-                onChange={(value) => setPassword(value)} // Certifique-se de que o evento está correto
+                onChange={(e) => setPassword(e.target.value)} 
+                {...register('password', {
+                  required: 'A senha é obrigatória'
+                })}
+              
               />
+                {errors.password && (
+                  <p style={{ color: 'red' }}>{errors.password.message}</p>
+                )}
             </div>
             <div className={styles.botoes}>
               <button
-                onClick={handleConfirmDelete}
+              type="submit"
                 className={styles.saveButton}
               >
                 Confirmar
@@ -193,7 +280,7 @@ const ListaUsuarios = ({ usuario }) => {
                 Cancelar
               </button>
             </div>
-          </div>
+          </form>
         </div>
       )}{" "}
     </div>
