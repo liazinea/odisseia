@@ -4,9 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UsuarioRequest extends FormRequest
+class UpdateUsuarioRequest extends FormRequest
 {
-
     public function authorize(): bool
     {
         return true;
@@ -16,7 +15,7 @@ class UsuarioRequest extends FormRequest
         return [
             'usu_nome'        => 'required|string|max:255',
             'usu_dataNasc'    => 'required|date|before:today',
-            'email'           => 'required|email|unique:usu_usuario,email',
+            'email'           => 'required|email',
             'usu_ra'          => 'required|integer',
         ];
     }
@@ -34,8 +33,6 @@ class UsuarioRequest extends FormRequest
 
             'email.required'            => 'O e-mail é obrigatório.',
             'email.email'               => 'Informe um e-mail válido.',
-            'email.unique'              => 'Este e-mail já está em uso.',
-
             'usu_ra.required'           => 'O RA é obrigatório.',
             'usu_ra.integer'            => 'O RA deve ser um número inteiro.',
 
