@@ -63,7 +63,7 @@ const ListaUsuarios = ({ usuario }) => {
 
   return (
     <div className={styles.row}>
-      <div className={styles.nome}>{usuario.nome}</div>
+      <div className={styles.nome}>{usuario.usu_nome}</div>
       <div className={styles.opcoes}>
         <div className={styles.excluir} onClick={handleDeleteClick}>
           <img className={styles.icon} src="/excluir-icon.svg" alt="Excluir" />

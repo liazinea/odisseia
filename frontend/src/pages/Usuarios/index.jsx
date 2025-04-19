@@ -5,8 +5,12 @@ import Button from "../../components/Botao/Botao";
 import Input from "../../components/Inputs/Input";
 import BarraPesquisa from "../../components/layout/HeaderHome/BarraPesquisa";
 import ListaUsuarios from "../../components/layout/ListaUsuarios";
+import useUsuarios from "../../hooks/useUsuarios";
+import { useAuth } from "../../context/AuthContext";
 
 const Usuarios = () => {
+  const {token, userType} = useAuth(  )
+  const {buscaUsuarios} = useUsuarios()
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (value) => {
@@ -32,27 +36,23 @@ const Usuarios = () => {
     console.log("Dados do formulário:", formData);
   };
 
-  const [usuariosBuscados, setUsuariosBuscados] = useState([]);
+  const [usuarios, setUsuarios] = useState([]);
 
   useEffect(() => {
-    // Define os dados manualmente no estado inicial
-    setUsuariosBuscados([
-      {
-        id: 1,
-        nome: "Lucas",
-        dataNascimento: "01/01/2000",
-        email: "lucas@email.com",
-        rg: "12.345.678-9",
-      },
-      {
-        id: 2,
-        nome: "Ana",
-        dataNascimento: "02/02/2001",
-        email: "ana@email.com",
-        rg: "98.765.432-1",
-      },
-    ]);
+    const carregarUsuarios = async () => {
+      const dados = await buscaUsuarios();
+      setUsuarios(dados);
+    };
+    carregarUsuarios();
   }, []);
+
+  useEffect(() => {
+    if (!token || userType != 1) {
+      navigate('/')
+    }
+  }, [token])
+
+  console.log(usuarios)
 
   return (
     <>
@@ -74,7 +74,7 @@ const Usuarios = () => {
               <div className={styles.opcoes}>Opções</div>
             </div>
             <div className={styles.conteudo}>
-              {usuariosBuscados.map((usuario) => (
+              {usuarios.map((usuario) => (
                 <div className={styles["linha"]} key={usuario.id}>
                   <ListaUsuarios usuario={usuario} />
                 </div>

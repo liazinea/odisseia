@@ -12,7 +12,9 @@ class UsuarioRepository implements UsuarioRepositoryInterface
 {
     public function buscaTodos():Collection
     {
-        return Usuario::where('usu_status', '=', 1)->get();
+        return Usuario::where('usu_status', '=', 1)
+        ->where('usu_nivel', '=', 0)
+        ->get();
     }
     public function buscaTodosComPesquisa(string $campo, string $valor):Collection
     {
