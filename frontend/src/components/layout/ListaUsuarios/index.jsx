@@ -21,12 +21,7 @@ const ListaUsuarios = ({ usuario, setMessage, buscaUsuarios, setUsuarios }) => {
     rg: usuario.rg,
   });
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
-    defaultValues: {
-      email: '',
-      password: '',
-    },
-  });
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
   const handleEditClick = () => {
     setIsEditModalOpen(true);

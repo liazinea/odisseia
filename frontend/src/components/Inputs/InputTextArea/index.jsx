@@ -16,7 +16,9 @@ const InputTextArea = ({nomeCampo, placeholder, required, errors, errorsApi, reg
   return (
     <label className={styles.label}>
         <textarea rows="10" className={`${styles.input} ${filled ? styles.filled : null}`} 
-        name={nomeCampo} id={nomeCampo} onChange={toggleFilled} {...(isRequired ? { required: true } : {})}/>
+        name={nomeCampo} id={nomeCampo} onChange={toggleFilled}  {...register(nomeCampo, {
+          required: required ? "Campo obrigatório" : false,
+        })}/>
         <span className={styles.placeholder}>{placeholder}</span>
     </label>
   )

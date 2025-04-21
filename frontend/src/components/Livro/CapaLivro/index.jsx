@@ -20,7 +20,7 @@ const CapaLivro = ({ imagemCapa, classificacao }) => {
 
       {imagemValida && imagemCapa ? (
         <img
-          src={getUrlImagem()}
+          src={`http://127.0.0.1:8000/storage/${imagemCapa}`}
           alt="Capa do livro"
           className={styles.imagemCapa}
           onError={() => setImagemValida(false)}

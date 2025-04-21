@@ -24,6 +24,7 @@ Route::middleware('auth:sanctum')->group(function(){
 
     Route::controller(AutorController::class)->group(function(){
         Route::get('/autores', 'index');
+        Route::get('/autores/nomes', 'nomes');
         Route::get('/autores/{autor}', 'show');
         Route::post('/autores', 'store');
         Route::patch('/autores/{autor}', 'delete');
@@ -32,6 +33,7 @@ Route::middleware('auth:sanctum')->group(function(){
 
     Route::controller(GeneroController::class)->group(function(){
         Route::get('/generos', 'index');
+        Route::get('/generos/nomes', 'nomes');
         Route::get('/generos/{genero}', 'show');
         Route::post('/generos', 'store');
         Route::patch('/generos/{genero}', 'delete');

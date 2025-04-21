@@ -4,18 +4,17 @@ import styles from "./index.module.scss";
 import { IoPencil, IoTrash, IoTrashOutline } from "react-icons/io5";
 import ModalExcluir from "../../Modal/ModalExcluir";
 import ModalEditar from "../../Modal/ModalEditar";
-// import { api } from '../../../config/api';
+import { api } from '../../../config/api';
+import { useAuth } from "../../../context/AuthContext";
 
 const CelulaTabelaLivros = ({ livro }) => {
   const [livroSelecionado, setLivroSelecionado] = useState(null);
   const [modalEditarAberto, setModalEditarAberto] = useState(false);
   const [modalAberto, setModalAberto] = useState(false);
+  const {token} = useAuth()
   
   const navigate = useNavigate();
-  const buscaLivro = async () =>{
-    const response = await api.get(`/livros`)
-    setLivrosBuscados(response.data.livros.data)
-  }
+
 
   const abreModal = (livroRelacionado) => {
     setLivroSelecionado(livroRelacionado);
@@ -37,9 +36,13 @@ const CelulaTabelaLivros = ({ livro }) => {
     setLivroSelecionado(null);
   };
 
-  const deletarLivro = async (livroDeletado) => {
+  const deletarLivro = async () => {
     try {
-      const response = await api.delete(`/livros/${livroDeletado.id}`);
+      const response = await api.delete(`/livros/${livro.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       console.log("Livro excluído com sucesso:", response.data);
       fechaModal();
       buscaLivro(); // Atualiza a lista após exclusão
@@ -47,10 +50,6 @@ const CelulaTabelaLivros = ({ livro }) => {
       console.error("Erro ao excluir o livro:", error);
     }
   };
-
-  useEffect(() => {
-    buscaLivro();
-  }, [modalAberto]);
 
   const formatarData = (dataString) => {
     const data = new Date(dataString);
@@ -68,18 +67,18 @@ const CelulaTabelaLivros = ({ livro }) => {
         <div className={styles.data}>{formatarData(livro.created_at)}</div>
         <div className={styles.capa}>
           <img
-            src={livro.liv_capa}
+            src={`http://127.0.0.1:8000/storage/${livro.capa}`}
             className={styles.imagem}
             alt="Capa do Livro"
           />
         </div>
         <div
           className={styles.titulo}
-          onClick={() => navigate(`/livros/${livro.id}`)}
+          onClick={() => navigate(`/livro/${livro.id}`)}
         >
-          {livro.liv_nome}
+          {livro.nome}
         </div>
-        <div className={styles.num}>{livro.liv_numRegistro}</div>
+        <div className={styles.num}>{livro.numRegistro}</div>
         <div className={styles.opcoes}>
           <div className={styles.editar} onClick={() => showModal(livro)}>
             <IoPencil/>
@@ -89,8 +88,8 @@ const CelulaTabelaLivros = ({ livro }) => {
           </div>
         </div>
       </div>
-      <ModalExcluir textoModal={`Tem certeza de que deseja excluir o livro "<b>{livroSelecionado.nome}</b>"?`} onClick={deletarLivro} modalAberto={modalAberto} fechaModal={fechaModal} itemSelecionado={livroSelecionado}/>
-      <ModalEditar closeModal={closeModal} modalEditarAberto={modalEditarAberto} showModal={showModal}/>
+      <ModalExcluir textoModal={`Tem certeza de que deseja excluir o livro ${livro.nome}`} onClick={deletarLivro} modalAberto={modalAberto} fechaModal={fechaModal} itemSelecionado={livroSelecionado}/>
+      <ModalEditar closeModal={closeModal} modalEditarAberto={modalEditarAberto} showModal={showModal} livro={livro}/>
     </div>
   );
 };
