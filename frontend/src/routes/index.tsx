@@ -25,11 +25,11 @@ export const Paths = () => {
                     <Route path={'/esqueci-minha-senha'} element={<RedefinicaoSenha />}/>
                     <Route path={'/'} element={<PageLayout />}>
                         <Route path={'/t'} element={<Teste />}/>
-                        <Route path={'/infos'} element={<InformacoesDetalhadas />}/>
+                        <Route path={`/livro/:id`} element={<InformacoesDetalhadas />}/>
                         <Route path={'/home-adm'} element={<HomeAdm />}/>
-                        <Route path={'/livros-cadastrados'} element={<LivrosCadastrados />}/>
+                        <Route path={'/livros'} element={<LivrosCadastrados />}/>
                         <Route path={'/home'} element={<Home/>}/>
-                        <Route path={'/c'} element={<CadastroLivro />}/>
+                        <Route path={'/livro/cadastro'} element={<CadastroLivro />}/>
                         <Route path={'/generos'} element={<Generos/>}/>
                         <Route path={'/usuarios'} element={<Usuarios/>}/>
                         

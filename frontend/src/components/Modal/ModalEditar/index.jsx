@@ -2,6 +2,8 @@ import Modal from "react-modal";
 import FormModal from "../../Form/FormModal";
 import styles from "./index.module.scss";
 import { IoClose } from "react-icons/io5";
+import { useState, useEffect } from "react";
+
 
 const ModalEditar = ({
   modalEditarAberto,
@@ -10,6 +12,7 @@ const ModalEditar = ({
   formModal,
   livro,
 }) => {
+
   return (
     <Modal
       isOpen={modalEditarAberto}

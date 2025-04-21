@@ -10,13 +10,14 @@ import {
 import CelulaTabelaLivros from "../CelulaTabelaLivros";
 import BotaoVerMais from "../../Botao/BotaoVerMais";
 import { IoSearch } from "react-icons/io5";
+import { useAuth } from "../../../context/AuthContext";
 
 const TabelaLivros = ({ livros }) => {
   const [livro, setLivro] = useState([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [pagesLoaded, setPagesLoaded] = useState(1);
   const itemsPerPage = 3;
-
+    console.log(livros)
   useEffect(() => {
     setLivro(livros);
   }, [livros]);
@@ -47,27 +48,27 @@ const TabelaLivros = ({ livros }) => {
       ),
     },
     {
-      accessorKey: "liv_capa",
+      accessorKey: "capa",
       id: "capa",
       header: "Capa",
       cell: (props) => (
-        <p className={styles.capa}>{props.row.original.liv_capa}</p>
+        <p className={styles.capa}>{props.row.original.capa}</p>
       ),
     },
     {
-      accessorKey: "liv_nome",
+      accessorKey: "nome",
       id: "titulo",
       header: "Título",
       cell: (props) => (
-        <p className={styles.titulo}>{props.row.original.liv_nome}</p>
+        <p className={styles.titulo}>{props.row.original.nome}</p>
       ),
     },
     {
-      accessorKey: "liv_numRegistro",
+      accessorKey: "numRegistro",
       id: "num",
       header: "Número de registro",
       cell: (props) => (
-        <p className={styles.num}>{props.row.original.liv_numRegistro}</p>
+        <p className={styles.num}>{props.row.original.numRegistro}</p>
       ),
     },
     {

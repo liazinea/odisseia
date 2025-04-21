@@ -1,24 +1,25 @@
-import { useEffect, useState } from "react"
+import { useAuth } from "../context/AuthContext"
 import { api } from "../config/api"
 
-function useAutores(param){
-    const [autores, setAutores] = useState([])
-    useEffect(() =>{
-        if(param){
-            const buscaAutores = async () => {
-                const response = await api.get(`/autores?autor=${param}`)
-                setAutores(response.data.autores.data)
-            }
-            buscaAutores()
-        }else{
-            const buscaAutores = async () => {
-                const response = await api.get(`/autores`)
-                setAutores(response.data.autores.data)
-            }
-            buscaAutores()
-        }
-    },[])
+function useAutores() {
+    const { token } = useAuth()
 
-    return {autores}
+    const buscaAutores = async (param) => {
+        try {
+            const url = param ? `/autores?autor=${param}` : `/autores`
+            const response = await api.get(url, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            return response.data.autores.data
+        } catch (error) {
+            console.error("Erro ao buscar autores:", error)
+            return []
+        }
+    }
+
+    return { buscaAutores }
 }
+
 export default useAutores

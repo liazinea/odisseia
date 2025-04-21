@@ -2,18 +2,18 @@ import styles from './index.module.scss';
 import { FaUpload } from "react-icons/fa6";
 import { useState } from 'react';
 
-
-const InputCapa = ({campo, errors, errorsApi, register}) => {
+const InputCapa = ({ campo, errors, errorsApi, register, required = true }) => {
   const [preview, setPreview] = useState(null);
 
-  const handleFileChange = (event) => {
+  const handlePreview = (event) => {
     const file = event.target.files[0];
+    console.log(file)
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        setPreview(e.target.result)
+        setPreview(e.target.result);
       };
-      reader.readAsDataURL(file)
+      reader.readAsDataURL(file);
     }
   };
 
@@ -34,14 +34,21 @@ const InputCapa = ({campo, errors, errorsApi, register}) => {
           )}
         </div>
       </label>
+
       <input
-       
         type="file"
-        className={styles.fileinput}
         id={campo}
-        accept='image/*'
-        onChange= {handleFileChange}
+        accept="image/*"
+        className={styles.fileinput}
+        {...register(campo, {
+          required: required ? "Campo obrigatório" : false,
+          onChange: (e) => handlePreview(e),
+        })}
       />
+
+      {errors?.[campo] && (
+        <p className={styles.error}>{errors[campo]?.message}</p>
+      )}
     </div>
   );
 };

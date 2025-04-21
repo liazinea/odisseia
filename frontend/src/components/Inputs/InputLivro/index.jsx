@@ -2,33 +2,35 @@ import { useState } from "react";
 import styles from "./index.module.scss";
 
 const InputLivro = ({
-  props,
   type,
   nomeCampo,
   placeholder,
   required,
+  register,
   errors,
-  errorsApi,
+  filledStatus = false
 }) => {
-  const isRequired = required;
-  const [filled, setFilled] = useState(false);
+  const [filled, setFilled] = useState(filledStatus);
 
   const handleChange = (e) => {
     setFilled(e.target.value.trim() !== "");
-    if (onChange) onChange(e);
   };
+
   return (
     <label className={styles.label}>
       <input
         type={type}
-        className={`${styles.input} ${filled ? styles.filled : null}`}
-        name={nomeCampo}
+        className={`${styles.input} ${filled ? styles.filled : ""}`}
         id={nomeCampo}
+        {...register(nomeCampo, {
+          required: required ? "Campo obrigatório" : false,
+        })}
         onChange={handleChange}
-        {...(isRequired ? { required: true } : {})}
-        {...props}
       />
       <span className={styles.placeholder}>{placeholder}</span>
+      {errors && errors[nomeCampo] && (
+        <span className={styles.error}>{errors[nomeCampo].message}</span>
+      )}
     </label>
   );
 };
