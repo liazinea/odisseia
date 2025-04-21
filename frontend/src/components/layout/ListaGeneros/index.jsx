@@ -49,8 +49,8 @@ const ListaGeneros = ({ genero, setMessage, buscaGeneros, setGeneros }) => {
     setPassword("");
   };
 
-  const handleConfirmDelete = async () => {
-    const response = await api.get(`/check-senha?password=${password}`, {
+  const handleConfirmDelete = async (data) => {
+    const response = await api.get(`/check-senha?password=${data.password}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -186,7 +186,7 @@ const ListaGeneros = ({ genero, setMessage, buscaGeneros, setGeneros }) => {
       {/* Modal de Confirmação de Senha */}
       {isPasswordModalOpen && (
         <div className={styles.modal}>
-          <div className={styles.modalSenha}>
+          <form onSubmit={handleSubmit(handleConfirmDelete)} className={styles.modalSenha}>
             <h3 className={styles.titulo}>Confirmar Exclusão</h3>
             <p className={styles.mensagem}>Por favor, digite sua senha:</p>
             {passwordMessage && <p>{passwordMessage}</p>}
@@ -197,23 +197,28 @@ const ListaGeneros = ({ genero, setMessage, buscaGeneros, setGeneros }) => {
                 placeholder="Digite sua senha"
                 value={password}
                 onChange={(value) => setPassword(value)}
+                {...register('password', {
+                  required: 'A senha é obrigatória'
+                })}
               />
             </div>
             <div className={styles.botoes}>
               <button
+               type="submit"
                 onClick={handleConfirmDelete}
                 className={styles.saveButton}
               >
                 Confirmar
               </button>
               <button
+             
                 onClick={closePasswordModal}
                 className={styles.closeButton}
               >
                 Cancelar
               </button>
             </div>
-          </div>
+          </form>
         </div>
       )}
     </div>
