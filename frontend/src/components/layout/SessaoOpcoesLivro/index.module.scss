@@ -1,0 +1,10 @@
+@use "../../../styles/cores/cores" as color;
+
+.container {
+  background-color: color.$azul-escuro;
+  display: grid;
+  justify-items: center;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5rem;
+  padding: 5vh;
+}
