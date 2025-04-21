@@ -32,6 +32,11 @@ class AutorController extends Controller
 
     }
 
+    public function nomes():JsonResponse
+    {
+        return response()->json(Autor::where('aut_status_ativo', '=', 1)->pluck('aut_nome'), 200);
+    }
+
     public function store(CriaAutorRequest $request):JsonResponse
     {
         $autor = $request->validated();
@@ -58,10 +63,5 @@ class AutorController extends Controller
                 'error' => $e->getMessage()
             ], 400);
         }
-    }
-
-    public function show(Autor $autor):JsonResponse
-    {
-        
     }
 }

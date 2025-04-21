@@ -5,18 +5,26 @@ namespace App\Repositories;
 use App\DTOs\UsuarioDTO;
 use App\Models\Usuario;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UsuarioRepository implements UsuarioRepositoryInterface
 {
     public function buscaTodos():Collection
     {
-        return Usuario::where('usu_status', '=', 1)->get();
+        return Usuario::where('usu_status', '=', 1)
+        ->where('usu_nivel', '=', 0)
+        ->get();
     }
     public function buscaTodosComPesquisa(string $campo, string $valor):Collection
     {
         return Usuario::where($campo, 'like', "%".$valor."%")
         ->where('usu_status', '=', 1)
         ->get();
+    }
+    public function checkSenha($password):bool
+    {
+        return Hash::check($password, Auth::user()->password);
     }
 
     public function salvar(UsuarioDTO $usuario):Usuario

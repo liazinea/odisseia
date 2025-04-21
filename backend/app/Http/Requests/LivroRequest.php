@@ -16,7 +16,7 @@ class LivroRequest extends FormRequest
     public function rules()
     {
         return [
-            'liv_isbn' => 'required||unique:liv_livro,liv_isbn',
+            'liv_isbn' => 'required',
             'liv_numRegistro' => 'required|',
             'liv_nome' => 'required|string|max:255',
             'liv_qtdPaginas' => 'required|integer|min:1',
@@ -26,7 +26,7 @@ class LivroRequest extends FormRequest
             'liv_classIndicativa' => 'required|string|max:50',
             'liv_localizacao' => 'required|string|max:255',
             'liv_sinopse' => 'required|string',
-            'liv_capa' => 'required|image| mimes:jpeg,png,jpg,gif|max:2048',
+            'liv_capa' => 'required',
             'liv_autores' => 'required|array|min:1',
             'liv_autores.*' => 'string|max:255',
             'liv_generos' => 'required|array|min:1',

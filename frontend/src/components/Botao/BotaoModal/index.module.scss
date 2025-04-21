@@ -1,0 +1,15 @@
+@import '../../../styles/index.scss';
+
+.botao{
+    padding: 10px;
+    font-size: 1.2rem;
+    border-radius: 12px;
+}
+.vermelho{
+    background-color: $vermelho;
+    color: $branco;
+}
+.laranja{
+    background-color: $laranja;
+    color: $azul-escuro;
+}

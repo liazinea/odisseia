@@ -8,8 +8,13 @@ import Home from "../pages/Home"
 import PageLayout from "../layouts/PageLayout";
 import PrimeiroAcesso from "../pages/PrimeiroAcesso";
 import RedefinicaoSenha from "../pages/RedefinicaoSenha";
+import Generos from "../pages/Generos";
+import Usuarios from "../pages/Usuarios";
 import HomeAdm from "../pages/HomeAdm";
+import LivrosCadastrados from "../pages/LivrosCadastrados";
 
+import CadastroLivro from "../pages/CadastroLivro";
+import OpcoesLivro from "../pages/OpcoesLivro";
 
 export const Paths = () => {
     return (
@@ -17,13 +22,18 @@ export const Paths = () => {
             <BrowserRouter basename={"/"}>
                 <Routes>
                     <Route index element={<Login />} />
+                    <Route path={'/primeiro-acesso'} element={<PrimeiroAcesso />}/>
+                    <Route path={'/esqueci-minha-senha'} element={<RedefinicaoSenha />}/>
                     <Route path={'/'} element={<PageLayout />}>
                         <Route path={'/t'} element={<Teste />}/>
-                        <Route path={'/infos'} element={<InformacoesDetalhadas />}/>
-                        <Route path={'/primeiro-acesso'} element={<PrimeiroAcesso />}/>
-                        <Route path={'/adm'} element={<HomeAdm />}/>
-                        <Route path={'/esqueci-minha-senha'} element={<RedefinicaoSenha />}/>
+                        <Route path={`/livro/:id`} element={<InformacoesDetalhadas />}/>
+                        <Route path={'/home-adm'} element={<HomeAdm />}/>
+                        <Route path={'/livros'} element={<LivrosCadastrados />}/>
                         <Route path={'/home'} element={<Home/>}/>
+                        <Route path={'/livro/cadastro'} element={<CadastroLivro />}/>
+                        <Route path={'/generos'} element={<Generos/>}/>
+                        <Route path={'/usuarios'} element={<Usuarios/>}/>
+                        <Route path={'/opcoes-livro'} element={<OpcoesLivro/>}/>
                     </Route>
                     <Route path={'*'} element={<NotFound />} />
                 </Routes>

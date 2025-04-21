@@ -23,6 +23,21 @@
     @media (min-width: 1024px) {
       padding: 2rem 3rem;
     }
+
+    .logout-button {
+      background-color: color.$azul-escuro;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-left: auto;
+    }
+
+    .logout-button:hover {
+      background-color: color.$vermelho;
+    }
   }
 
   .navbar-logo {
@@ -120,6 +135,21 @@
           }
         }
       }
+    }
+
+    .logout-button {
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-left: auto;
+    }
+
+    .logout-button:hover {
+      background-color: #ff1a1a;
     }
 
     @media (max-width: 576px) {

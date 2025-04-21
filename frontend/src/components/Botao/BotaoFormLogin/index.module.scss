@@ -1,0 +1,9 @@
+@use "../../../styles/index.scss" as color;
+
+.botao {
+  background-color: color.$azul-escuro;
+  color: color.$branco;
+  padding: 10px 50px;
+  font-size: 1.7rem;
+  border-radius: 12px;
+}

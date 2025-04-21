@@ -1,0 +1,42 @@
+@import "../../../styles/index.scss";
+
+.fundo {
+  width: 90vw;
+  background-color: $azul-escuro;
+  padding: 2%;
+  border-radius: 40px;
+  display: flex;
+  justify-content: center;
+  form {
+    width: 100%; 
+  }
+  .alinhaCapa {
+    display: flex;
+
+    .capa {
+      margin-left: 2.604vw;
+      
+      
+      .btn {
+        display: flex;
+        justify-content: center;
+        margin-top: 2vh;
+      }
+    }
+  }
+  .dupla {
+    display: flex;
+    gap: 70px;
+
+    .input {
+      width: 30vw;
+      margin-bottom: 2%;
+    }
+    .inputCanto {
+      width: 16.667vw;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+}

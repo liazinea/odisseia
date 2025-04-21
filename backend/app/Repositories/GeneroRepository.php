@@ -10,7 +10,7 @@ class GeneroRepository implements GeneroRepositoryInterface
 {
     public function buscarTodos():null|Collection
     {
-        return Genero::all();
+        return Genero::where('gen_status_ativo', '=', 1)->get();
     }
     public function buscaComNome(string $param): null|Genero|Collection
     {

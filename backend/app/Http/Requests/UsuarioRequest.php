@@ -17,10 +17,7 @@ class UsuarioRequest extends FormRequest
             'usu_nome'        => 'required|string|max:255',
             'usu_dataNasc'    => 'required|date|before:today',
             'email'           => 'required|email|unique:usu_usuario,email',
-            'password'        => 'required|string',
-            'usu_nivel'       => 'required|integer',
             'usu_ra'          => 'required|integer',
-            'usu_status'      => 'required|integer',
         ];
     }
 
@@ -39,17 +36,9 @@ class UsuarioRequest extends FormRequest
             'email.email'               => 'Informe um e-mail válido.',
             'email.unique'              => 'Este e-mail já está em uso.',
 
-            'password.required'         => 'A senha é obrigatória.',
-            'password.string'           => 'A senha deve ser um texto.',
-
-            'usu_nivel.required'        => 'O nível é obrigatório.',
-            'usu_nivel.integer'         => 'O nível deve ser um número inteiro.',
-
             'usu_ra.required'           => 'O RA é obrigatório.',
             'usu_ra.integer'            => 'O RA deve ser um número inteiro.',
 
-            'usu_status.required'       => 'O status é obrigatório.',
-            'usu_status.integer'        => 'O status deve ser um número inteiro.',
         ];
     }
 }

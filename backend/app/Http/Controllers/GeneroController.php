@@ -31,6 +31,11 @@ class GeneroController extends Controller
         ], 200);
     }
 
+    public function nomes():JsonResponse
+    {
+        return response()->json(Genero::where('gen_status_ativo', '=', 1)->pluck('gen_nome'), 200);
+    }
+
     public function show(Genero $genero):JsonResponse
     {
         if($genero->gen_status_ativo == 1){
@@ -68,7 +73,7 @@ class GeneroController extends Controller
     public function update(Genero $genero, GeneroRequest $request):JsonResponse
     {
         try{
-            $this->generoService->atualizar($genero, new GeneroDTO($request->validated()));
+            $this->generoService->atualizar($genero, new GeneroDTO($request->validated('gen_nome')));
             return response()->json([
                 'message' =>'Gênero atualizado com sucesso.'
             ], 200);

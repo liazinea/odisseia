@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DTOs\LoginDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
+use App\Http\Resources\UsuarioResource;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use App\Services\LoginService;
@@ -27,7 +28,7 @@ class LoginController extends Controller
                         password: $request->validated('password')
                     )
                     ),
-                'usuario' => Auth::user()
+                'usuario' => new UsuarioResource(Auth::user())
             ],200);
        } catch(Exception $e){
             return response()->json([

@@ -10,20 +10,19 @@ const InfosLivro = ({ livro }) => {
   return (
     <div className={styles.card}>
       <div className={styles.topo}>
-        <CapaLivro imagemCapa={livro.imagemCapa} classificacao={livro.classificacao} />
+        <CapaLivro imagemCapa={livro.capa} classificacao={livro.classIndicativa} />
 
         <div className={styles.textos}>
           <div className={styles.qtdWrapper}>
-            <BotaoQtd quantidade={livro.quantidade} />
+            <BotaoQtd quantidade={livro.qtdPaginas} />
           </div>
 
-          <TituloDescricao titulo={livro.titulo} 
-                           subTitulo={livro.subTitulo} 
+          <TituloDescricao titulo={livro.nome} 
                            autores={livro.autores} />
 
           <div className={styles.generos}>
             {livro.generos.map((genero, i) => (
-              <BotaoGenero key={i} texto={genero} />
+              <BotaoGenero key={i} texto={genero.nome} />
             ))}
           </div>
         </div>

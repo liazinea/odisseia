@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DTOs\UsuarioDTO;
+use App\Http\Requests\UpdateUsuarioRequest;
 use App\Http\Requests\UsuarioRequest;
 use App\Http\Resources\UsuarioCollection;
 use App\Http\Resources\UsuarioResource;
@@ -43,6 +44,13 @@ class UsuarioController extends Controller
         ], 400);
     }
 
+    public function check(Request $request):JsonResponse
+    {
+        return response()->json([
+            'status' => $this->usuarioService->checkSenha($request->password)
+        ], 200);
+    }
+
     public function store(UsuarioRequest $request): JsonResponse
     {
         try {
@@ -50,10 +58,10 @@ class UsuarioController extends Controller
                 $request->validated('usu_nome'),
                 $request->validated('usu_dataNasc'),
                 $request->validated('email'),
-                $request->validated('password'),
-                $request->validated('usu_nivel'),
+                'senha123',
+                0,
                 $request->validated('usu_ra'),
-                $request->validated('usu_status'),
+                1,
             );
 
             return response()->json([
@@ -81,22 +89,22 @@ class UsuarioController extends Controller
         }
     }
 
-    public function update(Usuario $usuario, UsuarioRequest $request): JsonResponse
+    public function update(Usuario $usuario, UpdateUsuarioRequest $request): JsonResponse
     {
         try {
             $usuarioDTO = new UsuarioDTO(
                 $request->validated('usu_nome'),
                 $request->validated('usu_dataNasc'),
                 $request->validated('email'),
-                $request->validated('password'),
-                $request->validated('usu_nivel'),
+                $usuario->password,
+                $usuario->usu_nivel,
                 $request->validated('usu_ra'),
-                $request->validated('usu_status'),
+                $usuario->usu_status
             );
 
             $this->usuarioService->editar($usuario, $usuarioDTO);
             return response()->json([
-                'message' => 'Gênero atualizado com sucesso.'
+                'message' => 'Usuário atualizado com sucesso.'
             ], 200);
         } catch (Exception $e) {
             return response()->json([

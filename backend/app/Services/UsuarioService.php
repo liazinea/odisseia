@@ -6,6 +6,7 @@ use App\DTOs\UsuarioDTO;
 use App\Models\Usuario;
 use App\Repositories\UsuarioRepository;
 use Illuminate\Database\Eloquent\Collection;
+use Psy\VersionUpdater\Checker;
 
 class UsuarioService
 {
@@ -17,6 +18,11 @@ class UsuarioService
     public function buscaTodosComPesquisa(array $params):Collection
     {
         return $this->usuarioRepository->buscaTodosComPesquisa($params['campo'], $params['valor']);
+    }
+
+    public function checkSenha($password):bool
+    {
+        return $this->usuarioRepository->checkSenha($password);
     }
 
     public function buscaTodos():Collection

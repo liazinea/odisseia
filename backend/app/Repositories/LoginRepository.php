@@ -14,7 +14,8 @@ class LoginRepository implements LoginRepositoryInterface
 
     public function logout(Usuario $usuarioAutenticado):bool
     {
-        return $usuarioAutenticado->currentAccessToken()->delete();
+        return $usuarioAutenticado->tokens()->delete();
+
     }
     public function geraTokenAluno(Usuario $alunoAutenticado):string
     {
