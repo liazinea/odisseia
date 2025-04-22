@@ -14,8 +14,12 @@ const InformacoesDetalhadas = () => {
   const { id } = useParams();
   const [livro, setLivro] = useState(null)
   const { buscaLivro } = useLivro(id)
-  const { token } = useAuth()
-  console.log(token)
+  const { token, userType } = useAuth()
+  useEffect(() => {
+    if (!token || userType != 1) {
+      navigate('/')
+    }
+  }, [token])
 
   useEffect(() => {
     // Função para buscar o livro na API
