@@ -38,6 +38,7 @@ const InputCapa = ({ campo, errors, errorsApi, register, required = true }) => {
       <input
         type="file"
         id={campo}
+        name={campo}
         accept="image/*"
         className={styles.fileinput}
         {...register(campo, {
@@ -45,10 +46,7 @@ const InputCapa = ({ campo, errors, errorsApi, register, required = true }) => {
           onChange: (e) => handlePreview(e),
         })}
       />
-
-      {errors?.[campo] && (
-        <p className={styles.error}>{errors[campo]?.message}</p>
-      )}
+        <p className={styles.error}>{errors?.[campo] && (errors[campo]?.message)}</p>
     </div>
   );
 };

@@ -38,9 +38,19 @@
       }
     }
   
-  
     .fileinput {
-display: none;
+      opacity: 0;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      visibility: hidden;
     }
 
   }
+.error{
+  width: 100%;
+    height: 20px;
+    color: $vermelho;
+    text-align: center;
+}

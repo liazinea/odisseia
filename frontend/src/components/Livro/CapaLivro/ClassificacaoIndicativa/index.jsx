@@ -10,7 +10,7 @@ const ClassificacaoIndicativa = ({ rating }) => {
     '+16': "#d4080f",
     '+18': "#080500",
   };
-
+// console.log(rating)
   const normalizedRating = (rating || "").trim();
   const color = colors[normalizedRating] || "#080500";
   const displayRating = normalizedRating === "Livre" ? "L" : normalizedRating;

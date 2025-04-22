@@ -6,18 +6,20 @@ import SelectLivro from "../../Inputs/SelectLivro";
 import InputCapa from "../../Inputs/InputCapa";
 import BotaoForm from "../../Botao/BotaoForm";
 import InputTextArea from "../../Inputs/InputTextArea";
-import { useForm } from 'react-hook-form'
+import { useForm } from "react-hook-form";
 import useGeneros from "../../../hooks/useGeneros";
 import useAutores from "../../../hooks/useAutores";
 import api from "../../../services/api";
 import { useAuth } from "../../../context/AuthContext";
+import ModalMensagem from "../../Modal/ModalMensagem";
 
 const CardCadastro = () => {
-
   const [generos, setGeneros] = useState([]);
-  const [autores, setAutores] = useState([])
-  const { token } = useAuth()
-  console.log(autores)
+  const [autores, setAutores] = useState([]);
+  const [modalMensagemAberto, setModalMensagemAberto] = useState(false);
+  const [message, setMessage] = useState(null);
+  const { token } = useAuth();
+  console.log(autores);
 
   const [errorsApi, setErrorsApi] = useState();
   const {
@@ -30,13 +32,13 @@ const CardCadastro = () => {
 
   useEffect(() => {
     const carregarGeneros = async () => {
-      const dados = await api.get('/generos/nomes', {
+      const dados = await api.get("/generos/nomes", {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-      setGeneros(dados.data)
+      setGeneros(dados.data);
     };
 
     carregarGeneros();
@@ -44,18 +46,17 @@ const CardCadastro = () => {
 
   useEffect(() => {
     const carregarAutores = async () => {
-      const dados = await api.get('/autores/nomes', {
+      const dados = await api.get("/autores/nomes", {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-      setAutores(dados.data)
+      setAutores(dados.data);
     };
 
     carregarAutores();
   }, []);
-
 
   const onSubmit = async (data) => {
     console.log("Dados brutos:", data);
@@ -96,32 +97,29 @@ const CardCadastro = () => {
     }
 
     try {
-      const response = await api.post('/livros', formData, {
+      const response = await api.post("/livros", formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${token}`
-        }
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
       });
 
-      console.log('Resposta da API:', response.data);
+      console.log("Resposta da API:", response.data);
+      setMessage(response.data.message)
+      setModalMensagemAberto(true);
+      closeEditModal();
+      
     } catch (error) {
       if (error.response) {
-
-        console.error('Erro na resposta da API:', error.response.data);
-        console.error('Status:', error.response.status);
+        console.error("Erro na resposta da API:", error.response.data);
+        console.error("Status:", error.response.status);
       } else if (error.request) {
-
-        console.error('Erro na requisição, sem resposta:', error.request);
+        console.error("Erro na requisição, sem resposta:", error.request);
       } else {
-
-        console.error('Erro ao configurar a requisição:', error.message);
+        console.error("Erro ao configurar a requisição:", error.message);
       }
     }
-
-
-
   };
-
 
   return (
     <div className={styles.form}>
@@ -129,7 +127,6 @@ const CardCadastro = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.dupla}>
             <div className={styles.input}>
-
               {" "}
               {/* Input Título */}
               <InputLivro
@@ -140,7 +137,6 @@ const CardCadastro = () => {
                 register={register}
                 errors={errors}
               />
-
             </div>
             <div className={styles.input}>
               {" "}
@@ -149,6 +145,17 @@ const CardCadastro = () => {
                 type="text"
                 nomeCampo="liv_isbn"
                 placeholder="ISBN"
+                required={true}
+                register={register}
+                errors={errors}
+              />
+            </div>
+            <div className={styles.inputCanto}>
+              {/* Input quantidade de páginas */}
+              <InputLivro
+                type="number"
+                nomeCampo="liv_qtdPaginas"
+                placeholder="Nº de páginas"
                 required={true}
                 register={register}
                 errors={errors}
@@ -204,7 +211,6 @@ const CardCadastro = () => {
                     errors={errors}
                   />
                 </div>
-
               </div>
               <div className={styles.dupla}>
                 <div className={styles.input}>
@@ -218,7 +224,6 @@ const CardCadastro = () => {
                     error={errors?.liv_localizacao}
                     isMulti={true}
                   />
-
                 </div>
                 <div className={styles.input}>
                   {/* Input Autor */}
@@ -251,30 +256,13 @@ const CardCadastro = () => {
                   <SelectLivro
                     nomeCampo="liv_classIndicativa"
                     placeholder="Classificação indicativa"
-                    values={[
-                      'Livre',
-                      '+10',
-                      '+12',
-                      '+14',
-                      '+16',
-                      '+18']}
+                    values={["Livre", "+10", "+12", "+14", "+16", "+18"]}
                     control={control}
                     rules={{ required: "Campo obrigatório" }}
                     error={errors?.liv_classIndicativa}
                     isMulti={true}
                   />
                 </div>
-              </div>
-              <div className={styles.input}>
-                {/* Input data publi */}
-                <InputLivro
-                  type="number"
-                  nomeCampo="liv_qtdPaginas"
-                  placeholder="Número de páginas"
-                  required={true}
-                  register={register}
-                  errors={errors}
-                />
               </div>
               <InputTextArea
                 nomeCampo={"liv_sinopse"}
@@ -287,10 +275,13 @@ const CardCadastro = () => {
             </div>
             <div className={styles.capaBtn}>
               <div className={styles.capa}>
-                <input
-                  type="file"
-                  accept="image/*"
-                  {...register('liv_capa', { required: 'Campo obrigatório' })}
+                <InputCapa
+                  required={true}
+                  campo={"liv_capa"}
+                  titulo={"Capa"}
+                  register={register}
+                  errors={errors}
+                  errorsApi={errorsApi}
                 />
 
                 <div className={styles.btn}>
@@ -298,6 +289,7 @@ const CardCadastro = () => {
                     type={"submit"}
                     nomeBotao={"cadastrar"}
                     texto={"Cadastrar"}
+                    mensagemModal={'Livro cadastrado com'}
                   />
                 </div>
               </div>
@@ -305,6 +297,11 @@ const CardCadastro = () => {
           </div>
         </form>
       </div>
+      <ModalMensagem
+          mensagemModal={message}
+          modalAberto={modalMensagemAberto}
+          closeModal={() => setModalMensagemAberto(false)}
+        />
     </div>
   );
 };

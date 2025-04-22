@@ -7,7 +7,7 @@ import ModalEditar from "../../Modal/ModalEditar";
 import { api } from '../../../config/api';
 import { useAuth } from "../../../context/AuthContext";
 
-const CelulaTabelaLivros = ({ livro }) => {
+const CelulaTabelaLivros = ({ livro, onDelete  }) => {
   const [livroSelecionado, setLivroSelecionado] = useState(null);
   const [modalEditarAberto, setModalEditarAberto] = useState(false);
   const [modalAberto, setModalAberto] = useState(false);
@@ -44,6 +44,7 @@ const CelulaTabelaLivros = ({ livro }) => {
         }
       });
       console.log("Livro excluído com sucesso:", response.data);
+      onDelete(livro.id);
       fechaModal();
       buscaLivro(); // Atualiza a lista após exclusão
     } catch (error) {

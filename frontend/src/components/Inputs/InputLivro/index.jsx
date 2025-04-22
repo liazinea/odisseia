@@ -17,21 +17,21 @@ const InputLivro = ({
   };
 
   return (
-    <label className={styles.label}>
-      <input
-        type={type}
-        className={`${styles.input} ${filled ? styles.filled : ""}`}
-        id={nomeCampo}
-        {...register(nomeCampo, {
-          required: required ? "Campo obrigatório" : false,
-        })}
-        onChange={handleChange}
-      />
-      <span className={styles.placeholder}>{placeholder}</span>
-      {errors && errors[nomeCampo] && (
-        <span className={styles.error}>{errors[nomeCampo].message}</span>
-      )}
-    </label>
+    <div>
+      <label className={styles.label}>
+        <input
+          type={type}
+          className={`${styles.input} ${filled ? styles.filled : ""}`}
+          id={nomeCampo}
+          {...register(nomeCampo, {
+            required: required ? "Campo obrigatório" : false,
+          })}
+          onChange={handleChange}
+        />
+        <span className={styles.placeholder}>{placeholder}</span>
+      </label>
+        <p className={styles.error}>{errors && errors[nomeCampo] && (errors[nomeCampo].message)}</p>
+    </div>
   );
 };
 

@@ -13,7 +13,7 @@ class AutorSeeder extends Seeder
      */
     public function run(): void
     {
-       Autor::crete(['aut_nome'=>'Clarice Lispector']);
-       Autor::crete(['aut_nome'=>'Maurício de Sousa']);
+       Autor::create(['aut_nome'=>'Clarice Lispector']);
+       Autor::create(['aut_nome'=>'Maurício de Sousa']);
     }
 }

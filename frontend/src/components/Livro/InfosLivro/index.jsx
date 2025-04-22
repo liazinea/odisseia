@@ -7,10 +7,11 @@ import BotaoGenero from '../../Botao/BotaoGenero';
 import BotaoQtd from '../../Botao/BotaoQtd';
 
 const InfosLivro = ({ livro }) => {
+
   return (
     <div className={styles.card}>
       <div className={styles.topo}>
-        <CapaLivro imagemCapa={livro.capa} classificacao={livro.classIndicativa} />
+        <CapaLivro imagemCapa={livro.capa} classificacao={livro.classificacaoIndicativa} />
 
         <div className={styles.textos}>
           <div className={styles.qtdWrapper}>

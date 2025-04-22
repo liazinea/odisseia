@@ -134,6 +134,9 @@ const TabelaLivros = ({ livros }) => {
             <CelulaTabelaLivros
               key={row.original.liv_id}
               livro={row.original}
+              onDelete={(id) => {
+                setLivro((prev) => prev.filter((livro) => livro.id !== id));
+              }}
             />
           ))}
         <div className={styles.botao}>

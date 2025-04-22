@@ -4,8 +4,9 @@ import Input from "../../Inputs/Input";
 import api from "../../../services/api";
 import { useAuth } from "../../../context/AuthContext";
 import { useForm } from "react-hook-form";
+import { IoPencil, IoTrash } from "react-icons/io5";
 
-const ListaUsuarios = ({ usuario, setMessage, buscaUsuarios, setUsuarios }) => {
+const ListaUsuarios = ({ usuario, setMessage, buscaUsuarios, setUsuarios, setModalMensagemAberto }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
@@ -67,6 +68,9 @@ const ListaUsuarios = ({ usuario, setMessage, buscaUsuarios, setUsuarios }) => {
       })
 
       setMessage(responseDelete.data.message)
+      setMessage("Usuário excluído com sucesso");
+      setModalMensagemAberto(true);
+      closePasswordModal();
       closePasswordModal();
     } else {
       setPasswordMessage('Senha incorreta')
@@ -103,6 +107,8 @@ const ListaUsuarios = ({ usuario, setMessage, buscaUsuarios, setUsuarios }) => {
       })
       setMessage(response.data.message)
       closeEditModal()
+      setMessage("Usuário atualizado com sucesso");
+      setModalMensagemAberto(true);
       console.log(response);
     } catch (error) {
       console.error('Erro ao fazer login:', error.response?.data || error.message);
@@ -115,11 +121,11 @@ const ListaUsuarios = ({ usuario, setMessage, buscaUsuarios, setUsuarios }) => {
     <div className={styles.row}>
       <div className={styles.nome}>{usuario.usu_nome}</div>
       <div className={styles.opcoes}>
-        <div className={styles.excluir} onClick={handleDeleteClick}>
-          <img className={styles.icon} src="/excluir-icon.svg" alt="Excluir" />
-        </div>
         <div className={styles.editar} onClick={handleEditClick}>
-          <img className={styles.icon} src="/editar-icon.svg" alt="Editar" />
+          <IoPencil/>
+        </div>
+        <div className={styles.excluir} onClick={handleDeleteClick}>
+          <IoTrash/>
         </div>
       </div>
       {/* Modal de Edição */}

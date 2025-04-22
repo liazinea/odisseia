@@ -29,6 +29,7 @@ const ModalEditar = ({
           borderRadius: "10px",
           textAlign: "center",
           overflowY: "auto",
+          overflowX: "hidden",
           maxHeight: "80vh",
         },
       }}

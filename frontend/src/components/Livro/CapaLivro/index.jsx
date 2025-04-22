@@ -11,7 +11,7 @@ const CapaLivro = ({ imagemCapa, classificacao }) => {
       ? imagemCapa
       : `http://127.0.0.1:8000/storage/${imagemCapa}`;
   };
-
+// console.log(classificacao)
   return (
     <div className={styles.capaLivro}>
       <div className={styles.classIndicativa}>

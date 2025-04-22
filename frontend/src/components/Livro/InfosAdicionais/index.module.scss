@@ -5,10 +5,11 @@
 .container {
   background-color: $azul-escuro;
   border-radius: 0px 0px 0px 20px;
-  padding: 80px 80px 30px;
+  padding:80px;
   color: $branco-rosado;
   text-align: center;
   width: 80%;
+  height: 500px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -31,9 +32,9 @@
   gap: 5%;
 }
 
-/* Media Queries */
+// / Media Queries /
 
-/* Para telas menores que 992px */
+// / Para telas menores que 992px /
 @media (max-width: 992px) {
 
   .container{
@@ -55,20 +56,20 @@
   }
 }
 
-/* Para telas menores que 768px */
+// / Para telas menores que 768px /
 @media (max-width: 768px) {
   .titulo {
-    font-size: 16px; /* Reduzir tamanho do título */
+    font-size: 16px;
   }
 
   .itens {
-    grid-template-columns: repeat(2, 1fr); /* Manter duas colunas */
-   
+    grid-template-columns: repeat(2, 1fr); 
+
   }
 
 }
 
-/* Para telas menores que 576px */
+// / Para telas menores que 576px /
 @media (max-width: 576px) {
   .titulo {
     font-size: 16px;
@@ -77,8 +78,8 @@
   }
 
   .itens {
-    grid-template-columns: repeat(2, 1fr); /* Ainda duas colunas */
-    justify-items: center; /* Alinhar itens à esquerda */
+    grid-template-columns: repeat(2, 1fr); 
+    justify-items: center; 
     align-items: center;
     justify-content: center;
     font-size: 14px;

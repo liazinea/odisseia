@@ -6,33 +6,37 @@ import Input from "../../components/Inputs/Input";
 import useGeneros from "../../hooks/useGeneros";
 import BarraPesquisa from "../../components/layout/HeaderHome/BarraPesquisa";
 import ListaGeneros from "../../components/layout/ListaGeneros";
-import { useForm } from 'react-hook-form';
+import { useForm } from "react-hook-form";
 import { useAuth } from "../../context/AuthContext";
-import {
-  useNavigate
-} from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { api } from "../../config/api";
+import ModalMensagem from "../../components/Modal/ModalMensagem";
 
 const Generos = () => {
-  const { token } = useAuth()
-  const { userType } = useAuth()
-  const navigate = useNavigate()
+  const { token } = useAuth();
+  const { userType } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!token || userType != 1) {
-      navigate('/')
+      navigate("/");
     }
-  }, [token])
+  }, [token]);
+  const [modalMensagemAberto, setModalMensagemAberto] = useState(false);
   const [inputValue, setInputValue] = useState("");
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     },
   });
-  const [registerMessage, setRegisterMessage] = useState(null)
-  const [message, setMessage] = useState(null)
+  const [registerMessage, setRegisterMessage] = useState(null);
+  const [message, setMessage] = useState(null);
 
   const handleInputChange = (value) => {
     setInputValue(value);
@@ -43,7 +47,7 @@ const Generos = () => {
   };
 
   const [generos, setGeneros] = useState([]);
-  const { buscaGeneros } = useGeneros()
+  const { buscaGeneros } = useGeneros();
   const [generosBuscados, setGenerosBuscados] = useState([]);
 
   const buscaGenero = async () => {
@@ -75,19 +79,24 @@ const Generos = () => {
     carregarGeneros();
   }, [registerMessage]);
 
-
   const onSubmit = async (data) => {
     try {
-      const response = await api.post('/generos', data, {
+      const response = await api.post("/generos", data, {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      setRegisterMessage(response.data.message)
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setRegisterMessage(response.data.message);
       console.log(response);
+      setMessage(response.data.message)
+      setModalMensagemAberto(true);
+      closeEditModal();
     } catch (error) {
-      console.error('Erro ao fazer login:', error.response?.data || error.message);
-      setError(error.response.data.message)
+      console.error(
+        "Erro ao fazer login:",
+        error.response?.data || error.message
+      );
+      setError(error.response.data.message);
     }
   };
   return (
@@ -97,14 +106,14 @@ const Generos = () => {
         <BarraPesquisa
           placeholder="Pesquise por gênero"
           onChange={handleInputChange}
-          buscaGeneros={buscaGeneros} setGeneros={setGeneros}
+          buscaGeneros={buscaGeneros}
+          setGeneros={setGeneros}
         />
       </div>
       <div className={styles["container-geral"]}>
         <div className={styles["container-exibir"]}>
           <div className={styles["titulo"]}>
             <h2>Gêneros cadastrados</h2>
-            {message && <p>{message}</p>}
           </div>
           <div className={styles["tabela"]}>
             <div className={styles.head}>
@@ -114,16 +123,25 @@ const Generos = () => {
             <div className={styles.conteudo}>
               {generos.map((genero) => (
                 <div className={styles["linha"]} key={genero.id}>
-                  <ListaGeneros genero={genero} buscaGenero={buscaGenero} setMessage={setMessage} buscaGeneros={buscaGeneros} setGeneros={setGeneros} />
+                  <ListaGeneros
+                    genero={genero}
+                    buscaGenero={buscaGenero}
+                    setMessage={setMessage}
+                    buscaGeneros={buscaGeneros}
+                    setGeneros={setGeneros}
+                    setModalMensagemAberto={setModalMensagemAberto}
+                  />
                 </div>
               ))}
             </div>
           </div>
         </div>
-        <form onSubmit={handleSubmit(onSubmit)} className={styles["container-cadastro"]}>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className={styles["container-cadastro"]}
+        >
           <div className={styles["titulo"]}>
             <h2>Cadastrar gênero</h2>
-            {registerMessage && <p>{registerMessage}</p>}
           </div>
           <div className={styles["input"]}>
             <label htmlFor="nome">Nome:</label>
@@ -131,13 +149,11 @@ const Generos = () => {
               type="text"
               nomeCampo="nome"
               placeholder="Digite o nome do gênero"
-              required={true}
-              onChange={handleInputChange}
-
-              {...register('gen_nome', {
-                required: 'O nome do gênero é obrigatório'
+              {...register("gen_nome", {
+                required: "O nome do gênero é obrigatório",
               })}
             />
+            {<p className={styles["erro"]}>{errors.gen_nome && errors.gen_nome.message}</p>}
           </div>
           <div className={styles["botao"]}>
             <Button
@@ -148,6 +164,12 @@ const Generos = () => {
             />
           </div>
         </form>
+
+        <ModalMensagem
+          mensagemModal={message}
+          modalAberto={modalMensagemAberto}
+          closeModal={() => setModalMensagemAberto(false)}
+        />
       </div>
     </>
   );

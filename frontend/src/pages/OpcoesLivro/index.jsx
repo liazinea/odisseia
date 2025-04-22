@@ -6,18 +6,18 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const OpcoesLivro = () => {
-  // const { logout } = useAuth();
-  // const { token } = useAuth();
-  // const { userType } = useAuth();
-  // const navigate = useNavigate();
-  // useEffect(() => {
-  //   if (!token || userType != 1) {
-  //     navigate("/");
-  //   }
-  // }, [token]);
+  const { logout } = useAuth();
+  const { token } = useAuth();
+  const { userType } = useAuth();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!token || userType != 1) {
+      navigate("/");
+    }
+  }, [token]);
   return (
     <>
-      <HeaderPagina titulo={"Gerenciamento de livros"} />
+      <HeaderPagina titulo={"Livros"} />
       <SessaoOpcoesLivro />
     </>
   );

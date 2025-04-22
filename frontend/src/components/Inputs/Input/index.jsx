@@ -5,7 +5,6 @@ const Input = ({
   nomeCampo,
   defaultValue,
   placeholder,
-  required,
   disabled,
   value,
   onChange,
@@ -19,7 +18,6 @@ const Input = ({
       defaultValue={defaultValue}
       id={nomeCampo}
       placeholder={placeholder}
-      required={required}
       disabled={disabled}
       {...props}
     />

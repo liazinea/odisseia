@@ -21,7 +21,6 @@ const HomeAdm = () => {
   }, [token])
   return (
     <>
-      <button onClick={logout}>Sair</button>
       <HeaderPagina titulo={"Página do Administrador"} />
       <SessaoAdmHome />
     </>

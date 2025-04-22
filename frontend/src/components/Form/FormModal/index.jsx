@@ -8,19 +8,34 @@ import { useForm } from "react-hook-form";
 import api from "../../../services/api";
 import { useAuth } from "../../../context/AuthContext";
 import { useState, useEffect } from "react";
+import ModalMensagem from "../../Modal/ModalMensagem";
 
-const FormModal = ({ modalEditarAberto = false, livro = {}, closeModal, errorsApi }) => {
+const FormModal = ({
+  modalEditarAberto = false,
+  livro = {},
+  closeModal,
+  errorsApi,
+}) => {
   const {
     register,
     control,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm();
 
+  const [modalMensagemAberto, setModalMensagemAberto] = useState(false);
+  const [message, setMessage] = useState(null);
+  useEffect(() => {
+    if (!modalMensagemAberto && message) {
+      closeModal(); // Fechar o FormModal quando a ModalMensagem for fechada
+    }
+  }, [modalMensagemAberto]);
+
   const onSubmit = async (data) => {
     const formData = new FormData();
-    formData.append('_method', 'PUT');
+    formData.append("_method", "PUT");
 
     formData.append("liv_isbn", data.liv_isbn);
     formData.append("liv_numRegistro", data.liv_numRegistro);
@@ -62,60 +77,85 @@ const FormModal = ({ modalEditarAberto = false, livro = {}, closeModal, errorsAp
       }
       const response = await api.post(`/livros/${livro.id}`, formData, {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
-
-      console.log('Resposta da API:', response.data);
+      setMessage(response.data.message)
+      setModalMensagemAberto(true);
+      closeEditModal()
+      console.log("Resposta da API:", response.data);
     } catch (error) {
       if (error.response) {
-
-        console.error('Erro na resposta da API:', error.response.data);
-        console.error('Status:', error.response.status);
+        console.error("Erro na resposta da API:", error.response.data);
+        console.error("Status:", error.response.status);
       } else if (error.request) {
-
-        console.error('Erro na requisição, sem resposta:', error.request);
+        console.error("Erro na requisição, sem resposta:", error.request);
       } else {
-
-        console.error('Erro ao configurar a requisição:', error.message);
+        console.error("Erro ao configurar a requisição:", error.message);
       }
     }
-
   };
 
+  const [generos, setGeneros] = useState([]);
+  const [autores, setAutores] = useState([]);
+  const { token } = useAuth();
+
+  useEffect(() => {
+    const carregarGeneros = async () => {
+      const dados = await api.get("/generos/nomes", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setGeneros(dados.data);
+    };
+
+    carregarGeneros();
+  }, []);
+
+  useEffect(() => {
+    const carregarAutores = async () => {
+      const dados = await api.get("/autores/nomes", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setAutores(dados.data);
+    };
+
+    carregarAutores();
+  }, []);
+
+  useEffect(()=>{
+      preencheModal();
+  }, [autores, generos, livro])
   
-      const [generos, setGeneros] = useState([]);
-      const [autores, setAutores] = useState([])
-      const {token} = useAuth()
-      console.log(token)
+  function preencheModal() {
+    setValue("liv_nome", livro.nome);
+    setValue("liv_isbn", livro.isbn);
+    setValue("liv_numRegistro", livro.numRegistro);
+    setValue("liv_edicao", livro.edicao);
+    setValue("liv_qtdPaginas", livro.qtdPaginas);
+    setValue("liv_dataPubli", livro.dataPubli);
+    setValue("liv_editora", livro.editora?.nome);
+    setValue('liv_generos', livro.generos?.map((g) => ({
+      value: g.nome,
+      label: g.nome,
+    })));
+    
+    setValue('liv_autores', livro.autores?.map((a) => ({
+      value: a.nome,
+      label: a.nome,
+    })));
+    setValue("liv_localizacao", livro.localizacao);
+    setValue("liv_classIndicativa", livro.classIndicativa);
+    setValue("liv_sinopse", livro.sinopse);
+    setValue("liv_capa", livro.capa);
+    console.log(livro)
+  }
   
-      useEffect(() => {
-        const carregarGeneros = async () => {
-          const dados = await api.get('/generos/nomes', {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          })
-    
-          setGeneros(dados.data)
-        };
-    
-        carregarGeneros();
-      }, []);
-    
-      useEffect(() => {
-        const carregarAutores = async () => {
-          const dados = await api.get('/autores/nomes', {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          })
-    
-          setAutores(dados.data)
-        };
-    
-        carregarAutores();
-      }, []);
 
   return (
     <div className={styles.form}>
@@ -132,8 +172,8 @@ const FormModal = ({ modalEditarAberto = false, livro = {}, closeModal, errorsAp
                 required={true}
                 register={register}
                 errors={errors}
-                filledStatus={livro.nome}
-              />
+                filledStatus={true}
+                />
             </div>
             <div className={styles.input}>
               {" "}
@@ -145,127 +185,121 @@ const FormModal = ({ modalEditarAberto = false, livro = {}, closeModal, errorsAp
                 required={true}
                 register={register}
                 errors={errors}
-                filledStatus={livro.isbn}
-              />
+                filledStatus={true}
+                />
             </div>
           </div>
           <div className={styles.dupla}>
             <div className={styles.input}>
               {/* Input N Registro */}
               <InputLivro
-                    type="number"
-                    nomeCampo="liv_numRegistro"
-                    placeholder="Número de Registro"
-                    required={true}
-                    register={register}
-                    errors={errors}
-                    filledStatus={livro.numRegistro}
-                  />
+                type="number"
+                nomeCampo="liv_numRegistro"
+                placeholder="Número de Registro"
+                required={true}
+                register={register}
+                errors={errors}
+                filledStatus={true}
+                />
             </div>
             <div className={styles.input}>
               {/* Input Edição */}
               <InputLivro
-                    type="number"
-                    nomeCampo="liv_edicao"
-                    placeholder="N° de Edição"
-                    required={true}
-                    register={register}
-                    errors={errors}
-                  />
+                type="number"
+                nomeCampo="liv_edicao"
+                placeholder="N° de Edição"
+                required={true}
+                register={register}
+                errors={errors}
+                filledStatus={true}
+                />
             </div>
           </div>
           <div className={styles.dupla}>
             <div className={styles.input}>
               {/* Select editora */}
               <InputLivro
-                    type="text"
-                    nomeCampo="liv_editora"
-                    placeholder="Editora"
-                    required={true}
-                    register={register}
-                    errors={errors}
-                  />
+                type="text"
+                nomeCampo="liv_editora"
+                placeholder="Editora"
+                required={true}
+                register={register}
+                errors={errors}
+                filledStatus={true}
+                />
             </div>
             <div className={styles.input}>
               {/* Input data publi */}
               <InputLivro
-                    type="date"
-                    nomeCampo="liv_dataPubli"
-                    placeholder="Data de publicação"
-                    required={true}
-                    register={register}
-                    errors={errors}
-                  />
+                type="date"
+                nomeCampo="liv_dataPubli"
+                placeholder="Data de publicação"
+                required={true}
+                register={register}
+                errors={errors}
+                filledStatus={true}
+                />
             </div>
           </div>
           <div className={styles.dupla}>
             <div className={styles.input}>
               {/* Input estante */}
               <SelectLivro
-                    nomeCampo="liv_localizacao"
-                    placeholder="Localização/Estante"
-                    values={generos}
-                    control={control}
-                    rules={{ required: "Campo obrigatório" }}
-                    error={errors?.liv_localizacao}
-                    isMulti={true}
-                  />
+                nomeCampo="liv_localizacao"
+                placeholder="Localização/Estante"
+                values={generos}
+                control={control}
+                rules={{ required: "Campo obrigatório" }}
+                error={errors?.liv_localizacao}
+                isMulti={true}
+                filledStatus={true}
+                />
             </div>
             <div className={styles.input}>
               {/* Input Autor */}
               <SelectLivro
-                    nomeCampo="liv_autores"
-                    placeholder="Autores"
-                    values={autores}
-                    control={control}
-                    rules={{ required: "Campo obrigatório" }}
-                    error={errors?.liv_autores}
-                    isMulti={true}
-                  />
+                nomeCampo="liv_autores"
+                placeholder="Autores"
+                values={autores}
+                control={control}
+                rules={{ required: "Campo obrigatório" }}
+                error={errors?.liv_autores}
+                isMulti={true}
+                filledStatus={true}
+                />
             </div>
           </div>
           <div className={styles.dupla}>
             <div className={styles.input}>
               {/* Input Genero */}
               <SelectLivro
-                    nomeCampo="liv_generos"
-                    placeholder="Gêneros"
-                    values={generos}
-                    control={control}
-                    rules={{ required: "Campo obrigatório" }}
-                    error={errors?.liv_generos}
-                    isMulti={true}
-                  />
+                nomeCampo="liv_generos"
+                placeholder="Gêneros"
+                values={generos}
+                control={control}
+                rules={{ required: "Campo obrigatório" }}
+                error={errors?.liv_generos}
+                isMulti={true}
+                filledStatus={true}
+                />
             </div>
             <div className={styles.input}>
               {/* Input Classificação */}
               <SelectLivro
-                    nomeCampo="liv_classIndicativa"
-                    placeholder="Classificação indicativa"
-                    values={["Estante A", "Estante B", "Estante C"]}
-                    control={control}
-                    rules={{ required: "Campo obrigatório" }}
-                    error={errors?.liv_classIndicativa}
-                    isMulti={true}
-                  />
+                nomeCampo="liv_classIndicativa"
+                placeholder="Classificação indicativa"
+                values={["Livre", "+10", "+12", "+14", "+16", "+18"]}
+                control={control}
+                rules={{ required: "Campo obrigatório" }}
+                error={errors?.liv_classIndicativa}
+                isMulti={true}
+                filledStatus={true}
+                />
             </div>
           </div>
           <div className={styles.alinhaCapa}>
             <div className={styles.ultimoInput}>
-              <div className={styles.input}>
-              
-              </div>
-              <div className={styles.input}>
-                {" "}
-                {/* Select Status */}
-                <InputTextArea
-                nomeCampo={"liv_sinopse"}
-                placeholder={"Sinopse"}
-                required={true}
-                register={register}
-                errors={errors}
-                errorsApi={errorsApi}
-              />
+              <div className={styles.input}></div>
                 <InputLivro
                   type="number"
                   nomeCampo="liv_qtdPaginas"
@@ -273,24 +307,38 @@ const FormModal = ({ modalEditarAberto = false, livro = {}, closeModal, errorsAp
                   required={true}
                   register={register}
                   errors={errors}
-                />
+                  filledStatus={true}
+                  />
+              <div className={styles.input}>
+                {" "}
+                {/* Select Status */}
+                <InputTextArea
+                  nomeCampo={"liv_sinopse"}
+                  placeholder={"Sinopse"}
+                  required={true}
+                  register={register}
+                  errors={errors}
+                  errorsApi={errorsApi}
+                  filledStatus={true}
+                  />
               </div>
             </div>
             <div className={styles.capaBtn}>
               <div className={styles.capa}>
-              <InputCapa
+                <InputCapa
                   required={true}
                   campo={"liv_capa"}
                   titulo={"Capa"}
                   register={register}
                   errors={errors}
                   errorsApi={errorsApi}
-                />
+                  />
                 <div className={styles.btn}>
                   <BotaoForm
                     type={"submit"}
                     nomeBotao={"cadastrar"}
                     texto={"Cadastrar"}
+                    mensagemModal={"Livro editado com sucesso!"}
                   />
                 </div>
               </div>
@@ -298,6 +346,11 @@ const FormModal = ({ modalEditarAberto = false, livro = {}, closeModal, errorsAp
           </div>
         </form>
       </div>
+      <ModalMensagem
+          mensagemModal={message}
+          modalAberto={modalMensagemAberto}
+          closeModal={() => setModalMensagemAberto(false)}
+        />
     </div>
   );
 };

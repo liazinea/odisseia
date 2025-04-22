@@ -19,7 +19,7 @@
     }
     
     .input{
-        margin-top: 25px;
+        margin-top: 10px;
         width: 100%;
         height: 40px;
         background-color: $laranja-claro;
@@ -57,7 +57,7 @@
         background-color: transparent;
             outline: 1px solid $marrom-laranja;
 
-            &::-webkit-datetime-edit{ color: $azul-escuro; }
+            &::-webkit-datetime-edit{ color: $branco-rosado }
 
             +.placeholder{
                 top: 10px;
@@ -67,4 +67,10 @@
                 background-color: $azul-escuro;
             }
     }
+}
+
+.error{
+    width: 100%;
+    height: 20px;
+    color: $vermelho;
 }

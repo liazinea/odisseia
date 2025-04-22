@@ -10,6 +10,14 @@ import { useAuth } from "../../context/AuthContext";
 import { useForm } from 'react-hook-form';
 import api from "../../services/api";
 import { useNavigate } from "react-router-dom";
+import {
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+import ModalMensagem from "../../components/Modal/ModalMensagem";
 
 const Usuarios = () => {
   const { token, userType } = useAuth();
@@ -26,6 +34,7 @@ const Usuarios = () => {
     rg: "",
   });
   const [usuarios, setUsuarios] = useState([]);
+  const [modalMensagemAberto, setModalMensagemAberto] = useState(false);
 
   const {
     register,
@@ -86,6 +95,8 @@ const Usuarios = () => {
       });
 
       setRegisterMessage(response.data.message);
+      setMessage("Usuário cadastrado com sucesso");
+      setModalMensagemAberto(true);
     } catch (error) {
       const apiErrors = error.response?.data?.errors;
       const apiMessage = error.response?.data?.message;
@@ -99,7 +110,8 @@ const Usuarios = () => {
         });
       }
 
-      setRegisterMessage(apiMessage);
+      // setRegisterMessage(apiMessage);
+      closeEditModal();
     }
   };
 
@@ -116,7 +128,6 @@ const Usuarios = () => {
         <div className={styles["container-exibir"]}>
           <div className={styles["titulo"]}>
             <h2>Usuários cadastrados</h2>
-            {message && <p>{message}</p>}
           </div>
           <div className={styles["tabela"]}>
             <div className={styles.head}>
@@ -131,6 +142,7 @@ const Usuarios = () => {
                     setMessage={setMessage}
                     buscaUsuarios={buscaUsuarios}
                     setUsuarios={setUsuarios}
+                    setModalMensagemAberto={setModalMensagemAberto}
                   />
                 </div>
               ))}
@@ -140,7 +152,6 @@ const Usuarios = () => {
         <form onSubmit={handleSubmit(onSubmit)} className={styles["container-cadastro"]}>
           <div className={styles["titulo"]}>
             <h2>Cadastrar novo usuário</h2>
-            {registerMessage && <p>{registerMessage}</p>}
           </div>
           <div className={styles["inputs"]}>
             {/* Nome */}
@@ -150,13 +161,11 @@ const Usuarios = () => {
                 type="text"
                 name="nome"
                 placeholder="Digite o nome completo do aluno"
-                required={true}
                 {...register('usu_nome', {
                   required: 'O nome do usuário é obrigatório'
                 })}
               />
-
-              {errors.usu_nome && <p className={styles["erro"]}>{errors.usu_nome.message}</p>}
+              {<p className={styles["erro"]}>{errors.usu_nome && errors.usu_nome.message}</p>}
             </div>
 
             {/* Data de nascimento */}
@@ -165,12 +174,11 @@ const Usuarios = () => {
               <Input
                 type="date"
                 name="dataNascimento"
-                required={true}
                 {...register('usu_dataNasc', {
                   required: 'A data de nascimento é obrigatória',
                 })}
               />
-              {errors.usu_dataNasc && <p className={styles["erro"]}>{errors.usu_dataNasc.message}</p>}
+              {<p className={styles["erro"]}>{errors.usu_dataNasc && errors.usu_dataNasc.message}</p>}
             </div>
 
             {/* Email */}
@@ -180,27 +188,25 @@ const Usuarios = () => {
                 type="text"
                 name="email"
                 placeholder="Digite o e-mail do aluno"
-                required={true}
                 {...register('email', {
                   required: 'O email é obrigatório',
                 })}
               />
-              {errors.email && <p className={styles["erro"]}>{errors.email.message}</p>}
+              {<p className={styles["erro"]}>{errors.email && errors.email.message}</p>}
             </div>
 
             {/* RG / RA */}
             <div className={styles["input"]}>
-              <label htmlFor="rg">RG:</label>
+              <label htmlFor="rg">RA:</label>
               <Input
                 type="text"
                 name="rg"
                 placeholder="xx.xxx.xxx-x"
-                required={true}
                 {...register('usu_ra', {
                   required: 'O ra é obrigatório',
                 })}
               />
-              {errors.usu_ra && <p className={styles["erro"]}>{errors.usu_ra.message}</p>}
+              {<p className={styles["erro"]}>{errors.usu_ra && errors.usu_ra.message}</p>}
             </div>
           </div>
 
@@ -213,6 +219,11 @@ const Usuarios = () => {
             />
           </div>
         </form>
+        <ModalMensagem
+          mensagemModal={message}
+          modalAberto={modalMensagemAberto}
+          closeModal={() => setModalMensagemAberto(false)}
+        />
       </div>
     </>
   );

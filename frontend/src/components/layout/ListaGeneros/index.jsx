@@ -6,19 +6,30 @@ import Input from "../../Inputs/Input";
 import { useForm } from "react-hook-form";
 import api from "../../../services/api";
 import { useAuth } from "../../../context/AuthContext";
+import { IoPencil, IoTrash } from "react-icons/io5";
 
-const ListaGeneros = ({ genero, setMessage, buscaGeneros, setGeneros }) => {
-  const { token } = useAuth()
+const ListaGeneros = ({
+  genero,
+  setMessage,
+  buscaGeneros,
+  setGeneros,
+  setModalMensagemAberto,
+}) => {
+  const { token } = useAuth();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [password, setPassword] = useState("");
-  const [passwordMessage, setPasswordMessage] = useState(null)
+  const [passwordMessage, setPasswordMessage] = useState(null);
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     },
   });
 
@@ -41,7 +52,7 @@ const ListaGeneros = ({ genero, setMessage, buscaGeneros, setGeneros }) => {
   const openPasswordModal = () => {
     setIsDeleteModalOpen(false);
     setIsPasswordModalOpen(true);
-    setPasswordMessage(null)
+    setPasswordMessage(null);
   };
 
   const closePasswordModal = () => {
@@ -52,21 +63,25 @@ const ListaGeneros = ({ genero, setMessage, buscaGeneros, setGeneros }) => {
   const handleConfirmDelete = async (data) => {
     const response = await api.get(`/check-senha?password=${data.password}`, {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     if (response.data.status) {
       const responseDelete = await api.patch(`/generos/${genero.id}`, {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-      setMessage(responseDelete.data.message)
+      // setMessage(responseDelete.data.message);
       closePasswordModal();
+      setMessage("Gênero excluído com sucesso");
+      setModalMensagemAberto(true);
+      closePasswordModal();
+      console.log(response.data.status);
     } else {
-      setPasswordMessage('Senha incorreta')
+      setPasswordMessage("Senha incorreta");
     }
     useEffect(() => {
       const carregarGeneros = async () => {
@@ -83,22 +98,25 @@ const ListaGeneros = ({ genero, setMessage, buscaGeneros, setGeneros }) => {
       };
       carregarGeneros();
     }, [isEditModalOpen]);
-
   };
 
   const onSubmit = async (data) => {
     try {
       const response = await api.put(`/generos/${genero.id}`, data, {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      setMessage(response.data.message)
-      closeEditModal()
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setMessage(response.data.message);
+      closeEditModal();
       console.log(response);
+      setModalMensagemAberto(true);
     } catch (error) {
-      console.error('Erro ao fazer login:', error.response?.data || error.message);
-      setError(error.response.data.message)
+      console.error(
+        "Erro ao fazer login:",
+        error.response?.data || error.message
+      );
+      setError(error.response.data.message);
     }
   };
 
@@ -106,18 +124,21 @@ const ListaGeneros = ({ genero, setMessage, buscaGeneros, setGeneros }) => {
     <div className={styles.row}>
       <div className={styles.nome}>{genero.nome}</div>
       <div className={styles.opcoes}>
-        <div className={styles.excluir} onClick={handleDeleteClick}>
-          <img className={styles.icon} src="/excluir-icon.svg"></img>
-        </div>
         <div className={styles.editar} onClick={handleEditClick}>
-          <img className={styles.icon} src="/editar-icon.svg"></img>
+          <IoPencil />
+        </div>
+        <div className={styles.excluir} onClick={handleDeleteClick}>
+          <IoTrash />
         </div>
       </div>
 
       {/* Modal de Edição */}
       {isEditModalOpen && (
         <div className={styles.modal}>
-          <form onSubmit={handleSubmit(onSubmit)} className={styles.modalEdicao}>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className={styles.modalEdicao}
+          >
             <h3 className={styles.titulo}>Editar Gênero</h3>
             <div>
               <label htmlFor="nomeAtual">Nome atual</label>
@@ -129,21 +150,16 @@ const ListaGeneros = ({ genero, setMessage, buscaGeneros, setGeneros }) => {
                 type="text"
                 defaultValue={genero.nome}
                 disabled={false}
-                {...register('gen_nome', {
-                  required: 'O novo nome do gênero é obrigatório'
+                {...register("gen_nome", {
+                  required: "O novo nome do gênero é obrigatório",
                 })}
               />
               {errors.gen_nome && (
-                <p style={{ color: 'red' }}>{errors.gen_nome.message}</p>
+                <p style={{ color: "red" }}>{errors.gen_nome.message}</p>
               )}
-
             </div>
             <div className={styles.botoes}>
-              <button
-                type="submit"
-
-                className={styles.saveButton}
-              >
+              <button type="submit" className={styles.saveButton}>
                 Salvar
               </button>
               <button onClick={closeEditModal} className={styles.closeButton}>
@@ -186,7 +202,10 @@ const ListaGeneros = ({ genero, setMessage, buscaGeneros, setGeneros }) => {
       {/* Modal de Confirmação de Senha */}
       {isPasswordModalOpen && (
         <div className={styles.modal}>
-          <form onSubmit={handleSubmit(handleConfirmDelete)} className={styles.modalSenha}>
+          <form
+            onSubmit={handleSubmit(handleConfirmDelete)}
+            className={styles.modalSenha}
+          >
             <h3 className={styles.titulo}>Confirmar Exclusão</h3>
             <p className={styles.mensagem}>Por favor, digite sua senha:</p>
             {passwordMessage && <p>{passwordMessage}</p>}
@@ -197,21 +216,16 @@ const ListaGeneros = ({ genero, setMessage, buscaGeneros, setGeneros }) => {
                 placeholder="Digite sua senha"
                 value={password}
                 onChange={(value) => setPassword(value)}
-                {...register('password', {
-                  required: 'A senha é obrigatória'
+                {...register("password", {
+                  required: "A senha é obrigatória",
                 })}
               />
             </div>
             <div className={styles.botoes}>
-              <button
-               type="submit"
-                onClick={handleConfirmDelete}
-                className={styles.saveButton}
-              >
+              <button type="submit" className={styles.saveButton}>
                 Confirmar
               </button>
               <button
-             
                 onClick={closePasswordModal}
                 className={styles.closeButton}
               >
