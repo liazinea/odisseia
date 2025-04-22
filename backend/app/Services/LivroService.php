@@ -22,7 +22,13 @@ class LivroService
 
     public function atualizar(LivroDTO $livroDTO, Livro $livro): bool
     {
-        return $this->livroRepository->atualizar($livroDTO, $livro);
+
+        if($this->livroRepository->atualizar($livroDTO, $livro)){
+            $livro->autores()->sync($livroDTO->autores);
+            $livro->generos()->sync($livroDTO->generos);
+            return true;
+        }
+        throw new \Exception("Erro ao salvar livro");
     }
 
     public function retorna(Livro $livo):Livro
