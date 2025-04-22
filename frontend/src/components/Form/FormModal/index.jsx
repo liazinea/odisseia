@@ -44,16 +44,8 @@ const FormModal = ({
     formData.append("liv_qtdPaginas", data.liv_qtdPaginas);
     formData.append("liv_dataPubli", data.liv_dataPubli);
     formData.append("liv_editora", data.liv_editora);
-    if (Array.isArray(data.liv_classIndicativa)) {
-      for (let i = 0; i < data.liv_classIndicativa.length; i++) {
-        formData.append(`liv_classIndicativa`, data.liv_classIndicativa[i]);
-      }
-    }
-    if (Array.isArray(data.liv_localizacao)) {
-      for (let i = 0; i < data.liv_localizacao.length; i++) {
-        formData.append(`liv_localizacao`, data.liv_localizacao[i]);
-      }
-    }
+    formData.append("liv_classIndicativa", data.liv_classIndicativa);
+    formData.append("liv_localizacao", data.liv_localizacao);
     formData.append("liv_sinopse", data.liv_sinopse);
     formData.append("liv_capa", data.liv_capa[0]);
     if (Array.isArray(data.liv_autores)) {
@@ -80,9 +72,8 @@ const FormModal = ({
           Authorization: `Bearer ${token}`,
         },
       });
-      setMessage(response.data.message)
+      setMessage(response.data.message);
       setModalMensagemAberto(true);
-      closeEditModal()
       console.log("Resposta da API:", response.data);
     } catch (error) {
       if (error.response) {
@@ -128,10 +119,10 @@ const FormModal = ({
     carregarAutores();
   }, []);
 
-  useEffect(()=>{
-      preencheModal();
-  }, [autores, generos, livro])
-  
+  useEffect(() => {
+    preencheModal();
+  }, [autores, generos, livro]);
+
   function preencheModal() {
     setValue("liv_nome", livro.nome);
     setValue("liv_isbn", livro.isbn);
@@ -140,22 +131,20 @@ const FormModal = ({
     setValue("liv_qtdPaginas", livro.qtdPaginas);
     setValue("liv_dataPubli", livro.dataPubli);
     setValue("liv_editora", livro.editora?.nome);
-    setValue('liv_generos', livro.generos?.map((g) => ({
-      value: g.nome,
-      label: g.nome,
-    })));
-    
-    setValue('liv_autores', livro.autores?.map((a) => ({
-      value: a.nome,
-      label: a.nome,
-    })));
+    setValue(
+      "liv_generos",
+      livro.generos?.map((g) => g.nome)
+    );
+    setValue(
+      "liv_autores",
+      livro.autores?.map((a) => a.nome)
+    );
     setValue("liv_localizacao", livro.localizacao);
-    setValue("liv_classIndicativa", livro.classIndicativa);
+    setValue("liv_classIndicativa", livro.classificacaoIndicativa);
     setValue("liv_sinopse", livro.sinopse);
     setValue("liv_capa", livro.capa);
-    console.log(livro)
+    console.log(livro);
   }
-  
 
   return (
     <div className={styles.form}>
@@ -173,7 +162,7 @@ const FormModal = ({
                 register={register}
                 errors={errors}
                 filledStatus={true}
-                />
+              />
             </div>
             <div className={styles.input}>
               {" "}
@@ -186,7 +175,7 @@ const FormModal = ({
                 register={register}
                 errors={errors}
                 filledStatus={true}
-                />
+              />
             </div>
           </div>
           <div className={styles.dupla}>
@@ -200,7 +189,7 @@ const FormModal = ({
                 register={register}
                 errors={errors}
                 filledStatus={true}
-                />
+              />
             </div>
             <div className={styles.input}>
               {/* Input Edição */}
@@ -212,7 +201,7 @@ const FormModal = ({
                 register={register}
                 errors={errors}
                 filledStatus={true}
-                />
+              />
             </div>
           </div>
           <div className={styles.dupla}>
@@ -226,7 +215,7 @@ const FormModal = ({
                 register={register}
                 errors={errors}
                 filledStatus={true}
-                />
+              />
             </div>
             <div className={styles.input}>
               {/* Input data publi */}
@@ -238,7 +227,7 @@ const FormModal = ({
                 register={register}
                 errors={errors}
                 filledStatus={true}
-                />
+              />
             </div>
           </div>
           <div className={styles.dupla}>
@@ -251,9 +240,9 @@ const FormModal = ({
                 control={control}
                 rules={{ required: "Campo obrigatório" }}
                 error={errors?.liv_localizacao}
-                isMulti={true}
+                isMulti={false}
                 filledStatus={true}
-                />
+              />
             </div>
             <div className={styles.input}>
               {/* Input Autor */}
@@ -266,7 +255,7 @@ const FormModal = ({
                 error={errors?.liv_autores}
                 isMulti={true}
                 filledStatus={true}
-                />
+              />
             </div>
           </div>
           <div className={styles.dupla}>
@@ -281,7 +270,7 @@ const FormModal = ({
                 error={errors?.liv_generos}
                 isMulti={true}
                 filledStatus={true}
-                />
+              />
             </div>
             <div className={styles.input}>
               {/* Input Classificação */}
@@ -292,23 +281,23 @@ const FormModal = ({
                 control={control}
                 rules={{ required: "Campo obrigatório" }}
                 error={errors?.liv_classIndicativa}
-                isMulti={true}
+                isMulti={false}
                 filledStatus={true}
-                />
+              />
             </div>
           </div>
           <div className={styles.alinhaCapa}>
             <div className={styles.ultimoInput}>
               <div className={styles.input}></div>
-                <InputLivro
-                  type="number"
-                  nomeCampo="liv_qtdPaginas"
-                  placeholder="Número de páginas"
-                  required={true}
-                  register={register}
-                  errors={errors}
-                  filledStatus={true}
-                  />
+              <InputLivro
+                type="number"
+                nomeCampo="liv_qtdPaginas"
+                placeholder="Número de páginas"
+                required={true}
+                register={register}
+                errors={errors}
+                filledStatus={true}
+              />
               <div className={styles.input}>
                 {" "}
                 {/* Select Status */}
@@ -320,7 +309,7 @@ const FormModal = ({
                   errors={errors}
                   errorsApi={errorsApi}
                   filledStatus={true}
-                  />
+                />
               </div>
             </div>
             <div className={styles.capaBtn}>
@@ -332,13 +321,12 @@ const FormModal = ({
                   register={register}
                   errors={errors}
                   errorsApi={errorsApi}
-                  />
+                />
                 <div className={styles.btn}>
                   <BotaoForm
                     type={"submit"}
-                    nomeBotao={"cadastrar"}
-                    texto={"Cadastrar"}
-                    mensagemModal={"Livro editado com sucesso!"}
+                    nomeBotao={"atualizar"}
+                    texto={"Atualizar"}
                   />
                 </div>
               </div>
@@ -347,10 +335,10 @@ const FormModal = ({
         </form>
       </div>
       <ModalMensagem
-          mensagemModal={message}
-          modalAberto={modalMensagemAberto}
-          closeModal={() => setModalMensagemAberto(false)}
-        />
+        mensagemModal={message}
+        modalAberto={modalMensagemAberto}
+        closeModal={() => setModalMensagemAberto(false)}
+      />
     </div>
   );
 };

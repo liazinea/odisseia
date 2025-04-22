@@ -15,7 +15,9 @@ const SelectLivro = ({
 }) => {
   const [filled, setFilled] = useState(filledStatus);
 
-  const options = values.map((val) => ({ label: val, value: val }));
+  const options = values.map((val) =>
+    typeof val === "string" ? { label: val, value: val } : val
+  );
 
   return (
     <div>
@@ -25,11 +27,15 @@ const SelectLivro = ({
           control={control}
           rules={rules}
           render={({ field }) => {
-            const currentValue = field.value || [];
+            const currentValue = field.value;
 
-            const selectedOptions = options.filter((opt) =>
-              currentValue.includes(opt.value)
-            );
+            const selectedOptions = isMulti
+              ? options.filter((opt) =>
+                  Array.isArray(currentValue)
+                    ? currentValue.includes(opt.value)
+                    : false
+                )
+              : options.find((opt) => opt.value === currentValue) || null;
 
             return (
               <CreatableSelect
@@ -37,10 +43,16 @@ const SelectLivro = ({
                 classNamePrefix="custom-select"
                 className={`${styles.input} ${filled ? styles.filled : ""}`}
                 value={selectedOptions}
-                onChange={(selectedOptions) => {
-                  const valuesOnly = selectedOptions.map((opt) => opt.value);
-                  field.onChange(valuesOnly);
-                  setFilled(valuesOnly.length > 0);
+                onChange={(selected) => {
+                  if (isMulti) {
+                    const valuesOnly = selected.map((opt) => opt.value);
+                    field.onChange(valuesOnly);
+                    setFilled(valuesOnly.length > 0);
+                  } else {
+                    const valueOnly = selected ? selected.value : null;
+                    field.onChange(valueOnly);
+                    setFilled(!!valueOnly);
+                  }
                 }}
                 onBlur={field.onBlur}
                 options={options}
@@ -68,13 +80,13 @@ const SelectLivro = ({
                   }),
                   placeholder: (base) => ({
                     ...base,
-                    display: "none", // Ensures no placeholder is shown
+                    display: "none",
                   }),
                   indicatorSeparator: () => ({
-                    display: "none", // This removes the separator bar
+                    display: "none",
                   }),
                   dropdownIndicator: () => ({
-                    display: "none", // This removes the separator bar
+                    display: "none",
                   }),
                   menu: (base) => ({
                     ...base,
@@ -84,7 +96,7 @@ const SelectLivro = ({
                     zIndex: 2,
                   }),
                   menuList: () => ({
-                    backgroundColor: "##FFFAF0",
+                    backgroundColor: "#FFFAF0",
                     color: "#002A3D",
                   }),
                 }}
@@ -94,7 +106,7 @@ const SelectLivro = ({
         />
         <span className={styles.placeholder}>{placeholder}</span>
       </label>
-        <p className={styles.error}>{error && error.message}</p>
+      <p className={styles.error}>{error && error.message}</p>
     </div>
   );
 };
