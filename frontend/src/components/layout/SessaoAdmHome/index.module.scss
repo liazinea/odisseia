@@ -8,4 +8,9 @@
   grid-template-rows: repeat(2, 1fr);
   gap: 5rem;
   padding: 5vh;
+
+  // Centralizar o último elemento quando há 7 itens
+  & > :nth-child(7) {
+    grid-column: 2; // Centraliza na segunda coluna
+  }
 }
