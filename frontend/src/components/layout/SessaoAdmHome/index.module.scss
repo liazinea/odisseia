@@ -9,8 +9,69 @@
   gap: 5rem;
   padding: 5vh;
 
-  // Centralizar o último elemento quando há 7 itens
   & > :nth-child(7) {
-    grid-column: 2; // Centraliza na segunda coluna
+    grid-column: 2;
+  }
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+
+  .modalCadastro {
+    background-color: color.$marrom-laranja;
+    padding: 20px;
+    border-radius: 20px;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-weight: lighter;
+
+    .titulo {
+      font-size: 32px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .botoes {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+
+      .closeButton,
+      .saveButton {
+        padding: 15px 25px;
+        margin: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      .closeButton {
+        background-color: color.$azul-escuro;
+        color: color.$branco;
+      }
+
+      .saveButton {
+        background-color: color.$laranja;
+        color: color.$azul-escuro;
+        transition: background-color 0.3s ease, color 0.3s ease;
+
+        &:hover {
+          background-color: color.$azul-escuro;
+          color: color.$branco;
+        }
+      }
+    }
   }
 }

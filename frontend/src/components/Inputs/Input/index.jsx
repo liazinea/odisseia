@@ -19,6 +19,7 @@ const Input = ({
       id={nomeCampo}
       placeholder={placeholder}
       disabled={disabled}
+      onChange={(e) => {onChange(e.target.value)}}
       {...props}
     />
   );
