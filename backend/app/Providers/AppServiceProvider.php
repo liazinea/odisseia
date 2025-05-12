@@ -6,6 +6,8 @@ use App\Repositories\AutorRepository;
 use App\Repositories\AutorRepositoryInterface;
 use App\Repositories\EditoraRepository;
 use App\Repositories\EditoraRepositoryInterface;
+use App\Repositories\EmprestimoRepository;
+use App\Repositories\EmprestimoRepositoryInterface;
 use App\Repositories\GeneroRepository;
 use App\Repositories\GeneroRepositoryInterface;
 use App\Repositories\LivroRepository;
@@ -39,6 +41,9 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->bind(UsuarioRepositoryInterface::class, function(){
             return new UsuarioRepository();
+        });
+        $this->app->bind(EmprestimoRepositoryInterface::class, function(){
+            return new EmprestimoRepository();
         });
     }
 

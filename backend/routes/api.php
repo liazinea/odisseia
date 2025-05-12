@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AutorController;
+use App\Http\Controllers\EmprestimoController;
 use App\Http\Controllers\GeneroController;
 use App\Http\Controllers\LivroController;
 use App\Http\Controllers\LoginController;
@@ -47,5 +48,9 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::post('/usuarios', 'store');
         Route::patch('/usuarios/{usuario}', 'delete');
         Route::put('/usuarios/{usuario}', 'update');
+    });
+
+    Route::controller(EmprestimoController::class)->group(function(){
+        Route::post('/emprestimos', 'store');
     });
 });

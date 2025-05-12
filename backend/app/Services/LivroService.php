@@ -35,7 +35,7 @@ class LivroService
     {
         return $this->livroRepository->retorna($livo);
     }
-    
+
     public function deletar(Livro $livro):bool
     {
         return $this->livroRepository->deletar($livro);
@@ -44,6 +44,11 @@ class LivroService
     public function buscarTodos():Collection
     {
         return $this->livroRepository->buscarTodos();
+    }
+
+    public function buscaPorId(int $id):Livro
+    {
+        return $this->livroRepository->buscaPorId($id);
     }
 
     public function salvarLivro(LivroDTO $livroDTO):Livro
