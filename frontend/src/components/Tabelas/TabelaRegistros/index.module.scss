@@ -1,0 +1,156 @@
+@import "../../../styles/index.scss";
+
+.principal {
+  position: relative;
+  background-color: $branco;
+
+  .wrapper {
+    margin: 0 auto;
+    width: 90%;
+
+    .filtrar {
+      margin-bottom: 20px;
+      font-weight: 600;
+      color: $azul-escuro;
+    }
+
+    .filtros {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      margin-block: 20px;
+
+      .todos {
+        width: 20%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .reservado {
+        width: 20%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .emprestado {
+        width: 20%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .devolvido {
+        width: 20%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .cancelado {
+        width: 20%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .filtroBotao {
+        width: fit-content;
+        background-color: $laranja;
+        color: $azul-escuro;
+        padding: 8px 10px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-size: 1.25rem;
+      }
+
+      .botaoAtivo {
+        background-color: $azul-escuro;
+        color: $branco;
+      }
+    }
+
+    .linha{
+        width: 100%;
+        height: 3px;
+        background-color: $laranja;
+        margin-bottom: 20px;
+    }
+
+    .divPesquisa {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      padding-block: 50px;
+
+      .pesquisa {
+        outline: $azul-escuro 1px solid;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 50%;
+
+        .pesquisaInput {
+          font-size: 2rem;
+          padding: 10px;
+          color: $azul-escuro;
+          outline: none;
+          width: 100%;
+          background-color: $branco;
+        }
+        .icon {
+          color: $branco-rosado;
+          font-size: 30px;
+          margin: 10px;
+          background-color: $azul-escuro;
+          border-radius: 25px;
+          padding: 10px 25px 0;
+        }
+      }
+    }
+
+    .secao {
+      font-size: 2rem;
+      color: $azul-escuro;
+      border-bottom: 3px $laranja solid;
+      margin-bottom: 20px;
+      font-weight: 600;
+      padding-bottom: 8px;
+    }
+
+    .head {
+      font-family: Inter;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-around;
+      background-color: $laranja;
+      border-radius: 15px;
+      padding-block: 10px;
+      text-align: center;
+      color: $azul-escuro;
+
+      .data {
+        width: 20%;
+      }
+      .numEmprestimo {
+        width: 20%;
+      }
+      .titulo {
+        width: 20%;
+      }
+      .isbn {
+        width: 20%;
+      }
+      .status {
+        width: 20%;
+      }
+    }
+    .botao {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      height: 75px;
+    }
+  }
+}
