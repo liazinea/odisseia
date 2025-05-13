@@ -50,7 +50,7 @@ const Autores = () => {
   const { buscaAutores } = useAutores();
   const [autoresBuscados, setAutoresBuscados] = useState([]);
 
-  const buscaAutores = async () => {
+  const buscaAutor = async () => {
     const response = await api.get(`/autores`);
     setAutoresBuscados(response.data.autores.data);
   };
@@ -149,11 +149,11 @@ const Autores = () => {
               type="text"
               nomeCampo="nome"
               placeholder="Digite o nome do autor"
-              {...register("gen_nome", {
+              {...register("aut_nome", {
                 required: "O nome do autor é obrigatório",
               })}
             />
-            {<p className={styles["erro"]}>{errors.gen_nome && errors.gen_nome.message}</p>}
+            {<p className={styles["erro"]}>{errors.aut_nome && errors.aut_nome.message}</p>}
           </div>
           <div className={styles["botao"]}>
             <Button
