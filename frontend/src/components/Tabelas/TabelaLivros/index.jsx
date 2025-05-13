@@ -11,15 +11,27 @@ import CelulaTabelaLivros from "../CelulaTabelaLivros";
 import BotaoVerMais from "../../Botao/BotaoVerMais";
 import { IoSearch } from "react-icons/io5";
 import { useAuth } from "../../../context/AuthContext";
+import useLivros from "../../../hooks/useLivros";
 
-const TabelaLivros = ({ livros }) => {
+const TabelaLivros = ({ livros, setLivros }) => {
   const [livro, setLivro] = useState([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [pagesLoaded, setPagesLoaded] = useState(1);
+  const {buscaLivros} = useLivros();
+  const [modalMensagemAberto, setModalMensagemAberto] = useState(false);
   const itemsPerPage = 3;
-    console.log(livros)
+  console.log(livros)
+  useEffect(() => {
+    const carregarivros = async () => {
+      const dados = await buscaLivros();
+      setLivro(dados);
+    };
+    carregarivros();
+  }, [modalMensagemAberto]);
+  
   useEffect(() => {
     setLivro(livros);
+    console.log('iai')
   }, [livros]);
 
   const formatarData = (dataString) => {
@@ -137,6 +149,7 @@ const TabelaLivros = ({ livros }) => {
               onDelete={(id) => {
                 setLivro((prev) => prev.filter((livro) => livro.id !== id));
               }}
+              setModalMensagemAberto={setModalMensagemAberto}
             />
           ))}
         <div className={styles.botao}>

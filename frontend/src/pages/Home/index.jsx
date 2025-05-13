@@ -10,21 +10,18 @@ import {
 import { useAuth } from "../../context/AuthContext";
 const Home = () => {
   const navigate = useNavigate()
-  const {token} = useAuth()
+  const {token, userType} = useAuth()
   
   const {logout} = useAuth()
   useEffect(() => {
-    if(!token){
+    if(!token || userType != 0){
       navigate('/')
     }  
   }, [token])
   return (
     <>
-    <button onClick={logout}>Sair</button>
-        <Navbar/>
         <HeaderHome/>
         <LivrosMaisAcessados/>
-        <Footer />
     </>
   );
 };

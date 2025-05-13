@@ -188,7 +188,7 @@ const ListaUsuarios = ({ usuario, setMessage, buscaUsuarios, setUsuarios, setMod
               )}
             </div>
             <div>
-              <label htmlFor="rg">RG</label>
+              <label htmlFor="rg">RA</label>
               <Input
                 type="text"
                 name="rg"
@@ -251,6 +251,7 @@ const ListaUsuarios = ({ usuario, setMessage, buscaUsuarios, setUsuarios, setMod
           <form onSubmit={handleSubmit(handleConfirmDelete)} className={styles.modalSenha}>
             <h3 className={styles.titulo}>Confirmar Exclusão</h3>
             <p className={styles.mensagem}>Por favor, digite sua senha:</p>
+            <p className={styles.error}>{passwordMessage && (passwordMessage)}</p>
             <div>
               <label htmlFor="senha">Senha</label>
               <Input
@@ -263,9 +264,8 @@ const ListaUsuarios = ({ usuario, setMessage, buscaUsuarios, setUsuarios, setMod
                 })}
               
               />
-                {errors.password && (
-                  <p style={{ color: 'red' }}>{errors.password.message}</p>
-                )}
+            
+                  <p className={styles.error}>{errors.password && (errors.password.message)}</p>
             </div>
             <div className={styles.botoes}>
               <button

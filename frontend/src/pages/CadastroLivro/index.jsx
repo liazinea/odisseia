@@ -23,7 +23,7 @@ const CadastroLivro = () => {
   }, [token])
 
   return (
-    <div>
+    <div className={styles.principal}>
       <Header titulo={"Cadastro de Livro"} />
       <div className={styles.card}>
         <CardCadastro />

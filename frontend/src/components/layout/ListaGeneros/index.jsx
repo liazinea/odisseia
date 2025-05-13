@@ -208,7 +208,7 @@ const ListaGeneros = ({
           >
             <h3 className={styles.titulo}>Confirmar Exclusão</h3>
             <p className={styles.mensagem}>Por favor, digite sua senha:</p>
-            {passwordMessage && <p>{passwordMessage}</p>}
+            <p className={styles.error}>{passwordMessage && (passwordMessage)}</p>
             <div>
               <label htmlFor="senha">Senha</label>
               <Input
@@ -219,7 +219,9 @@ const ListaGeneros = ({
                 {...register("password", {
                   required: "A senha é obrigatória",
                 })}
+                
               />
+              <p className={styles.error}>{errors.password && (errors.password.message)}</p>
             </div>
             <div className={styles.botoes}>
               <button type="submit" className={styles.saveButton}>

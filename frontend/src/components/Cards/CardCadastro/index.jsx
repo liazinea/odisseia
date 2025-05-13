@@ -69,16 +69,8 @@ const CardCadastro = () => {
     formData.append("liv_qtdPaginas", data.liv_qtdPaginas);
     formData.append("liv_dataPubli", data.liv_dataPubli);
     formData.append("liv_editora", data.liv_editora);
-    if (Array.isArray(data.liv_classIndicativa)) {
-      for (let i = 0; i < data.liv_classIndicativa.length; i++) {
-        formData.append(`liv_classIndicativa`, data.liv_classIndicativa[i]);
-      }
-    }
-    if (Array.isArray(data.liv_localizacao)) {
-      for (let i = 0; i < data.liv_localizacao.length; i++) {
-        formData.append(`liv_localizacao`, data.liv_localizacao[i]);
-      }
-    }
+    formData.append(`liv_classIndicativa`, data.liv_classIndicativa);
+    formData.append(`liv_localizacao`, data.liv_localizacao);
     formData.append("liv_sinopse", data.liv_sinopse);
     formData.append("liv_capa", data.liv_capa[0]);
     if (Array.isArray(data.liv_autores)) {
@@ -222,7 +214,7 @@ const CardCadastro = () => {
                     control={control}
                     rules={{ required: "Campo obrigatório" }}
                     error={errors?.liv_localizacao}
-                    isMulti={true}
+                    isMulti={false}
                   />
                 </div>
                 <div className={styles.input}>
@@ -260,7 +252,7 @@ const CardCadastro = () => {
                     control={control}
                     rules={{ required: "Campo obrigatório" }}
                     error={errors?.liv_classIndicativa}
-                    isMulti={true}
+                    isMulti={false}
                   />
                 </div>
               </div>

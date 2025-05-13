@@ -4,7 +4,10 @@
 background-color: $azul-escuro;
 position: relative;
 overflow: hidden;
-
+.imagem{
+    overflow: hidden;
+    display: block;
+}
 }
 .titulo{
     color: $branco-rosado;
