@@ -1,21 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import BotaoAdmHome from "../../Botao/BotaoAdmHome";
 import styles from "./index.module.scss";
 import { useNavigate } from "react-router-dom";
 import SelectSimples from "../../Inputs/Select";
+import useUsuarios from "../../../hooks/useUsuarios";
+import useLivros from "../../../hooks/useLivros";
 
 const SessaoAdmHome = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { control, handleSubmit, setValue, reset } = useForm(); // Adicionado reset
-  const [formData, setFormData] = useState({ aluno: "", livro: "" });
+  const { control, handleSubmit, setValue, reset } = useForm();
+  const [alunos, setAlunos] = useState([]);
+  const [livros, setLivros] = useState([]);
+  const { buscaUsuarios } = useUsuarios();
+  const { buscaLivros } = useLivros();
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   const handleInputChange = (name, value) => {
-    setFormData({ ...formData, [name]: value });
     setValue(name, value); // Atualiza o valor no react-hook-form
   };
 
@@ -23,12 +27,37 @@ const SessaoAdmHome = () => {
     console.log("Novo Empréstimo:", data);
     // Aqui você pode adicionar a lógica para enviar os dados para a API
 
-    // Limpa os valores do formulário
-    setFormData({ aluno: "", livro: "" });
     reset(); // Reseta os valores no react-hook-form
-
     closeModal();
   };
+
+  // Busca os alunos e livros ao carregar o componente
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const alunosData = await buscaUsuarios();
+        const livrosData = await buscaLivros();
+
+        // Verifica se os dados retornados são válidos antes de mapeá-los
+        setAlunos(
+          Array.isArray(alunosData) && alunosData.length > 0
+            ? alunosData.map((aluno) => aluno.usu_nome || "Nome não disponível")
+            : ["Nenhum aluno disponível"]
+        );
+        setLivros(
+          Array.isArray(livrosData) && livrosData.length > 0
+            ? livrosData.map((livro) => livro.nome || "Título não disponível")
+            : ["Nenhum livro disponível"]
+        );
+      } catch (error) {
+        console.error("Erro ao buscar dados:", error);
+        setAlunos(["Nenhum aluno disponível"]); // Garante que o estado tenha uma mensagem padrão
+        setLivros(["Nenhum livro disponível"]);
+      }
+    };
+
+    fetchData();
+  }, [buscaUsuarios, buscaLivros]);
 
   return (
     <div className={styles.container}>
@@ -89,9 +118,9 @@ const SessaoAdmHome = () => {
               <SelectSimples
                 nomeCampo="aluno"
                 placeholder="Selecione um aluno"
-                values={["Fabio", "Marcela", "João", "Maria"]}
-                control={control} // Passa o control do useForm
-                onChange={(value) => handleInputChange("aluno", value)} // Atualiza o estado e o react-hook-form
+                values={alunos} // Dados dinâmicos
+                control={control}
+                onChange={(value) => handleInputChange("aluno", value)}
               />
             </div>
             <div>
@@ -99,9 +128,9 @@ const SessaoAdmHome = () => {
               <SelectSimples
                 nomeCampo="livro"
                 placeholder="Selecione um livro"
-                values={["Livro A", "Livro B", "Livro C", "Livro D"]}
-                control={control} // Passa o control do useForm
-                onChange={(value) => handleInputChange("livro", value)} // Atualiza o estado e o react-hook-form
+                values={livros} // Dados dinâmicos
+                control={control}
+                onChange={(value) => handleInputChange("livro", value)}
               />
             </div>
             <div className={styles.botoes}>
