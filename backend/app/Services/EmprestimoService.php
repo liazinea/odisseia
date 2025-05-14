@@ -7,6 +7,7 @@ use App\Models\Emprestimo;
 use App\Repositories\EmprestimoRepository;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 
 class EmprestimoService
 {
@@ -17,6 +18,10 @@ class EmprestimoService
     )
     {}
 
+    public function buscarTodos():Collection
+    {
+        return $this->emprestimoRepository->buscarTodos();
+    }
     public function criaEmprestimo(int $idAluno, int $idLivro):Emprestimo
     {
         $aluno = $this->usuarioService->buscaPorId($idAluno);
@@ -37,6 +42,22 @@ class EmprestimoService
         }
 
         throw new Exception('O aluno já tem um empréstimo');
+    }
+
+    public function atualizaEmprestimo(int $estadoAtual, Emprestimo $emprestimo):bool
+    {
+        if($result = $this->emprestimoRepository->atualizaEmprestimo($estadoAtual, $emprestimo)){
+            return $result;
+        }
+        throw new Exception('Erro ao atualizar um empréstimo');
+    }
+
+    public function renovaEmprestimo(Emprestimo $emprestimo):bool
+    {
+        if($result = $this->emprestimoRepository->renovaEmprestimo($emprestimo)){
+            return $result;
+        }
+        throw new Exception('Erro ao atualizar um empréstimo');
     }
 
     public function verificaSeAlunoTemEmprestimo(int $idAluno):bool

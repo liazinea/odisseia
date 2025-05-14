@@ -51,6 +51,9 @@ Route::middleware('auth:sanctum')->group(function(){
     });
 
     Route::controller(EmprestimoController::class)->group(function(){
+        Route::get('/emprestimos', 'index');
         Route::post('/emprestimos', 'store');
+        Route::patch('/emprestimos/{emprestimo}', 'atualizaEmprestimo');
+        Route::patch('/renova-emprestimo/{emprestimo}', 'renovaEmprestimo');
     });
 });
