@@ -15,6 +15,7 @@ import LivrosCadastrados from "../pages/LivrosCadastrados";
 
 import CadastroLivro from "../pages/CadastroLivro";
 import OpcoesLivro from "../pages/OpcoesLivro";
+import Autores from "../pages/Autores";
 
 export const Paths = () => {
     return (
@@ -25,6 +26,7 @@ export const Paths = () => {
                     <Route path={'/primeiro-acesso'} element={<PrimeiroAcesso />}/>
                     <Route path={'/esqueci-minha-senha'} element={<RedefinicaoSenha />}/>
                     <Route path={'/'} element={<PageLayout />}>
+
                         <Route path={'/t'} element={<Teste />}/>
                         <Route path={`/livro/:id`} element={<InformacoesDetalhadas />}/>
                         <Route path={'/home-adm'} element={<HomeAdm />}/>
@@ -32,6 +34,7 @@ export const Paths = () => {
                         <Route path={'/home'} element={<Home/>}/>
                         <Route path={'/livro/cadastro'} element={<CadastroLivro />}/>
                         <Route path={'/generos'} element={<Generos/>}/>
+                        <Route path={'/autores'} element={<Autores/>}/>
                         <Route path={'/usuarios'} element={<Usuarios/>}/>
                         <Route path={'/opcoes-livro'} element={<OpcoesLivro/>}/>
                     </Route>
