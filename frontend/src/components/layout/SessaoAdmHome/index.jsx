@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import BotaoAdmHome from "../../Botao/BotaoAdmHome";
 import styles from "./index.module.scss";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +10,7 @@ import useLivros from "../../../hooks/useLivros";
 const SessaoAdmHome = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { control, handleSubmit, setValue, reset } = useForm();
+  const { control, handleSubmit, setValue, reset, formState: { errors } } = useForm();
   const [alunos, setAlunos] = useState([]);
   const [livros, setLivros] = useState([]);
   const { buscaUsuarios } = useUsuarios();
@@ -25,7 +25,7 @@ const SessaoAdmHome = () => {
 
   const onSubmit = (data) => {
     console.log("Novo Empréstimo:", data);
-    // Aqui você pode adicionar a lógica para enviar os dados para a API
+    // Falta a lógica para enviar os dados do novo empréstimo para o backend
 
     reset(); // Reseta os valores no react-hook-form
     closeModal();
@@ -42,17 +42,17 @@ const SessaoAdmHome = () => {
         setAlunos(
           Array.isArray(alunosData) && alunosData.length > 0
             ? alunosData.map((aluno) => aluno.usu_nome || "Nome não disponível")
-            : ["Nenhum aluno disponível"]
+            : []
         );
         setLivros(
           Array.isArray(livrosData) && livrosData.length > 0
             ? livrosData.map((livro) => livro.nome || "Título não disponível")
-            : ["Nenhum livro disponível"]
+            : []
         );
       } catch (error) {
         console.error("Erro ao buscar dados:", error);
-        setAlunos(["Nenhum aluno disponível"]); // Garante que o estado tenha uma mensagem padrão
-        setLivros(["Nenhum livro disponível"]);
+        setAlunos([]); // Garante que o estado seja um array vazio em caso de erro
+        setLivros([]);
       }
     };
 
@@ -118,8 +118,10 @@ const SessaoAdmHome = () => {
               <SelectSimples
                 nomeCampo="aluno"
                 placeholder="Selecione um aluno"
-                values={alunos} // Dados dinâmicos
+                values={alunos} 
                 control={control}
+                rules={{ required: "Selecione um aluno" }}
+                error={errors.aluno} 
                 onChange={(value) => handleInputChange("aluno", value)}
               />
             </div>
@@ -128,8 +130,10 @@ const SessaoAdmHome = () => {
               <SelectSimples
                 nomeCampo="livro"
                 placeholder="Selecione um livro"
-                values={livros} // Dados dinâmicos
+                values={livros} 
                 control={control}
+                rules={{ required: "Selecione um livro" }} 
+                error={errors.livro} 
                 onChange={(value) => handleInputChange("livro", value)}
               />
             </div>
