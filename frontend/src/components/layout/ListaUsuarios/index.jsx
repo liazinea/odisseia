@@ -255,6 +255,7 @@ const ListaUsuarios = ({ usuario, setMessage, buscaUsuarios, setUsuarios, setMod
               <label htmlFor="senha">Senha</label>
               <Input
                 type="password"
+                nomeCampo="password"
                 placeholder="Digite sua senha"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)} 

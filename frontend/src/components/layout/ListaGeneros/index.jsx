@@ -213,6 +213,7 @@ const ListaGeneros = ({
               <label htmlFor="senha">Senha</label>
               <Input
                 type="password"
+                nomeCampo="password"
                 placeholder="Digite sua senha"
                 value={password}
                 onChange={(value) => setPassword(value)}
