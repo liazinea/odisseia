@@ -1,12 +1,14 @@
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import BotaoAdmHome from "../../Botao/BotaoAdmHome";
 import styles from "./index.module.scss";
 import { useNavigate } from "react-router-dom";
-import Input from "../../Inputs/Input";
+import SelectSimples from "../../Inputs/Select";
 
 const SessaoAdmHome = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { control, handleSubmit, setValue, reset } = useForm(); // Adicionado reset
   const [formData, setFormData] = useState({ aluno: "", livro: "" });
 
   const openModal = () => setIsModalOpen(true);
@@ -14,12 +16,17 @@ const SessaoAdmHome = () => {
 
   const handleInputChange = (name, value) => {
     setFormData({ ...formData, [name]: value });
+    setValue(name, value); // Atualiza o valor no react-hook-form
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Novo Empréstimo:", formData);
+  const onSubmit = (data) => {
+    console.log("Novo Empréstimo:", data);
     // Aqui você pode adicionar a lógica para enviar os dados para a API
+
+    // Limpa os valores do formulário
+    setFormData({ aluno: "", livro: "" });
+    reset(); // Reseta os valores no react-hook-form
+
     closeModal();
   };
 
@@ -75,28 +82,26 @@ const SessaoAdmHome = () => {
       {/* Modal para cadastrar novo empréstimo */}
       {isModalOpen && (
         <div className={styles.modal}>
-          <form onSubmit={handleSubmit} className={styles.modalCadastro}>
+          <form onSubmit={handleSubmit(onSubmit)} className={styles.modalCadastro}>
             <h3 className={styles.titulo}>Cadastrar Novo Empréstimo</h3>
             <div>
               <label htmlFor="aluno">Nome do Aluno</label>
-              <Input
-                type="text"
+              <SelectSimples
                 nomeCampo="aluno"
-                placeholder="Digite o nome do aluno"
-                value={formData.aluno}
-                onChange={(value) => handleInputChange("aluno", value)}
-                required
+                placeholder="Selecione um aluno"
+                values={["Fabio", "Marcela", "João", "Maria"]}
+                control={control} // Passa o control do useForm
+                onChange={(value) => handleInputChange("aluno", value)} // Atualiza o estado e o react-hook-form
               />
             </div>
             <div>
               <label htmlFor="livro">Livro Desejado</label>
-              <Input
-                type="text"
+              <SelectSimples
                 nomeCampo="livro"
-                placeholder="Digite o nome do livro"
-                value={formData.livro}
-                onChange={(value) => handleInputChange("livro", value)}
-                required
+                placeholder="Selecione um livro"
+                values={["Livro A", "Livro B", "Livro C", "Livro D"]}
+                control={control} // Passa o control do useForm
+                onChange={(value) => handleInputChange("livro", value)} // Atualiza o estado e o react-hook-form
               />
             </div>
             <div className={styles.botoes}>
