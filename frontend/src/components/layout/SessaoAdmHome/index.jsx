@@ -57,7 +57,7 @@ const SessaoAdmHome = () => {
     };
 
     fetchData();
-  }, [buscaUsuarios, buscaLivros]);
+  }, []);
 
   return (
     <div className={styles.container}>
