@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./index.module.scss";
+import CapaLivro from "../../Livro/CapaLivro";
 
 const dados = {
   Romance: [1, 2, 3, 4],
@@ -52,7 +53,7 @@ const CardCarrossel = () => {
         <div className={`${styles.cardContainer} ${animating ? styles.animating : ""}`}>
           {livros.map((livro, index) => (
             <div key={index} className={styles.card}>
-              <div className={styles.cardImage}></div>
+              <CapaLivro imagemCapa={livro.capa} classificacao={livro.classificacaoIndicativa} />
             </div>
           ))}
         </div>
@@ -66,4 +67,5 @@ const CardCarrossel = () => {
 };
 
 export default CardCarrossel;
+
 
