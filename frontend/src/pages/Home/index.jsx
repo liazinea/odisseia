@@ -20,13 +20,10 @@ const Home = () => {
    }  
   }, [token])
   return (
-    <>
-    <button onClick={logout}>Sair</button> 
-        <Navbar/>
+    <>  
         <HeaderHome/>
         <LivrosMaisAcessados/>
         <CardCarrossel/>
-        <Footer />
     </>
   );
 };
