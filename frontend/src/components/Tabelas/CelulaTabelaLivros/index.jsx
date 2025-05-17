@@ -1,54 +1,91 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./index.module.scss";
-import { IoPencil, IoTrash, IoTrashOutline } from "react-icons/io5";
+import { IoPencil, IoTrash } from "react-icons/io5";
 import ModalExcluir from "../../Modal/ModalExcluir";
-import ModalEditar from "../../Modal/ModalEditar";
+import ModalEditarLivro from "../../Modal/ModalEditarLivro";
+import ModalConfirmarSenha from "../../Modal/ModalConfirmarSenha";
 import { api } from '../../../config/api';
 import { useAuth } from "../../../context/AuthContext";
+import { useForm } from "react-hook-form";
 
-const CelulaTabelaLivros = ({ livro, onDelete  }) => {
+const CelulaTabelaLivros = ({ livro, onDelete }) => {
   const [livroSelecionado, setLivroSelecionado] = useState(null);
   const [modalEditarAberto, setModalEditarAberto] = useState(false);
-  const [modalAberto, setModalAberto] = useState(false);
-  const {token} = useAuth()
-  
+  const [modalExcluirAberto, setModalExcluirAberto] = useState(false);
+  const [modalSenhaAberto, setModalSenhaAberto] = useState(false);
+  const [password, setPassword] = useState("");
+  const [passwordMessage, setPasswordMessage] = useState(null);
+  const { token } = useAuth();
   const navigate = useNavigate();
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
+    defaultValues: {
+      password: "",
+    },
+  });
 
-  const abreModal = (livroRelacionado) => {
+  const abreModalExcluir = (livroRelacionado) => {
     setLivroSelecionado(livroRelacionado);
-    setModalAberto(true);
+    setModalExcluirAberto(true);
   };
 
-  const showModal = (livroRelacionado) => {
+  const showModalEditar = (livroRelacionado) => {
     setLivroSelecionado(livroRelacionado);
     setModalEditarAberto(true);
   };
 
-  const fechaModal = () => {
-    setModalAberto(false);
+  const fechaModalExcluir = () => {
+    setModalExcluirAberto(false);
     setLivroSelecionado(null);
   };
 
-  const closeModal = () => {
+  const closeModalEditar = () => {
     setModalEditarAberto(false);
     setLivroSelecionado(null);
   };
 
-  const deletarLivro = async () => {
+  // Abre modal de senha e fecha o de confirmação
+  const openModalSenha = () => {
+    setModalExcluirAberto(false);
+    setModalSenhaAberto(true);
+    setPasswordMessage(null);
+  };
+
+  // Fecha modal de senha e limpa campo
+  const closeModalSenha = () => {
+    setModalSenhaAberto(false);
+    setPassword("");
+    reset({ password: "" });
+  };
+
+  // Confirma senha e exclui livro
+  const handleConfirmDelete = async (data) => {
     try {
-      const response = await api.delete(`/livros/${livro.id}`, {
+      const response = await api.get(`/check-senha?password=${data.password}`, {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
-      console.log("Livro excluído com sucesso:", response.data);
-      onDelete(livro.id);
-      fechaModal();
-      buscaLivro(); // Atualiza a lista após exclusão
+
+      if (response.data.status) {
+        await api.delete(`/livros/${livro.id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        onDelete(livro.id);
+        closeModalSenha();
+      } else {
+        setPasswordMessage("Senha incorreta");
+      }
     } catch (error) {
-      console.error("Erro ao excluir o livro:", error);
+      setPasswordMessage("Erro ao validar senha");
     }
   };
 
@@ -81,16 +118,45 @@ const CelulaTabelaLivros = ({ livro, onDelete  }) => {
         </div>
         <div className={styles.num}>{livro.numRegistro}</div>
         <div className={styles.opcoes}>
-          <div className={styles.editar} onClick={() => showModal(livro)}>
-            <IoPencil/>
+          <div className={styles.editar} onClick={() => showModalEditar(livro)}>
+            <IoPencil />
           </div>
-          <div className={styles.excluir} onClick={() => abreModal(livro)}>
-            <IoTrash/>
+          <div className={styles.excluir} onClick={() => abreModalExcluir(livro)}>
+            <IoTrash />
           </div>
         </div>
       </div>
-      <ModalExcluir textoModal={`Tem certeza de que deseja excluir o livro ${livro.nome}`} onClick={deletarLivro} modalAberto={modalAberto} fechaModal={fechaModal} itemSelecionado={livroSelecionado}/>
-      <ModalEditar closeModal={closeModal} modalEditarAberto={modalEditarAberto} showModal={showModal} livro={livro}/>
+      {/* Modal de confirmação de exclusão */}
+      <ModalExcluir
+        isOpen={modalExcluirAberto}
+        onClose={fechaModalExcluir}
+        onConfirm={openModalSenha}
+        titulo="Excluir Livro"
+        mensagem={`Tem certeza de que deseja excluir o livro`}
+        nome={livro.nome}
+        confirmLabel="Excluir"
+        cancelLabel="Cancelar"
+      />
+      {/* Modal de confirmação de senha */}
+      <ModalConfirmarSenha
+        isOpen={modalSenhaAberto}
+        onClose={closeModalSenha}
+        onSubmit={handleConfirmDelete}
+        handleSubmit={handleSubmit}
+        register={register}
+        errors={errors}
+        password={password}
+        setPassword={setPassword}
+        passwordMessage={passwordMessage}
+        mensagem="Por favor, digite sua senha:"
+        titulo="Confirmar Exclusão"
+      />
+      <ModalEditarLivro
+        closeModal={closeModalEditar}
+        modalEditarAberto={modalEditarAberto}
+        showModal={showModalEditar}
+        livro={livro}
+      />
     </div>
   );
 };

@@ -42,10 +42,6 @@ const Autores = () => {
     setInputValue(value);
   };
 
-  const handleButtonClick = () => {
-    console.log("Valor do input:", inputValue);
-  };
-
   const [autores, setAutores] = useState([]);
   const { buscaAutores } = useAutores();
   const [autoresBuscados, setAutoresBuscados] = useState([]);
@@ -63,22 +59,6 @@ const Autores = () => {
     carregarAutores();
   }, []);
 
-  useEffect(() => {
-    const carregarAutores = async () => {
-      const dados = await buscaAutores();
-      setAutores(dados);
-    };
-    carregarAutores();
-  }, [message]);
-
-  useEffect(() => {
-    const carregarAutores = async () => {
-      const dados = await buscaAutores();
-      setAutores(dados);
-    };
-    carregarAutores();
-  }, [registerMessage]);
-
   const onSubmit = async (data) => {
     try {
       const response = await api.post("/autores", data, {
@@ -87,16 +67,17 @@ const Autores = () => {
         },
       });
       setRegisterMessage(response.data.message);
-      console.log(response);
       setMessage(response.data.message)
       setModalMensagemAberto(true);
-      closeEditModal();
+
+      const dados = await buscaAutores();
+      setAutores(dados);
     } catch (error) {
       console.error(
-        "Erro ao fazer login:",
+        "Erro:",
         error.response?.data || error.message
       );
-      setError(error.response.data.message);
+      setRegisterMessage(error.response?.data?.message || "Erro ao cadastrar autor.");
     }
   };
   return (
@@ -160,7 +141,6 @@ const Autores = () => {
               type="submit"
               nomeBotao="cadastrar"
               texto="Adicionar Autor"
-              onClick={handleButtonClick}
             />
           </div>
         </form>
