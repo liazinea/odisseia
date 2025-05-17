@@ -3,16 +3,16 @@ import HeaderPagina from "../../components/layout/HeaderPagina";
 import styles from "./index.module.scss";
 import Button from "../../components/Botao/Botao";
 import Input from "../../components/Inputs/Input";
-import useGeneros from "../../hooks/useGeneros";
+import useAutores from "../../hooks/useAutores";
 import BarraPesquisa from "../../components/layout/HeaderHome/BarraPesquisa";
-import ListaGeneros from "../../components/layout/ListaGeneros";
+import ListaAutores from "../../components/layout/ListaAutores";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../config/api";
 import ModalMensagem from "../../components/Modal/ModalMensagem";
 
-const Generos = () => {
+const Autores = () => {
   const { token } = useAuth();
   const { userType } = useAuth();
   const navigate = useNavigate();
@@ -42,77 +42,59 @@ const Generos = () => {
     setInputValue(value);
   };
 
+  const [autores, setAutores] = useState([]);
+  const { buscaAutores } = useAutores();
+  const [autoresBuscados, setAutoresBuscados] = useState([]);
 
-
-  const [generos, setGeneros] = useState([]);
-  const { buscaGeneros } = useGeneros();
-  const [generosBuscados, setGenerosBuscados] = useState([]);
-
-  const buscaGenero = async () => {
-    const response = await api.get(`/generos`);
-    setGenerosBuscados(response.data.generos.data);
+  const buscaAutor = async () => {
+    const response = await api.get(`/autores`);
+    setAutoresBuscados(response.data.autores.data);
   };
 
   useEffect(() => {
-    const carregarGeneros = async () => {
-      const dados = await buscaGeneros();
-      setGeneros(dados);
+    const carregarAutores = async () => {
+      const dados = await buscaAutores();
+      setAutores(dados);
     };
-    carregarGeneros();
+    carregarAutores();
   }, []);
 
-  useEffect(() => {
-    const carregarGeneros = async () => {
-      const dados = await buscaGeneros();
-      setGeneros(dados);
-    };
-    carregarGeneros();
-  }, [message]);
+  const onSubmit = async (data) => {
+    try {
+      const response = await api.post("/autores", data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setRegisterMessage(response.data.message);
+      setMessage(response.data.message)
+      setModalMensagemAberto(true);
 
-  useEffect(() => {
-    const carregarGeneros = async () => {
-      const dados = await buscaGeneros();
-      setGeneros(dados);
-    };
-    carregarGeneros();
-  }, [registerMessage]);
-
-const onSubmit = async (data) => {
-  try {
-    const response = await api.post("/generos", data, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    setRegisterMessage(response.data.message);
-    setMessage(response.data.message)
-    setModalMensagemAberto(true);
-
-    const dados = await buscaGeneros();
-    setGeneros(dados);
-  } catch (error) {
-    console.error(
-      "Erro:",
-      error.response?.data || error.message
-    );
-    setRegisterMessage(error.response?.data?.message || "Erro ao cadastrar gênero.");
-  }
-};
+      const dados = await buscaAutores();
+      setAutores(dados);
+    } catch (error) {
+      console.error(
+        "Erro:",
+        error.response?.data || error.message
+      );
+      setRegisterMessage(error.response?.data?.message || "Erro ao cadastrar autor.");
+    }
+  };
   return (
     <>
-      <HeaderPagina titulo="Gêneros de Livros" />
+      <HeaderPagina titulo="Autores" />
       <div className={styles["barra-pesquisa"]}>
         <BarraPesquisa
-          placeholder="Pesquise por gênero"
+          placeholder="Pesquise por autor"
           onChange={handleInputChange}
-          buscaGeneros={buscaGeneros}
-          setGeneros={setGeneros}
+          buscaAutores={buscaAutores}
+          setAutores={setAutores}
         />
       </div>
       <div className={styles["container-geral"]}>
         <div className={styles["container-exibir"]}>
           <div className={styles["titulo"]}>
-            <h2>Gêneros cadastrados</h2>
+            <h2>Autores cadastrados</h2>
           </div>
           <div className={styles["tabela"]}>
             <div className={styles.head}>
@@ -120,14 +102,14 @@ const onSubmit = async (data) => {
               <div className={styles.opcoes}>Opções</div>
             </div>
             <div className={styles.conteudo}>
-              {generos.map((genero) => (
-                <div className={styles["linha"]} key={genero.id}>
-                  <ListaGeneros
-                    genero={genero}
-                    buscaGenero={buscaGenero}
+              {autores.map((autores) => (
+                <div className={styles["linha"]} key={autores.id}>
+                  <ListaAutores
+                    autor={autores}
+                    buscaAutor={buscaAutor}
                     setMessage={setMessage}
-                    buscaGeneros={buscaGeneros}
-                    setGeneros={setGeneros}
+                    buscaAutores={buscaAutores}
+                    setAutores={setAutores}
                     setModalMensagemAberto={setModalMensagemAberto}
                   />
                 </div>
@@ -140,25 +122,25 @@ const onSubmit = async (data) => {
           className={styles["container-cadastro"]}
         >
           <div className={styles["titulo"]}>
-            <h2>Cadastrar gênero</h2>
+            <h2>Cadastrar autor</h2>
           </div>
           <div className={styles["input"]}>
             <label htmlFor="nome">Nome:</label>
             <Input
               type="text"
               nomeCampo="nome"
-              placeholder="Digite o nome do gênero"
-              {...register("gen_nome", {
-                required: "O nome do gênero é obrigatório",
+              placeholder="Digite o nome do autor"
+              {...register("aut_nome", {
+                required: "O nome do autor é obrigatório",
               })}
             />
-            {<p className={styles["erro"]}>{errors.gen_nome && errors.gen_nome.message}</p>}
+            {<p className={styles["erro"]}>{errors.aut_nome && errors.aut_nome.message}</p>}
           </div>
           <div className={styles["botao"]}>
             <Button
               type="submit"
               nomeBotao="cadastrar"
-              texto="Adicionar Gênero"
+              texto="Adicionar Autor"
             />
           </div>
         </form>
@@ -173,4 +155,4 @@ const onSubmit = async (data) => {
   );
 };
 
-export default Generos;
+export default Autores;

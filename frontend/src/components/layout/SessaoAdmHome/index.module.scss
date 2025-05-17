@@ -8,4 +8,8 @@
   grid-template-rows: repeat(2, 1fr);
   gap: 5rem;
   padding: 5vh;
+
+  & > :nth-child(7) {
+    grid-column: 2;
+  }
 }

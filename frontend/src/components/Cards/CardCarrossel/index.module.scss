@@ -1,0 +1,83 @@
+@import "../../../styles/index.scss";
+
+.carrosselContainer {
+  background-color: $azul-escuro;
+  padding: 2rem;
+  color: $branco-rosado;
+  text-align: center;
+  min-height: 80vh;
+}
+
+.generoTitulo {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.carrosselWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.seta {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  background-color: $azul-escuro;
+  color: $branco-rosado;
+  border: none;
+  padding: 0.5rem 0.8rem;
+  cursor: pointer;
+  border-radius: 20%;
+  z-index: 2;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: $laranja
+  }
+}
+
+.esquerda {
+  left: 1rem;
+}
+
+.direita {
+  right: 1rem;
+}
+
+.cardContainer {
+  display: flex;
+  justify-content: center;
+  gap: 5rem;
+  margin-top: 4rem;
+  transition: all 0.3s ease-in-out;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.animating {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.card {
+  border: 2px solid $laranja;
+  border-radius: 1rem;
+  padding: 1rem;
+  width: 16vw;
+  height: 26vw;
+  background-color: $azul-escuro;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer; // Adicionado
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  background: url("/img/capalivro.png") center/contain no-repeat;
+  border-radius: 0.5rem;
+}
