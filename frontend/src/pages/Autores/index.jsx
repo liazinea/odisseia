@@ -59,22 +59,6 @@ const Autores = () => {
     carregarAutores();
   }, []);
 
-  useEffect(() => {
-    const carregarAutores = async () => {
-      const dados = await buscaAutores();
-      setAutores(dados);
-    };
-    carregarAutores();
-  }, [message]);
-
-  useEffect(() => {
-    const carregarAutores = async () => {
-      const dados = await buscaAutores();
-      setAutores(dados);
-    };
-    carregarAutores();
-  }, [registerMessage]);
-
   const onSubmit = async (data) => {
     try {
       const response = await api.post("/autores", data, {
@@ -85,6 +69,9 @@ const Autores = () => {
       setRegisterMessage(response.data.message);
       setMessage(response.data.message)
       setModalMensagemAberto(true);
+
+      const dados = await buscaAutores();
+      setAutores(dados);
     } catch (error) {
       console.error(
         "Erro:",

@@ -65,27 +65,31 @@ const ListaAutores = ({
   }, [passwordMessage, isEditModalOpen]);
 
   // Confirma exclusão do autor
-  const handleConfirmDelete = async (data) => {
-    const response = await api.get(`/check-senha?password=${data.password}`, {
+const handleConfirmDelete = async (data) => {
+  const response = await api.get(`/check-senha?password=${data.password}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (response.data.status) {
+    await api.patch(`/autores/${autor.id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
 
-    if (response.data.status) {
-      await api.patch(`/autores/${autor.id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+    // Atualize a lista aqui!
+    const dados = await buscaAutores();
+    setAutores(dados);
 
-      closePasswordModal();
-      setMessage("Autor excluído com sucesso");
-      setModalMensagemAberto(true);
-    } else {
-      setPasswordMessage("Senha incorreta");
-    }
-  };
+    closePasswordModal();
+    setMessage("Autor excluído com sucesso");
+    setModalMensagemAberto(true);
+  } else {
+    setPasswordMessage("Senha incorreta");
+  }
+};
 
   // Atualiza o autor
   const onSubmit = async (data) => {
@@ -142,26 +146,16 @@ const ListaAutores = ({
 
       {/* Modal de Exclusão */}
       {isDeleteModalOpen && (
-        <div className={styles.modal}>
-          <div className={styles.modalExcluir}>
-            <h3 className={styles.titulo}>Excluir Autor</h3>
-            <p className={styles.mensagem}>
-              Tem certeza de que deseja excluir permanentemente o autor
-              <span className={styles.nome}> "{autor.nome}"</span>?
-            </p>
-            <div className={styles.botoes}>
-              <button
-                onClick={openPasswordModal}
-                className={styles.deleteButton}
-              >
-                Excluir
-              </button>
-              <button onClick={closeDeleteModal} className={styles.closeButton}>
-                Cancelar
-              </button>
-            </div>
-          </div>
-        </div>
+        <ModalExcluir
+          isOpen={isDeleteModalOpen}
+          onClose={closeDeleteModal}
+          onConfirm={openPasswordModal}
+          titulo="Excluir Autor"
+          mensagem="Tem certeza de que deseja excluir permanentemente o autor"
+          nome={autor.nome}
+          confirmLabel="Excluir"
+          cancelLabel="Cancelar"
+        />
       )}
 
       {/* Modal de Confirmação de Senha */}
