@@ -25,7 +25,7 @@ class LivroRepository implements LivroRepositoryInterface
         $livro->liv_capa = $livroDTO->capa;
         return $livro->save();
     }
-    
+
     public function retorna(Livro $livro): Livro
     {
         return $livro->load(['editora', 'autores', 'generos']);
@@ -41,6 +41,13 @@ class LivroRepository implements LivroRepositoryInterface
     public function buscarTodos():Collection
     {
         return Livro::where('liv_status_ativo', '=', 1)->with(['autores', 'editora', 'generos'])->get();
+    }
+
+    public function buscaPorId(int $id): Livro
+    {
+        return Livro::where('liv_status', '=', 1)
+        ->where('liv_id', '=', $id)
+        ->first();
     }
 
     public function salvar(LivroDTO $livroDTO):Livro
