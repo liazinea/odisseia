@@ -5,7 +5,7 @@ import { IoClose } from "react-icons/io5";
 import { useState, useEffect } from "react";
 
 
-const ModalEditar = ({
+const ModalEditarLivro = ({
   modalEditarAberto,
   closeModal,
   showModal,
@@ -53,4 +53,4 @@ const ModalEditar = ({
   );
 };
 
-export default ModalEditar;
+export default ModalEditarLivro;

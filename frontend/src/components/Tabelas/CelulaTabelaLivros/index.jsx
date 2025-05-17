@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./index.module.scss";
 import { IoPencil, IoTrash, IoTrashOutline } from "react-icons/io5";
 import ModalExcluir from "../../Modal/ModalExcluir";
-import ModalEditar from "../../Modal/ModalEditar";
+import ModalEditarLivro from "../../Modal/ModalEditarLivro";
 import { api } from '../../../config/api';
 import { useAuth } from "../../../context/AuthContext";
 
@@ -90,7 +90,7 @@ const CelulaTabelaLivros = ({ livro, onDelete  }) => {
         </div>
       </div>
       <ModalExcluir textoModal={`Tem certeza de que deseja excluir o livro ${livro.nome}`} onClick={deletarLivro} modalAberto={modalAberto} fechaModal={fechaModal} itemSelecionado={livroSelecionado}/>
-      <ModalEditar closeModal={closeModal} modalEditarAberto={modalEditarAberto} showModal={showModal} livro={livro}/>
+      <ModalEditarLivro closeModal={closeModal} modalEditarAberto={modalEditarAberto} showModal={showModal} livro={livro}/>
     </div>
   );
 };

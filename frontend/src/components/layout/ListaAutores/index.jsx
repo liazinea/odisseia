@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 import api from "../../../services/api";
 import { useAuth } from "../../../context/AuthContext";
 import ModalConfirmarSenha from "../../Modal/ModalConfirmarSenha";
+import ModalEdicao from "../../Modal/ModalEdicao";
+
 
 const ListaAutores = ({
   autor,
@@ -117,41 +119,24 @@ const ListaAutores = ({
 
       {/* Modal de Edição */}
       {isEditModalOpen && (
-        <div className={styles.modal}>
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className={styles.modalEdicao}
-          >
-            <h3 className={styles.titulo}>Editar Autor</h3>
-            <div>
-              <label htmlFor="nomeAtual">Nome atual</label>
-              <Input type="text" defaultValue={autor.nome} disabled={true} />
-            </div>
-            <div>
-              <label htmlFor="nomeNovo">Novo nome</label>
-              <Input
-                type="text"
-                defaultValue={autor.nome}
-                disabled={false}
-                {...register("aut_nome", {
-                  required: "O novo nome do autor é obrigatório",
-                })}
-              />
-              {errors.aut_nome && (
-                <p style={{ color: "red" }}>{errors.aut_nome.message}</p>
-              )}
-            </div>
-            <div className={styles.botoes}>
-              <button type="submit" className={styles.saveButton}>
-                Salvar
-              </button>
-              <button onClick={closeEditModal} className={styles.closeButton}>
-                Cancelar
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
+      <ModalEdicao
+        isOpen={isEditModalOpen}
+        onClose={closeEditModal}
+        onSubmit={onSubmit}
+        handleSubmit={handleSubmit}
+        register={register}
+        errors={errors}
+        titulo="Editar Autor"
+        labelAtual="Nome atual"
+        valorAtual={autor.nome}
+        labelNovo="Novo nome"
+        nomeCampoNovo="aut_nome"
+        valorNovo={autor.nome}
+        registerOptions={{
+          required: "O novo nome do autor é obrigatório",
+        }}
+      />
+    )}
 
       {/* Modal de Exclusão */}
       {isDeleteModalOpen && (

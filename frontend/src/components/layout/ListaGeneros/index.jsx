@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 import api from "../../../services/api";
 import { useAuth } from "../../../context/AuthContext";
 import ModalConfirmarSenha from "../../Modal/ModalConfirmarSenha";
+import ModalEdicao from "../../Modal/ModalEdicao";
+
 
 const ListaGeneros = ({
   genero,
@@ -117,41 +119,24 @@ const ListaGeneros = ({
 
       {/* Modal de Edição */}
       {isEditModalOpen && (
-        <div className={styles.modal}>
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className={styles.modalEdicao}
-          >
-            <h3 className={styles.titulo}>Editar Gênero</h3>
-            <div>
-              <label htmlFor="nomeAtual">Nome atual</label>
-              <Input type="text" defaultValue={genero.nome} disabled={true} />
-            </div>
-            <div>
-              <label htmlFor="nomeNovo">Novo nome</label>
-              <Input
-                type="text"
-                defaultValue={genero.nome}
-                disabled={false}
-                {...register("gen_nome", {
-                  required: "O novo nome do gênero é obrigatório",
-                })}
-              />
-              {errors.gen_nome && (
-                <p style={{ color: "red" }}>{errors.gen_nome.message}</p>
-              )}
-            </div>
-            <div className={styles.botoes}>
-              <button type="submit" className={styles.saveButton}>
-                Salvar
-              </button>
-              <button onClick={closeEditModal} className={styles.closeButton}>
-                Cancelar
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
+      <ModalEdicao
+        isOpen={isEditModalOpen}
+        onClose={closeEditModal}
+        onSubmit={onSubmit}
+        handleSubmit={handleSubmit}
+        register={register}
+        errors={errors}
+        titulo="Editar Gênero"
+        labelAtual="Nome atual"
+        valorAtual={genero.nome}
+        labelNovo="Novo nome"
+        nomeCampoNovo="gen_nome"
+        valorNovo={genero.nome}
+        registerOptions={{
+          required: "O novo nome do gênero é obrigatório",
+        }}
+      />
+    )}
 
       {/* Modal de Exclusão */}
       {isDeleteModalOpen && (
