@@ -88,6 +88,8 @@ const SessaoAdmHome = () => {
         nomeBotao="autores" 
         icon="/autores-icon.svg" 
         texto="Autores"
+        onClick={() => navigate("/autores")}
+
       />
       <BotaoAdmHome
         type="button"

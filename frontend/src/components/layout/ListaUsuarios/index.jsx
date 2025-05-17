@@ -5,6 +5,8 @@ import api from "../../../services/api";
 import { useAuth } from "../../../context/AuthContext";
 import { useForm } from "react-hook-form";
 import { IoPencil, IoTrash } from "react-icons/io5";
+import ModalConfirmarSenha from "../../Modal/ModalConfirmarSenha";
+
 
 const ListaUsuarios = ({ usuario, setMessage, buscaUsuarios, setUsuarios, setModalMensagemAberto }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -22,7 +24,7 @@ const ListaUsuarios = ({ usuario, setMessage, buscaUsuarios, setUsuarios, setMod
     rg: usuario.rg,
   });
 
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
   const handleEditClick = () => {
     setIsEditModalOpen(true);
@@ -50,6 +52,7 @@ const ListaUsuarios = ({ usuario, setMessage, buscaUsuarios, setUsuarios, setMod
   const closePasswordModal = () => {
     setIsPasswordModalOpen(false);
     setPassword("");
+    reset({ password: "" });
   };
 
   const handleConfirmDelete = async (data) => {
@@ -58,9 +61,7 @@ const ListaUsuarios = ({ usuario, setMessage, buscaUsuarios, setUsuarios, setMod
         Authorization: `Bearer ${token}`
       }
     })
-    console.log(password)
     if (response.data.status) {
-      console.log('olaa')
       const responseDelete = await api.patch(`/usuarios/${usuario.usu_id}`, {
         headers: {
           Authorization: `Bearer ${token}`
@@ -94,7 +95,6 @@ const ListaUsuarios = ({ usuario, setMessage, buscaUsuarios, setUsuarios, setMod
   };
 
   const handleSaveChanges = () => {
-    console.log("Dados editados:", editedData);
     closeEditModal();
   };
 
@@ -109,14 +109,12 @@ const ListaUsuarios = ({ usuario, setMessage, buscaUsuarios, setUsuarios, setMod
       closeEditModal()
       setMessage("Usuário atualizado com sucesso");
       setModalMensagemAberto(true);
-      console.log(response);
     } catch (error) {
       console.error('Erro ao fazer login:', error.response?.data || error.message);
       setError(error.response.data.message)
     }
   };
 
-  console.log(usuario.email)
   return (
     <div className={styles.row}>
       <div className={styles.nome}>{usuario.usu_nome}</div>
@@ -231,7 +229,6 @@ const ListaUsuarios = ({ usuario, setMessage, buscaUsuarios, setUsuarios, setMod
             <div className={styles.botoes}>
               <button
                 onClick={() => {
-                  console.log("Excluindo usuário...");
                   openPasswordModal();
                 }}
                 className={styles.deleteButton}
@@ -247,44 +244,20 @@ const ListaUsuarios = ({ usuario, setMessage, buscaUsuarios, setUsuarios, setMod
       )}
       {/* Modal de Confirmação de Senha */}
       {isPasswordModalOpen && (
-        <div className={styles.modal}>
-          <form onSubmit={handleSubmit(handleConfirmDelete)} className={styles.modalSenha}>
-            <h3 className={styles.titulo}>Confirmar Exclusão</h3>
-            <p className={styles.mensagem}>Por favor, digite sua senha:</p>
-            <div>
-              <label htmlFor="senha">Senha</label>
-              <Input
-                type="password"
-                nomeCampo="password"
-                placeholder="Digite sua senha"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)} 
-                {...register('password', {
-                  required: 'A senha é obrigatória'
-                })}
-              
-              />
-                {errors.password && (
-                  <p style={{ color: 'red' }}>{errors.password.message}</p>
-                )}
-            </div>
-            <div className={styles.botoes}>
-              <button
-              type="submit"
-                className={styles.saveButton}
-              >
-                Confirmar
-              </button>
-              <button
-                onClick={closePasswordModal}
-                className={styles.closeButton}
-              >
-                Cancelar
-              </button>
-            </div>
-          </form>
-        </div>
-      )}{" "}
+        <ModalConfirmarSenha
+          isOpen={isPasswordModalOpen}
+          onClose={closePasswordModal}
+          onSubmit={handleConfirmDelete}
+          handleSubmit={handleSubmit}
+          register={register}
+          errors={errors}
+          password={password}
+          setPassword={setPassword}
+          passwordMessage={passwordMessage}
+          mensagem="Por favor, digite sua senha:"
+          titulo="Confirmar Exclusão"
+        />
+      )}
     </div>
   );
 };

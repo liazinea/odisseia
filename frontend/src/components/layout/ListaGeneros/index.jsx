@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styles from "./index.module.scss";
-import { MdOutlineEdit } from "react-icons/md";
-import { IoMdTrash } from "react-icons/io";
+import { IoPencil, IoTrash } from "react-icons/io5";
 import Input from "../../Inputs/Input";
 import { useForm } from "react-hook-form";
 import api from "../../../services/api";
 import { useAuth } from "../../../context/AuthContext";
-import { IoPencil, IoTrash } from "react-icons/io5";
+import ModalConfirmarSenha from "../../Modal/ModalConfirmarSenha";
 
 const ListaGeneros = ({
   genero,
@@ -26,28 +25,18 @@ const ListaGeneros = ({
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     defaultValues: {
-      email: "",
+      gen_nome: "",
       password: "",
     },
   });
 
-  const handleEditClick = () => {
-    setIsEditModalOpen(true);
-  };
-
-  const handleDeleteClick = () => {
-    setIsDeleteModalOpen(true);
-  };
-
-  const closeEditModal = () => {
-    setIsEditModalOpen(false);
-  };
-
-  const closeDeleteModal = () => {
-    setIsDeleteModalOpen(false);
-  };
+  const handleEditClick = () => setIsEditModalOpen(true);
+  const handleDeleteClick = () => setIsDeleteModalOpen(true);
+  const closeEditModal = () => setIsEditModalOpen(false);
+  const closeDeleteModal = () => setIsDeleteModalOpen(false);
 
   const openPasswordModal = () => {
     setIsDeleteModalOpen(false);
@@ -55,11 +44,23 @@ const ListaGeneros = ({
     setPasswordMessage(null);
   };
 
+  // Limpa o campo de senha ao fechar o modal
   const closePasswordModal = () => {
     setIsPasswordModalOpen(false);
     setPassword("");
+    reset({ password: "" });
   };
 
+  // Atualiza a lista de gêneros quando a senha é validada ou edição é feita
+  useEffect(() => {
+    const carregarGeneros = async () => {
+      const dados = await buscaGeneros();
+      setGeneros(dados);
+    };
+    carregarGeneros();
+  }, [passwordMessage, isEditModalOpen]);
+
+  // Confirma exclusão do gênero
   const handleConfirmDelete = async (data) => {
     const response = await api.get(`/check-senha?password=${data.password}`, {
       headers: {
@@ -74,32 +75,15 @@ const ListaGeneros = ({
         },
       });
 
-      // setMessage(responseDelete.data.message);
       closePasswordModal();
       setMessage("Gênero excluído com sucesso");
       setModalMensagemAberto(true);
-      closePasswordModal();
-      console.log(response.data.status);
     } else {
       setPasswordMessage("Senha incorreta");
     }
-    useEffect(() => {
-      const carregarGeneros = async () => {
-        const dados = await buscaGeneros();
-        setGeneros(dados);
-      };
-      carregarGeneros();
-    }, [passwordMessage]);
-
-    useEffect(() => {
-      const carregarGeneros = async () => {
-        const dados = await buscaGeneros();
-        setGeneros(dados);
-      };
-      carregarGeneros();
-    }, [isEditModalOpen]);
   };
 
+  // Atualiza o gênero
   const onSubmit = async (data) => {
     try {
       const response = await api.put(`/generos/${genero.id}`, data, {
@@ -109,14 +93,13 @@ const ListaGeneros = ({
       });
       setMessage(response.data.message);
       closeEditModal();
-      console.log(response);
       setModalMensagemAberto(true);
     } catch (error) {
       console.error(
-        "Erro ao fazer login:",
+        "Erro ao atualizar gênero:",
         error.response?.data || error.message
       );
-      setError(error.response.data.message);
+      // setError(error.response.data.message); // Só use se tiver setError definido
     }
   };
 
@@ -175,18 +158,13 @@ const ListaGeneros = ({
         <div className={styles.modal}>
           <div className={styles.modalExcluir}>
             <h3 className={styles.titulo}>Excluir Gênero</h3>
-
             <p className={styles.mensagem}>
               Tem certeza de que deseja excluir permanentemente o gênero
               <span className={styles.nome}> "{genero.nome}"</span>?
             </p>
-
             <div className={styles.botoes}>
               <button
-                onClick={() => {
-                  console.log("Excluindo gênero..." + genero.id);
-                  openPasswordModal();
-                }}
+                onClick={openPasswordModal}
                 className={styles.deleteButton}
               >
                 Excluir
@@ -201,40 +179,19 @@ const ListaGeneros = ({
 
       {/* Modal de Confirmação de Senha */}
       {isPasswordModalOpen && (
-        <div className={styles.modal}>
-          <form
-            onSubmit={handleSubmit(handleConfirmDelete)}
-            className={styles.modalSenha}
-          >
-            <h3 className={styles.titulo}>Confirmar Exclusão</h3>
-            <p className={styles.mensagem}>Por favor, digite sua senha:</p>
-            {passwordMessage && <p>{passwordMessage}</p>}
-            <div>
-              <label htmlFor="senha">Senha</label>
-              <Input
-                type="password"
-                nomeCampo="password"
-                placeholder="Digite sua senha"
-                value={password}
-                onChange={(value) => setPassword(value)}
-                {...register("password", {
-                  required: "A senha é obrigatória",
-                })}
-              />
-            </div>
-            <div className={styles.botoes}>
-              <button type="submit" className={styles.saveButton}>
-                Confirmar
-              </button>
-              <button
-                onClick={closePasswordModal}
-                className={styles.closeButton}
-              >
-                Cancelar
-              </button>
-            </div>
-          </form>
-        </div>
+        <ModalConfirmarSenha
+          isOpen={isPasswordModalOpen}
+          onClose={closePasswordModal}
+          onSubmit={handleConfirmDelete}
+          handleSubmit={handleSubmit}
+          register={register}
+          errors={errors}
+          password={password}
+          setPassword={setPassword}
+          passwordMessage={passwordMessage}
+          mensagem="Por favor, digite sua senha:"
+          titulo="Confirmar Exclusão"
+        />
       )}
     </div>
   );

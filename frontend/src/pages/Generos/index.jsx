@@ -42,9 +42,7 @@ const Generos = () => {
     setInputValue(value);
   };
 
-  const handleButtonClick = () => {
-    console.log("Valor do input:", inputValue);
-  };
+
 
   const [generos, setGeneros] = useState([]);
   const { buscaGeneros } = useGeneros();
@@ -79,26 +77,24 @@ const Generos = () => {
     carregarGeneros();
   }, [registerMessage]);
 
-  const onSubmit = async (data) => {
-    try {
-      const response = await api.post("/generos", data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setRegisterMessage(response.data.message);
-      console.log(response);
-      setMessage(response.data.message)
-      setModalMensagemAberto(true);
-      closeEditModal();
-    } catch (error) {
-      console.error(
-        "Erro ao fazer login:",
-        error.response?.data || error.message
-      );
-      setError(error.response.data.message);
-    }
-  };
+const onSubmit = async (data) => {
+  try {
+    const response = await api.post("/generos", data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    setRegisterMessage(response.data.message);
+    setMessage(response.data.message)
+    setModalMensagemAberto(true);
+  } catch (error) {
+    console.error(
+      "Erro:",
+      error.response?.data || error.message
+    );
+    setRegisterMessage(error.response?.data?.message || "Erro ao cadastrar gênero.");
+  }
+};
   return (
     <>
       <HeaderPagina titulo="Gêneros de Livros" />
@@ -160,7 +156,6 @@ const Generos = () => {
               type="submit"
               nomeBotao="cadastrar"
               texto="Adicionar Gênero"
-              onClick={handleButtonClick}
             />
           </div>
         </form>
