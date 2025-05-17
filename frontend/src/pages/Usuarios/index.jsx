@@ -136,8 +136,9 @@ const Usuarios = () => {
             </div>
             <div className={styles.conteudo}>
               {usuarios.map((usuario) => (
-                <div className={styles["linha"]} key={usuario.id}>
+                <div className={styles["linha"]}>
                   <ListaUsuarios
+                    key={usuario.id}
                     usuario={usuario}
                     setMessage={setMessage}
                     buscaUsuarios={buscaUsuarios}
