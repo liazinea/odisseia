@@ -7,6 +7,8 @@ import api from "../../../services/api";
 import { useAuth } from "../../../context/AuthContext";
 import ModalConfirmarSenha from "../../Modal/ModalConfirmarSenha";
 import ModalEdicao from "../../Modal/ModalEdicao";
+import ModalExcluir from "../../Modal/ModalExcluir";
+
 
 
 const ListaAutores = ({

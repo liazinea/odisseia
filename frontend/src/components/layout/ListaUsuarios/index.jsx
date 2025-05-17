@@ -1,32 +1,46 @@
-import React, { useState, useEffect, use } from "react";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+
 import styles from "./index.module.scss";
 import Input from "../../Inputs/Input";
 import api from "../../../services/api";
 import { useAuth } from "../../../context/AuthContext";
-import { useForm } from "react-hook-form";
 import { IoPencil, IoTrash } from "react-icons/io5";
 import ModalConfirmarSenha from "../../Modal/ModalConfirmarSenha";
+import ModalExcluir from "../../Modal/ModalExcluir";
 
-
-const ListaUsuarios = ({ usuario, setMessage, buscaUsuarios, setUsuarios, setModalMensagemAberto }) => {
+const ListaUsuarios = ({
+  usuario,
+  setMessage,
+  buscaUsuarios,
+  setUsuarios,
+  setModalMensagemAberto,
+}) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [password, setPassword] = useState("");
-  const [passwordMessage, setPasswordMessage] = useState(null)
-  const { token } = useAuth()
+  const [passwordMessage, setPasswordMessage] = useState(null);
+  const { token } = useAuth();
+
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
   // Estado local para armazenar os valores editados
   const [editedData, setEditedData] = useState({
-    nome: usuario.nome,
+    nome: usuario.usu_nome,
     email: usuario.email,
-    dataNascimento: usuario.dataNascimento,
-    rg: usuario.rg,
+    dataNascimento: usuario.usu_dataNasc,
+    rg: usuario.usu_ra,
   });
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm();
-
+  // Atualiza os dados editados ao abrir o modal de edição
   const handleEditClick = () => {
+    setEditedData({
+      nome: usuario.usu_nome,
+      email: usuario.email,
+      dataNascimento: usuario.usu_dataNasc,
+      rg: usuario.usu_ra,
+    });
     setIsEditModalOpen(true);
   };
 
@@ -40,78 +54,79 @@ const ListaUsuarios = ({ usuario, setMessage, buscaUsuarios, setUsuarios, setMod
 
   const closeDeleteModal = () => {
     setIsDeleteModalOpen(false);
-    setPasswordMessage('')
+    setPasswordMessage('');
   };
 
   const openPasswordModal = () => {
     setIsDeleteModalOpen(false);
     setIsPasswordModalOpen(true);
-    setPasswordMessage(null)
+    setPasswordMessage(null);
   };
 
   const closePasswordModal = () => {
     setIsPasswordModalOpen(false);
     setPassword("");
-    reset({ password: "" });
   };
 
   const handleConfirmDelete = async (data) => {
     const response = await api.get(`/check-senha?password=${data.password}`, {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.data.status) {
-      const responseDelete = await api.patch(`/usuarios/${usuario.usu_id}`, {
+      const responseDelete = await api.patch(`/usuarios/${usuario.usu_id}`, {}, {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-      setMessage(responseDelete.data.message)
+      setMessage(responseDelete.data.message);
       setMessage("Usuário excluído com sucesso");
       setModalMensagemAberto(true);
-      closePasswordModal();
-      closePasswordModal();
-    } else {
-      setPasswordMessage('Senha incorreta')
-    }
-  }
-  useEffect(() => {
-    const carregarUsuarios = async () => {
+      // Atualiza a lista de usuários após exclusão
       const dados = await buscaUsuarios();
       setUsuarios(dados);
-    };
-    carregarUsuarios();
-  }, [passwordMessage]);
+      closePasswordModal();
+    } else {
+      setPasswordMessage('Senha incorreta');
+    }
+  };
 
   // Função para capturar as alterações nos inputs
   const handleInputChange = (e) => {
-    const { name, value } = e.target; // Access event target directly
+    const { name, value } = e.target;
     setEditedData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
 
-  const handleSaveChanges = () => {
-    closeEditModal();
-  };
-
-  const onSubmit = async (data) => {
+  const onSubmit = async (e) => {
+    e.preventDefault();
     try {
-      const response = await api.put(`/usuarios/${usuario.usu_id}`, data, {
-        headers: {
-          Authorization: `Bearer ${token}`
+      await api.put(
+        `/usuarios/${usuario.usu_id}`,
+        {
+          usu_nome: editedData.nome,
+          email: editedData.email,
+          usu_dataNasc: editedData.dataNascimento,
+          usu_ra: editedData.rg,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      })
-      setMessage(response.data.message)
-      closeEditModal()
+      );
+      // Atualiza a lista de usuários após edição
+      const dados = await buscaUsuarios();
+      setUsuarios(dados);
+      closeEditModal();
       setMessage("Usuário atualizado com sucesso");
       setModalMensagemAberto(true);
     } catch (error) {
-      console.error('Erro ao fazer login:', error.response?.data || error.message);
-      setError(error.response.data.message)
+      console.error('Erro ao atualizar usuário:', error.response?.data || error.message);
     }
   };
 
@@ -120,16 +135,16 @@ const ListaUsuarios = ({ usuario, setMessage, buscaUsuarios, setUsuarios, setMod
       <div className={styles.nome}>{usuario.usu_nome}</div>
       <div className={styles.opcoes}>
         <div className={styles.editar} onClick={handleEditClick}>
-          <IoPencil/>
+          <IoPencil />
         </div>
         <div className={styles.excluir} onClick={handleDeleteClick}>
-          <IoTrash/>
+          <IoTrash />
         </div>
       </div>
       {/* Modal de Edição */}
       {isEditModalOpen && (
         <div className={styles.modal}>
-          <form onSubmit={handleSubmit(onSubmit)} className={styles.modalEdicao}>
+          <form onSubmit={onSubmit} className={styles.modalEdicao}>
             <h3 className={styles.titulo}>Editar usuário</h3>
             <div>
               <label htmlFor="nome">Nome</label>
@@ -137,17 +152,8 @@ const ListaUsuarios = ({ usuario, setMessage, buscaUsuarios, setUsuarios, setMod
                 type="text"
                 name="nome"
                 value={editedData.nome}
-                onChange={(value) =>
-                  setEditedData({ ...editedData, nome: value })
-                } // Corrigido
-                defaultValue={usuario.usu_nome}
-                {...register('usu_nome', {
-                  required: 'O novo nome do usuário é obrigatório'
-                })}
+                onChange={handleInputChange}
               />
-              {errors.usu_nome && (
-                <p style={{ color: 'red' }}>{errors.usu_nome.message}</p>
-              )}
             </div>
             <div>
               <label htmlFor="email">E-mail</label>
@@ -155,17 +161,8 @@ const ListaUsuarios = ({ usuario, setMessage, buscaUsuarios, setUsuarios, setMod
                 type="text"
                 name="email"
                 value={editedData.email}
-                onChange={(value) =>
-                  setEditedData({ ...editedData, email: value })
-                } // Corrigido
-                defaultValue={usuario.email}
-                {...register('email', {
-                  required: 'O email usuário é obrigatório'
-                })}
+                onChange={handleInputChange}
               />
-              {errors.email && (
-                <p style={{ color: 'red' }}>{errors.email.message}</p>
-              )}
             </div>
             <div>
               <label htmlFor="dataNascimento">Data de nascimento</label>
@@ -173,43 +170,23 @@ const ListaUsuarios = ({ usuario, setMessage, buscaUsuarios, setUsuarios, setMod
                 type="text"
                 name="dataNascimento"
                 value={editedData.dataNascimento}
-                onChange={(value) =>
-                  setEditedData({ ...editedData, dataNascimento: value })
-                } // Corrigido
-                defaultValue={usuario.usu_dataNasc}
-                {...register('usu_dataNasc', {
-                  required: 'A data de nasimento é obrigatória'
-                })}
+                onChange={handleInputChange}
               />
-              {errors.usu_dataNasc && (
-                <p style={{ color: 'red' }}>{errors.usu_dataNasc.message}</p>
-              )}
             </div>
             <div>
-              <label htmlFor="rg">RG</label>
+              <label htmlFor="rg">RA</label>
               <Input
                 type="text"
                 name="rg"
                 value={editedData.rg}
-                onChange={(value) =>
-                  setEditedData({ ...editedData, rg: value })
-                } // Corrigido
-                defaultValue={usuario.usu_ra}
-                {...register('usu_ra', {
-                  required: ' O RA do usuário é obrigatório'
-                })}
+                onChange={handleInputChange}
               />
-              {errors.usu_ra && (
-                <p style={{ color: 'red' }}>{errors.usu_ra.message}</p>
-              )}
             </div>
-
-
             <div className={styles.botoes}>
-              <button type='submit 'className={styles.saveButton}>
+              <button type="submit" className={styles.saveButton}>
                 Salvar
               </button>
-              <button onClick={closeEditModal} className={styles.closeButton}>
+              <button onClick={closeEditModal} type="button" className={styles.closeButton}>
                 Cancelar
               </button>
             </div>
@@ -218,33 +195,20 @@ const ListaUsuarios = ({ usuario, setMessage, buscaUsuarios, setUsuarios, setMod
       )}
       {/* Modal de Exclusão */}
       {isDeleteModalOpen && (
-        <div className={styles.modal}>
-          <div className={styles.modalExcluir}>
-            <h3 className={styles.titulo}>Excluir Usuário</h3>
-            <p className={styles.mensagem}>
-              Tem certeza de que deseja excluir permanentemente o usuário
-              <span className={styles.nome}> "{usuario.usu_nome}"</span>?
-            </p>
-
-            <div className={styles.botoes}>
-              <button
-                onClick={() => {
-                  openPasswordModal();
-                }}
-                className={styles.deleteButton}
-              >
-                Excluir
-              </button>
-              <button onClick={closeDeleteModal} className={styles.closeButton}>
-                Cancelar
-              </button>
-            </div>
-          </div>
-        </div>
+        <ModalExcluir
+          isOpen={isDeleteModalOpen}
+          onClose={closeDeleteModal}
+          onConfirm={openPasswordModal}
+          titulo="Excluir Usuário"
+          mensagem="Tem certeza de que deseja excluir permanentemente o usuário"
+          nome={usuario.usu_nome}
+          confirmLabel="Excluir"
+          cancelLabel="Cancelar"
+        />
       )}
       {/* Modal de Confirmação de Senha */}
       {isPasswordModalOpen && (
-        <ModalConfirmarSenha
+       <ModalConfirmarSenha
           isOpen={isPasswordModalOpen}
           onClose={closePasswordModal}
           onSubmit={handleConfirmDelete}
