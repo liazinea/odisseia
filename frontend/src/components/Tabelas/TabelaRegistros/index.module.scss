@@ -22,32 +22,7 @@
       margin-bottom: 12px;
       margin-block: 20px;
 
-      .todos {
-        width: 20%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .reservado {
-        width: 20%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      .emprestado {
-        width: 20%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      .devolvido {
-        width: 20%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      .cancelado {
+      .status {
         width: 20%;
         display: flex;
         justify-content: center;

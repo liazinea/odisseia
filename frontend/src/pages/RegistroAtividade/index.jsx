@@ -17,10 +17,13 @@ const RegistroAtividade = () => {
   return (
     <>
         <HeaderPagina titulo={'Registro de Atividades'} />
-        <TabelaRegistros emprestimos={[{id: 1, created_at: '05-11-2026', numEmprestimo: 24, titulo: "O Espreitador", isbn: "29845151485111", status: 'Reservado'}, 
-            {id: 2, created_at: '05-11-2026', numEmprestimo: 24, titulo: "O Espreitador", isbn: "29845151485111", status: 'Reservado'}, 
-            {id: 3, created_at: '05-11-2026', numEmprestimo: 24, titulo: "O Espreitador", isbn: "29845151485111", status: 'Reservado'}, 
-            {id: 4, created_at: '05-11-2026', numEmprestimo: 24, titulo: "O Espreitador", isbn: "29845151485111", status: 'Reservado'}]}/>
+        <TabelaRegistros 
+        alunos={[{nome: "Lívia", ra: 151654, serie: '2º ano'}, {nome: "Talles", ra: 151655, serie: '1º ano'}, {nome: "Gabriela", ra: 151652, serie: '3º ano'}, {nome: "Luiza", ra: 151659, serie: '1º ano'}, {nome: "Bruno Patrick", ra: 151653, serie: '2º ano'},]} 
+        livro={[{titulo: 'A Culpa é das Estrelas', autor:[{nome: 'John Green'}], registro: '56191561', isbn: '1651651', classificacao: '+12', }]}
+        emprestimos={[{id: 1, created_at: '05-11-2026', numEmprestimo: 24, titulo: "O Espreitador", isbn: "29845151485111", status: 'Reservado', funcionario: 'Maria', dataReserva: '05-11-2025', dataLimite: '05-18-2025'}, 
+            {id: 2, created_at: '05-11-2026', numEmprestimo: 24, titulo: "O Espreitador", isbn: "29845151485111", status: 'Reservado', funcionario: 'Maria', dataReserva: '05-11-2025', dataLimite: '05-18-2025'}, 
+            {id: 3, created_at: '05-11-2026', numEmprestimo: 24, titulo: "O Espreitador", isbn: "29845151485111", status: 'Reservado',funcionario: 'Maria', dataReserva: '05-11-2025', dataLimite: '05-18-2025'}, 
+            {id: 4, created_at: '05-11-2026', numEmprestimo: 24, titulo: "O Espreitador", isbn: "29845151485111", status: 'Reservado',funcionario: 'Maria', dataReserva: '05-11-2025', dataLimite: '05-18-2025'}]}/>
     </>
   );
 };

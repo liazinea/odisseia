@@ -45,6 +45,7 @@ const SessaoAdmHome = () => {
         nomeBotao="registros"
         icon="/registros-icon.svg"
         texto="Registros"
+        onClick={()=>navigate('/registro-de-atividades')}
       />
     </div>
   );

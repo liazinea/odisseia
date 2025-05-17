@@ -12,13 +12,13 @@ import BotaoVerMais from "../../Botao/BotaoVerMais";
 import { IoSearch } from "react-icons/io5";
 // import useLivros from "../../../hooks/useLivros";
 
-const TabelaRegistros = ({ emprestimos, setEmprestimos }) => {
+const TabelaRegistros = ({ emprestimos, alunos, livro, setEmprestimos }) => {
   const [emprestimo, setEmprestimo] = useState([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [pagesLoaded, setPagesLoaded] = useState(1);
   //   const {buscaLivros} = useLivros();
   const [modalMensagemAberto, setModalMensagemAberto] = useState(false);
-  const itemsPerPage = 3;
+  const itemsPerPage = 7;
 
   //   console.log(livros)
   //   useEffect(() => {
@@ -31,7 +31,6 @@ const TabelaRegistros = ({ emprestimos, setEmprestimos }) => {
 
     useEffect(() => {
       setEmprestimo(emprestimos);
-      console.log('iai')
     }, [emprestimos]);
 
   const formatarData = (dataString) => {
@@ -82,10 +81,7 @@ const TabelaRegistros = ({ emprestimos, setEmprestimos }) => {
       id: "isbn",
       header: "ISBN",
       cell: (props) => (
-        <div className={styles.isbn}>
-          <div>icon1</div>
-          <div>icon2</div>
-        </div>
+        <div className={styles.isbn}></div>
       ),
     },
     {
@@ -93,10 +89,7 @@ const TabelaRegistros = ({ emprestimos, setEmprestimos }) => {
       id: "status",
       header: "Status",
       cell: (props) => (
-        <div className={styles.status}>
-          <div>icon1</div>
-          <div>icon2</div>
-        </div>
+        <div className={styles.status}></div>
       ),
     },
   ];
@@ -131,7 +124,7 @@ const TabelaRegistros = ({ emprestimos, setEmprestimos }) => {
         </div>
         <p className={styles.filtrar}>FILTRAR POR:</p>
         <div className={styles.filtros}>
-          <div className={styles.todos}>
+          <div className={styles.status}>
             <p
               className={`${styles.filtroBotao} ${
                 globalFilter == "" ? styles.botaoAtivo : null
@@ -141,7 +134,7 @@ const TabelaRegistros = ({ emprestimos, setEmprestimos }) => {
               Todos
             </p>
           </div>
-          <div className={styles.reservado}>
+          <div className={styles.status}>
             <p
               className={`${styles.filtroBotao} ${
                 globalFilter == "Reservado" ? styles.botaoAtivo : null
@@ -151,7 +144,7 @@ const TabelaRegistros = ({ emprestimos, setEmprestimos }) => {
               Reservados
             </p>
           </div>
-          <div className={styles.emprestado}>
+          <div className={styles.status}>
             <p
               className={`${styles.filtroBotao} ${
                 globalFilter == "Emprestado" ? styles.botaoAtivo : null
@@ -161,7 +154,7 @@ const TabelaRegistros = ({ emprestimos, setEmprestimos }) => {
               Emprestados
             </p>
           </div>
-          <div className={styles.devolvido}>
+          <div className={styles.status}>
             <p
               className={`${styles.filtroBotao} ${
                 globalFilter == "Devolvido" ? styles.botaoAtivo : null
@@ -171,7 +164,7 @@ const TabelaRegistros = ({ emprestimos, setEmprestimos }) => {
               Devolvidos
             </p>
           </div>
-          <div className={styles.cancelado}>
+          <div className={styles.status}>
             <p
               className={`${styles.filtroBotao} ${
                 globalFilter == "Cancelado" ? styles.botaoAtivo : null
@@ -198,15 +191,20 @@ const TabelaRegistros = ({ emprestimos, setEmprestimos }) => {
         {table
           .getRowModel()
           .rows.slice(0, pagesLoaded * itemsPerPage)
-          .map((row) => (
-            <CelulaTabelaRegistros
-              key={row.original.emprestimo_id}
-              emprestimo={row.original}
-              onDelete={(id) => {
-                setEmprestimo((prev) => prev.filter((emprestimo) => emprestimo.id !== id));
-              }}
-              setModalMensagemAberto={setModalMensagemAberto}
-            />
+          .map((row, i) => (
+            <div>
+              {/* {console.log(row.original)} */}
+              <CelulaTabelaRegistros
+                key={row.original.emprestimo_id}
+                emprestimo={row.original}
+                aluno={alunos[i]}
+                livro={livro}
+                onDelete={(id) => {
+                  setEmprestimo((prev) => prev.filter((emprestimo) => emprestimo.id !== id));
+                }}
+                setModalMensagemAberto={setModalMensagemAberto}
+              />
+            </div>
           ))}
         <div className={styles.botao}>
           {pagesLoaded * itemsPerPage < table.getRowModel().rows.length && (
