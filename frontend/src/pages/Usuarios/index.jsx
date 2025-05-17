@@ -86,34 +86,38 @@ const Usuarios = () => {
     }
   }, [token]);
 
-  const onSubmit = async (data) => {
-    try {
-      const response = await api.post('/usuarios', data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+const onSubmit = async (data) => {
+  try {
+    const response = await api.post('/usuarios', data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-      setRegisterMessage(response.data.message);
-      setMessage("Usuário cadastrado com sucesso");
-      setModalMensagemAberto(true);
-    } catch (error) {
-      const apiErrors = error.response?.data?.errors;
-      const apiMessage = error.response?.data?.message;
+    setRegisterMessage(response.data.message);
+    setMessage("Usuário cadastrado com sucesso");
+    setModalMensagemAberto(true);
 
-      if (apiErrors) {
-        Object.keys(apiErrors).forEach((campo) => {
-          setError(campo, {
-            type: 'manual',
-            message: apiErrors[campo][0],
-          });
+    // Atualize a lista imediatamente após o cadastro
+    const dados = await buscaUsuarios();
+    setUsuarios(dados);
+
+  } catch (error) {
+    const apiErrors = error.response?.data?.errors;
+    const apiMessage = error.response?.data?.message;
+
+    if (apiErrors) {
+      Object.keys(apiErrors).forEach((campo) => {
+        setError(campo, {
+          type: 'manual',
+          message: apiErrors[campo][0],
         });
-      }
-
-      // setRegisterMessage(apiMessage);
-      closeEditModal();
+      });
     }
-  };
+    // setRegisterMessage(apiMessage);
+    // closeEditModal(); // Não existe aqui, pode remover
+  }
+};
 
   return (
     <>
@@ -135,17 +139,17 @@ const Usuarios = () => {
               <div className={styles.opcoes}>Opções</div>
             </div>
             <div className={styles.conteudo}>
-              {usuarios.map((usuario) => (
-                <div className={styles["linha"]} key={usuario.id}>
-                  <ListaUsuarios
-                    usuario={usuario}
-                    setMessage={setMessage}
-                    buscaUsuarios={buscaUsuarios}
-                    setUsuarios={setUsuarios}
-                    setModalMensagemAberto={setModalMensagemAberto}
-                  />
-                </div>
-              ))}
+            {usuarios.map((usuario) => (
+              <div className={styles["linha"]} key={usuario.usu_id}>
+                <ListaUsuarios
+                  usuario={usuario}
+                  setMessage={setMessage}
+                  buscaUsuarios={buscaUsuarios}
+                  setUsuarios={setUsuarios}
+                  setModalMensagemAberto={setModalMensagemAberto}
+                />
+              </div>
+            ))}
             </div>
           </div>
         </div>

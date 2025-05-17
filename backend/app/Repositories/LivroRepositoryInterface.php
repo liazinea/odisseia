@@ -13,6 +13,7 @@ interface LivroRepositoryInterface
     public function retorna(Livro $livro):Livro;
     public function deletar(Livro $livro):bool;
     public function buscarTodos():Collection;
+    public function buscaPorId(int $id):Livro;
     public function salvarCapa(UploadedFile $capa):string;
     public function salvar(LivroDTO $livroSTO):Livro;
 }

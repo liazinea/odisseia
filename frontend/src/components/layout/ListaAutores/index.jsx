@@ -11,11 +11,11 @@ import ModalExcluir from "../../Modal/ModalExcluir";
 
 
 
-const ListaGeneros = ({
-  genero,
+const ListaAutores = ({
+  autor,
   setMessage,
-  buscaGeneros,
-  setGeneros,
+  buscaAutores,
+  setAutores,
   setModalMensagemAberto,
 }) => {
   const { token } = useAuth();
@@ -32,7 +32,7 @@ const ListaGeneros = ({
     reset,
   } = useForm({
     defaultValues: {
-      gen_nome: "",
+      aut_nome: "",
       password: "",
     },
   });
@@ -55,17 +55,17 @@ const ListaGeneros = ({
     reset({ password: "" });
   };
 
-  // Atualiza a lista de gêneros quando a senha é validada ou edição é feita
+  // Atualiza a lista de autores quando a senha é validada ou edição é feita
   useEffect(() => {
-    const carregarGeneros = async () => {
-      const dados = await buscaGeneros();
-      setGeneros(dados);
+    const carregarAutores = async () => {
+      const dados = await buscaAutores();
+      setAutores(dados);
     };
-    carregarGeneros();
+    carregarAutores();
   }, [passwordMessage, isEditModalOpen]);
 
-  // Confirma exclusão do gênero
-  const handleConfirmDelete = async (data) => {
+  // Confirma exclusão do autor
+const handleConfirmDelete = async (data) => {
   const response = await api.get(`/check-senha?password=${data.password}`, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -73,28 +73,28 @@ const ListaGeneros = ({
   });
 
   if (response.data.status) {
-    await api.patch(`/generos/${genero.id}`, {
+    await api.patch(`/autores/${autor.id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
 
     // Atualize a lista aqui!
-    const dados = await buscaGeneros();
-    setGeneros(dados);
+    const dados = await buscaAutores();
+    setAutores(dados);
 
     closePasswordModal();
-    setMessage("Gênero excluído com sucesso");
+    setMessage("Autor excluído com sucesso");
     setModalMensagemAberto(true);
   } else {
     setPasswordMessage("Senha incorreta");
   }
 };
 
-  // Atualiza o gênero
+  // Atualiza o autor
   const onSubmit = async (data) => {
     try {
-      const response = await api.put(`/generos/${genero.id}`, data, {
+      const response = await api.put(`/autores/${autor.id}`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -104,7 +104,7 @@ const ListaGeneros = ({
       setModalMensagemAberto(true);
     } catch (error) {
       console.error(
-        "Erro ao atualizar gênero:",
+        "Erro ao atualizar autor:",
         error.response?.data || error.message
       );
       // setError(error.response.data.message); // Só use se tiver setError definido
@@ -113,7 +113,7 @@ const ListaGeneros = ({
 
   return (
     <div className={styles.row}>
-      <div className={styles.nome}>{genero.nome}</div>
+      <div className={styles.nome}>{autor.nome}</div>
       <div className={styles.opcoes}>
         <div className={styles.editar} onClick={handleEditClick}>
           <IoPencil />
@@ -132,14 +132,14 @@ const ListaGeneros = ({
         handleSubmit={handleSubmit}
         register={register}
         errors={errors}
-        titulo="Editar Gênero"
+        titulo="Editar Autor"
         labelAtual="Nome atual"
-        valorAtual={genero.nome}
+        valorAtual={autor.nome}
         labelNovo="Novo nome"
-        nomeCampoNovo="gen_nome"
-        valorNovo={genero.nome}
+        nomeCampoNovo="aut_nome"
+        valorNovo={autor.nome}
         registerOptions={{
-          required: "O novo nome do gênero é obrigatório",
+          required: "O novo nome do autor é obrigatório",
         }}
       />
     )}
@@ -150,9 +150,9 @@ const ListaGeneros = ({
           isOpen={isDeleteModalOpen}
           onClose={closeDeleteModal}
           onConfirm={openPasswordModal}
-          titulo="Excluir Gênero"
-          mensagem="Tem certeza de que deseja excluir permanentemente o gênero"
-          nome={genero.nome}
+          titulo="Excluir Autor"
+          mensagem="Tem certeza de que deseja excluir permanentemente o autor"
+          nome={autor.nome}
           confirmLabel="Excluir"
           cancelLabel="Cancelar"
         />
@@ -178,4 +178,4 @@ const ListaGeneros = ({
   );
 };
 
-export default ListaGeneros;
+export default ListaAutores;
