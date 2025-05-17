@@ -13,4 +13,5 @@ interface AutorRepositoryInterface
     public function buscaPeloNome(string $nome):Autor|null;
     public function salvar(AutorDTO $autorDTO):Autor;
     public function deletar(Autor $autor):bool;
+     public function atualizar(Autor $autor, AutorDTO $autorDTO):bool;
 }
