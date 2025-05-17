@@ -8,11 +8,11 @@ import api from "../../../services/api";
 import { useAuth } from "../../../context/AuthContext";
 import { IoPencil, IoTrash } from "react-icons/io5";
 
-const ListaGeneros = ({
-  genero,
+const ListaAutores = ({
+  autor,
   setMessage,
-  buscaGeneros,
-  setGeneros,
+  buscaAutores,
+  setAutores,
   setModalMensagemAberto,
 }) => {
   const { token } = useAuth();
@@ -68,7 +68,7 @@ const ListaGeneros = ({
     });
 
     if (response.data.status) {
-      const responseDelete = await api.patch(`/generos/${genero.id}`, {
+      const responseDelete = await api.patch(`/autores/${autor.id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -76,7 +76,7 @@ const ListaGeneros = ({
 
       // setMessage(responseDelete.data.message);
       closePasswordModal();
-      setMessage("Gênero excluído com sucesso");
+      setMessage("Autor excluído com sucesso");
       setModalMensagemAberto(true);
       closePasswordModal();
       console.log(response.data.status);
@@ -84,25 +84,25 @@ const ListaGeneros = ({
       setPasswordMessage("Senha incorreta");
     }
     useEffect(() => {
-      const carregarGeneros = async () => {
-        const dados = await buscaGeneros();
-        setGeneros(dados);
+      const carregarAutores = async () => {
+        const dados = await buscaAutores();
+        setAutores(dados);
       };
-      carregarGeneros();
+      carregarAutores();
     }, [passwordMessage]);
 
     useEffect(() => {
-      const carregarGeneros = async () => {
-        const dados = await buscaGeneros();
-        setGeneros(dados);
+      const carregarAutores = async () => {
+        const dados = await buscaAutores();
+        setAutores(dados);
       };
-      carregarGeneros();
+      carregarAutores();
     }, [isEditModalOpen]);
   };
 
   const onSubmit = async (data) => {
     try {
-      const response = await api.put(`/generos/${genero.id}`, data, {
+      const response = await api.put(`/autores/${autor.id}`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -122,7 +122,7 @@ const ListaGeneros = ({
 
   return (
     <div className={styles.row}>
-      <div className={styles.nome}>{genero.nome}</div>
+      <div className={styles.nome}>{autor.nome}</div>
       <div className={styles.opcoes}>
         <div className={styles.editar} onClick={handleEditClick}>
           <IoPencil />
@@ -139,23 +139,23 @@ const ListaGeneros = ({
             onSubmit={handleSubmit(onSubmit)}
             className={styles.modalEdicao}
           >
-            <h3 className={styles.titulo}>Editar Gênero</h3>
+            <h3 className={styles.titulo}>Editar Autor</h3>
             <div>
               <label htmlFor="nomeAtual">Nome atual</label>
-              <Input type="text" defaultValue={genero.nome} disabled={true} />
+              <Input type="text" defaultValue={autor.nome} disabled={true} />
             </div>
             <div>
               <label htmlFor="nomeNovo">Novo nome</label>
               <Input
                 type="text"
-                defaultValue={genero.nome}
+                defaultValue={autor.nome}
                 disabled={false}
-                {...register("gen_nome", {
-                  required: "O novo nome do gênero é obrigatório",
+                {...register("aut_nome", {
+                  required: "O novo nome do autor é obrigatório",
                 })}
               />
-              {errors.gen_nome && (
-                <p style={{ color: "red" }}>{errors.gen_nome.message}</p>
+              {errors.aut_nome && (
+                <p style={{ color: "red" }}>{errors.aut_nome.message}</p>
               )}
             </div>
             <div className={styles.botoes}>
@@ -174,17 +174,17 @@ const ListaGeneros = ({
       {isDeleteModalOpen && (
         <div className={styles.modal}>
           <div className={styles.modalExcluir}>
-            <h3 className={styles.titulo}>Excluir Gênero</h3>
+            <h3 className={styles.titulo}>Excluir Autor</h3>
 
             <p className={styles.mensagem}>
-              Tem certeza de que deseja excluir permanentemente o gênero
-              <span className={styles.nome}> "{genero.nome}"</span>?
+              Tem certeza de que deseja excluir permanentemente o autor
+              <span className={styles.nome}> "{autor.nome}"</span>?
             </p>
 
             <div className={styles.botoes}>
               <button
                 onClick={() => {
-                  console.log("Excluindo gênero..." + genero.id);
+                  console.log("Excluindo autor..." + autor.id);
                   openPasswordModal();
                 }}
                 className={styles.deleteButton}
@@ -213,7 +213,6 @@ const ListaGeneros = ({
               <label htmlFor="senha">Senha</label>
               <Input
                 type="password"
-                nomeCampo="password"
                 placeholder="Digite sua senha"
                 value={password}
                 onChange={(value) => setPassword(value)}
@@ -240,4 +239,4 @@ const ListaGeneros = ({
   );
 };
 
-export default ListaGeneros;
+export default ListaAutores;

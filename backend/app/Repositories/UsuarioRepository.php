@@ -16,6 +16,13 @@ class UsuarioRepository implements UsuarioRepositoryInterface
         ->where('usu_nivel', '=', 0)
         ->get();
     }
+
+    public function buscaPorId(int $id): Usuario
+    {
+        return Usuario::where('usu_status', '=', 1)
+        ->where('usu_id', '=', $id)
+        ->first();
+    }
     public function buscaTodosComPesquisa(string $campo, string $valor):Collection
     {
         return Usuario::where($campo, 'like', "%".$valor."%")
