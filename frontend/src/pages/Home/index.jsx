@@ -8,6 +8,7 @@ import {
   useNavigate
 } from 'react-router-dom';
 import { useAuth } from "../../context/AuthContext";
+import CardCarrossel from "../../components/Cards/CardCarrossel";
 const Home = () => {
   const navigate = useNavigate()
   const {token} = useAuth()
@@ -16,15 +17,13 @@ const Home = () => {
   useEffect(() => {
     if(!token){
       navigate('/')
-    }  
+   }  
   }, [token])
   return (
-    <>
-    <button onClick={logout}>Sair</button>
-        <Navbar/>
+    <>  
         <HeaderHome/>
         <LivrosMaisAcessados/>
-        <Footer />
+        <CardCarrossel/>
     </>
   );
 };

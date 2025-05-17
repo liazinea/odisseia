@@ -22,6 +22,7 @@ export const Paths = () => {
         <>
             <BrowserRouter basename={"/"}>
                 <Routes>
+
                     <Route index element={<Login />} />
                     <Route path={'/primeiro-acesso'} element={<PrimeiroAcesso />}/>
                     <Route path={'/esqueci-minha-senha'} element={<RedefinicaoSenha />}/>
