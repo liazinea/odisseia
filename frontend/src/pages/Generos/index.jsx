@@ -87,6 +87,9 @@ const onSubmit = async (data) => {
     setRegisterMessage(response.data.message);
     setMessage(response.data.message)
     setModalMensagemAberto(true);
+
+    const dados = await buscaGeneros();
+    setGeneros(dados);
   } catch (error) {
     console.error(
       "Erro:",

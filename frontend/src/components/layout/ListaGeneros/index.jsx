@@ -66,26 +66,30 @@ const ListaGeneros = ({
 
   // Confirma exclusão do gênero
   const handleConfirmDelete = async (data) => {
-    const response = await api.get(`/check-senha?password=${data.password}`, {
+  const response = await api.get(`/check-senha?password=${data.password}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (response.data.status) {
+    await api.patch(`/generos/${genero.id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
 
-    if (response.data.status) {
-      const responseDelete = await api.patch(`/generos/${genero.id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+    // Atualize a lista aqui!
+    const dados = await buscaGeneros();
+    setGeneros(dados);
 
-      closePasswordModal();
-      setMessage("Gênero excluído com sucesso");
-      setModalMensagemAberto(true);
-    } else {
-      setPasswordMessage("Senha incorreta");
-    }
-  };
+    closePasswordModal();
+    setMessage("Gênero excluído com sucesso");
+    setModalMensagemAberto(true);
+  } else {
+    setPasswordMessage("Senha incorreta");
+  }
+};
 
   // Atualiza o gênero
   const onSubmit = async (data) => {
@@ -142,26 +146,16 @@ const ListaGeneros = ({
 
       {/* Modal de Exclusão */}
       {isDeleteModalOpen && (
-        <div className={styles.modal}>
-          <div className={styles.modalExcluir}>
-            <h3 className={styles.titulo}>Excluir Gênero</h3>
-            <p className={styles.mensagem}>
-              Tem certeza de que deseja excluir permanentemente o gênero
-              <span className={styles.nome}> "{genero.nome}"</span>?
-            </p>
-            <div className={styles.botoes}>
-              <button
-                onClick={openPasswordModal}
-                className={styles.deleteButton}
-              >
-                Excluir
-              </button>
-              <button onClick={closeDeleteModal} className={styles.closeButton}>
-                Cancelar
-              </button>
-            </div>
-          </div>
-        </div>
+        <ModalExcluir
+          isOpen={isDeleteModalOpen}
+          onClose={closeDeleteModal}
+          onConfirm={openPasswordModal}
+          titulo="Excluir Gênero"
+          mensagem="Tem certeza de que deseja excluir permanentemente o gênero"
+          nome={genero.nome}
+          confirmLabel="Excluir"
+          cancelLabel="Cancelar"
+        />
       )}
 
       {/* Modal de Confirmação de Senha */}
