@@ -1,0 +1,164 @@
+@import "../../../styles/index.scss";
+
+.registroContainer {
+  width: 100%;
+  border-radius: 0 0 50px 50px;
+  font-family: "Inter", sans-serif;
+  border-radius: 12px;
+
+  .headerDropdown {
+    padding-block: 15px;
+    border-radius: 12px;
+    color: $azul-escuro;
+    width: 100%;
+    z-index: 1;
+
+    &:hover {
+      background-color: $laranja;
+      color: $azul-escuro;
+    }
+
+    .infosHeader {
+      display: flex;
+      align-items: center;
+      .infos {
+        width: 20%;
+        text-align: center;
+      }
+    }
+  }
+  .dropdownAtivo{
+    background-color: $azul-escuro;
+    color: $branco;
+    .status{
+      color: $laranja-claro;
+    }
+    &:hover{
+      background-color: $azul-escuro;
+      color: $branco;
+
+    }
+  }
+  .conteudo {
+    background-color: $laranja-claro;
+    padding: 40px 60px 90px;
+    border-radius: 12px;
+    overflow: hidden;
+    display: none;
+
+    .infoBloco {
+      margin-bottom: 50px;
+      margin-inline: 20px;
+
+      .infosTitulo {
+        font-weight: bold;
+        font-style: italic;
+        margin-bottom: 20px;
+        color: $azul-escuro;
+      }
+
+      .linha {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 30px;
+
+        .infosTexto {
+          margin-top: 40px;
+          color: $azul-escuro;
+          font-size: 18px;
+          font-weight: 500;
+
+          strong {
+            display: block;
+            margin-bottom: -20px;
+          }
+        }
+      }
+    }
+
+    .statusReserva {
+      margin-top: 30px;
+      margin-inline: 20px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+
+      .infosTitulo {
+        font-weight: bold;
+        font-style: italic;
+        color: $azul-escuro;
+        margin-bottom: 10px;
+      }
+
+      .dropdownContainer {
+        position: relative;
+        display: inline-block;
+        width: 180px;
+        margin-left: -90px;
+      }
+
+      .dropdownToggle {
+        background-color: $azul-escuro;
+        color: $branco;
+        padding: 12px 20px;
+        font-weight: bold;
+        font-size: 16px;
+        border: none;
+        border-radius: 10px 10px 0px 0px;
+        cursor: pointer;
+        width: 100%;
+        text-align: center;
+      }
+
+      .dropdownMenu {
+        background-color: $branco;
+        border: 1px solid $azul-escuro;
+        border-top: none;
+        list-style: none;
+        overflow: hidden;
+        visibility: hidden;
+        position: absolute;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        z-index: 1;
+        border-radius: 0 0 10px 10px;
+        box-shadow: 0 4px 8px $azul-escuro(0, 0, 0, 0.1);
+      }
+
+      .active{
+        visibility: visible;
+      }
+
+      .dropdownItem {
+        padding: 10px;
+        cursor: pointer;
+        color: $azul-escuro;
+        font-weight: bold;
+        border-top: 1px solid $azul-escuro;
+        background-color: $branco;
+        display: flex;
+        justify-content: center;
+
+        &:hover {
+          background-color: $laranja;
+        }
+      }
+
+      .dropdownItemAtivo {
+        @extend .dropdownItem;
+        background-color: $azul-escuro;
+        color: $branco;
+      }
+    }
+  }
+  .active {
+    display: block;
+  }
+}
+
+.blocoBotao {
+  margin-top: 60px;
+  margin-top: 40px;
+  display: flex;
+  justify-content: end;
+}

@@ -36,6 +36,7 @@ const LivrosCadastrados = () => {
       <HeaderPagina titulo={"Livros Cadastrados"} />
       <TabelaLivros
         livros={livros}
+        setLivros={setLivros}
       />
     </div>
   );

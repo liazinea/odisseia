@@ -1,7 +1,10 @@
 @import '../../styles/index.scss';
 
-.card{
-    margin-block: 2%;
-    display: flex;
-    justify-content: center;
+.principal{
+    overflow-x: hidden;
+    .card{
+        margin-block: 2%;
+        display: flex;
+        justify-content: center;
+    }
 }

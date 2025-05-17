@@ -14,7 +14,7 @@ const FormModal = ({
   modalEditarAberto = false,
   livro = {},
   closeModal,
-  errorsApi,
+  errorsApi
 }) => {
   const {
     register,

@@ -43,6 +43,13 @@
     align-items: center;
     z-index: 1000;
 
+    .error{
+      color: red;
+      width: 100%;
+      height: 40px;
+      font-size: 14px;
+    }
+
     .modalEdicao {
       background-color: color.$marrom-laranja;
       padding: 20px;
@@ -150,7 +157,6 @@
       width: 500px;
       display: flex;
       flex-direction: column;
-      gap: 20px;
       justify-content: center;
       font-weight: lighter;
 

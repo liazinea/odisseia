@@ -11,11 +11,11 @@ import { useAuth } from "../../context/AuthContext";
 import CardCarrossel from "../../components/Cards/CardCarrossel";
 const Home = () => {
   const navigate = useNavigate()
-  const {token} = useAuth()
+  const {token, userType} = useAuth()
   
   const {logout} = useAuth()
   useEffect(() => {
-    if(!token){
+    if(!token || userType != 0){
       navigate('/')
    }  
   }, [token])
