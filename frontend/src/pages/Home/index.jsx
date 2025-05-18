@@ -20,7 +20,7 @@ const Home = () => {
    }  
   }, [token])
   return (
-    <>
+    <>  
         <HeaderHome/>
         <LivrosMaisAcessados/>
         <CardCarrossel/>

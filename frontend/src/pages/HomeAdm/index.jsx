@@ -10,7 +10,6 @@ import {
 } from 'react-router-dom';
 
 const HomeAdm = () => {
-  const { logout } = useAuth()
   const { token } = useAuth()
   const {userType } = useAuth()
   const navigate = useNavigate()

@@ -20,7 +20,7 @@ class EmprestimoController extends Controller
     public function index():JsonResponse
     {
         return response()->json([
-            new EmprestimoCollection($this->empretimoService->buscarTodos()),
+            'emprestimos'=> $this->empretimoService->buscarTodos(),
         ], 200);
     }
     public function store(EmprestimoRequest $request): JsonResponse
@@ -41,8 +41,8 @@ class EmprestimoController extends Controller
     public function atualizaEmprestimo(Emprestimo $emprestimo, Request $request):JsonResponse
     {
         try {
-            $estadoAtual = $request->input('valor');
 
+            $estadoAtual = $request->input('valor');
             $this->empretimoService->atualizaEmprestimo($estadoAtual, $emprestimo);
 
             return response()->json([

@@ -57,4 +57,9 @@ class AutorService
 
         throw new \Exception('Erro ao excluir autor.');
     }
+
+    public function atualizar(Autor $autor, AutorDTO $autorDTO):bool
+    {
+        return $this->autorRepository->atualizar($autor, $autorDTO);
+    }
 }

@@ -36,14 +36,10 @@ const SessaoAdmHome = () => {
         const alunosData = await buscaUsuarios();
         const livrosData = await buscaLivros();
         setAlunos(
-          Array.isArray(alunosData) && alunosData.length > 0
-            ? alunosData.map((aluno) => aluno.usu_nome || "Nome não disponível")
-            : []
+          alunosData
         );
         setLivros(
-          Array.isArray(livrosData) && livrosData.length > 0
-            ? livrosData.map((livro) => livro.nome || "Título não disponível")
-            : []
+         livrosData
         );
       } catch (error) {
         console.error("Erro ao buscar dados:", error);

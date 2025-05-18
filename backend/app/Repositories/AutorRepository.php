@@ -35,4 +35,9 @@ class AutorRepository implements AutorRepositoryInterface
         $autor->aut_status_ativo = 0;
         return $autor->save();
     }
+
+    public function atualizar(Autor $autor, AutorDTO $autorDTO):bool
+    {
+        return $autor->update($autorDTO->toArray());
+    }
 }

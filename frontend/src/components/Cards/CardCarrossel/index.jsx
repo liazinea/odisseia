@@ -1,25 +1,40 @@
 import React, { useState, useEffect } from "react";
 import styles from "./index.module.scss";
 import CapaLivro from "../../Livro/CapaLivro";
-
-const dados = {
-  Romance: [1, 2, 3, 4],
-  "Ficção Científica": [5, 6, 7, 8],
-  Drama: [9, 10, 11, 12],
-};
-
-const generos = Object.keys(dados);
+import useLivrosEGeneros from "../../../hooks/useLivrosEGeneros";
 
 const CardCarrossel = () => {
+  const [livros, setLivros] = useState([]);
+  const [generos, setGeneros] = useState([]);
+  console.log(generos)
+   console.log(livros)
   const [generoAtual, setGeneroAtual] = useState(0);
   const [animating, setAnimating] = useState(false);
+  const { buscaLivrosEGeneros } = useLivrosEGeneros();
 
   useEffect(() => {
+    const carregarlivros = async () => {
+      const dados = await buscaLivrosEGeneros();
+      const generosExtraidos = dados.map(dado => dado.genero);
+      setGeneros(generosExtraidos);
+
+      const todosLivros = dados.flatMap(dado =>
+        dado.livros.map(livro => ({ ...livro, genero: dado.genero }))
+      );
+      setLivros(todosLivros);
+      setGeneroAtual(0);
+    };
+
+    carregarlivros();
+  }, []);
+
+  useEffect(() => {
+    if (generos.length === 0) return;
     const intervalo = setInterval(() => {
       trocarGenero((generoAtual + 1) % generos.length);
     }, 9000);
     return () => clearInterval(intervalo);
-  }, [generoAtual]);
+  }, [generoAtual, generos]);
 
   const trocarGenero = (novoIndice) => {
     setAnimating(true);
@@ -39,8 +54,8 @@ const CardCarrossel = () => {
     trocarGenero(novo);
   };
 
-  const genero = generos[generoAtual];
-  const livros = dados[genero];
+  const genero = generos[generoAtual] || '';
+  const livrosDoGenero = livros.filter(livro => livro.genero === genero);
 
   return (
     <div className={styles.carrosselContainer}>
@@ -51,9 +66,9 @@ const CardCarrossel = () => {
         </button>
 
         <div className={`${styles.cardContainer} ${animating ? styles.animating : ""}`}>
-          {livros.map((livro, index) => (
+          {livrosDoGenero.map((livro, index) => (
             <div key={index} className={styles.card}>
-              <CapaLivro imagemCapa={livro.capa} classificacao={livro.classificacaoIndicativa} />
+              <CapaLivro imagemCapa={livro.liv_capa} classificacao={livro.liv_classIndicativa} />
             </div>
           ))}
         </div>
@@ -67,5 +82,3 @@ const CardCarrossel = () => {
 };
 
 export default CardCarrossel;
-
-

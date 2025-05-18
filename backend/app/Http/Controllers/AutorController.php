@@ -64,4 +64,18 @@ class AutorController extends Controller
             ], 400);
         }
     }
+
+     public function update(Autor $autor, CriaAutorRequest $request):JsonResponse
+    {
+        try{
+            $this->autorService->atualizar($autor, new AutorDTO($request->validated('aut_nome')));
+            return response()->json([
+                'message' =>'Autor atualizado com sucesso.'
+            ], 200);
+        }catch(Exception $e){
+            return response()->json([
+                'message'=> $e->getMessage()
+            ], 400);
+        }
+    }
 }
