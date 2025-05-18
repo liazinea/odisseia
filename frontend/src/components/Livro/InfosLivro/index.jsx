@@ -15,7 +15,7 @@ const InfosLivro = ({ livro }) => {
 
         <div className={styles.textos}>
           <div className={styles.qtdWrapper}>
-            <BotaoQtd quantidade={livro.qtdPaginas} />
+            <BotaoQtd quantidade={1} />
           </div>
 
           <TituloDescricao titulo={livro.nome} 
