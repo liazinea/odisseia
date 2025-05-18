@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Emprestimo extends Model
 {
 
-    protected string $table = "emp_emprestimo";
-    protected string $primaryKey = "emp_id";
+    protected  $table = "emp_emprestimo";
+    protected  $primaryKey = "emp_id";
 
-    protected array $fillable = [
+    protected  $fillable = [
         'emp_dataInicio',
         'emp_dataFim',
         'emp_status',
@@ -21,13 +21,13 @@ class Emprestimo extends Model
         'usu_id',
     ];
 
-    public function livro():BelongsTo
+    public function livro(): BelongsTo
     {
-        return $this->belongsTo(Livro::class);
+        return $this->belongsTo(Livro::class, 'liv_id', 'liv_id');
     }
 
-    public function aluno():BelongsTo
+    public function aluno(): BelongsTo
     {
-        return $this->belongsTo(Usuario::class);
+        return $this->belongsTo(Usuario::class, 'usu_id', 'usu_id');
     }
 }

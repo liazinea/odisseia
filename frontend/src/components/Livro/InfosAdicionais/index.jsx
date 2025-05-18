@@ -12,6 +12,7 @@ const InfoAdicionais = ({
   edicao,
   editora = {},
   data,
+  id
 }) => {
   return (
     <div className={styles.container}>
@@ -48,7 +49,7 @@ const InfoAdicionais = ({
       </div>
 
       <div className={styles.botaoWrapper}>
-        <BotaoReserva texto="Realizar Reserva" />
+        <BotaoReserva texto="Realizar Reserva" idLivro={id}/>
       </div>
     </div>
   );

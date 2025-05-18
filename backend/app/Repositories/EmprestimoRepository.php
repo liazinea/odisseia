@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 class EmprestimoRepository implements EmprestimoRepositoryInterface
 {
-    public function renovaEmprestimo(Emprestimo $emprestimo):bool
+    public function renovaEmprestimo(Emprestimo $emprestimo): bool
     {
         $emprestimo->emp_quantRenovacao++;
         $novaDataFim = Carbon::parse($emprestimo->emp_data_fim)->addMonth();
@@ -17,14 +17,22 @@ class EmprestimoRepository implements EmprestimoRepositoryInterface
 
         return $emprestimo->save();
     }
-    public function atualizaEmprestimo(int $estadoAtual, Emprestimo $emprestimo):bool
+    public function atualizaEmprestimo(int $estadoAtual, Emprestimo $emprestimo): bool
     {
         $emprestimo->emp_status = $estadoAtual;
         return $emprestimo->save();
     }
-    public function buscarTodos():Collection
+    public function buscarTodos(): Collection
     {
-        return Emprestimo::where('emp_status_ativo', '=', 1)->with(['aluno', 'livro'])->get();
+        return Emprestimo::where('emp_status_ativo', 1)
+            ->with([
+                'aluno',
+                'livro',
+                'livro.generos',
+                'livro.editora',
+                'livro.autores',
+            ])
+            ->get();
     }
     public function verificaSeAlunoTemEmprestimo(int $idAluno): bool
     {

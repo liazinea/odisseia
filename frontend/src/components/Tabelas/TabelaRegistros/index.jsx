@@ -12,7 +12,7 @@ import BotaoVerMais from "../../Botao/BotaoVerMais";
 import { IoSearch } from "react-icons/io5";
 // import useLivros from "../../../hooks/useLivros";
 
-const TabelaRegistros = ({ emprestimos, alunos, livro, setEmprestimos }) => {
+const TabelaRegistros = ({ emprestimos }) => {
   const [emprestimo, setEmprestimo] = useState([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [pagesLoaded, setPagesLoaded] = useState(1);
@@ -95,7 +95,7 @@ const TabelaRegistros = ({ emprestimos, alunos, livro, setEmprestimos }) => {
   ];
 
   const table = useReactTable({
-    data: emprestimo,
+    data: emprestimos,
     columns,
     state: {
       globalFilter,
@@ -197,8 +197,8 @@ const TabelaRegistros = ({ emprestimos, alunos, livro, setEmprestimos }) => {
               <CelulaTabelaRegistros
                 key={row.original.emprestimo_id}
                 emprestimo={row.original}
-                aluno={alunos[i]}
-                livro={livro}
+                aluno={emprestimos[i].aluno}
+                livro={emprestimos[i].livro}
                 onDelete={(id) => {
                   setEmprestimo((prev) => prev.filter((emprestimo) => emprestimo.id !== id));
                 }}

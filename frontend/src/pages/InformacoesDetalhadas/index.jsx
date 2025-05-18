@@ -8,22 +8,23 @@ import useLivro from '../../hooks/useLivro';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import api from '../../services/api';
-
+import { useNavigate } from 'react-router-dom';
 
 const InformacoesDetalhadas = () => {
   const { id } = useParams();
   const [livro, setLivro] = useState(null)
   const { buscaLivro } = useLivro(id)
+   const navigate = useNavigate()
   const { token, userType } = useAuth()
   useEffect(() => {
-    if (!token || userType != 1) {
+    if (!token) {
       navigate('/')
     }
   }, [token])
 
   useEffect(() => {
-    // Função para buscar o livro na API
-    const carregaLivro = async () => {
+    if(!livro){
+       const carregaLivro = async () => {
       try {
         const response = await api.get(`/livros/${id}`, {
           headers: {
@@ -38,6 +39,7 @@ const InformacoesDetalhadas = () => {
 
     if (id) {
       carregaLivro(); // Chama a função apenas se o ID for válido
+    }
     }
   }, [livro]); // A dependênc
 
@@ -60,6 +62,7 @@ const InformacoesDetalhadas = () => {
               edicao={livro.edicao}
               editora={livro.editora} 
               data={livro.dataPubli}
+              id={livro.id}
             />
           </div>
         </div>

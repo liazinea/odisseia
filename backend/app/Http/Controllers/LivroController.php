@@ -21,22 +21,29 @@ class LivroController extends Controller
         protected EditoraService $editoraService,
         protected GeneroService $generoService,
         protected AutorService $autorService,
-    )
-    {}
+    ) {}
 
-    public function index():JsonResponse
+    public function index(): JsonResponse
     {
         return response()->json([
             'livros' => new LivroCollection($this->livroService->buscarTodos()),
         ], 200);
     }
 
-    public function store(LivroRequest $request):JsonResponse
+    public function livrosPorGenero(): JsonResponse
+    {
+        return response()->json([
+            'livros' => $this->livroService->buscaLivrosPorGenero(),
+            'message'=>'ai'
+        ]);
+    }
+
+    public function store(LivroRequest $request): JsonResponse
     {
         try {
             $data = $request->validated();
 
-            if($request->hasFile('liv_capa')){
+            if ($request->hasFile('liv_capa')) {
                 $capa = $this->livroService->salvarCapa($data['liv_capa']);
                 $data['liv_capa'] = $capa;
             }
@@ -66,10 +73,9 @@ class LivroController extends Controller
             $livro->load(['editora', 'autores', 'generos']);
 
             return response()->json([
-                'message'=> 'Livro adicionado com sucesso',
+                'message' => 'Livro adicionado com sucesso',
                 'livro' => new LivroResource($livro),
             ], 201);
-
         } catch (Exception $e) {
             return response()->json([
                 'error' => $e->getMessage(),
@@ -78,17 +84,17 @@ class LivroController extends Controller
         }
     }
 
-    public function show(Livro $livro):JsonResponse
+    public function show(Livro $livro): JsonResponse
     {
         $livro = $this->livroService->retorna($livro);
         return response()->json([
-            'livro'=> new LivroResource($livro),
+            'livro' => new LivroResource($livro),
         ], 200);
     }
 
-    public function delete(Livro $livro):JsonResponse
+    public function delete(Livro $livro): JsonResponse
     {
-        try{
+        try {
             $this->livroService->deletar($livro);
             return response()->json([
                 'mensagm' => 'Livro deletado com sucesso!!'
@@ -100,12 +106,12 @@ class LivroController extends Controller
             ], 500);
         }
     }
-    public function update( Livro $livro, LivroRequest $request):JsonResponse
+    public function update(Livro $livro, LivroRequest $request): JsonResponse
     {
         try {
             $data = $request->validated();
 
-            if($request->hasFile('liv_capa')){
+            if ($request->hasFile('liv_capa')) {
                 $capa = $this->livroService->salvarCapa($data['liv_capa']);
                 $data['liv_capa'] = $capa;
             }
@@ -134,10 +140,9 @@ class LivroController extends Controller
             $livroAtualizado = $this->livroService->retorna($livro);
 
             return response()->json([
-                'message'=> 'Livro atualizado com sucesso',
+                'message' => 'Livro atualizado com sucesso',
                 'livro' => new LivroResource($livroAtualizado),
             ], 201);
-
         } catch (Exception $e) {
             return response()->json([
                 'error' => $e->getMessage(),
