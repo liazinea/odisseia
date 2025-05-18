@@ -89,7 +89,7 @@ const CelulaTabelaRegistros = ({ aluno, livro, emprestimo }) => {
       <div onClick={toggleDropdown} className={`${styles.headerDropdown} ${open ? styles.dropdownAtivo : ""}`} ref={dropdownRef}>
         <div className={styles.infosHeader}>
           <p className={styles.infos}>{formatarData(emprestimo.created_at)}</p>
-          <p className={styles.infos}>{emprestimo.numEmprestimo}</p>
+          <p className={styles.infos}>{emprestimo.emp_id}</p>
           <p className={styles.infos}>{livro.liv_nome}</p>
           <p className={styles.infos}>{livro.liv_isbn}</p>
           <p className={`${styles.infos} ${styles.status}`}>{emprestimo.emp_status}</p>
