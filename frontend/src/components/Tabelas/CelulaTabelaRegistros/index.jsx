@@ -1,20 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./index.module.scss";
 import Botao from "../../Botao/Botao";
 import { useRef } from "react";
+import { set } from "react-hook-form";
+import { useAuth } from "../../../context/AuthContext";
+import api from "../../../services/api";
 
 const CelulaTabelaRegistros = ({ aluno, livro, emprestimo }) => {
   const [statusAtual, setStatusAtual] = useState("RESERVADO");
   const [dropdownAberto, setDropdownAberto] = useState(false);
   const [open, setOpen] = useState(false);
-
+  const { token } = useAuth()
   const formatarData = (dataString) => {
     const data = new Date(dataString);
     const dia = data.getDate().toString().padStart(2, "0");
-    const mes = (data.getMonth() + 1).toString().padStart(2, "0"); 
+    const mes = (data.getMonth() + 1).toString().padStart(2, "0");
     const ano = data.getFullYear();
     return `${dia}/${mes}/${ano}`;
   };
+
+  useEffect(() => {
+    switch (emprestimo.emp_status) {
+      case 1:
+        setStatusAtual('RESERVADO')
+        break
+      case 2:
+        setStatusAtual('EMPRESTADO')
+        break
+      case 3:
+        setStatusAtual('DEVOLVIDO')
+        break
+      default:
+        setStatusAtual('RESERVADO')
+        break
+    }
+  }, [])
 
   const opcoesStatus = ["RESERVADO", "EMPRESTADO", "DEVOLUÇÃO", "CANCELAR"];
 
@@ -25,21 +45,27 @@ const CelulaTabelaRegistros = ({ aluno, livro, emprestimo }) => {
   };
 
   const Submit = async () => {
-    const dadosParaSalvar = {
-      aluno,
-      livro,
-      emprestimo,
-      statusAtual,
-    };
-
     try {
-      const resposta = await fetch("https://sua-api.com/salvar-reserva", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      let valorAtt = 0
+      if(statusAtual =='RESERVADO'){
+        valorAtt = 1
+      }else if(statusAtual == 'EMPRESTADO'){
+        valorAtt = 2
+      }else if(statusAtual == 'DEVOLVIDO'){
+        valorAtt = 3
+      }
+      const resposta = await api.patch(
+        `/emprestimos/${emprestimo.emp_id}`,
+        {
+          valor: valorAtt
         },
-        body: JSON.stringify(dadosParaSalvar),
-      });
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
 
       if (!resposta.ok) {
         throw new Error("Erro ao salvar os dados");
@@ -64,9 +90,9 @@ const CelulaTabelaRegistros = ({ aluno, livro, emprestimo }) => {
         <div className={styles.infosHeader}>
           <p className={styles.infos}>{formatarData(emprestimo.created_at)}</p>
           <p className={styles.infos}>{emprestimo.numEmprestimo}</p>
-          <p className={styles.infos}>{livro.titulo}</p>
-          <p className={styles.infos}>{livro.isbn}</p>
-          <p className={`${styles.infos} ${styles.status}`}>{emprestimo.status}</p>
+          <p className={styles.infos}>{livro.liv_nome}</p>
+          <p className={styles.infos}>{livro.liv_isbn}</p>
+          <p className={`${styles.infos} ${styles.status}`}>{emprestimo.emp_status}</p>
         </div>
       </div>
       <div className={`${styles.conteudo} ${open ? styles.active : ""}`}>
@@ -76,12 +102,12 @@ const CelulaTabelaRegistros = ({ aluno, livro, emprestimo }) => {
             <p className={styles.infosTexto}>
               <strong>Nome do Aluno:</strong>
               <br />
-              {aluno.nome}
+              {aluno.usu_nome}
             </p>
             <p className={styles.infosTexto}>
               <strong>RA:</strong>
               <br />
-              {aluno.ra}
+              {aluno.usu_ra}
             </p>
             <p className={styles.infosTexto}>
               <strong>Série/Ano:</strong>
@@ -91,7 +117,7 @@ const CelulaTabelaRegistros = ({ aluno, livro, emprestimo }) => {
             <p className={styles.infosTexto}>
               <strong>ID do Empréstimo:</strong>
               <br />
-              {emprestimo.id}
+              {emprestimo.emp_id}
             </p>
           </div>
         </section>
@@ -102,29 +128,38 @@ const CelulaTabelaRegistros = ({ aluno, livro, emprestimo }) => {
             <p className={styles.infosTexto}>
               <strong>Nome do Livro:</strong>
               <br />
-              {livro.titulo}
+              {livro.liv_nome}
             </p>
             <p className={styles.infosTexto}>
               <strong>Nome do Autor:</strong>
               <br />
-              {livro.autor}
+              {livro.autores && (
+                Array.isArray(livro.autores) ? (
+                  livro.autores.map((autor, index) => (
+                    <p key={index}>{autor.aut_nome}</p>
+                  ))
+                ) : (
+                  <p>{livro.autores.aut_nome}</p>
+                )
+              )}
+
             </p>
             <p className={styles.infosTexto}>
               <strong>Número de Registro:</strong>
               <br />
-              {livro.registro}
+              {livro.liv_numRegistro}
             </p>
           </div>
           <div className={styles.linha}>
             <p className={styles.infosTexto}>
               <strong>Código do Sistema:</strong>
               <br />
-              {livro.codigo}
+              {livro.liv_id}
             </p>
             <p className={styles.infosTexto}>
               <strong>Classificação na Estante:</strong>
               <br />
-              {livro.classificacao}
+              {livro.classIndicativa}
             </p>
           </div>
         </section>
@@ -133,19 +168,14 @@ const CelulaTabelaRegistros = ({ aluno, livro, emprestimo }) => {
           <h2 className={styles.infosTitulo}>Informações do Empréstimo:</h2>
           <div className={styles.linha}>
             <p className={styles.infosTexto}>
-              <strong>Funcionário Responsável:</strong>
-              <br />
-              {emprestimo.funcionario}
-            </p>
-            <p className={styles.infosTexto}>
               <strong>Data da Reserva:</strong>
               <br />
-              {emprestimo.dataReserva}
+              {emprestimo.created_at}
             </p>
             <p className={styles.infosTexto}>
               <strong>Data Limite de Retirada:</strong>
               <br />
-              {emprestimo.dataLimite}
+              {emprestimo.emp_dataFim}
             </p>
           </div>
         </section>
