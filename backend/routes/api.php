@@ -21,6 +21,7 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::delete('/livros/{livro}', 'delete');
         Route::get('/livros/{livro}', 'show');
         Route::put('/livros/{livro}', 'update');
+        Route::get('/livros-por-genero', 'livrosPorGenero');
     });
 
     Route::controller(AutorController::class)->group(function(){

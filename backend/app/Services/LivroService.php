@@ -17,13 +17,12 @@ class LivroService
         protected AutorService $autorService,
         protected GeneroService $generoService,
         protected LivroRepositoryInterface $livroRepository
-    )
-    {}
+    ) {}
 
     public function atualizar(LivroDTO $livroDTO, Livro $livro): bool
     {
 
-        if($this->livroRepository->atualizar($livroDTO, $livro)){
+        if ($this->livroRepository->atualizar($livroDTO, $livro)) {
             $livro->autores()->sync($livroDTO->autores);
             $livro->generos()->sync($livroDTO->generos);
             return true;
@@ -31,29 +30,44 @@ class LivroService
         throw new \Exception("Erro ao salvar livro");
     }
 
-    public function retorna(Livro $livo):Livro
+    public function buscaLivrosPorGenero(): array
+    {
+        $generos = $this->generoService->buscarTodos();
+        $livrosPorGenero = [];
+
+        foreach ($generos as $genero) {
+            $livrosPorGenero[] = [
+                'genero' => $genero->gen_nome,
+                'livros' => $this->livroRepository->buscaLivrosPorGenero($genero->gen_nome),
+            ];
+        }
+
+        return $livrosPorGenero;
+    }
+
+    public function retorna(Livro $livo): Livro
     {
         return $this->livroRepository->retorna($livo);
     }
 
-    public function deletar(Livro $livro):bool
+    public function deletar(Livro $livro): bool
     {
         return $this->livroRepository->deletar($livro);
     }
 
-    public function buscarTodos():Collection
+    public function buscarTodos(): Collection
     {
         return $this->livroRepository->buscarTodos();
     }
 
-    public function buscaPorId(int $id):Livro
+    public function buscaPorId(int $id): Livro
     {
         return $this->livroRepository->buscaPorId($id);
     }
 
-    public function salvarLivro(LivroDTO $livroDTO):Livro
+    public function salvarLivro(LivroDTO $livroDTO): Livro
     {
-        if($livro = $this->livroRepository->salvar($livroDTO)){
+        if ($livro = $this->livroRepository->salvar($livroDTO)) {
             $livro->autores()->sync($livroDTO->autores);
             $livro->generos()->sync($livroDTO->generos);
             return $livro;
@@ -61,9 +75,9 @@ class LivroService
         throw new \Exception("Erro ao salvar livro");
     }
 
-    public function salvarCapa(UploadedFile $capa):string
+    public function salvarCapa(UploadedFile $capa): string
     {
-        if($pathCapa = $this->livroRepository->salvarCapa($capa)){
+        if ($pathCapa = $this->livroRepository->salvarCapa($capa)) {
             return $pathCapa;
         }
 

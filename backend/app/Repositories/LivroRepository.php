@@ -31,6 +31,17 @@ class LivroRepository implements LivroRepositoryInterface
         return $livro->load(['editora', 'autores', 'generos']);
     }
 
+    public function buscaLivrosPorGenero(string $genero): Collection
+    {
+        return Livro::with(['generos', 'autores', 'editora'])
+            ->whereHas('generos', function ($query) use ($genero) {
+                $query->where('gen_nome', $genero)
+                    ->where('gen_status_ativo', '=', 1);
+            })->where('liv_status_ativo', '=', '1')->get();
+    }
+
+
+
     public function deletar(Livro $livro): bool
     {
         $livro->autores()->detach();
@@ -38,19 +49,19 @@ class LivroRepository implements LivroRepositoryInterface
         return $livro->delete();
     }
 
-    public function buscarTodos():Collection
+    public function buscarTodos(): Collection
     {
         return Livro::where('liv_status_ativo', '=', 1)->with(['autores', 'editora', 'generos'])->get();
     }
 
     public function buscaPorId(int $id): Livro
     {
-        return Livro::where('liv_status', '=', 1)
-        ->where('liv_id', '=', $id)
-        ->first();
+        return Livro::where('liv_status_ativo', '=', 1)
+            ->where('liv_id', '=', $id)
+            ->first();
     }
 
-    public function salvar(LivroDTO $livroDTO):Livro
+    public function salvar(LivroDTO $livroDTO): Livro
     {
         return Livro::create([
             'liv_isbn' =>  $livroDTO->isbn,
@@ -67,7 +78,7 @@ class LivroRepository implements LivroRepositoryInterface
         ]);
     }
 
-    public function salvarCapa(UploadedFile $capa):string
+    public function salvarCapa(UploadedFile $capa): string
     {
         return $path = $capa->store('capas_livros', 'public');
     }

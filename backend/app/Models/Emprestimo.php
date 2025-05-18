@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Emprestimo extends Model
 {
 
-    protected string $table = "emp_emprestimo";
-    protected string $primaryKey = "emp_id";
+    protected  $table = "emp_emprestimo";
+    protected  $primaryKey = "emp_id";
 
-    protected array $fillable = [
+    protected  $fillable = [
         'emp_dataInicio',
         'emp_dataFim',
         'emp_status',
