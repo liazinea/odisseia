@@ -64,7 +64,9 @@ const SessaoAdmHome = () => {
         type="button" 
         nomeBotao="consultar-emprestimos" 
         icon="/registros-icon.svg" 
-        texto="Consultar empréstimos" />
+        texto="Consultar empréstimos" 
+        onClick={() => navigate("/registro-de-atividades")}
+        />
       <BotaoAdmHome
         type="button"
         nomeBotao="livros"
