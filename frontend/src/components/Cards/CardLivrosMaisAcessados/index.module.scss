@@ -1,51 +1,81 @@
 @import "../../../styles/index.scss";
-.card {
-    display: flex;
-    flex-direction: column;
-    background-color: $laranja;
-    padding: 4vh;
-    justify-content: center;
-    max-width: 350px;
-    gap: 10px;
-    border-radius: 0px 20px 0px 20px;
 
-    .titulo {
-        text-align: center;
-        color: $azul-escuro;
-    }
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: $laranja;
+  padding: 4vh 2vw;
+  justify-content: flex-start;
+  max-width: 350px;
+  width: 100%;
+  gap: 10px;
+  border-radius: 0px 20px 0px 20px;
+  box-sizing: border-box;
+  min-width: 220px;
+  height: 100%;
+  min-height: 420px;
+
+  .titulo {
+    text-align: center;
+    color: $azul-escuro;
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    word-break: break-word;
+    margin-bottom: 4px;
+  }
+
+  .paragrafo {
+    flex: 1 1 120px;
+    padding-right: 10px;
+    text-align: justify;
+    max-height: 120px;
+    overflow-y: auto;
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+
+  /* Scrollbar styles */
+  .paragrafo::-webkit-scrollbar {
+    width: 8px;
+  }
+  .paragrafo::-webkit-scrollbar-track {
+    background: $laranja;
+    border-radius: 10px;
+  }
+  .paragrafo::-webkit-scrollbar-thumb {
+    background: lighten($laranja, 5%);
+    border-radius: 10px;
+  }
+  .paragrafo::-webkit-scrollbar-thumb:hover {
+    background: darken($laranja, 10%);
+  }
+
+  .imagem {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    width: 100%;
+    min-height: 120px;
+    margin-top: auto;
+  }
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+  .card {
+    padding: 3vh 2vw;
+    max-width: 98vw;
+    min-width: 0;
+    border-radius: 0px 10px 0px 10px;
+    min-height: 320px;
 
     .paragrafo {
-        padding-right: 15px;
-        text-align: justify;
-        max-height: 200px;
-        overflow-y: scroll;
+      max-height: 80px;
+      font-size: 0.95rem;
     }
-    /* Target the vertical scrollbar */
-::-webkit-scrollbar {
-  width: 12px; /* width of the scrollbar */
-}
-
-/* Track (the background) */
-::-webkit-scrollbar-track {
-  background: $laranja;
-  border-radius: 10px;
-  
-}
-
-/* Thumb (the draggable part) */
-::-webkit-scrollbar-thumb {
-  background: lighten($laranja, 5%);
-  border-radius: 10px;
-
-}
-
-/* On hover */
-::-webkit-scrollbar-thumb:hover {
-  background: darken($laranja, 10%);
-}
-
     .imagem {
-        display: flex;
-        justify-content: center;
+      min-height: 80px;
     }
+  }
 }
