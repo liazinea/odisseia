@@ -36,7 +36,9 @@ class EmprestimoRepository implements EmprestimoRepositoryInterface
     }
     public function verificaSeAlunoTemEmprestimo(int $idAluno): bool
     {
-        return Emprestimo::where('usu_id', '=', $idAluno)->exists();
+        return Emprestimo::where('usu_id', $idAluno)
+            ->whereNotIn('emp_status', [0, 3])
+            ->exists();
     }
 
     public function criaEmprestimo(EmprestimoDTO $emprestimoDTO): Emprestimo
