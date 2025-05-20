@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './index.module.scss';
-import CardLivrosMaisAcessados from '../../Cards/CardLivrosMaisAcessados';
+import CardLivrosMaisEmprestados from '../../Cards/CardLivrosMaisEmprestados';
 import useLivros from '../../../hooks/useLivros';
 
 function getRandomItems(array, n) {
@@ -16,7 +16,7 @@ function getRandomItems(array, n) {
   return result;
 }
 
-const LivrosMaisAcessados = () => {
+const LivrosMaisEmprestados = () => {
   const { buscaLivros } = useLivros();
   const [livrosAleatorios, setLivrosAleatorios] = useState([]);
 
@@ -31,14 +31,14 @@ const LivrosMaisAcessados = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.titulo}> Livros Mais Acessados </h1>
+      <h1 className={styles.titulo}> Livros Mais Emprestados</h1>
       <div className={styles.cards_container}>
         {livrosAleatorios.map((livro) => (
-          <CardLivrosMaisAcessados key={livro.id} livro={livro} />
+          <CardLivrosMaisEmprestados key={livro.id} livro={livro} />
         ))}
       </div>
     </div>
   );
 }
 
-export default LivrosMaisAcessados;
+export default LivrosMaisEmprestados;

@@ -7,6 +7,7 @@ import SelectSimples from "../../Inputs/Select";
 import useUsuarios from "../../../hooks/useUsuarios";
 import useLivros from "../../../hooks/useLivros";
 import ModalEmprestimoLivro from "../../Modal/ModalEmprestimoLivro";
+import ModalMensagem from "../../Modal/ModalMensagem";
 
 const SessaoAdmHome = () => {
   const navigate = useNavigate();
@@ -41,8 +42,8 @@ const SessaoAdmHome = () => {
         setLivros(
          livrosData
         );
-      } catch (error) {
-        console.error("Erro ao buscar dados:", error);
+    } catch (error) {
+      console.error("Erro ao buscar dados:", error);
         setAlunos([]);
         setLivros([]);
       }
@@ -64,7 +65,9 @@ const SessaoAdmHome = () => {
         type="button" 
         nomeBotao="consultar-emprestimos" 
         icon="/registros-icon.svg" 
-        texto="Consultar empréstimos" />
+        texto="Consultar empréstimos" 
+        onClick={() => navigate("/registro-de-atividades")}
+        />
       <BotaoAdmHome
         type="button"
         nomeBotao="livros"
