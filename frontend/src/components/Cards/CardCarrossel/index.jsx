@@ -28,7 +28,7 @@ const CardCarrossel = () => {
     };
 
     carregarlivros();
-  }, []);
+  }, [livros == 0]);
 
   useEffect(() => {
     if (generos.length === 0) return;

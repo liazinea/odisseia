@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "../../components/layout/Navbar"
 import HeaderHome from "../../components/layout/HeaderHome"
 import Footer from "../../components/layout/Footer";
-import LivrosMaisAcessados from "../../components/layout/LivrosMaisAcessados";
+import LivrosMaisEmprestados from "../../components/layout/LivrosMaisEmprestados";
 import { useEffect } from "react";
 import {
   useNavigate
@@ -22,7 +22,7 @@ const Home = () => {
   return (
     <>  
         <HeaderHome/>
-        <LivrosMaisAcessados/>
+        <LivrosMaisEmprestados/>
         <CardCarrossel/>
     </>
   );

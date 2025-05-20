@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { useMemo } from "react";
 import api from "../../../services/api";
 import { useAuth } from "../../../context/AuthContext";
+import { useState } from "react";
+import ModalMensagem from "../ModalMensagem";
 
 const ModalEmprestimoLivro = ({ isOpen, onClose, alunos = [], livros = [], handleInputChange }) => {
   const {
@@ -13,7 +15,9 @@ const ModalEmprestimoLivro = ({ isOpen, onClose, alunos = [], livros = [], handl
   } = useForm();
 
   const {token} = useAuth()
-
+  
+  const [modalMensagemAberto, setModalMensagemAberto] = useState(false);
+    const [message, setMessage] = useState('');
   // Normaliza alunos e livros para { label, value }
   const selectAlunoValue = useMemo(() =>
     alunos.map((aluno) => ({
@@ -48,13 +52,18 @@ const ModalEmprestimoLivro = ({ isOpen, onClose, alunos = [], livros = [], handl
       );
 
       console.log('Empréstimo criado com sucesso:', response.data);
+      setMessage("Empréstimo cadastrado com sucesso!");
+      setModalMensagemAberto(true)
 
     } catch (error) {
       console.error('Erro ao fazer empréstimo do livro:', error);
+      setMessage("Falha ao cadastrar empréstimo!");
+      setModalMensagemAberto(true)
     }
   };
 
   if (!isOpen) return null;
+
 
   return (
     <div className={styles.modal}>
@@ -99,6 +108,11 @@ const ModalEmprestimoLivro = ({ isOpen, onClose, alunos = [], livros = [], handl
           </button>
         </div>
       </form>
+      <ModalMensagem
+          mensagemModal={message}
+          modalAberto={modalMensagemAberto}
+          closeModal={() => setModalMensagemAberto(false)}
+        />
     </div>
   );
 };
