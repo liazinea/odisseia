@@ -108,7 +108,9 @@
         width: 100%;
         text-align: center;
       }
-
+      .borderDropdown{
+        border-radius: 10px;
+      }
       .dropdownMenu {
         background-color: $branco;
         border: 1px solid $azul-escuro;

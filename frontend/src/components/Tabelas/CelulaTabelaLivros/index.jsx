@@ -103,7 +103,7 @@ const CelulaTabelaLivros = ({ livro, onDelete }) => {
     <div className={styles.principal}>
       <div className={styles.body}>
         <div className={styles.data}>{formatarData(livro.created_at)}</div>
-        <div className={styles.capa}>
+        <div className={styles.capa} onClick={() => navigate(`/livro/${livro.id}`)}>
           <img
             src={`http://127.0.0.1:8000/storage/${livro.capa}`}
             className={styles.imagem}

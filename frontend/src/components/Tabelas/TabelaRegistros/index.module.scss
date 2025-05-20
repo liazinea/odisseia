@@ -98,27 +98,17 @@
       font-family: Inter;
       font-weight: 600;
       display: flex;
-      justify-content: space-around;
       background-color: $laranja;
       border-radius: 15px;
       padding-block: 10px;
       text-align: center;
       color: $azul-escuro;
 
-      .data {
-        width: 20%;
-      }
-      .numEmprestimo {
-        width: 20%;
-      }
-      .titulo {
-        width: 20%;
-      }
-      .isbn {
-        width: 20%;
-      }
       .status {
         width: 20%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
     }
     .botao {

@@ -7,8 +7,8 @@ const HeaderHome = () => {
     <div className={styles.principal}>
       <div className={styles.conteudo}>
         <h1 className={styles.titulo}>Acervo Digital</h1>
-        <p className={styles.subtitulo}>Biblioteca E.E. Ernesto Quissak</p>
-        <p className={styles.paragrafo}>Navegue pelos livros dsponíveis na biblioteca!</p>
+        <p className={styles.subtitulo}>Sala de leitura E.E. Ernesto Quissak</p>
+        <p className={styles.paragrafo}>Navegue pelos livros disponíveis na biblioteca!</p>
         <div className={styles.alinha}>
           <BarraPesquisa placeholder={`Pesquise por autor, nome do livro ou gênero`}/>
         </div>

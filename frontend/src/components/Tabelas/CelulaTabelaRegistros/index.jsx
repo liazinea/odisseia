@@ -5,9 +5,12 @@ import { useRef } from "react";
 import { set } from "react-hook-form";
 import { useAuth } from "../../../context/AuthContext";
 import api from "../../../services/api";
+import ModalMensagem from "../../Modal/ModalMensagem";
 
 const CelulaTabelaRegistros = ({ aluno, livro, emprestimo }) => {
-  const [statusAtual, setStatusAtual] = useState("RESERVADO");
+  const [modalMensagemAberto, setModalMensagemAberto] = useState(false);
+  const [message, setMessage] = useState('');
+  const [statusAtual, setStatusAtual] = useState();
   const [dropdownAberto, setDropdownAberto] = useState(false);
   const [open, setOpen] = useState(false);
   const { token } = useAuth()
@@ -21,6 +24,9 @@ const CelulaTabelaRegistros = ({ aluno, livro, emprestimo }) => {
 
   useEffect(() => {
     switch (emprestimo.emp_status) {
+      case 0: 
+        setStatusAtual('CANCELADO')
+        break
       case 1:
         setStatusAtual('RESERVADO')
         break
@@ -36,7 +42,7 @@ const CelulaTabelaRegistros = ({ aluno, livro, emprestimo }) => {
     }
   }, [])
 
-  const opcoesStatus = ["RESERVADO", "EMPRESTADO", "DEVOLUÇÃO", "CANCELAR"];
+  const opcoesStatus = ["RESERVADO", "EMPRESTADO", "DEVOLVIDO", "CANCELADO"];
 
   const alternarDropdown = () => setDropdownAberto(!dropdownAberto);
   const selecionarStatus = (novoStatus) => {
@@ -66,15 +72,14 @@ const CelulaTabelaRegistros = ({ aluno, livro, emprestimo }) => {
         }
       );
 
-
-      if (!resposta.ok) {
-        throw new Error("Erro ao salvar os dados");
-      }
-
-      alert("Alterações salvas com sucesso!");
+      // alert("Alterações salvas com sucesso!");
+      setMessage("Alterações salvas com sucesso!");
+      setModalMensagemAberto(true)
     } catch (erro) {
       console.error("Erro ao salvar:", erro);
-      alert("Falha ao salvar alterações.");
+      // alert("Falha ao salvar alterações.");
+      setMessage("Falha ao salvar alterações.");
+      setModalMensagemAberto(true)
     }
   };
 
@@ -92,45 +97,45 @@ const CelulaTabelaRegistros = ({ aluno, livro, emprestimo }) => {
           <p className={styles.infos}>{emprestimo.emp_id}</p>
           <p className={styles.infos}>{livro.liv_nome}</p>
           <p className={styles.infos}>{livro.liv_isbn}</p>
-          <p className={`${styles.infos} ${styles.status}`}>{emprestimo.emp_status}</p>
+          <p className={`${styles.infos} ${styles.status}`}>{statusAtual}</p>
         </div>
       </div>
       <div className={`${styles.conteudo} ${open ? styles.active : ""}`}>
         <section className={styles.infoBloco}>
           <h2 className={styles.infosTitulo}>Informações do Aluno:</h2>
           <div className={styles.linha}>
-            <p className={styles.infosTexto}>
+            <div className={styles.infosTexto}>
               <strong>Nome do Aluno:</strong>
               <br />
-              {aluno.usu_nome}
-            </p>
-            <p className={styles.infosTexto}>
+              <p>{aluno.usu_nome}</p>
+            </div>
+            <div className={styles.infosTexto}>
               <strong>RA:</strong>
               <br />
-              {aluno.usu_ra}
-            </p>
-            <p className={styles.infosTexto}>
+              <p>{aluno.usu_ra}</p>
+            </div>
+            {/* <div className={styles.infosTexto}>
               <strong>Série/Ano:</strong>
               <br />
-              {aluno.serie}
-            </p>
-            <p className={styles.infosTexto}>
+              <p>{aluno.serie}</p>
+            </div> */}
+            <div className={styles.infosTexto}>
               <strong>ID do Empréstimo:</strong>
               <br />
-              {emprestimo.emp_id}
-            </p>
+              <p>{emprestimo.emp_id}</p>
+            </div>
           </div>
         </section>
 
         <section className={styles.infoBloco}>
           <h2 className={styles.infosTitulo}>Informações do Livro:</h2>
           <div className={styles.linha}>
-            <p className={styles.infosTexto}>
+            <div className={styles.infosTexto}>
               <strong>Nome do Livro:</strong>
               <br />
-              {livro.liv_nome}
-            </p>
-            <p className={styles.infosTexto}>
+              <p>{livro.liv_nome}</p>
+            </div>
+            <div className={styles.infosTexto}>
               <strong>Nome do Autor:</strong>
               <br />
               {livro.autores && (
@@ -143,40 +148,40 @@ const CelulaTabelaRegistros = ({ aluno, livro, emprestimo }) => {
                 )
               )}
 
-            </p>
-            <p className={styles.infosTexto}>
+            </div>
+            <div className={styles.infosTexto}>
               <strong>Número de Registro:</strong>
               <br />
-              {livro.liv_numRegistro}
-            </p>
+              <p>{livro.liv_numRegistro}</p>
+            </div>
           </div>
           <div className={styles.linha}>
-            <p className={styles.infosTexto}>
+            <div className={styles.infosTexto}>
               <strong>Código do Sistema:</strong>
               <br />
-              {livro.liv_id}
-            </p>
-            <p className={styles.infosTexto}>
+              <p>{livro.liv_id}</p>
+            </div>
+            <div className={styles.infosTexto}>
               <strong>Classificação na Estante:</strong>
               <br />
-              {livro.classIndicativa}
-            </p>
+              <p>{livro.liv_classIndicativa}</p>
+            </div>
           </div>
         </section>
 
         <section className={styles.infoBloco}>
           <h2 className={styles.infosTitulo}>Informações do Empréstimo:</h2>
           <div className={styles.linha}>
-            <p className={styles.infosTexto}>
+            <div className={styles.infosTexto}>
               <strong>Data da Reserva:</strong>
               <br />
-              {emprestimo.created_at}
-            </p>
-            <p className={styles.infosTexto}>
+              <p>{formatarData(emprestimo.created_at)}</p>
+            </div>
+            <div className={styles.infosTexto}>
               <strong>Data Limite de Retirada:</strong>
               <br />
-              {emprestimo.emp_dataFim}
-            </p>
+              <p>{formatarData(emprestimo.emp_dataFim)}</p>
+            </div>
           </div>
         </section>
 
@@ -185,7 +190,7 @@ const CelulaTabelaRegistros = ({ aluno, livro, emprestimo }) => {
           <div className={styles.dropdownContainer}>
             <button
               onClick={alternarDropdown}
-              className={styles.dropdownToggle}
+              className={`${styles.dropdownToggle} ${dropdownAberto ? null : styles.borderDropdown}`}
             >
               {statusAtual}
             </button>
@@ -217,6 +222,11 @@ const CelulaTabelaRegistros = ({ aluno, livro, emprestimo }) => {
           />
         </section>
       </div>
+      <ModalMensagem
+          mensagemModal={message}
+          modalAberto={modalMensagemAberto}
+          closeModal={() => setModalMensagemAberto(false)}
+        />
     </div>
   );
 };

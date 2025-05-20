@@ -3,7 +3,7 @@ import styles from "./index.module.scss";
 import CapaLivro from "../../Livro/CapaLivro";
 import Sinopse from "../../Livro/Sinopse";
 
-const CardLivrosMaisAcessados = ({ livro }) => {
+const CardLivrosMaisEmprestados = ({ livro }) => {
   return (
     <div className={styles.card}>
       <h1 className={styles.titulo}>{livro?.nome || "Título não disponível"}</h1>
@@ -20,4 +20,4 @@ const CardLivrosMaisAcessados = ({ livro }) => {
   );
 };
 
-export default CardLivrosMaisAcessados;
+export default CardLivrosMaisEmprestados;
