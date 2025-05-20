@@ -2,9 +2,14 @@ import styles from './index.module.scss';
 import React from 'react';
 import { useAuth } from '../../../context/AuthContext';
 import api from '../../../services/api';
+import { useState } from 'react';
+import ModalMensagem from '../../Modal/ModalMensagem';
 
 const BotaoReserva = ({ texto, idLivro }) => {
   const { token, user } = useAuth();
+
+  const [modalMensagemAberto, setModalMensagemAberto] = useState(false);
+    const [message, setMessage] = useState(null);
 
   const handleSubmit = async () => {
     try {
@@ -20,10 +25,13 @@ const BotaoReserva = ({ texto, idLivro }) => {
           },
         }
       );
-
+      setMessage("Reserva cadastrada com sucesso!");
+      setModalMensagemAberto(true);
       console.log('Empréstimo criado com sucesso:', response.data);
       // Aqui você pode exibir um toast ou feedback para o usuário
     } catch (error) {
+      setMessage(response.data.message);
+      setModalMensagemAberto(true);
       console.error('Erro ao fazer empréstimo do livro:', error);
     }
   };
@@ -33,6 +41,11 @@ const BotaoReserva = ({ texto, idLivro }) => {
       <button onClick={handleSubmit} type="button" className={styles.btn}>
         {texto}
       </button>
+      <ModalMensagem
+        mensagemModal={message}
+        modalAberto={modalMensagemAberto}
+        closeModal={() => setModalMensagemAberto(false)}
+      />
     </div>
   );
 };
