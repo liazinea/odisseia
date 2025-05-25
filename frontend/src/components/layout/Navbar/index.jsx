@@ -49,6 +49,9 @@ const Navbar = () => {
       <li>
         <Link to="/em-breve">Em breve</Link>
       </li>
+      <li>
+        <Link to="/perfil">Meu perfil</Link>
+      </li>
     </ul>
   );
 

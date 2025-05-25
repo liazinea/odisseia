@@ -17,6 +17,7 @@ import CadastroLivro from "../pages/CadastroLivro";
 import OpcoesLivro from "../pages/OpcoesLivro";
 import RegistroAtividade from "../pages/RegistroAtividade";
 import Autores from "../pages/Autores";
+import PerfilUsuario from "../pages/PerfilUsuario";
 
 export const Paths = () => {
     return (
@@ -40,6 +41,7 @@ export const Paths = () => {
                         <Route path={'/autores'} element={<Autores/>}/>
                         <Route path={'/usuarios'} element={<Usuarios/>}/>
                         <Route path={'/opcoes-livro'} element={<OpcoesLivro/>}/>
+                        <Route path={'/perfil'} element={<PerfilUsuario/>}/>
                     </Route>
                     <Route path={'*'} element={<NotFound />} />
                 </Routes>

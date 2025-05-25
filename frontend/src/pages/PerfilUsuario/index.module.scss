@@ -1,0 +1,51 @@
+@use "../../styles/cores/cores" as color;
+
+.container-geral {
+  display: flex;
+  justify-content: space-around;
+  background-color: color.$azul-escuro;
+  color: color.$laranja;
+  padding-bottom: 5vh;
+
+  .container-informacoes {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    .titulo-container {
+      width: 90%;
+
+      .titulo {
+        font-size: 2.5rem;
+      }
+    }
+
+    .container-inputs {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      width: 90%;
+
+      .inputs {
+        label{
+          font-size: 1.2rem;
+        }
+      }
+    }
+
+    .container-botao {
+      width: 90%;
+      display: flex;
+      justify-content: end;
+    }
+  }
+
+  .container-historico {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+}
