@@ -8,12 +8,19 @@ const Input = ({
   disabled,
   value,
   onChange,
+  keepStyleWhenDisabled = false, // nova prop
   ...props
 }) => {
+  // Adiciona uma classe extra se o input estiver desabilitado e for para manter o estilo
+  const inputClass = [
+    styles.input,
+    disabled && keepStyleWhenDisabled ? styles.keepStyleWhenDisabled : ""
+  ].join(" ");
+
   return (
     <input
       type={type}
-      className={styles.input}
+      className={inputClass}
       name={nomeCampo}
       defaultValue={defaultValue}
       id={nomeCampo}

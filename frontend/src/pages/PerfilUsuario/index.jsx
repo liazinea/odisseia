@@ -80,27 +80,27 @@ const PerfilUsuario = () => {
           <div className={styles["container-inputs"]}>
             <div className={styles["inputs"]}>
               <label>Nome:</label>
-              <Input value={"Fabinho doidão"} disabled={true} />
+              <Input value={"Fabinho doidão"} disabled={true} keepStyleWhenDisabled={true}/>
             </div>
             <div className={styles["inputs"]}>
               <label>Data de nascimento:</label>
-              <Input type={"date"} value={"2025-05-02"} disabled={true} />
+              <Input type={"date"} value={"2025-05-02"} disabled={true} keepStyleWhenDisabled={true}/>
             </div>
             <div className={styles["inputs"]}>
               <label>RA:</label>
-              <Input value={"43785"} disabled={true} />
+              <Input value={"43785"} disabled={true} keepStyleWhenDisabled={true}/>
             </div>
             <div className={styles["inputs"]}>
               <label>Série:</label>
-              <Input value={"2° Ano A"} disabled={true} />
+              <Input value={"2° Ano A"} disabled={true} keepStyleWhenDisabled={true}/>
             </div>
             <div className={styles["inputs"]}>
               <label>E-mail:</label>
-              <Input value={"email@example.com"} disabled={true} />
+              <Input value={"email@example.com"} disabled={true} keepStyleWhenDisabled={true}/>
             </div>
             <div className={styles["inputs"]}>
               <label>Senha:</label>
-              <Input value={"**************"} disabled={true} />
+              <Input value={"**************"} disabled={true} keepStyleWhenDisabled={true} />
             </div>
           </div>
 
