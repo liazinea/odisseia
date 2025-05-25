@@ -5,14 +5,23 @@ import Button from "../../components/Botao/Botao";
 import Input from "../../components/Inputs/Input";
 import useGeneros from "../../hooks/useGeneros";
 import BarraPesquisa from "../../components/layout/HeaderHome/BarraPesquisa";
+import { IoSearch } from "react-icons/io5";
 import ListaGeneros from "../../components/layout/ListaGeneros";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../config/api";
 import ModalMensagem from "../../components/Modal/ModalMensagem";
+import {
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
 
 const Generos = () => {
+  const [globalFilter, setGlobalFilter] = useState("");
   const { token } = useAuth();
   const { userType } = useAuth();
   const navigate = useNavigate();
@@ -40,9 +49,8 @@ const Generos = () => {
 
   const handleInputChange = (value) => {
     setInputValue(value);
+    setGlobalFilter(value.target.value);
   };
-
-
 
   const [generos, setGeneros] = useState([]);
   const { buscaGeneros } = useGeneros();
@@ -77,37 +85,76 @@ const Generos = () => {
     carregarGeneros();
   }, [registerMessage]);
 
-const onSubmit = async (data) => {
-  try {
-    const response = await api.post("/generos", data, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    setRegisterMessage(response.data.message);
-    setMessage(response.data.message)
-    setModalMensagemAberto(true);
+  const onSubmit = async (data) => {
+    try {
+      const response = await api.post("/generos", data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setRegisterMessage(response.data.message);
+      setMessage(response.data.message);
+      setModalMensagemAberto(true);
 
-    const dados = await buscaGeneros();
-    setGeneros(dados);
-  } catch (error) {
-    console.error(
-      "Erro:",
-      error.response?.data || error.message
-    );
-    setRegisterMessage(error.response?.data?.message || "Erro ao cadastrar gênero.");
-  }
-};
+      const dados = await buscaGeneros();
+      setGeneros(dados);
+    } catch (error) {
+      console.error("Erro:", error.response?.data || error.message);
+      setRegisterMessage(
+        error.response?.data?.message || "Erro ao cadastrar gênero."
+      );
+    }
+  };
+
+  const columns = [
+    {
+      accessorKey: "nome",
+      id: "generos",
+      header: "Gêneros",
+      cell: (props) => (
+        <p className={styles.status}>{props.row.original.nome}</p>
+      ),
+    },
+    {
+      accessorKey: "opcoes",
+      id: "opcoes",
+      header: "Opções",
+      cell: (props) => (
+        <div>
+          <p className={styles.status}>editar</p>
+          <p className={styles.status}>excluir</p>
+        </div>
+      ),
+    },
+  ];
+
+  const table = useReactTable({
+    data: generos,
+    columns,
+    state: {
+      globalFilter,
+    },
+    onGlobalFilterChange: setGlobalFilter,
+    getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+  });
+  
   return (
     <>
       <HeaderPagina titulo="Gêneros de Livros" />
-      <div className={styles["barra-pesquisa"]}>
-        <BarraPesquisa
-          placeholder="Pesquise por gênero"
-          onChange={handleInputChange}
-          buscaGeneros={buscaGeneros}
-          setGeneros={setGeneros}
-        />
+      <div className={styles.divPesquisa}>
+        <div className={styles.pesquisa}>
+          <input
+            className={styles.pesquisaInput}
+            type="text"
+            onChange={(e) => setGlobalFilter(e.target.value)}
+            placeholder="Pesquise o gênero que deseja"
+          />
+          <div className={styles.icon}>
+            <IoSearch />
+          </div>
+        </div>
       </div>
       <div className={styles["container-geral"]}>
         <div className={styles["container-exibir"]}>
@@ -115,15 +162,27 @@ const onSubmit = async (data) => {
             <h2>Gêneros cadastrados</h2>
           </div>
           <div className={styles["tabela"]}>
-            <div className={styles.head}>
-              <div className={styles.nome}>Nome</div>
-              <div className={styles.opcoes}>Opções</div>
-            </div>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <div className={styles.head} key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <p
+                      className={`${styles[header.column.columnDef.id]}`}
+                      key={header.id}
+                    >
+                      {header.column.columnDef.header}
+                    </p>
+                  ))}
+                </div>
+              ))}
             <div className={styles.conteudo}>
-              {generos.map((genero) => (
-                <div className={styles["linha"]} key={genero.id}>
+              {table.getRowModel().rows.map((row) => (
+                <div
+                  className={styles["linha"]}
+                  key={row.original.id}
+                  onClick={() => console.log(row.original)}
+                >
                   <ListaGeneros
-                    genero={genero}
+                    genero={row.original}
                     buscaGenero={buscaGenero}
                     setMessage={setMessage}
                     buscaGeneros={buscaGeneros}
@@ -135,6 +194,7 @@ const onSubmit = async (data) => {
             </div>
           </div>
         </div>
+
         <form
           onSubmit={handleSubmit(onSubmit)}
           className={styles["container-cadastro"]}
@@ -152,7 +212,11 @@ const onSubmit = async (data) => {
                 required: "O nome do gênero é obrigatório",
               })}
             />
-            {<p className={styles["erro"]}>{errors.gen_nome && errors.gen_nome.message}</p>}
+            {
+              <p className={styles["erro"]}>
+                {errors.gen_nome && errors.gen_nome.message}
+              </p>
+            }
           </div>
           <div className={styles["botao"]}>
             <Button

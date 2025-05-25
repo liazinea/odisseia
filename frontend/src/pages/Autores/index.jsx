@@ -6,13 +6,22 @@ import Input from "../../components/Inputs/Input";
 import useAutores from "../../hooks/useAutores";
 import BarraPesquisa from "../../components/layout/HeaderHome/BarraPesquisa";
 import ListaAutores from "../../components/layout/ListaAutores";
+import { IoSearch } from "react-icons/io5";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../config/api";
 import ModalMensagem from "../../components/Modal/ModalMensagem";
+import {
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
 
 const Autores = () => {
+  const [globalFilter, setGlobalFilter] = useState("");
   const { token } = useAuth();
   const { userType } = useAuth();
   const navigate = useNavigate();
@@ -67,29 +76,68 @@ const Autores = () => {
         },
       });
       setRegisterMessage(response.data.message);
-      setMessage(response.data.message)
+      setMessage(response.data.message);
       setModalMensagemAberto(true);
 
       const dados = await buscaAutores();
       setAutores(dados);
     } catch (error) {
-      console.error(
-        "Erro:",
-        error.response?.data || error.message
+      console.error("Erro:", error.response?.data || error.message);
+      setRegisterMessage(
+        error.response?.data?.message || "Erro ao cadastrar autor."
       );
-      setRegisterMessage(error.response?.data?.message || "Erro ao cadastrar autor.");
     }
   };
+
+  const columns = [
+    {
+      accessorKey: "nome",
+      id: "nome",
+      header: "Autores",
+      cell: (props) => (
+        <p className={styles.status}>{props.row.original.nome}</p>
+      ),
+    },
+    {
+      accessorKey: "opcoes",
+      id: "opcoes",
+      header: "Opções",
+      cell: (props) => (
+        <div>
+          <p className={styles.status}>editar</p>
+          <p className={styles.status}>excluir</p>
+        </div>
+      ),
+    },
+  ];
+
+  const table = useReactTable({
+    data: autores,
+    columns,
+    state: {
+      globalFilter,
+    },
+    onGlobalFilterChange: setGlobalFilter,
+    getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+  });
+
   return (
     <>
       <HeaderPagina titulo="Autores" />
-      <div className={styles["barra-pesquisa"]}>
-        <BarraPesquisa
-          placeholder="Pesquise por autor"
-          onChange={handleInputChange}
-          buscaAutores={buscaAutores}
-          setAutores={setAutores}
-        />
+      <div className={styles.divPesquisa}>
+        <div className={styles.pesquisa}>
+          <input
+            className={styles.pesquisaInput}
+            type="text"
+            onChange={(e) => setGlobalFilter(e.target.value)}
+            placeholder="Pesquise o gênero que deseja"
+          />
+          <div className={styles.icon}>
+            <IoSearch />
+          </div>
+        </div>
       </div>
       <div className={styles["container-geral"]}>
         <div className={styles["container-exibir"]}>
@@ -97,15 +145,27 @@ const Autores = () => {
             <h2>Autores cadastrados</h2>
           </div>
           <div className={styles["tabela"]}>
-            <div className={styles.head}>
-              <div className={styles.nome}>Nome</div>
-              <div className={styles.opcoes}>Opções</div>
-            </div>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <div className={styles.head} key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <p
+                    className={`${styles[header.column.columnDef.id]}`}
+                    key={header.id}
+                  >
+                    {header.column.columnDef.header}
+                  </p>
+                ))}
+              </div>
+            ))}
             <div className={styles.conteudo}>
-              {autores.map((autores) => (
-                <div className={styles["linha"]} key={autores.id}>
+              {table.getRowModel().rows.map((row) => (
+                <div
+                  className={styles["linha"]}
+                  key={row.original.id}
+                  onClick={() => console.log(row.original)}
+                >
                   <ListaAutores
-                    autor={autores}
+                    autor={row.original}
                     buscaAutor={buscaAutor}
                     setMessage={setMessage}
                     buscaAutores={buscaAutores}
@@ -134,7 +194,11 @@ const Autores = () => {
                 required: "O nome do autor é obrigatório",
               })}
             />
-            {<p className={styles["erro"]}>{errors.aut_nome && errors.aut_nome.message}</p>}
+            {
+              <p className={styles["erro"]}>
+                {errors.aut_nome && errors.aut_nome.message}
+              </p>
+            }
           </div>
           <div className={styles["botao"]}>
             <Button
