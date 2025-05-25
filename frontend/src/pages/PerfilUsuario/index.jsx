@@ -7,6 +7,7 @@ import { useAuth } from "../../context/AuthContext";
 import Input from "../../components/Inputs/Input";
 import Button from "../../components/Botao/Botao";
 import ModalAlterarSenha from "../../components/Modal/ModalAlterarSenha";
+import ModalMensagem from "../../components/Modal/ModalMensagem";
 import { useForm } from "react-hook-form";
 
 const PerfilUsuario = () => {
@@ -14,9 +15,13 @@ const PerfilUsuario = () => {
   const { token, userType } = useAuth();
   const { logout } = useAuth();
 
-  // Estado para controlar o modal
+  // Estado para controlar o modal de senha
   const [modalSenhaAberto, setModalSenhaAberto] = useState(false);
   const [passwordMessage, setPasswordMessage] = useState(null);
+
+  // Estado para o modal de mensagem
+  const [modalMensagemAberto, setModalMensagemAberto] = useState(false);
+  const [mensagemModal, setMensagemModal] = useState("");
 
   // react-hook-form para o modal
   const {
@@ -33,36 +38,41 @@ const PerfilUsuario = () => {
     }
   }, [token, userType, navigate]);
 
-  // Função para abrir o modal
+  // Função para abrir o modal de senha
   const abrirModalSenha = () => {
     setPasswordMessage(null);
     setModalSenhaAberto(true);
     reset();
   };
 
-  // Função para fechar o modal
+  // Função para fechar o modal de senha
   const fecharModalSenha = () => {
     setModalSenhaAberto(false);
     setPasswordMessage(null);
     reset();
   };
 
-  // Função para submit do modal
+  // Função para fechar o modal de mensagem
+  const fecharModalMensagem = () => {
+    setModalMensagemAberto(false);
+    setMensagemModal("");
+  };
+
+  // Função para submit do modal de senha
   const onSubmitAlterarSenha = async (data) => {
-    // Aqui você faz a chamada para a API de alteração de senha
-    // Exemplo fictício:
+    // Exibe os valores dos inputs no console
+    console.log("Valores do modal alterar senha:", data);
+
     if (data.novaSenha !== data.confirmarNovaSenha) {
       setPasswordMessage("As senhas não coincidem.");
       return;
     }
-    // Capture e exiba os valores dos inputs
-    console.log("Valores do formulário:", data);
     try {
       // await api.post("/usuario/alterar-senha", data);
-      setPasswordMessage("Senha alterada com sucesso!");
-      setTimeout(() => {
-        fecharModalSenha();
-      }, 1500);
+      setPasswordMessage(null);
+      fecharModalSenha();
+      setMensagemModal("Senha alterada com sucesso!");
+      setModalMensagemAberto(true);
     } catch (error) {
       setPasswordMessage("Erro ao alterar senha.");
     }
@@ -119,6 +129,12 @@ const PerfilUsuario = () => {
         register={register}
         errors={errors}
         passwordMessage={passwordMessage}
+      />
+
+      <ModalMensagem
+        mensagemModal={mensagemModal}
+        closeModal={fecharModalMensagem}
+        modalAberto={modalMensagemAberto}
       />
     </>
   );
