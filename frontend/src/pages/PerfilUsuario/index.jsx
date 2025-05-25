@@ -1,19 +1,40 @@
-import React, { useState } from "react";
 import HeaderPagina from "../../components/layout/HeaderPagina";
 import styles from "./index.module.scss";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { useEffect, useState } from "react";
+import useEmprestimos from "../../hooks/useEmprestimos";
+import {useNavigate} from 'react-router-dom';
 import Input from "../../components/Inputs/Input";
 import Button from "../../components/Botao/Botao";
 import ModalAlterarSenha from "../../components/Modal/ModalAlterarSenha";
 import ModalMensagem from "../../components/Modal/ModalMensagem";
 import { useForm } from "react-hook-form";
+import ListaEmprestimos from "../../components/layout/ListaEmprestimos";
+import {
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
 
 const PerfilUsuario = () => {
+  const [message, setMessage] = useState(null);
+  const [globalFilter, setGlobalFilter] = useState("");
   const navigate = useNavigate();
   const { token, userType } = useAuth();
   const { logout } = useAuth();
+  const [emprestimos, setEmprestimos] = useState([])
+  const {buscaEmprestimos} = useEmprestimos()
+
+   useEffect(() => {
+    const carregarEmprestimos = async () => {
+      const dados = await buscaEmprestimos();
+      setEmprestimos(dados);
+    };
+    carregarEmprestimos();
+    console.log(emprestimos)
+  }, []);
 
   // Estado para controlar o modal de senha
   const [modalSenhaAberto, setModalSenhaAberto] = useState(false);
@@ -78,6 +99,48 @@ const PerfilUsuario = () => {
     }
   };
 
+  const columns = [
+      {
+        accessorKey: "titulo",
+        id: "titulo",
+        header: "Título",
+        cell: (props) => (
+          <p className={styles.status}>{props.row.original.nome}</p>
+        ),
+      },
+      {
+        accessorKey: "status",
+        id: "status",
+        header: "Status",
+        cell: (props) => (
+            <p className={styles.status}>{props.row.original.status}</p>
+        ),
+      },
+      {
+        accessorKey: "opcoes",
+        id: "opcoes",
+        header: "Opções",
+        cell: (props) => (
+          <div>
+            <p className={styles.status}>editar</p>
+            <p className={styles.status}>excluir</p>
+          </div>
+        ),
+      },
+    ];
+  
+    const table = useReactTable({
+      data: emprestimos,
+      columns,
+      state: {
+        globalFilter,
+      },
+      onGlobalFilterChange: setGlobalFilter,
+      getCoreRowModel: getCoreRowModel(),
+      getFilteredRowModel: getFilteredRowModel(),
+      getPaginationRowModel: getPaginationRowModel(),
+    });
+
   return (
     <>
       <HeaderPagina titulo="Perfil do aluno" />
@@ -90,35 +153,99 @@ const PerfilUsuario = () => {
           <div className={styles["container-inputs"]}>
             <div className={styles["inputs"]}>
               <label>Nome:</label>
-              <Input value={"Fabinho doidão"} disabled={true} keepStyleWhenDisabled={true}/>
+              <Input
+                value={"Fabinho doidão"}
+                disabled={true}
+                keepStyleWhenDisabled={true}
+              />
             </div>
             <div className={styles["inputs"]}>
               <label>Data de nascimento:</label>
-              <Input type={"date"} value={"2025-05-02"} disabled={true} keepStyleWhenDisabled={true}/>
+              <Input
+                type={"date"}
+                value={"2025-05-02"}
+                disabled={true}
+                keepStyleWhenDisabled={true}
+              />
             </div>
             <div className={styles["inputs"]}>
               <label>RA:</label>
-              <Input value={"43785"} disabled={true} keepStyleWhenDisabled={true}/>
+              <Input
+                value={"43785"}
+                disabled={true}
+                keepStyleWhenDisabled={true}
+              />
             </div>
             <div className={styles["inputs"]}>
               <label>Série:</label>
-              <Input value={"2° Ano A"} disabled={true} keepStyleWhenDisabled={true}/>
+              <Input
+                value={"2° Ano A"}
+                disabled={true}
+                keepStyleWhenDisabled={true}
+              />
             </div>
             <div className={styles["inputs"]}>
               <label>E-mail:</label>
-              <Input value={"email@example.com"} disabled={true} keepStyleWhenDisabled={true}/>
+              <Input
+                value={"email@example.com"}
+                disabled={true}
+                keepStyleWhenDisabled={true}
+              />
             </div>
             <div className={styles["inputs"]}>
               <label>Senha:</label>
-              <Input value={"**************"} disabled={true} keepStyleWhenDisabled={true} />
+              <Input
+                value={"**************"}
+                disabled={true}
+                keepStyleWhenDisabled={true}
+              />
             </div>
           </div>
 
           <div className={styles["container-botao"]}>
-            <Button nomeBotao="EditarSenha" texto="Alterar a senha" onClick={abrirModalSenha} />
+            <Button
+              nomeBotao="EditarSenha"
+              texto="Alterar a senha"
+              onClick={abrirModalSenha}
+            />
           </div>
         </div>
-        <div className={styles["container-historico"]}>Exibir histórico</div>
+        <div className={styles["container-historico"]}>
+          <div className={styles["titulo-historico"]}>
+            <h2 className={styles.tituloFonte}>Histórico</h2>
+          </div>
+          <div className={styles["tabela"]}>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <div className={styles.head} key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <p
+                    className={`${styles[header.column.columnDef.id]}`}
+                    key={header.id}
+                  >
+                    {header.column.columnDef.header}
+                  </p>
+                ))}
+              </div>
+            ))}
+            <div className={styles.conteudo}>
+              {table.getRowModel().rows.map((row) => (
+                <div
+                  className={styles["linha"]}
+                  key={row.original.id}
+                  onClick={() => console.log(row.original)}
+                >
+                  <ListaEmprestimos
+                    emprestimo={row.original}
+                    buscaEmprestimos={buscaEmprestimos}
+                    setMessage={setMessage}
+                    setEmprestimos={setEmprestimos}
+                    setModalMensagemAberto={setModalMensagemAberto}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
 
       <ModalAlterarSenha
