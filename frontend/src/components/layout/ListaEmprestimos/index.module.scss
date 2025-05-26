@@ -1,0 +1,25 @@
+@use "../../../styles/cores/cores" as color;
+
+.row {
+  font-weight: 600;
+  width: 100%;
+  display: flex;
+  background-color: color.$laranja-claro;
+  border-radius: 15px;
+  padding: 2vh 5vh;
+  justify-content: space-around;
+  align-items: center;
+  color: color.$azul-escuro;
+
+  .nome {
+    width: 40%;
+  }
+  .status {
+    width: 40%;
+    text-align: center;
+  }
+  .opcoes {
+    width: 20%;
+    text-align: center;
+  }
+}
