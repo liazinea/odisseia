@@ -1,7 +1,8 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import styles from "./index.module.scss";
 import Input from "../../Inputs/Input";
 import { IoClose } from "react-icons/io5";
+import ModalExcluir from "../ModalExcluir";
 
 const ModalInfoDetalhada = ({
   isOpen,
@@ -14,30 +15,47 @@ const ModalInfoDetalhada = ({
 }) => {
   if (!isOpen) return null;
 
-  let tituloPrazo = "Prazos";
-  let labelData = "Data:";
-  let labelPrazo = "Prazo:";
-  let labelBtn = "";
-  let btn = "";
+  
+  const [modalCancelarReserva, setCancelarReserva] = useState(false);
+  const closeDeleteModal = () => setCancelarReserva(false);
+  const [tituloPrazo, setTituloPrazo] = useState("Prazos");
+  const [labelData, setLabelData] = useState("Data:");
+  const [labelPrazo, setLabelPrazo] = useState("Prazo:");
+  const [labelBtn, setLabelBtn] = useState("");
+  const [btn, setBtn] = useState("");
+  const [tituloModal, setTituloModal] = useState('')
+  const [mensagemModal, setMensagemModal] = useState('')
+  const [confirmLabel, setConfirmLabel] = useState('')
+  const [cancelLabel, setCancelLabel] = useState('')
 
-  switch (emprestimo.emp_status) {
-    case 1:
-      labelData = "Data da Reserva:";
-      labelPrazo = "Prazo de Retirada:";
-      labelBtn = "Alterar Status da Reserva";
-      btn = "Cancelar Reserva";
-      break;
-    case 2:
-      labelData = "Data do Empréstimo:";
-      labelPrazo = "Prazo de Devolução:";
-      labelBtn = "Renovar Empréstimo";
-      btn = "Renovar Empréstimo";
-      break;
-    default:
-      labelData = "Data do Empréstimo:";
-      labelPrazo = "Data de Devolução:";
-      break;
-  }
+  useEffect(()=>{
+    switch (emprestimo.emp_status) {
+      case 1:
+        setLabelData("Data da Reserva:")
+        setLabelPrazo("Prazo de Retirada:")
+        setLabelBtn("Alterar Status da Reserva")
+        setBtn("Cancelar Reserva")
+        setTituloModal("Confirmar cancelamento")
+        setMensagemModal('Tem certeza que quer cancelar sua reserva de')
+        setConfirmLabel("Confirmar")
+        setCancelLabel("Cancelar")
+        break;
+      case 2:
+        setLabelData("Data do Empréstimo:")
+        setLabelPrazo("Prazo de Devolução:")
+        setLabelBtn("Renovar Empréstimo")
+        setBtn("Renovar Empréstimo")
+        setTituloModal("Confirmar renovação de empréstimo")
+        setMensagemModal('Tem certeza que deseja renovar o livro por mais uma semana?')
+        setConfirmLabel("Confirmar")
+        setCancelLabel("Cancelar")
+        break;
+      default:
+        setLabelData('Data do Empréstimo:')
+        setLabelPrazo('Data do Empréstimo:')
+        break;
+    }
+  }, [emprestimo.emp_status])
 
   const formatarData = (dataString) => {
     const data = new Date(dataString);
@@ -46,11 +64,10 @@ const ModalInfoDetalhada = ({
     const ano = data.getFullYear();
     return `${dia}/${mes}/${ano}`;
   };
-  
 
   return (
     <div className={styles.modalOverlay}>
-      <form onSubmit={handleSubmit} className={styles.modal}>
+      <div className={styles.modal}>
         <div className={styles.closeButton} onClick={onClose}>
           <h3 className={styles.titulo}>Informações detalhadas</h3>
           <div className={styles.icon}>
@@ -118,12 +135,25 @@ const ModalInfoDetalhada = ({
         </div>
         <div>
           <div className={styles.botoes}>
-            <button type="submit" className={`${styles.saveButton} ${btn ? null : styles.none}`}>
+            <button
+              className={`${styles.saveButton} ${btn ? null : styles.none}`}
+              onClick={()=>setCancelarReserva(true)}
+            >
               {btn}
             </button>
           </div>
         </div>
-      </form>
+      </div>
+      <ModalExcluir
+        isOpen={modalCancelarReserva}
+        onClose={closeDeleteModal}
+        onConfirm={null}
+        titulo={tituloModal}
+        mensagem={mensagemModal}
+        nome={emprestimo.emp_status == 2 ? null : emprestimo.livro.liv_nome}
+        confirmLabel={confirmLabel}
+        cancelLabel={cancelLabel}
+      />
     </div>
   );
 };
