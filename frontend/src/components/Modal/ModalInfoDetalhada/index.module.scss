@@ -10,39 +10,53 @@
   gap: 20px;
   justify-content: center;
   font-weight: lighter;
-  .closeButton{
+  .closeButton {
     background-color: color.$marrom-laranja;
-    cursor: pointer;
-    text-align: right;
-    font-size: 20px;
+    display: flex;
+
+    .icon {
+      width: 5%;
+      cursor: pointer;
+      text-align: right;
+      font-size: 20px;
+    }
+    .titulo {
+      width: 95%;
+      font-size: 32px;
+      font-weight: bold;
+    }
   }
 
-  .titulo {
-    font-size: 32px;
-    font-weight: bold;
-   
-  }
-   .Alinhadupla{
+  .Alinhadupla {
     display: flex;
     justify-content: space-between;
-.dupla{
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
 
- 
-      .nomeLivro{
-        font-weight: 900;
-
-      }
+    .dupla {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
+    .nomeLivro {
+      font-weight: 900;
+
+    }
+    .generos{
+      width: 100%;
+      display: flex;
+      gap: 10px;
+    }
+  }
 
   .botoes {
     display: flex;
     justify-content: left;
     gap: 25px;
+
+    .none{
+      display: none;
+    }
 
     .closeButton,
     .saveButton {
