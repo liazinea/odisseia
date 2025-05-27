@@ -30,10 +30,11 @@ class UsuarioService
         return $this->usuarioRepository->buscaTodos();
     }
 
-    public function buscaPorId(int $id):Usuario
-    {
-        return $this->usuarioRepository->buscaPorId($id);
-    }
+    public function buscaPorId(int $id): ?Usuario
+{
+    return $this->usuarioRepository->buscaPorId($id);
+}
+
 
     public function salvar(UsuarioDTO $usuarioDTO):Usuario
     {
