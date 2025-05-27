@@ -23,9 +23,9 @@ class Usuario extends Authenticatable
         'usu_status',
     ];
 
-    public function emprestimo():HasOne
+    public function emprestimo():HasMany
     {
-        return $this->hasOne(Emprestimo::class,'emp_id');
+        return $this->hasMany(Emprestimo::class,'emp_id');
     }
 
     protected $hidden = [

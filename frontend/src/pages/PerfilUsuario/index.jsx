@@ -17,23 +17,23 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import useUsuario from "../../hooks/useUsuario";
 
 const PerfilUsuario = () => {
   const [message, setMessage] = useState(null);
   const [globalFilter, setGlobalFilter] = useState("");
   const navigate = useNavigate();
-  const { token, userType } = useAuth();
+  const { token, userType, user } = useAuth();
   const { logout } = useAuth();
-  const [emprestimos, setEmprestimos] = useState([])
-  const {buscaEmprestimos} = useEmprestimos()
+  const [usuario, setUsuario] = useState([])
+  const {buscaUsuario} = useUsuario()
 
    useEffect(() => {
-    const carregarEmprestimos = async () => {
-      const dados = await buscaEmprestimos();
-      setEmprestimos(dados);
+    const carregarUsuario = async () => {
+      const dados = await buscaUsuario();
+      setUsuario(dados);
     };
-    carregarEmprestimos();
-    console.log(emprestimos)
+    carregarUsuario();
   }, []);
 
   // Estado para controlar o modal de senha
