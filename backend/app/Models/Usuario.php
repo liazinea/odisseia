@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -23,9 +24,9 @@ class Usuario extends Authenticatable
         'usu_status',
     ];
 
-    public function emprestimo():HasOne
+    public function emprestimo():HasMany
     {
-        return $this->hasOne(Emprestimo::class,'emp_id');
+        return $this->hasMany(Emprestimo::class,'emp_id');
     }
 
     protected $hidden = [

@@ -3,6 +3,8 @@ import styles from "./index.module.scss";
 import Input from "../../Inputs/Input";
 import { IoClose } from "react-icons/io5";
 import ModalExcluir from "../ModalExcluir";
+import api from "../../../services/api";
+import { useAuth } from "../../../context/AuthContext";
 
 const ModalInfoDetalhada = ({
   isOpen,
@@ -15,7 +17,7 @@ const ModalInfoDetalhada = ({
 }) => {
   if (!isOpen) return null;
 
-  
+
   const [modalCancelarReserva, setCancelarReserva] = useState(false);
   const closeDeleteModal = () => setCancelarReserva(false);
   const [tituloPrazo, setTituloPrazo] = useState("Prazos");
@@ -27,8 +29,9 @@ const ModalInfoDetalhada = ({
   const [mensagemModal, setMensagemModal] = useState('')
   const [confirmLabel, setConfirmLabel] = useState('')
   const [cancelLabel, setCancelLabel] = useState('')
+  const { token } = useAuth()
 
-  useEffect(()=>{
+  useEffect(() => {
     switch (emprestimo.emp_status) {
       case 1:
         setLabelData("Data da Reserva:")
@@ -46,7 +49,7 @@ const ModalInfoDetalhada = ({
         setLabelBtn("Renovar Empréstimo")
         setBtn("Renovar Empréstimo")
         setTituloModal("Confirmar renovação de empréstimo")
-        setMensagemModal('Tem certeza que deseja renovar o livro por mais uma semana?')
+        setMensagemModal('Tem certeza que deseja renovar o livro por mais um mês?')
         setConfirmLabel("Confirmar")
         setCancelLabel("Cancelar")
         break;
@@ -65,6 +68,7 @@ const ModalInfoDetalhada = ({
     return `${dia}/${mes}/${ano}`;
   };
 
+ 
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modal}>
@@ -137,7 +141,7 @@ const ModalInfoDetalhada = ({
           <div className={styles.botoes}>
             <button
               className={`${styles.saveButton} ${btn ? null : styles.none}`}
-              onClick={()=>setCancelarReserva(true)}
+              onClick={() => setCancelarReserva(true)}
             >
               {btn}
             </button>
@@ -147,12 +151,14 @@ const ModalInfoDetalhada = ({
       <ModalExcluir
         isOpen={modalCancelarReserva}
         onClose={closeDeleteModal}
-        onConfirm={null}
+        onConfirm={'oii'}
         titulo={tituloModal}
         mensagem={mensagemModal}
         nome={emprestimo.emp_status == 2 ? null : emprestimo.livro.liv_nome}
         confirmLabel={confirmLabel}
         cancelLabel={cancelLabel}
+        id={emprestimo.emp_id}
+        status={emprestimo.emp_status}
       />
     </div>
   );

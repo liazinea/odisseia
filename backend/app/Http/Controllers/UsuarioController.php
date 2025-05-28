@@ -36,7 +36,7 @@ class UsuarioController extends Controller
     {
         if ($usuario->usu_status == 1) {
             return response()->json([
-                'usuario' => new UsuarioResource($usuario),
+                'usuario' => $usuario->load('emprestimo.livro.autores','emprestimo.livro.generos','emprestimo.livro.editora'),
             ], 200);
         }
         return response()->json([
@@ -96,7 +96,7 @@ class UsuarioController extends Controller
                 $request->validated('usu_nome'),
                 $request->validated('usu_dataNasc'),
                 $request->validated('email'),
-                $usuario->password,
+                $request->input('password') ? $request->input('password') : $usuario->password,
                 $usuario->usu_nivel,
                 $request->validated('usu_ra'),
                 $usuario->usu_status

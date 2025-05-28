@@ -13,7 +13,7 @@ import ModalInfoDetalhada from "../../Modal/ModalInfoDetalhada";
 const ListaEmprestimos = ({
   emprestimo,
   setMessage,
-  buscaEmprestimos,
+
   setEmprestimos,
   setModalMensagemAberto,
 }) => {

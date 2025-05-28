@@ -2,8 +2,9 @@ import HeaderPagina from "../../components/layout/HeaderPagina";
 import styles from "./index.module.scss";
 import { useAuth } from "../../context/AuthContext";
 import { useEffect, useState } from "react";
-import useEmprestimos from "../../hooks/useEmprestimos";
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import bcrypt from 'bcryptjs'
+import useUsuario from "../../hooks/useUsuario";
 import Input from "../../components/Inputs/Input";
 import Button from "../../components/Botao/Botao";
 import ModalAlterarSenha from "../../components/Modal/ModalAlterarSenha";
@@ -17,24 +18,20 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import api from "../../services/api";
 
 const PerfilUsuario = () => {
   const [message, setMessage] = useState(null);
+  const [emprestimos, setEmprestimos] = useState([])
   const [globalFilter, setGlobalFilter] = useState("");
   const navigate = useNavigate();
-  const { token, userType } = useAuth();
+  const { token, userType, user } = useAuth();
   const { logout } = useAuth();
-  const [emprestimos, setEmprestimos] = useState([])
-  const {buscaEmprestimos} = useEmprestimos()
+  const [usuario, setUsuario] = useState([])
+  const { buscaUsuario } = useUsuario(user)
 
-   useEffect(() => {
-    const carregarEmprestimos = async () => {
-      const dados = await buscaEmprestimos();
-      setEmprestimos(dados);
-    };
-    carregarEmprestimos();
-    console.log(emprestimos)
-  }, []);
+
+
 
   // Estado para controlar o modal de senha
   const [modalSenhaAberto, setModalSenhaAberto] = useState(false);
@@ -59,6 +56,18 @@ const PerfilUsuario = () => {
     }
   }, [token, userType, navigate]);
 
+  useEffect(() => {
+    const carregaUsuario = async () => {
+      const dados = await buscaUsuario();
+
+      setUsuario(dados.data.usuario)
+      setEmprestimos(dados.data.usuario.emprestimo)
+    };
+    carregaUsuario();
+  }, [passwordMessage]);
+
+
+
   // Função para abrir o modal de senha
   const abrirModalSenha = () => {
     setPasswordMessage(null);
@@ -81,65 +90,92 @@ const PerfilUsuario = () => {
 
   // Função para submit do modal de senha
   const onSubmitAlterarSenha = async (data) => {
-    // Exibe os valores dos inputs no console
-    console.log("Valores do modal alterar senha:", data);
+    const senhaCorreta = await bcrypt.compare(data.senhaAtual, usuario.password)
 
-    if (data.novaSenha !== data.confirmarNovaSenha) {
-      setPasswordMessage("As senhas não coincidem.");
-      return;
+    if (!senhaCorreta) {
+      console.log('senha incorreta')
+    } else {
+      console.log("Valores do modal alterar senha:", data);
+
+      if (data.novaSenha !== data.confirmarNovaSenha) {
+        setPasswordMessage("As senhas não coincidem.");
+        return;
+      }
+      try {
+        let userAtt = usuario
+        userAtt.password = data.novaSenha
+
+        console.log(userAtt)
+        const response = await api.put(
+          `/usuarios/${usuario.usu_id}`,
+          {
+            usu_nome: userAtt.usu_nome,
+            usu_dataNasc :userAtt.usu_dataNasc,
+            email: userAtt.email,
+            usu_ra: userAtt.usu_ra,
+            password:data.novaSenha   
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setPasswordMessage(null);
+        fecharModalSenha();
+        setMensagemModal("Senha alterada com sucesso!");
+        setModalMensagemAberto(true);
+      } catch (error) {
+        setPasswordMessage("Erro ao alterar senha.");
+        console.error(error)
+      }
     }
-    try {
-      // await api.post("/usuario/alterar-senha", data);
-      setPasswordMessage(null);
-      fecharModalSenha();
-      setMensagemModal("Senha alterada com sucesso!");
-      setModalMensagemAberto(true);
-    } catch (error) {
-      setPasswordMessage("Erro ao alterar senha.");
-    }
+
   };
 
+  console.log(emprestimos)
+
   const columns = [
-      {
-        accessorKey: "titulo",
-        id: "titulo",
-        header: "Título",
-        cell: (props) => (
-          <p className={styles.status}>{props.row.original.nome}</p>
-        ),
-      },
-      {
-        accessorKey: "status",
-        id: "status",
-        header: "Status",
-        cell: (props) => (
-            <p className={styles.status}>{props.row.original.status}</p>
-        ),
-      },
-      {
-        accessorKey: "opcoes",
-        id: "opcoes",
-        header: "Opções",
-        cell: (props) => (
-          <div>
-            <p className={styles.status}>editar</p>
-            <p className={styles.status}>excluir</p>
-          </div>
-        ),
-      },
-    ];
-  
-    const table = useReactTable({
-      data: emprestimos,
-      columns,
-      state: {
-        globalFilter,
-      },
-      onGlobalFilterChange: setGlobalFilter,
-      getCoreRowModel: getCoreRowModel(),
-      getFilteredRowModel: getFilteredRowModel(),
-      getPaginationRowModel: getPaginationRowModel(),
-    });
+    {
+      accessorKey: "livro.liv_titulo",
+      id: "titulo",
+      header: "Título",
+      cell: (props) => (
+        <p className={styles.status}>{props.row.original.livro.liv_titulo}</p>
+      ),
+    },
+    {
+      accessorKey: "status",
+      id: "status",
+      header: "Status",
+      cell: (props) => (
+        <p className={styles.status}>{props.row.original.status}</p>
+      ),
+    },
+    {
+      accessorKey: "opcoes",
+      id: "opcoes",
+      header: "Opções",
+      cell: (props) => (
+        <div>
+          <p className={styles.status}>editar</p>
+          <p className={styles.status}>excluir</p>
+        </div>
+      ),
+    },
+  ];
+
+  const table = useReactTable({
+    data: emprestimos,
+    columns,
+    state: {
+      globalFilter,
+    },
+    onGlobalFilterChange: setGlobalFilter,
+    getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+  });
 
   return (
     <>
@@ -154,7 +190,7 @@ const PerfilUsuario = () => {
             <div className={styles["inputs"]}>
               <label>Nome:</label>
               <Input
-                value={"Fabinho doidão"}
+                value={usuario.usu_nome}
                 disabled={true}
                 keepStyleWhenDisabled={true}
               />
@@ -162,7 +198,7 @@ const PerfilUsuario = () => {
             <div className={styles["inputs"]}>
               <label>Data de nascimento:</label>
               <Input
-                type={"date"}
+                type={usuario.usu_dataNasc}
                 value={"2025-05-02"}
                 disabled={true}
                 keepStyleWhenDisabled={true}
@@ -171,7 +207,7 @@ const PerfilUsuario = () => {
             <div className={styles["inputs"]}>
               <label>RA:</label>
               <Input
-                value={"43785"}
+                value={usuario.usu_ra}
                 disabled={true}
                 keepStyleWhenDisabled={true}
               />
@@ -187,7 +223,7 @@ const PerfilUsuario = () => {
             <div className={styles["inputs"]}>
               <label>E-mail:</label>
               <Input
-                value={"email@example.com"}
+                value={usuario.email}
                 disabled={true}
                 keepStyleWhenDisabled={true}
               />
@@ -195,7 +231,7 @@ const PerfilUsuario = () => {
             <div className={styles["inputs"]}>
               <label>Senha:</label>
               <Input
-                value={"**************"}
+                value={'******'}
                 disabled={true}
                 keepStyleWhenDisabled={true}
               />
@@ -232,11 +268,9 @@ const PerfilUsuario = () => {
                 <div
                   className={styles["linha"]}
                   key={row.original.id}
-                  onClick={() => console.log(row.original)}
                 >
                   <ListaEmprestimos
                     emprestimo={row.original}
-                    buscaEmprestimos={buscaEmprestimos}
                     setMessage={setMessage}
                     setEmprestimos={setEmprestimos}
                     setModalMensagemAberto={setModalMensagemAberto}

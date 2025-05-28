@@ -19,6 +19,7 @@ class UsuarioResource extends JsonResource
             'usu_status' => $this->usu_status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'emprestimos' => EmprestimoResource::collection($this->whenLoaded('emprestimo')),
         ];
     }
 }

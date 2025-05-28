@@ -17,12 +17,20 @@ class UsuarioRepository implements UsuarioRepositoryInterface
         ->get();
     }
 
-    public function buscaPorId(int $id): Usuario
+    public function buscaPorId(int $id): ?Usuario
     {
-        return Usuario::where('usu_status', '=', 1)
-        ->where('usu_id', '=', $id)
+    return Usuario::where('usu_status', 1)
+        ->where('usu_id', $id)
+        ->with([
+            'emprestimo.livro.generos',
+            'emprestimo.livro.editora',
+            'emprestimo.livro.autores',
+            'emprestimo.aluno',
+        ])
         ->first();
-    }
+    }       
+
+
     public function buscaTodosComPesquisa(string $campo, string $valor):Collection
     {
         return Usuario::where($campo, 'like', "%".$valor."%")

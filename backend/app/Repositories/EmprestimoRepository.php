@@ -12,8 +12,8 @@ class EmprestimoRepository implements EmprestimoRepositoryInterface
     public function renovaEmprestimo(Emprestimo $emprestimo): bool
     {
         $emprestimo->emp_quantRenovacao++;
-        $novaDataFim = Carbon::parse($emprestimo->emp_data_fim)->addMonth();
-        $emprestimo->emp_data_fim = $novaDataFim;
+        $novaDataFim = Carbon::parse($emprestimo->emp_dataFim)->addMonth();
+        $emprestimo->emp_dataFim = $novaDataFim;
 
         return $emprestimo->save();
     }
