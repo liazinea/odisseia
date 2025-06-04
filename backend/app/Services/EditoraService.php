@@ -5,6 +5,7 @@ namespace App\Services;
 use App\DTOs\EditoraDTO;
 use App\Models\Editora;
 use App\Repositories\EditoraRepositoryInterface;
+use Illuminate\Support\Collection;
 
 class EditoraService
 {
@@ -21,13 +22,28 @@ class EditoraService
 
         return $this->editoraRepository->salvar($novaEditora);
     }
-    public function buscaPeloNome(string $nome):Editora | null
+    public function buscaPeloNome(string $nome): Editora | null
     {
         return $this->editoraRepository->buscaPeloNome($nome);
     }
 
-    public function salvar(EditoraDTO $editoraDTO):Editora
+    public function buscarTodos(): null|Collection
+    {
+        return $this->editoraRepository->buscarTodos();
+    }
+
+    public function salvar(EditoraDTO $editoraDTO): Editora
     {
         return $this->editoraRepository->salvar($editoraDTO);
+    }
+
+        public function deletar(Editora $editora):bool
+    {
+        return $this->editoraRepository->deletar($editora);
+    }
+
+    public function atualizar(Editora $editora, EditoraDTO $editoraDTO):bool
+    {
+        return $this->editoraRepository->atualizar($editora, $editoraDTO);
     }
 }
