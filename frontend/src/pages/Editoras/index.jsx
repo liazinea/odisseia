@@ -179,7 +179,6 @@ const Editoras = () => {
                 <div
                   className={styles["linha"]}
                   key={row.original.id}
-                  onClick={() => console.log(row.original)}
                 >
                   <ListaEditoras
                     editora={row.original}

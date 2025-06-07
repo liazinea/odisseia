@@ -5,7 +5,7 @@ import styles from "./index.module.scss";
 import Input from "../../Inputs/Input";
 import api from "../../../services/api";
 import { useAuth } from "../../../context/AuthContext";
-import { IoPencil, IoTrash } from "react-icons/io5";
+import { IoPencil, IoTrash, IoCheckmarkCircleSharp } from "react-icons/io5";
 import ModalConfirmarSenha from "../../Modal/ModalConfirmarSenha";
 import ModalExcluir from "../../Modal/ModalExcluir";
 
@@ -18,14 +18,18 @@ const ListaUsuarios = ({
 }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isActivateModalOpen, setIsActivateModalOpen] = useState(false);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [password, setPassword] = useState("");
   const [passwordMessage, setPasswordMessage] = useState(null);
   const { token } = useAuth();
 
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  // Estado local para armazenar os valores editados
   const [editedData, setEditedData] = useState({
     nome: usuario.usu_nome,
     email: usuario.email,
@@ -33,7 +37,6 @@ const ListaUsuarios = ({
     rg: usuario.usu_ra,
   });
 
-  // Atualiza os dados editados ao abrir o modal de edição
   const handleEditClick = () => {
     setEditedData({
       nome: usuario.usu_nome,
@@ -54,7 +57,7 @@ const ListaUsuarios = ({
 
   const closeDeleteModal = () => {
     setIsDeleteModalOpen(false);
-    setPasswordMessage('');
+    setPasswordMessage("");
   };
 
   const openPasswordModal = () => {
@@ -68,32 +71,42 @@ const ListaUsuarios = ({
     setPassword("");
   };
 
+  const openActivateModal = () => {
+    setIsActivateModalOpen(true);
+  };
+
+  const closeActivateModal = () => {
+    setIsActivateModalOpen(false);
+  };
+
   const handleConfirmDelete = async (data) => {
     const response = await api.get(`/check-senha?password=${data.password}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    if (response.data.status) {
-      const responseDelete = await api.patch(`/usuarios/${usuario.usu_id}`, {}, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
 
-      setMessage(responseDelete.data.message);
+    if (response.data.status) {
+      const responseDelete = await api.patch(
+        `/usuarios/${usuario.usu_id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
       setMessage("Usuário excluído com sucesso");
       setModalMensagemAberto(true);
-      // Atualiza a lista de usuários após exclusão
       const dados = await buscaUsuarios();
       setUsuarios(dados);
       closePasswordModal();
     } else {
-      setPasswordMessage('Senha incorreta');
+      setPasswordMessage("Senha incorreta");
     }
   };
 
-  // Função para capturar as alterações nos inputs
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setEditedData((prevData) => ({
@@ -119,29 +132,63 @@ const ListaUsuarios = ({
           },
         }
       );
-      // Atualiza a lista de usuários após edição
       const dados = await buscaUsuarios();
       setUsuarios(dados);
       closeEditModal();
       setMessage("Usuário atualizado com sucesso");
       setModalMensagemAberto(true);
     } catch (error) {
-      console.error('Erro ao atualizar usuário:', error.response?.data || error.message);
+      console.error(
+        "Erro ao atualizar usuário:",
+        error.response?.data || error.message
+      );
     }
+  };
+
+  const handleActivateClick = () => {
+    console.log("oii");
+    closeActivateModal();
   };
 
   return (
     <div className={styles.row}>
       <div className={styles.nome}>{usuario.usu_nome}</div>
       <div className={styles.opcoes}>
-        <div className={styles.editar} onClick={handleEditClick}>
-          <IoPencil />
-        </div>
-        <div className={styles.excluir} onClick={handleDeleteClick}>
-          <IoTrash />
-        </div>
+        {usuario.usu_status == "0" ? (
+          <div
+            className={styles.botaoAtivar}
+            onClick={(e) => {
+              e.stopPropagation();
+              openActivateModal();
+            }}
+          >
+            <IoCheckmarkCircleSharp />
+            Ativar
+          </div>
+        ) : (
+          <>
+            <div
+              className={styles.editar}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleEditClick();
+              }}
+            >
+              <IoPencil />
+            </div>
+            <div
+              className={styles.excluir}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleDeleteClick();
+              }}
+            >
+              <IoTrash />
+            </div>
+          </>
+        )}
       </div>
-      {/* Modal de Edição */}
+
       {isEditModalOpen && (
         <div className={styles.modal}>
           <form onSubmit={onSubmit} className={styles.modalEdicao}>
@@ -186,14 +233,18 @@ const ListaUsuarios = ({
               <button type="submit" className={styles.saveButton}>
                 Salvar
               </button>
-              <button onClick={closeEditModal} type="button" className={styles.closeButton}>
+              <button
+                onClick={closeEditModal}
+                type="button"
+                className={styles.closeButton}
+              >
                 Cancelar
               </button>
             </div>
           </form>
         </div>
       )}
-      {/* Modal de Exclusão */}
+
       {isDeleteModalOpen && (
         <ModalExcluir
           isOpen={isDeleteModalOpen}
@@ -206,9 +257,9 @@ const ListaUsuarios = ({
           cancelLabel="Cancelar"
         />
       )}
-      {/* Modal de Confirmação de Senha */}
+
       {isPasswordModalOpen && (
-       <ModalConfirmarSenha
+        <ModalConfirmarSenha
           isOpen={isPasswordModalOpen}
           onClose={closePasswordModal}
           onSubmit={handleConfirmDelete}
@@ -220,6 +271,19 @@ const ListaUsuarios = ({
           passwordMessage={passwordMessage}
           mensagem="Por favor, digite sua senha:"
           titulo="Confirmar Exclusão"
+        />
+      )}
+
+      {isActivateModalOpen && (
+        <ModalExcluir
+          isOpen={isActivateModalOpen}
+          onClose={closeActivateModal}
+          onConfirm={handleActivateClick}
+          titulo="Ativar Usuário"
+          mensagem="Tem certeza de que deseja ativar o usuário"
+          nome={usuario.usu_nome}
+          confirmLabel="Ativar"
+          cancelLabel="Cancelar"
         />
       )}
     </div>

@@ -12,8 +12,7 @@ class UsuarioRepository implements UsuarioRepositoryInterface
 {
     public function buscaTodos():Collection
     {
-        return Usuario::where('usu_status', '=', 1)
-        ->where('usu_nivel', '=', 0)
+        return Usuario::where('usu_nivel', '=', 0)
         ->get();
     }
 
