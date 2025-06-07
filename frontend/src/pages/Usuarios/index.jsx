@@ -4,7 +4,6 @@ import styles from "./index.module.scss";
 import Button from "../../components/Botao/Botao";
 import Input from "../../components/Inputs/Input";
 import { IoSearch } from "react-icons/io5";
-import BarraPesquisa from "../../components/layout/HeaderHome/BarraPesquisa";
 import ListaUsuarios from "../../components/layout/ListaUsuarios";
 import useUsuarios from "../../hooks/useUsuarios";
 import { useAuth } from "../../context/AuthContext";
@@ -26,15 +25,12 @@ const Usuarios = () => {
   const { buscaUsuarios } = useUsuarios();
   const navigate = useNavigate();
 
-  const [inputValue, setInputValue] = useState("");
   const [message, setMessage] = useState(null);
-  const [registerMessage, setRegisterMessage] = useState(null);
-  const [formData, setFormData] = useState({
-    nome: "",
-    dataNascimento: "",
-    email: "",
-    rg: "",
-  });
+  const [statusFilter, setStatusFilter] = useState("1");
+  const [columnFilters, setColumnFilters] = useState([
+    { id: "usu_status", value: statusFilter },
+  ]);
+
   const [usuarios, setUsuarios] = useState([]);
   const [modalMensagemAberto, setModalMensagemAberto] = useState(false);
 
@@ -43,36 +39,14 @@ const Usuarios = () => {
     handleSubmit,
     formState: { errors },
     setError,
-  } = useForm({
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
-
-  const handleInputChange = (value) => {
-    setInputValue(value);
-  };
-
-  const handleCadastroInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleButtonClick = () => {
-    console.log("Dados do formulário:", formData);
-  };
+    reset,
+  } = useForm();
 
   useEffect(() => {
-    const carregarUsuarios = async () => {
-      const dados = await buscaUsuarios();
-      setUsuarios(dados);
-    };
-    carregarUsuarios();
-  }, []);
+    if (!token || userType != 1) {
+      navigate("/");
+    }
+  }, [token, userType, navigate]);
 
   useEffect(() => {
     const carregarUsuarios = async () => {
@@ -83,10 +57,8 @@ const Usuarios = () => {
   }, [message]);
 
   useEffect(() => {
-    if (!token || userType != 1) {
-      navigate("/");
-    }
-  }, [token]);
+    setColumnFilters([{ id: "usu_status", value: statusFilter }]);
+  }, [statusFilter]);
 
   const onSubmit = async (data) => {
     try {
@@ -96,11 +68,11 @@ const Usuarios = () => {
         },
       });
 
-      setRegisterMessage(response.data.message);
-      setMessage("Usuário cadastrado com sucesso");
+      setMessage(response.data.message || "Usuário cadastrado com sucesso");
       setModalMensagemAberto(true);
+      reset(); // limpa o formulário
 
-      // Atualize a lista imediatamente após o cadastro
+      // Atualizar lista
       const dados = await buscaUsuarios();
       setUsuarios(dados);
     } catch (error) {
@@ -114,9 +86,10 @@ const Usuarios = () => {
             message: apiErrors[campo][0],
           });
         });
+      } else if (apiMessage) {
+        setMessage(apiMessage);
+        setModalMensagemAberto(true);
       }
-      // setRegisterMessage(apiMessage);
-      // closeEditModal(); // Não existe aqui, pode remover
     }
   };
 
@@ -140,6 +113,15 @@ const Usuarios = () => {
         </div>
       ),
     },
+    {
+      accessorKey: "usu_status",
+      id: "usu_status",
+      header: "",
+      cell: () => null, // Não renderiza nada
+      filterFn: (row, columnId, filterValue) => {
+        return String(row.getValue(columnId)) === String(filterValue);
+      },
+    },
   ];
 
   const table = useReactTable({
@@ -147,8 +129,10 @@ const Usuarios = () => {
     columns,
     state: {
       globalFilter,
+      columnFilters,
     },
     onGlobalFilterChange: setGlobalFilter,
+    onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -157,25 +141,43 @@ const Usuarios = () => {
   return (
     <>
       <HeaderPagina titulo="Lista de usuários" />
-        <div className={styles.divPesquisa}>
-          <div className={styles.pesquisa}>
-            <input
-              className={styles.pesquisaInput}
-              type="text"
-              onChange={(e) => setGlobalFilter(e.target.value)}
-              placeholder="Pesquise o aluno que deseja"
-            />
-            <div className={styles.icon}>
-              <IoSearch />
-            </div>
+      <div className={styles.divPesquisa}>
+        <div className={styles.pesquisa}>
+          <input
+            className={styles.pesquisaInput}
+            type="text"
+            onChange={(e) => setGlobalFilter(e.target.value)}
+            placeholder="Pesquise o aluno que deseja"
+          />
+          <div className={styles.icon}>
+            <IoSearch />
           </div>
         </div>
+      </div>
       <div className={styles["container-geral"]}>
         <div className={styles["container-exibir"]}>
           <div className={styles["titulo"]}>
             <h2>Usuários cadastrados</h2>
           </div>
           <div className={styles["tabela"]}>
+            <div className={styles["filtro-status"]}>
+              <label className={styles["status-label"]}>
+                Filtrar por status:
+              </label>
+              <select
+                className={styles["status-select"]}
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+              >
+                <option className={styles["status-option"]} value="1">
+                  Ativo
+                </option>
+                <option className={styles["status-option"]} value="0">
+                  Inativo
+                </option>
+              </select>
+            </div>
+
             {table.getHeaderGroups().map((headerGroup) => (
               <div className={styles.head} key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
@@ -192,7 +194,7 @@ const Usuarios = () => {
               {table.getRowModel().rows.map((row) => (
                 <div
                   className={styles["linha"]}
-                  key={row.original.id}
+                  key={row.original.usu_id || row.original.usu_ra || row.id}
                   onClick={() => console.log(row.original)}
                 >
                   <ListaUsuarios
@@ -210,6 +212,7 @@ const Usuarios = () => {
         <form
           onSubmit={handleSubmit(onSubmit)}
           className={styles["container-cadastro"]}
+          noValidate
         >
           <div className={styles["titulo"]}>
             <h2>Cadastrar novo usuário</h2>
@@ -217,83 +220,74 @@ const Usuarios = () => {
           <div className={styles["inputs"]}>
             {/* Nome */}
             <div className={styles["input"]}>
-              <label htmlFor="nome">Nome:</label>
+              <label htmlFor="usu_nome">Nome:</label>
               <Input
                 type="text"
-                name="nome"
+                id="usu_nome"
                 placeholder="Digite o nome completo do aluno"
                 {...register("usu_nome", {
                   required: "O nome do usuário é obrigatório",
                 })}
               />
-              {
-                <p className={styles["erro"]}>
-                  {errors.usu_nome && errors.usu_nome.message}
-                </p>
-              }
+              <p className={styles["erro"]}>
+                {errors.usu_nome && errors.usu_nome.message}
+              </p>
             </div>
 
             {/* Data de nascimento */}
             <div className={styles["input"]}>
-              <label htmlFor="dataNascimento">Data de nascimento:</label>
+              <label htmlFor="usu_dataNasc">Data de nascimento:</label>
               <Input
                 type="date"
-                name="dataNascimento"
+                id="usu_dataNasc"
                 {...register("usu_dataNasc", {
                   required: "A data de nascimento é obrigatória",
                 })}
               />
-              {
-                <p className={styles["erro"]}>
-                  {errors.usu_dataNasc && errors.usu_dataNasc.message}
-                </p>
-              }
+              <p className={styles["erro"]}>
+                {errors.usu_dataNasc && errors.usu_dataNasc.message}
+              </p>
             </div>
 
             {/* Email */}
             <div className={styles["input"]}>
-              <label htmlFor="email">E-mail</label>
+              <label htmlFor="usu_email">E-mail</label>
               <Input
-                type="text"
-                name="email"
+                type="email"
+                id="usu_email"
                 placeholder="Digite o e-mail do aluno"
-                {...register("email", {
+                {...register("usu_email", {
                   required: "O email é obrigatório",
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: "Digite um email válido",
+                  },
                 })}
               />
-              {
-                <p className={styles["erro"]}>
-                  {errors.email && errors.email.message}
-                </p>
-              }
+              <p className={styles["erro"]}>
+                {errors.usu_email && errors.usu_email.message}
+              </p>
             </div>
 
             {/* RG / RA */}
             <div className={styles["input"]}>
-              <label htmlFor="rg">RA:</label>
+              <label htmlFor="usu_ra">RA:</label>
               <Input
                 type="text"
-                name="rg"
+                id="usu_ra"
                 placeholder="xx.xxx.xxx-x"
                 {...register("usu_ra", {
-                  required: "O ra é obrigatório",
+                  required: "O RA é obrigatório",
                 })}
               />
-              {
-                <p className={styles["erro"]}>
-                  {errors.usu_ra && errors.usu_ra.message}
-                </p>
-              }
+              <p className={styles["erro"]}>
+                {errors.usu_ra && errors.usu_ra.message}
+              </p>
             </div>
           </div>
 
           <div className={styles["botao"]}>
-            <Button
-              type="submit"
-              nomeBotao="cadastrar"
-              texto="Criar usuário"
-              onClick={handleButtonClick}
-            />
+            <Button type="submit" nomeBotao="cadastrar" texto="Criar usuário" />
           </div>
         </form>
         <ModalMensagem
