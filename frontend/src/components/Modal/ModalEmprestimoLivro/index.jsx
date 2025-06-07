@@ -7,39 +7,49 @@ import { useAuth } from "../../../context/AuthContext";
 import { useState } from "react";
 import ModalMensagem from "../ModalMensagem";
 
-const ModalEmprestimoLivro = ({ isOpen, onClose, alunos = [], livros = [], handleInputChange }) => {
+const ModalEmprestimoLivro = ({
+  isOpen,
+  onClose,
+  alunos = [],
+  livros = [],
+  handleInputChange,
+}) => {
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const {token} = useAuth()
-  
+  const { token } = useAuth();
+
   const [modalMensagemAberto, setModalMensagemAberto] = useState(false);
-    const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   // Normaliza alunos e livros para { label, value }
-  const selectAlunoValue = useMemo(() =>
-    alunos.map((aluno) => ({
-      label: aluno.usu_nome,
-      value: aluno.usu_id,
-    })),
+  const selectAlunoValue = useMemo(
+    () =>
+      alunos
+        .filter((aluno) => aluno.usu_status == 1)
+        .map((aluno) => ({
+          label: aluno.usu_nome,
+          value: aluno.usu_id,
+        })),
     [alunos]
   );
 
-  const selectLivroValue = useMemo(() =>
-    livros.map((livro) => ({
-      label: livro.nome,
-      value: livro.id,
-    })),
+  const selectLivroValue = useMemo(
+    () =>
+      livros.map((livro) => ({
+        label: livro.nome,
+        value: livro.id,
+      })),
     [livros]
   );
 
   // Quando envia o formulário
   const onSubmit = async (data) => {
-      try {
+    try {
       const response = await api.post(
-        '/emprestimos',
+        "/emprestimos",
         {
           liv_id: data.livro,
           usu_id: data.aluno, // já é o ID do usuário
@@ -51,19 +61,17 @@ const ModalEmprestimoLivro = ({ isOpen, onClose, alunos = [], livros = [], handl
         }
       );
 
-      console.log('Empréstimo criado com sucesso:', response.data);
+      console.log("Empréstimo criado com sucesso:", response.data);
       setMessage("Empréstimo cadastrado com sucesso!");
-      setModalMensagemAberto(true)
-
+      setModalMensagemAberto(true);
     } catch (error) {
-      console.error('Erro ao fazer empréstimo do livro:', error);
+      console.error("Erro ao fazer empréstimo do livro:", error);
       setMessage("Falha ao cadastrar empréstimo!");
-      setModalMensagemAberto(true)
+      setModalMensagemAberto(true);
     }
   };
 
   if (!isOpen) return null;
-
 
   return (
     <div className={styles.modal}>
@@ -103,16 +111,20 @@ const ModalEmprestimoLivro = ({ isOpen, onClose, alunos = [], livros = [], handl
           <button type="submit" className={styles.saveButton}>
             Cadastrar
           </button>
-          <button type="button" onClick={onClose} className={styles.closeButton}>
+          <button
+            type="button"
+            onClick={onClose}
+            className={styles.closeButton}
+          >
             Cancelar
           </button>
         </div>
       </form>
       <ModalMensagem
-          mensagemModal={message}
-          modalAberto={modalMensagemAberto}
-          closeModal={() => setModalMensagemAberto(false)}
-        />
+        mensagemModal={message}
+        modalAberto={modalMensagemAberto}
+        closeModal={() => setModalMensagemAberto(false)}
+      />
     </div>
   );
 };
