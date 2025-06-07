@@ -1,26 +1,34 @@
-import React from 'react'
+import React, { useState } from 'react';
 import styles from './index.module.scss';
 import { FaSearch } from 'react-icons/fa';
-import { useState, useEffect } from 'react';
-import useGeneros from '../../../../hooks/useGeneros';
-const BarraPesquisa = ({placeholder,  buscaGeneros, setGeneros }) => {
-  const [valorInput, setValorInput] = useState("");
+import { useNavigate } from 'react-router-dom';
 
+const BarraPesquisa = ({ placeholder }) => {
+  const [valorInput, setValorInput] = useState('');
+  const navigate = useNavigate();
 
   const handleInputChange = (event) => {
     setValorInput(event.target.value);
   };
 
-  const handleSearch = async () => {
-    console.log("Buscar por:", valorInput);
-    const data = await buscaGeneros(valorInput)
-    setGeneros(data)
+  const handleSearch = () => {
+    if (valorInput.trim() !== '') {
+      navigate(`/pesquisa/${encodeURIComponent(valorInput)}`);
+    }
   };
 
   return (
     <div className={styles.barra}>
-        <input type='text' placeholder={placeholder} className={styles.pesquisa} required/>
-        <FaSearch className={styles.icon} onClick={handleSearch}/>
+      <input
+        type="text"
+        placeholder={placeholder}
+        className={styles.pesquisa}
+        value={valorInput}
+        onChange={handleInputChange}
+        onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+        required
+      />
+      <FaSearch className={styles.icon} onClick={handleSearch} />
     </div>
   );
 };
