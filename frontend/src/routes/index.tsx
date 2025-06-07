@@ -12,12 +12,12 @@ import Generos from "../pages/Generos";
 import Usuarios from "../pages/Usuarios";
 import HomeAdm from "../pages/HomeAdm";
 import LivrosCadastrados from "../pages/LivrosCadastrados";
-
 import CadastroLivro from "../pages/CadastroLivro";
 import OpcoesLivro from "../pages/OpcoesLivro";
 import RegistroAtividade from "../pages/RegistroAtividade";
 import Autores from "../pages/Autores";
 import PerfilUsuario from "../pages/PerfilUsuario";
+import PaginaPesquisa from "../pages/PaginaPesquisa";   
 
 export const Paths = () => {
     return (
@@ -42,6 +42,7 @@ export const Paths = () => {
                         <Route path={'/usuarios'} element={<Usuarios/>}/>
                         <Route path={'/opcoes-livro'} element={<OpcoesLivro/>}/>
                         <Route path={'/perfil'} element={<PerfilUsuario/>}/>
+                        <Route path="/pesquisa/:termo" element={<PaginaPesquisa/>} />
                     </Route>
                     <Route path={'*'} element={<NotFound />} />
                 </Routes>
