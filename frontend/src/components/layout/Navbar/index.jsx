@@ -6,9 +6,7 @@ import { useAuth } from "../../../context/AuthContext";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { token } = useAuth();
-
-  const { logout } = useAuth();
+  const { token, userType, logout } = useAuth();
 
   const toggleMenu = () => setIsMenuOpen((prevState) => !prevState);
 
@@ -38,19 +36,37 @@ const Navbar = () => {
     </div>
   );
 
-  const renderLinks = () => (
+  const renderUserLinks = () => (
     <ul className={styles["navbar-links"]}>
       <li>
-        <Link to="/generos">Gêneros</Link>
-      </li>
-      <li>
-        <Link to="/opcoes-livro">Livros</Link>
+        <Link to="/perfil">Meu perfil</Link>
       </li>
       <li>
         <Link to="/em-breve">Em breve</Link>
       </li>
+    </ul>
+  );
+
+  const renderAdminLinks = () => (
+    <ul className={styles["navbar-links"]}>
       <li>
-        <Link to="/perfil">Meu perfil</Link>
+        <Link to="/livros">Livros</Link>
+      </li>
+      <li>
+        <Link to="/livro/cadastro">Cadastrar Livro</Link>
+      </li>
+      <li>
+        <Link to="/generos">Gêneros</Link>
+      </li>
+      <li>
+        <Link to="/autores">Autores</Link>
+      </li>
+      <li>
+        <Link to="/editoras">Editoras</Link>
+      </li>
+
+      <li>
+        <Link to="/usuarios">Usuários</Link>
       </li>
     </ul>
   );
@@ -90,7 +106,7 @@ const Navbar = () => {
     <nav className={`${styles.navbar} ${isMenuOpen ? styles.open : ""}`}>
       <div className={styles["navbar-container"]}>
         {renderLogo()}
-        {renderLinks()}
+        {token && userType == 1 ? renderAdminLinks() : renderUserLinks()}
         {renderMenuToggle()}
         {renderDropdownButtons()}
         {renderLogoutButton()}
