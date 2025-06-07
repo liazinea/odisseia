@@ -179,7 +179,6 @@ const Generos = () => {
                 <div
                   className={styles["linha"]}
                   key={row.original.id}
-                  onClick={() => console.log(row.original)}
                 >
                   <ListaGeneros
                     genero={row.original}

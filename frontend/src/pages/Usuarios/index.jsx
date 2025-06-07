@@ -195,7 +195,6 @@ const Usuarios = () => {
                 <div
                   className={styles["linha"]}
                   key={row.original.usu_id || row.original.usu_ra || row.id}
-                  onClick={() => console.log(row.original)}
                 >
                   <ListaUsuarios
                     usuario={row.original}

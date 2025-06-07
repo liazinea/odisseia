@@ -162,7 +162,6 @@ const Autores = () => {
                 <div
                   className={styles["linha"]}
                   key={row.original.id}
-                  onClick={() => console.log(row.original)}
                 >
                   <ListaAutores
                     autor={row.original}
