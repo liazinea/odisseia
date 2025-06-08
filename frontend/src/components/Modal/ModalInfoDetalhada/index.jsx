@@ -17,7 +17,6 @@ const ModalInfoDetalhada = ({
 }) => {
   if (!isOpen) return null;
 
-
   const [modalCancelarReserva, setCancelarReserva] = useState(false);
   const closeDeleteModal = () => setCancelarReserva(false);
   const [tituloPrazo, setTituloPrazo] = useState("Prazos");
@@ -25,40 +24,42 @@ const ModalInfoDetalhada = ({
   const [labelPrazo, setLabelPrazo] = useState("Prazo:");
   const [labelBtn, setLabelBtn] = useState("");
   const [btn, setBtn] = useState("");
-  const [tituloModal, setTituloModal] = useState('')
-  const [mensagemModal, setMensagemModal] = useState('')
-  const [confirmLabel, setConfirmLabel] = useState('')
-  const [cancelLabel, setCancelLabel] = useState('')
-  const { token } = useAuth()
+  const [tituloModal, setTituloModal] = useState("");
+  const [mensagemModal, setMensagemModal] = useState("");
+  const [confirmLabel, setConfirmLabel] = useState("");
+  const [cancelLabel, setCancelLabel] = useState("");
+  const { token } = useAuth();
 
   useEffect(() => {
     switch (emprestimo.emp_status) {
       case 1:
-        setLabelData("Data da Reserva:")
-        setLabelPrazo("Prazo de Retirada:")
-        setLabelBtn("Alterar Status da Reserva")
-        setBtn("Cancelar Reserva")
-        setTituloModal("Confirmar cancelamento")
-        setMensagemModal('Tem certeza que quer cancelar sua reserva de')
-        setConfirmLabel("Confirmar")
-        setCancelLabel("Cancelar")
+        setLabelData("Data da Reserva:");
+        setLabelPrazo("Prazo de Retirada:");
+        setLabelBtn("Alterar Status da Reserva");
+        setBtn("Cancelar Reserva");
+        setTituloModal("Confirmar cancelamento");
+        setMensagemModal("Tem certeza que quer cancelar sua reserva de");
+        setConfirmLabel("Confirmar");
+        setCancelLabel("Cancelar");
         break;
       case 2:
-        setLabelData("Data do Empréstimo:")
-        setLabelPrazo("Prazo de Devolução:")
-        setLabelBtn("Renovar Empréstimo")
-        setBtn("Renovar Empréstimo")
-        setTituloModal("Confirmar renovação de empréstimo")
-        setMensagemModal('Tem certeza que deseja renovar o livro por mais um mês?')
-        setConfirmLabel("Confirmar")
-        setCancelLabel("Cancelar")
+        setLabelData("Data do Empréstimo:");
+        setLabelPrazo("Prazo de Devolução:");
+        setLabelBtn("Renovar Empréstimo");
+        setBtn("Renovar Empréstimo");
+        setTituloModal("Confirmar renovação de empréstimo");
+        setMensagemModal(
+          "Tem certeza que deseja renovar o livro por mais um mês?"
+        );
+        setConfirmLabel("Confirmar");
+        setCancelLabel("Cancelar");
         break;
       default:
-        setLabelData('Data do Empréstimo:')
-        setLabelPrazo('Data do Empréstimo:')
+        setLabelData("Data do Empréstimo:");
+        setLabelPrazo("Data do Empréstimo:");
         break;
     }
-  }, [emprestimo.emp_status])
+  }, [emprestimo.emp_status]);
 
   const formatarData = (dataString) => {
     const data = new Date(dataString);
@@ -68,7 +69,43 @@ const ModalInfoDetalhada = ({
     return `${dia}/${mes}/${ano}`;
   };
 
- 
+  const handleFunction = async (id) => {
+    if (status == 2) {
+      try {
+        const response = await api.patch(
+          `/renova-emprestimo/${id}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log(response);
+      } catch (error) {
+        console.error(error);
+      }
+    } else if (status == 1) {
+      try {
+        const response = await api.patch(
+          `/emprestimos/${id}`,
+          {
+            valor: 0,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        console.log(response);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modal}>
@@ -151,7 +188,7 @@ const ModalInfoDetalhada = ({
       <ModalExcluir
         isOpen={modalCancelarReserva}
         onClose={closeDeleteModal}
-        onConfirm={'oii'}
+        onConfirm={handleFunction}
         titulo={tituloModal}
         mensagem={mensagemModal}
         nome={emprestimo.emp_status == 2 ? null : emprestimo.livro.liv_nome}
