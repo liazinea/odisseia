@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Carbon\Carbon;
 
 class Usuario extends Authenticatable
 {
-    use HasApiTokens,HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
     protected  $table = 'usu_usuario';
     protected  $primaryKey = 'usu_id';
     protected $fillable = [
@@ -24,10 +25,20 @@ class Usuario extends Authenticatable
         'usu_status',
     ];
 
-    public function emprestimo():HasMany
+    public function emprestimo(): HasMany
     {
-        return $this->hasMany(Emprestimo::class,'emp_id');
+        return $this->hasMany(Emprestimo::class, 'emp_id');
     }
+
+
+
+    public function emprestimosVencidos()
+    {
+        return $this->emprestimo()
+            ->where('emp_status', 2)
+            ->where('dataFim', '<', Carbon::now());
+    }
+
 
     protected $hidden = [
         'remember_token',

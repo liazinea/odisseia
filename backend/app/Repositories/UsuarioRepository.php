@@ -28,7 +28,7 @@ class UsuarioRepository implements UsuarioRepositoryInterface
             'emprestimo.aluno',
         ])
         ->first();
-    }       
+    }
 
 
     public function buscaTodosComPesquisa(string $campo, string $valor):Collection
@@ -49,6 +49,12 @@ class UsuarioRepository implements UsuarioRepositoryInterface
     public function deletar(Usuario $usuario): bool
     {
         $usuario->usu_status = 0;
+        return $usuario->save();
+    }
+
+    public function banirUsuario(Usuario $usuario):bool
+    {
+        $usuario->usu_status = 3;
         return $usuario->save();
     }
     public function editar(Usuario $usuario, UsuarioDTO $usuarioDTO):bool
