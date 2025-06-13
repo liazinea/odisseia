@@ -5,12 +5,14 @@ namespace App\Services;
 use App\DTOs\LoginDTO;
 use App\Models\Usuario;
 use App\Repositories\LoginRepositoryInterface;
+use App\Repositories\UsuarioRepositoryInterface;
 use Auth;
 class LoginService
 {
     public function __construct
     (
         protected LoginRepositoryInterface $loginRepository,
+        protected UsuarioRepositoryInterface $usuarioRepository,
     ){}
 
     public function login(LoginDTO $loginDTO):string
@@ -35,6 +37,10 @@ class LoginService
     public function geraToken(Usuario $usuarioAutenticado):string
     {
         if($usuarioAutenticado->usu_nivel == 0){
+            $emprestimosVencidos = $usuarioAutenticado->emprestimosVencidos()->get();
+            if($emprestimosVencidos->isNotEmpty()){
+                $this->usuarioRepository->banirUsuario($usuarioAutenticado);
+            }
             return $this->loginRepository->geraTokenAluno($usuarioAutenticado);
         }
         return $this->loginRepository->geraTokenProfessorSalaDeLeitura($usuarioAutenticado);

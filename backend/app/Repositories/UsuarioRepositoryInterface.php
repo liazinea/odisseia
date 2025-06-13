@@ -15,4 +15,5 @@ interface UsuarioRepositoryInterface
     public function salvar(UsuarioDTO $usuario):Usuario;
     public function deletar(Usuario $usuario):bool;
     public function editar(Usuario $usuario, UsuarioDTO $usuarioDTO):bool;
+    public function banirUsuario(Usuario $usuario):bool;
 }

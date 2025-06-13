@@ -54,4 +54,9 @@ class UsuarioService
     {
         return $this->usuarioRepository->editar($usuario,$usuarioDTO);
     }
+
+    public function banirUsuario(Usuario $usuario ):bool
+    {
+        return $this->usuarioRepository->banirUsuario($usuario);
+    }
 }
