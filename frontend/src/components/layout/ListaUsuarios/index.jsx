@@ -145,9 +145,28 @@ const ListaUsuarios = ({
     }
   };
 
-  const handleActivateClick = () => {
-    console.log("oii");
-    closeActivateModal();
+  const handleActivateClick = async () => {
+    try {
+      await api.patch(
+        `/usuarios/${usuario.usu_id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const dados = await buscaUsuarios();
+      setUsuarios(dados);
+      closeActivateModal();
+      setMessage("Usuário reativado com sucesso");
+      setModalMensagemAberto(true);
+    } catch (error) {
+      console.error(
+        "Erro ao reativar usuário:",
+        error.response?.data || error.message
+      );
+    }
   };
 
   return (

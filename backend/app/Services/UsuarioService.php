@@ -7,6 +7,7 @@ use App\Models\Usuario;
 use App\Repositories\UsuarioRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Psy\VersionUpdater\Checker;
+use Exception;
 
 class UsuarioService
 {
@@ -59,4 +60,17 @@ class UsuarioService
     {
         return $this->usuarioRepository->banirUsuario($usuario);
     }
+
+    public function reativar(Usuario $usuario): Usuario
+    {
+        if ($usuario->usu_status == 1) {
+            throw new Exception('Usuário já está ativo.');
+        }
+
+        $usuario->usu_status = 1;
+        $usuario->save();
+
+        return $usuario;
+    }
+
 }
