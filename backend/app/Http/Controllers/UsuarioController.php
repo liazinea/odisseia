@@ -112,4 +112,20 @@ class UsuarioController extends Controller
             ], 400);
         }
     }
+
+    public function reativar(Usuario $usuario): JsonResponse
+    {
+        try {
+            $usuarioReativado = $this->usuarioService->reativar($usuario);
+
+            return response()->json([
+                'message' => 'Usuário reativado com sucesso.',
+                'usuario' => new UsuarioResource($usuarioReativado)
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 400);
+        }
+    }
 }

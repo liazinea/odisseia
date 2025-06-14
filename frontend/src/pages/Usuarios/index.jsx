@@ -250,12 +250,12 @@ const Usuarios = () => {
 
             {/* Email */}
             <div className={styles["input"]}>
-              <label htmlFor="usu_email">E-mail</label>
+              <label htmlFor="email">E-mail</label>
               <Input
                 type="email"
-                id="usu_email"
+                id="email"
                 placeholder="Digite o e-mail do aluno"
-                {...register("usu_email", {
+                {...register("email", {
                   required: "O email é obrigatório",
                   pattern: {
                     value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
