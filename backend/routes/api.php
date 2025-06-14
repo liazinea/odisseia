@@ -55,8 +55,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/usuarios/{usuario}', 'show');
         Route::get('/check-senha', 'check');
         Route::post('/usuarios', 'store');
-        Route::patch('/usuarios/{usuario}', 'delete');
-        Route::patch('/usuarios/{usuario}', 'reativar');
+        Route::patch('/usuarios/{usuario}/desativar', 'desativar');
+        Route::patch('/usuarios/{usuario}/reativar', 'reativar');
         Route::put('/usuarios/{usuario}', 'update');
     });
 

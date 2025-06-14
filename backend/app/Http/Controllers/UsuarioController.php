@@ -75,7 +75,7 @@ class UsuarioController extends Controller
         }
     }
 
-    public function delete(Usuario $usuario): JsonResponse
+    public function desativar(Usuario $usuario): JsonResponse
     {
         try {
             $this->usuarioService->deletar($usuario);

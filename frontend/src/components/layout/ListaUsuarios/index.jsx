@@ -88,7 +88,7 @@ const ListaUsuarios = ({
 
     if (response.data.status) {
       const responseDelete = await api.patch(
-        `/usuarios/${usuario.usu_id}`,
+        `/usuarios/${usuario.usu_id}/desativar`,
         {},
         {
           headers: {
@@ -148,7 +148,7 @@ const ListaUsuarios = ({
   const handleActivateClick = async () => {
     try {
       await api.patch(
-        `/usuarios/${usuario.usu_id}`,
+        `/usuarios/${usuario.usu_id}/reativar`,
         {},
         {
           headers: {
