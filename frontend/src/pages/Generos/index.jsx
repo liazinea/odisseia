@@ -30,9 +30,8 @@ const Generos = () => {
     if (!token || userType != 1) {
       navigate("/");
     }
-  }, [token]);
+  }, [token, userType, navigate]);
   const [modalMensagemAberto, setModalMensagemAberto] = useState(false);
-  const [inputValue, setInputValue] = useState("");
 
   const {
     register,
@@ -54,36 +53,15 @@ const Generos = () => {
 
   const [generos, setGeneros] = useState([]);
   const { buscaGeneros } = useGeneros();
-  const [generosBuscados, setGenerosBuscados] = useState([]);
 
-  const buscaGenero = async () => {
-    const response = await api.get(`/generos`);
-    setGenerosBuscados(response.data.generos.data);
+  const carregarGeneros = async () => {
+    const dados = await buscaGeneros();
+    setGeneros(dados);
   };
 
   useEffect(() => {
-    const carregarGeneros = async () => {
-      const dados = await buscaGeneros();
-      setGeneros(dados);
-    };
     carregarGeneros();
   }, []);
-
-  useEffect(() => {
-    const carregarGeneros = async () => {
-      const dados = await buscaGeneros();
-      setGeneros(dados);
-    };
-    carregarGeneros();
-  }, [message]);
-
-  useEffect(() => {
-    const carregarGeneros = async () => {
-      const dados = await buscaGeneros();
-      setGeneros(dados);
-    };
-    carregarGeneros();
-  }, [registerMessage]);
 
   const onSubmit = async (data) => {
     try {
@@ -139,7 +117,7 @@ const Generos = () => {
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
-  
+
   return (
     <>
       <HeaderPagina titulo="Gêneros de Livros" />
@@ -162,27 +140,23 @@ const Generos = () => {
             <h2>Gêneros cadastrados</h2>
           </div>
           <div className={styles["tabela"]}>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <div className={styles.head} key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <p
-                      className={`${styles[header.column.columnDef.id]}`}
-                      key={header.id}
-                    >
-                      {header.column.columnDef.header}
-                    </p>
-                  ))}
-                </div>
-              ))}
+            {table.getHeaderGroups().map((headerGroup) => (
+              <div className={styles.head} key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <p
+                    className={`${styles[header.column.columnDef.id]}`}
+                    key={header.id}
+                  >
+                    {header.column.columnDef.header}
+                  </p>
+                ))}
+              </div>
+            ))}
             <div className={styles.conteudo}>
               {table.getRowModel().rows.map((row) => (
-                <div
-                  className={styles["linha"]}
-                  key={row.original.id}
-                >
+                <div className={styles["linha"]} key={row.original.id}>
                   <ListaGeneros
                     genero={row.original}
-                    buscaGenero={buscaGenero}
                     setMessage={setMessage}
                     buscaGeneros={buscaGeneros}
                     setGeneros={setGeneros}
@@ -190,6 +164,55 @@ const Generos = () => {
                   />
                 </div>
               ))}
+            </div>
+            <div className={styles.paginacao}>
+              {/* Bloco de navegação entre páginas */}
+              <div className={styles["botoes-paginacao"]}>
+                <button
+                  className={styles["botao-paginacao"]}
+                  onClick={() => table.previousPage()}
+                  disabled={!table.getCanPreviousPage()}
+                >
+                  Anterior
+                </button>
+
+                <span className={styles["info-paginacao"]}>
+                  Página {table.getState().pagination.pageIndex + 1} de{" "}
+                  {table.getPageCount()}
+                </span>
+
+                <button
+                  className={styles["botao-paginacao"]}
+                  onClick={() => table.nextPage()}
+                  disabled={!table.getCanNextPage()}
+                >
+                  Próxima
+                </button>
+              </div>
+
+              {/* Bloco de detalhes: total de itens e seletor de itens por página */}
+              <div className={styles["detalhes-paginacao"]}>
+                <span className={styles["info-paginacao"]}>
+                  Total de itens: {table.getFilteredRowModel().rows.length}
+                </span>
+
+                <div className={styles["seletor-tamanho-pagina"]}>
+                  <label htmlFor="pageSize">Itens por página:</label>
+                  <select
+                    id="pageSize"
+                    value={table.getState().pagination.pageSize}
+                    onChange={(e) => {
+                      table.setPageSize(Number(e.target.value));
+                    }}
+                  >
+                    {[10, 20, 30, 40, 50].map((pageSize) => (
+                      <option key={pageSize} value={pageSize}>
+                        {pageSize}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
             </div>
           </div>
         </div>

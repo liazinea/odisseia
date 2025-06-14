@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styles from "./index.module.scss";
 import { IoPencil, IoTrash } from "react-icons/io5";
 import Input from "../../Inputs/Input";
@@ -8,8 +8,6 @@ import { useAuth } from "../../../context/AuthContext";
 import ModalConfirmarSenha from "../../Modal/ModalConfirmarSenha";
 import ModalEdicao from "../../Modal/ModalEdicao";
 import ModalExcluir from "../../Modal/ModalExcluir";
-
-
 
 const ListaGeneros = ({
   genero,
@@ -55,41 +53,36 @@ const ListaGeneros = ({
     reset({ password: "" });
   };
 
-  // Atualiza a lista de gêneros quando a senha é validada ou edição é feita
-  useEffect(() => {
-    const carregarGeneros = async () => {
-      const dados = await buscaGeneros();
-      setGeneros(dados);
-    };
-    carregarGeneros();
-  }, [passwordMessage, isEditModalOpen]);
-
   // Confirma exclusão do gênero
   const handleConfirmDelete = async (data) => {
-  const response = await api.get(`/check-senha?password=${data.password}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  if (response.data.status) {
-    await api.patch(`/generos/${genero.id}`, {
+    const response = await api.get(`/check-senha?password=${data.password}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
 
-    // Atualize a lista aqui!
-    const dados = await buscaGeneros();
-    setGeneros(dados);
+    if (response.data.status) {
+      await api.patch(
+        `/generos/${genero.id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-    closePasswordModal();
-    setMessage("Gênero excluído com sucesso");
-    setModalMensagemAberto(true);
-  } else {
-    setPasswordMessage("Senha incorreta");
-  }
-};
+      // Atualize a lista aqui!
+      const dados = await buscaGeneros();
+      setGeneros(dados);
+
+      closePasswordModal();
+      setMessage("Gênero excluído com sucesso");
+      setModalMensagemAberto(true);
+    } else {
+      setPasswordMessage("Senha incorreta");
+    }
+  };
 
   // Atualiza o gênero
   const onSubmit = async (data) => {
@@ -102,6 +95,9 @@ const ListaGeneros = ({
       setMessage(response.data.message);
       closeEditModal();
       setModalMensagemAberto(true);
+
+      const dados = await buscaGeneros();
+      setGeneros(dados);
     } catch (error) {
       console.error(
         "Erro ao atualizar gênero:",
@@ -125,24 +121,24 @@ const ListaGeneros = ({
 
       {/* Modal de Edição */}
       {isEditModalOpen && (
-      <ModalEdicao
-        isOpen={isEditModalOpen}
-        onClose={closeEditModal}
-        onSubmit={onSubmit}
-        handleSubmit={handleSubmit}
-        register={register}
-        errors={errors}
-        titulo="Editar Gênero"
-        labelAtual="Nome atual"
-        valorAtual={genero.nome}
-        labelNovo="Novo nome"
-        nomeCampoNovo="gen_nome"
-        valorNovo={genero.nome}
-        registerOptions={{
-          required: "O novo nome do gênero é obrigatório",
-        }}
-      />
-    )}
+        <ModalEdicao
+          isOpen={isEditModalOpen}
+          onClose={closeEditModal}
+          onSubmit={onSubmit}
+          handleSubmit={handleSubmit}
+          register={register}
+          errors={errors}
+          titulo="Editar Gênero"
+          labelAtual="Nome atual"
+          valorAtual={genero.nome}
+          labelNovo="Novo nome"
+          nomeCampoNovo="gen_nome"
+          valorNovo={genero.nome}
+          registerOptions={{
+            required: "O novo nome do gênero é obrigatório",
+          }}
+        />
+      )}
 
       {/* Modal de Exclusão */}
       {isDeleteModalOpen && (

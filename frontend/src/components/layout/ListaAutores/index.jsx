@@ -9,8 +9,6 @@ import ModalConfirmarSenha from "../../Modal/ModalConfirmarSenha";
 import ModalEdicao from "../../Modal/ModalEdicao";
 import ModalExcluir from "../../Modal/ModalExcluir";
 
-
-
 const ListaAutores = ({
   autor,
   setMessage,
@@ -55,41 +53,32 @@ const ListaAutores = ({
     reset({ password: "" });
   };
 
-  // Atualiza a lista de autores quando a senha é validada ou edição é feita
-  useEffect(() => {
-    const carregarAutores = async () => {
-      const dados = await buscaAutores();
-      setAutores(dados);
-    };
-    carregarAutores();
-  }, [passwordMessage, isEditModalOpen]);
-
   // Confirma exclusão do autor
-const handleConfirmDelete = async (data) => {
-  const response = await api.get(`/check-senha?password=${data.password}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  if (response.data.status) {
-    await api.patch(`/autores/${autor.id}`, {
+  const handleConfirmDelete = async (data) => {
+    const response = await api.get(`/check-senha?password=${data.password}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
 
-    // Atualize a lista aqui!
-    const dados = await buscaAutores();
-    setAutores(dados);
+    if (response.data.status) {
+      await api.patch(`/autores/${autor.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-    closePasswordModal();
-    setMessage("Autor excluído com sucesso");
-    setModalMensagemAberto(true);
-  } else {
-    setPasswordMessage("Senha incorreta");
-  }
-};
+      // Atualize a lista aqui!
+      const dados = await buscaAutores();
+      setAutores(dados);
+
+      closePasswordModal();
+      setMessage("Autor excluído com sucesso");
+      setModalMensagemAberto(true);
+    } else {
+      setPasswordMessage("Senha incorreta");
+    }
+  };
 
   // Atualiza o autor
   const onSubmit = async (data) => {
@@ -102,6 +91,9 @@ const handleConfirmDelete = async (data) => {
       setMessage(response.data.message);
       closeEditModal();
       setModalMensagemAberto(true);
+
+      const dados = await buscaAutores();
+      setAutores(dados);
     } catch (error) {
       console.error(
         "Erro ao atualizar autor:",
@@ -125,24 +117,24 @@ const handleConfirmDelete = async (data) => {
 
       {/* Modal de Edição */}
       {isEditModalOpen && (
-      <ModalEdicao
-        isOpen={isEditModalOpen}
-        onClose={closeEditModal}
-        onSubmit={onSubmit}
-        handleSubmit={handleSubmit}
-        register={register}
-        errors={errors}
-        titulo="Editar Autor"
-        labelAtual="Nome atual"
-        valorAtual={autor.nome}
-        labelNovo="Novo nome"
-        nomeCampoNovo="aut_nome"
-        valorNovo={autor.nome}
-        registerOptions={{
-          required: "O novo nome do autor é obrigatório",
-        }}
-      />
-    )}
+        <ModalEdicao
+          isOpen={isEditModalOpen}
+          onClose={closeEditModal}
+          onSubmit={onSubmit}
+          handleSubmit={handleSubmit}
+          register={register}
+          errors={errors}
+          titulo="Editar Autor"
+          labelAtual="Nome atual"
+          valorAtual={autor.nome}
+          labelNovo="Novo nome"
+          nomeCampoNovo="aut_nome"
+          valorNovo={autor.nome}
+          registerOptions={{
+            required: "O novo nome do autor é obrigatório",
+          }}
+        />
+      )}
 
       {/* Modal de Exclusão */}
       {isDeleteModalOpen && (
