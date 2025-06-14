@@ -89,6 +89,10 @@ const Autores = () => {
     }
   };
 
+  useEffect(() => {
+    table.setPageIndex(0);
+  }, [globalFilter]);
+
   const columns = [
     {
       accessorKey: "nome",
@@ -121,7 +125,6 @@ const Autores = () => {
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    autoResetPageIndex: false,
   });
 
   return (
