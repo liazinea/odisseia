@@ -136,7 +136,7 @@ const Autores = () => {
             className={styles.pesquisaInput}
             type="text"
             onChange={(e) => setGlobalFilter(e.target.value)}
-            placeholder="Pesquise o gênero que deseja"
+            placeholder="Pesquise o autor que deseja"
           />
           <div className={styles.icon}>
             <IoSearch />
