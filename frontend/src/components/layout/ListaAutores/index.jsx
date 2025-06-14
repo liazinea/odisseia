@@ -55,15 +55,6 @@ const ListaAutores = ({
     reset({ password: "" });
   };
 
-  // Atualiza a lista de autores quando a senha é validada ou edição é feita
-  useEffect(() => {
-    const carregarAutores = async () => {
-      const dados = await buscaAutores();
-      setAutores(dados);
-    };
-    carregarAutores();
-  }, [passwordMessage, isEditModalOpen]);
-
   // Confirma exclusão do autor
 const handleConfirmDelete = async (data) => {
   const response = await api.get(`/check-senha?password=${data.password}`, {
