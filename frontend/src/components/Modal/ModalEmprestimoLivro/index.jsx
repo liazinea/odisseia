@@ -18,6 +18,7 @@ const ModalEmprestimoLivro = ({
     control,
     handleSubmit,
     formState: { errors },
+    reset
   } = useForm();
 
   const { token } = useAuth();
@@ -44,6 +45,13 @@ const ModalEmprestimoLivro = ({
       })),
     [livros]
   );
+
+// Função para fechar modal
+const handleClose = () => {
+  reset(); // limpa o formulário
+  onClose();
+};
+
 
   // Quando envia o formulário
   const onSubmit = async (data) => {
@@ -113,7 +121,7 @@ const ModalEmprestimoLivro = ({
           </button>
           <button
             type="button"
-            onClick={onClose}
+            onClick={handleClose}
             className={styles.closeButton}
           >
             Cancelar
