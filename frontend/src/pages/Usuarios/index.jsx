@@ -54,7 +54,7 @@ const Usuarios = () => {
       setUsuarios(dados);
     };
     carregarUsuarios();
-  }, [message]);
+  }, []);
 
   useEffect(() => {
     setColumnFilters([{ id: "usu_status", value: statusFilter }]);
@@ -205,6 +205,55 @@ const Usuarios = () => {
                   />
                 </div>
               ))}
+            </div>
+            <div className={styles.paginacao}>
+              {/* Bloco de navegação entre páginas */}
+              <div className={styles["botoes-paginacao"]}>
+                <button
+                  className={styles["botao-paginacao"]}
+                  onClick={() => table.previousPage()}
+                  disabled={!table.getCanPreviousPage()}
+                >
+                  Anterior
+                </button>
+
+                <span className={styles["info-paginacao"]}>
+                  Página {table.getState().pagination.pageIndex + 1} de{" "}
+                  {table.getPageCount()}
+                </span>
+
+                <button
+                  className={styles["botao-paginacao"]}
+                  onClick={() => table.nextPage()}
+                  disabled={!table.getCanNextPage()}
+                >
+                  Próxima
+                </button>
+              </div>
+
+              {/* Bloco de detalhes: total de itens e seletor de itens por página */}
+              <div className={styles["detalhes-paginacao"]}>
+                <span className={styles["info-paginacao"]}>
+                  Total de itens: {table.getFilteredRowModel().rows.length}
+                </span>
+
+                <div className={styles["seletor-tamanho-pagina"]}>
+                  <label htmlFor="pageSize">Itens por página:</label>
+                  <select
+                    id="pageSize"
+                    value={table.getState().pagination.pageSize}
+                    onChange={(e) => {
+                      table.setPageSize(Number(e.target.value));
+                    }}
+                  >
+                    {[10, 20, 30, 40, 50].map((pageSize) => (
+                      <option key={pageSize} value={pageSize}>
+                        {pageSize}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
             </div>
           </div>
         </div>
