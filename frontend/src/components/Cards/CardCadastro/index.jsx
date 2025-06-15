@@ -3,6 +3,7 @@ import styles from "./index.module.scss";
 import InputForm from "../../Inputs/InputForm";
 import InputLivro from "../../Inputs/InputLivro";
 import SelectCriavel from "../../Inputs/SelectCriavel";
+import SelectSimples from "../../Inputs/Select";
 import InputCapa from "../../Inputs/InputCapa";
 import BotaoForm from "../../Botao/BotaoForm";
 import InputTextArea from "../../Inputs/InputTextArea";
@@ -245,7 +246,7 @@ const CardCadastro = () => {
                 </div>
                 <div className={styles.input}>
                   {/* Input Classificação */}
-                  <SelectCriavel
+                  <SelectSimples
                     nomeCampo="liv_classIndicativa"
                     placeholder="Classificação indicativa"
                     values={["Livre", "+10", "+12", "+14", "+16", "+18"]}
