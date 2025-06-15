@@ -8,12 +8,13 @@
 
   .placeholder {
     position: absolute;
-    top: calc(50% + 13px);
+    top: 50%;
     left: 12px;
     transform: translateY(-50%);
     color: $azul-escuro;
     padding: 0 10px;
-    transition: top 0.3s ease, font-size 0.3s ease, color 0.3s ease, left 0.3s ease;
+    transition: top 0.3s ease, font-size 0.3s ease, color 0.3s ease,
+      left 0.3s ease;
     pointer-events: none;
     z-index: 1;
     white-space: nowrap;
@@ -23,15 +24,13 @@
   .input {
     width: 100%;
     height: 40px;
-    background-color: $laranja-claro;
-    border-radius: 12px;
+    background-color: transparent;
     font-size: 1rem;
     color: $branco-rosado;
     margin-top: 25px;
 
     &:focus-within {
-      background-color: $azul-escuro;
-      outline: 1px solid $branco-rosado;
+      background-color: transparent;
     }
 
     .custom-select__control {
@@ -44,15 +43,6 @@
 
       &--is-focused {
         background-color: darken($azul-escuro, 10%);
-        outline: 2px solid $branco-rosado;
-      }
-    }
-
-    .custom-select__input-container {
-      color: $branco-rosado !important;
-
-      input {
-        color: $branco-rosado !important;
       }
     }
 
@@ -128,18 +118,46 @@
       left: 10px;
       font-size: 14px;
       transform: translateY(0);
-      background-color: $azul-escuro;
-      color: $branco-rosado;
+      background-color: transparent;
+      color: transparent;
     }
   }
 
   .filled {
-    background-color: $azul-escuro;
-    outline: 1px solid $marrom-laranja;
+    background-color: transparent;
 
     + .placeholder {
       color: $marrom-laranja;
     }
+  }
+
+  .custom-select__value-container {
+    max-height: 40px; // Altura fixa
+    overflow-x: auto; // Scroll horizontal
+    overflow-y: hidden;
+    white-space: nowrap; // Forçar conteúdo numa linha
+    display: flex;
+    flex-wrap: nowrap; // Não quebrar linha
+    align-items: center;
+    padding-right: 10px;
+
+    // Opcional: esconder a scrollbar (funciona no Firefox e Webkit)
+    scrollbar-width: thin;
+    scrollbar-color: $marrom-laranja transparent;
+
+    &::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $marrom-laranja;
+      border-radius: 3px;
+    }
+  }
+
+  .custom-select__multi-value {
+    flex-shrink: 0; // Não deixa as tags diminuírem de tamanho
+    margin-right: 4px; // Espaçamento entre as tags
   }
 }
 

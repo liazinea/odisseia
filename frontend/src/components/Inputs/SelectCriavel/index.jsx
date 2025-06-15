@@ -151,10 +151,17 @@ const SelectCriavel = ({
                         ...base,
                         display: "none",
                       }),
-                      dropdownIndicator: (base) => ({
-                        ...base,
-                        color: "#FFFAF0",
-                      }),
+                      dropdownIndicator: (base, state) => {
+                        return {
+                          ...base,
+                          color:
+                            state.isFocused || filled ? "#FFFAF0" : "#002A3D",
+                          ":hover": {
+                            color:
+                              state.isFocused || filled ? "#FFFAF0" : "#002A3D",
+                          },
+                        };
+                      },
                       indicatorSeparator: () => ({
                         display: "none",
                       }),
