@@ -2,7 +2,7 @@ import BotaoForm from "../../Botao/BotaoForm";
 import InputCapa from "../../Inputs/InputCapa";
 import InputLivro from "../../Inputs/InputLivro";
 import InputTextArea from "../../Inputs/InputTextArea";
-import SelectLivro from "../../Inputs/SelectLivro";
+import SelectCriavel from "../../Inputs/SelectCriavel";
 import styles from "./index.module.scss";
 import { useForm } from "react-hook-form";
 import api from "../../../services/api";
@@ -233,7 +233,7 @@ const FormModal = ({
           <div className={styles.dupla}>
             <div className={styles.input}>
               {/* Input estante */}
-              <SelectLivro
+              <SelectCriavel
                 nomeCampo="liv_localizacao"
                 placeholder="Localização/Estante"
                 values={generos}
@@ -246,7 +246,7 @@ const FormModal = ({
             </div>
             <div className={styles.input}>
               {/* Input Autor */}
-              <SelectLivro
+              <SelectCriavel
                 nomeCampo="liv_autores"
                 placeholder="Autores"
                 values={autores}
@@ -261,7 +261,7 @@ const FormModal = ({
           <div className={styles.dupla}>
             <div className={styles.input}>
               {/* Input Genero */}
-              <SelectLivro
+              <SelectCriavel
                 nomeCampo="liv_generos"
                 placeholder="Gêneros"
                 values={generos}
@@ -274,7 +274,7 @@ const FormModal = ({
             </div>
             <div className={styles.input}>
               {/* Input Classificação */}
-              <SelectLivro
+              <SelectCriavel
                 nomeCampo="liv_classIndicativa"
                 placeholder="Classificação indicativa"
                 values={["Livre", "+10", "+12", "+14", "+16", "+18"]}

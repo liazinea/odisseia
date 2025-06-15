@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import styles from "./index.module.scss";
 import InputForm from "../../Inputs/InputForm";
 import InputLivro from "../../Inputs/InputLivro";
-import SelectLivro from "../../Inputs/SelectLivro";
+import SelectCriavel from "../../Inputs/SelectCriavel";
+import SelectSimples from "../../Inputs/Select";
 import InputCapa from "../../Inputs/InputCapa";
 import BotaoForm from "../../Botao/BotaoForm";
 import InputTextArea from "../../Inputs/InputTextArea";
@@ -207,7 +208,7 @@ const CardCadastro = () => {
               <div className={styles.dupla}>
                 <div className={styles.input}>
                   {/* Input estante */}
-                  <SelectLivro
+                  <SelectCriavel
                     nomeCampo="liv_localizacao"
                     placeholder="Estante/Prateleira"
                     values={generos}
@@ -219,7 +220,7 @@ const CardCadastro = () => {
                 </div>
                 <div className={styles.input}>
                   {/* Input Autor */}
-                  <SelectLivro
+                  <SelectCriavel
                     nomeCampo="liv_autores"
                     placeholder="Autores"
                     values={autores}
@@ -233,7 +234,7 @@ const CardCadastro = () => {
               <div className={styles.dupla}>
                 <div className={styles.input}>
                   {/* Input Genero */}
-                  <SelectLivro
+                  <SelectCriavel
                     nomeCampo="liv_generos"
                     placeholder="Gêneros"
                     values={generos}
@@ -245,7 +246,7 @@ const CardCadastro = () => {
                 </div>
                 <div className={styles.input}>
                   {/* Input Classificação */}
-                  <SelectLivro
+                  <SelectSimples
                     nomeCampo="liv_classIndicativa"
                     placeholder="Classificação indicativa"
                     values={["Livre", "+10", "+12", "+14", "+16", "+18"]}
