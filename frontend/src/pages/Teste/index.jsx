@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import SelectLivro from "../../components/Inputs/SelectLivro";
+import SelectCriavel from "../../components/Inputs/SelectCriavel";
 
 const Teste = () => {
   const { control, handleSubmit, formState: { errors } } = useForm();
@@ -17,7 +17,7 @@ const Teste = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <SelectLivro
+      <SelectCriavel
         nomeCampo="liv_autores"
         placeholder="Autores"
         values={autores}

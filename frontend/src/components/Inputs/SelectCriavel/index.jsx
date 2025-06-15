@@ -2,7 +2,7 @@ import { Controller } from "react-hook-form";
 import CreatableSelect from "react-select/creatable";
 import styles from "./index.module.scss";
 
-const SelectLivro = ({
+const SelectCriavel = ({
   nomeCampo,
   placeholder,
   values = [],
@@ -212,4 +212,4 @@ const SelectLivro = ({
   );
 };
 
-export default SelectLivro;
+export default SelectCriavel;
