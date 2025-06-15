@@ -71,13 +71,10 @@ const CelulaTabelaRegistros = ({ aluno, livro, emprestimo }) => {
           },
         }
       );
-
-      // alert("Alterações salvas com sucesso!");
       setMessage("Alterações salvas com sucesso!");
       setModalMensagemAberto(true)
     } catch (erro) {
       console.error("Erro ao salvar:", erro);
-      // alert("Falha ao salvar alterações.");
       setMessage("Falha ao salvar alterações.");
       setModalMensagemAberto(true)
     }
@@ -114,11 +111,6 @@ const CelulaTabelaRegistros = ({ aluno, livro, emprestimo }) => {
               <br />
               <p>{aluno.usu_ra}</p>
             </div>
-            {/* <div className={styles.infosTexto}>
-              <strong>Série/Ano:</strong>
-              <br />
-              <p>{aluno.serie}</p>
-            </div> */}
             <div className={styles.infosTexto}>
               <strong>ID do Empréstimo:</strong>
               <br />
@@ -196,14 +188,20 @@ const CelulaTabelaRegistros = ({ aluno, livro, emprestimo }) => {
             </button>
             {dropdownAberto && (
               <ul className={`${styles.dropdownMenu} ${dropdownAberto ? styles.active : null}`}>
-                {opcoesStatus.map((opcao) => (
+                {opcoesStatus.map((opcao, index) => (
                   <li
-                    key={opcao}
+                    key={index}
                     onClick={() => selecionarStatus(opcao)}
-                    className={
+                    className={`${
                       statusAtual === opcao
                         ? styles.dropdownItemAtivo
                         : styles.dropdownItem
+                      }
+                      ${
+                        statusAtual < opcao && emprestimo.emp_status != index + 1
+                          ? styles.dropdownItemInativo
+                          : null
+                    }`
                     }
                   >
                     {opcao}
