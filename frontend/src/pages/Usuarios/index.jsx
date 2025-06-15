@@ -108,6 +108,7 @@ const Usuarios = () => {
       header: "Opções",
       cell: (props) => (
         <div>
+          <p className={styles.status}>punir</p>
           <p className={styles.status}>editar</p>
           <p className={styles.status}>excluir</p>
         </div>
@@ -207,7 +208,7 @@ const Usuarios = () => {
               ))}
             </div>
             <div className={styles.paginacao}>
-              {/* Bloco de navegação entre páginas */}
+
               <div className={styles["botoes-paginacao"]}>
                 <button
                   className={styles["botao-paginacao"]}
@@ -231,7 +232,6 @@ const Usuarios = () => {
                 </button>
               </div>
 
-              {/* Bloco de detalhes: total de itens e seletor de itens por página */}
               <div className={styles["detalhes-paginacao"]}>
                 <span className={styles["info-paginacao"]}>
                   Total de itens: {table.getFilteredRowModel().rows.length}

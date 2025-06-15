@@ -39,6 +39,7 @@
 
     }
   }
+  
   .conteudo {
     background-color: $laranja-claro;
     padding: 40px 60px 90px;
@@ -150,6 +151,12 @@
         @extend .dropdownItem;
         background-color: $azul-escuro;
         color: $branco;
+      }
+      .dropdownItemInativo {
+        @extend .dropdownItem;
+        pointer-events:none;
+        background-color: $branco;
+        color: $cinza;
       }
     }
   }

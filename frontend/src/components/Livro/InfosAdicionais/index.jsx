@@ -5,7 +5,8 @@ import { FaHashtag } from "react-icons/fa";
 import { RiBookLine } from "react-icons/ri";
 import { LuCalendar } from "react-icons/lu";
 import TextoIcone from "../../Icones/TextoIcone";
-import BotaoReserva from "../../Botao/BotaoReserva"; // 👈 Importando o botão
+import BotaoReserva from "../../Botao/BotaoReserva";
+import { useAuth } from "../../../context/AuthContext";
 
 const InfoAdicionais = ({
   paginas,
@@ -14,6 +15,8 @@ const InfoAdicionais = ({
   data,
   id
 }) => {
+  const {userType} = useAuth();
+
   return (
     <div className={styles.container}>
       <h3 className={styles.titulo}>Informações Adicionais:</h3>
@@ -48,7 +51,7 @@ const InfoAdicionais = ({
         />
       </div>
 
-      <div className={styles.botaoWrapper}>
+    <div className={`${userType == 1 ? styles.desativado : styles.botaoWrapper}`}>
         <BotaoReserva texto="Realizar Reserva" idLivro={id}/>
       </div>
     </div>

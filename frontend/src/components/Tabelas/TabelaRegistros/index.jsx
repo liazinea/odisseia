@@ -16,18 +16,8 @@ const TabelaRegistros = ({ emprestimos }) => {
   const [emprestimo, setEmprestimo] = useState([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [pagesLoaded, setPagesLoaded] = useState(1);
-  //   const {buscaLivros} = useLivros();
   const [modalMensagemAberto, setModalMensagemAberto] = useState(false);
   const itemsPerPage = 7;
-
-  //   console.log(livros)
-  //   useEffect(() => {
-  //     const carregarivros = async () => {
-  //       const dados = await buscaLivros();
-  //       setLivro(dados);
-  //     };
-  //     carregarivros();
-  //   }, [modalMensagemAberto]);
 
     useEffect(() => {
       setEmprestimo(emprestimos);
