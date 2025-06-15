@@ -93,6 +93,93 @@
           margin-bottom: 5px;
         }
       }
+      .paginacao {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin-top: 0.5rem;
+        gap: 0.5rem;
+
+        .botoes-paginacao {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          width: 100%;
+
+          .botao-paginacao {
+            background-color: color.$laranja;
+            color: color.$azul-escuro;
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.2s;
+
+            &:hover:not(:disabled) {
+              background-color: color.$laranja-claro;
+              transform: translateY(-2px);
+            }
+
+            &:disabled {
+              background-color: lighten(color.$laranja, 20%);
+              color: color.$azul-escuro;
+              opacity: 0.6;
+              cursor: not-allowed;
+            }
+          }
+
+          .info-paginacao {
+            font-weight: bold;
+            color: color.$branco;
+            font-size: 1.2rem;
+          }
+        }
+
+        .detalhes-paginacao {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          width: 100%;
+          gap: 0.5rem;
+
+          .info-paginacao {
+            font-weight: bold;
+            color: color.$branco;
+            font-size: 1rem;
+          }
+
+          .seletor-tamanho-pagina {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+
+            label {
+              font-weight: bold;
+              color: color.$branco;
+            }
+
+            select {
+              padding: 0.4rem 0.6rem;
+              border-radius: 8px;
+              border: 1px solid color.$laranja;
+              background-color: color.$branco;
+              color: color.$azul-escuro;
+              cursor: pointer;
+              font-weight: bold;
+              transition: background-color 0.2s;
+
+              &:hover {
+                background-color: color.$branco-rosado;
+              }
+            }
+          }
+        }
+      }
     }
   }
 
