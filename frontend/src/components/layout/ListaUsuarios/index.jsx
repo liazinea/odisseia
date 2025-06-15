@@ -8,6 +8,7 @@ import { useAuth } from "../../../context/AuthContext";
 import { IoPencil, IoTrash, IoCheckmarkCircleSharp } from "react-icons/io5";
 import ModalConfirmarSenha from "../../Modal/ModalConfirmarSenha";
 import ModalExcluir from "../../Modal/ModalExcluir";
+import { MdBlock } from "react-icons/md";
 
 const ListaUsuarios = ({
   usuario,
@@ -17,6 +18,7 @@ const ListaUsuarios = ({
   setModalMensagemAberto,
 }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isPunishmentModalOpen, setIsPunishmentModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isActivateModalOpen, setIsActivateModalOpen] = useState(false);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
@@ -51,6 +53,10 @@ const ListaUsuarios = ({
     setIsDeleteModalOpen(true);
   };
 
+  const handlePunishmentClick = () => {
+    setIsPunishmentModalOpen(true);
+  };
+
   const closeEditModal = () => {
     setIsEditModalOpen(false);
   };
@@ -58,6 +64,9 @@ const ListaUsuarios = ({
   const closeDeleteModal = () => {
     setIsDeleteModalOpen(false);
     setPasswordMessage("");
+  };
+  const closePunishmentModal = () => {
+    setIsPunishmentModalOpen(false);
   };
 
   const openPasswordModal = () => {
@@ -196,6 +205,15 @@ const ListaUsuarios = ({
               <IoPencil />
             </div>
             <div
+              className={styles.punir}
+              onClick={(e) => {
+                e.stopPropagation();
+                handlePunishmentClick();
+              }}
+            >
+              <MdBlock />
+            </div>
+            <div
               className={styles.excluir}
               onClick={(e) => {
                 e.stopPropagation();
@@ -273,6 +291,19 @@ const ListaUsuarios = ({
           mensagem="Tem certeza de que deseja excluir permanentemente o usuário"
           nome={usuario.usu_nome}
           confirmLabel="Excluir"
+          cancelLabel="Cancelar"
+        />
+      )}
+
+      {isPunishmentModalOpen && (
+        <ModalExcluir
+          isOpen={isPunishmentModalOpen}
+          onClose={closePunishmentModal}
+          onConfirm={openPasswordModal}
+          titulo="Punir Usuário"
+          mensagem="Tem certeza de que deseja punir o usuário"
+          nome={usuario.usu_nome}
+          confirmLabel="Punir"
           cancelLabel="Cancelar"
         />
       )}
