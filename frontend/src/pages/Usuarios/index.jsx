@@ -18,6 +18,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import ModalMensagem from "../../components/Modal/ModalMensagem";
+import BotaoPlanilha from "../../components/Botao/BotaoPlanilha";
 
 const Usuarios = () => {
   const [globalFilter, setGlobalFilter] = useState("");
@@ -208,7 +209,6 @@ const Usuarios = () => {
               ))}
             </div>
             <div className={styles.paginacao}>
-
               <div className={styles["botoes-paginacao"]}>
                 <button
                   className={styles["botao-paginacao"]}
@@ -335,6 +335,14 @@ const Usuarios = () => {
           </div>
 
           <div className={styles["botao"]}>
+            <BotaoPlanilha
+              campo="planilha_usuario"
+              required={true}
+              register={register}
+            />
+            {/* <p className={styles.error}>
+              {errors?.[campo] && errors[campo]?.message}
+            </p> */}
             <Button type="submit" nomeBotao="cadastrar" texto="Criar usuário" />
           </div>
         </form>
