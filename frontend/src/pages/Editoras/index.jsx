@@ -31,6 +31,7 @@ const Editoras = () => {
       navigate("/");
     }
   }, [token]);
+
   const [modalMensagemAberto, setModalMensagemAberto] = useState(false);
   const [inputValue, setInputValue] = useState("");
 
@@ -109,7 +110,7 @@ const Editoras = () => {
   const columns = [
     {
       accessorKey: "nome",
-      id: "editoras",
+      id: "nome",
       header: "Editoras",
       cell: (props) => (
         <p className={styles.status}>{props.row.original.nome}</p>

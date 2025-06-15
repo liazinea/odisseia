@@ -63,7 +63,7 @@ const ListaEditoras = ({
     carregarEditoras();
   }, [passwordMessage, isEditModalOpen]);
 
-
+  const handleConfirmDelete = async (data) => {
   const response = await api.get(`/check-senha?password=${data.password}`, {
     headers: {
       Authorization: `Bearer ${token}`,

@@ -18,6 +18,7 @@ import RegistroAtividade from "../pages/RegistroAtividade";
 import Autores from "../pages/Autores";
 import PerfilUsuario from "../pages/PerfilUsuario";
 import PaginaPesquisa from "../pages/PaginaPesquisa";   
+import Editoras from "../pages/Editoras";
 
 export const Paths = () => {
     return (
@@ -39,6 +40,7 @@ export const Paths = () => {
                         <Route path={'/livro/cadastro'} element={<CadastroLivro />}/>
                         <Route path={'/generos'} element={<Generos/>}/>
                         <Route path={'/autores'} element={<Autores/>}/>
+                        <Route path={'/editoras'} element={<Editoras/>}/>
                         <Route path={'/usuarios'} element={<Usuarios/>}/>
                         <Route path={'/opcoes-livro'} element={<OpcoesLivro/>}/>
                         <Route path={'/perfil'} element={<PerfilUsuario/>}/>

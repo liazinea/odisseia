@@ -101,7 +101,8 @@ const SessaoAdmHome = () => {
         type="button" 
         nomeBotao="editoras" 
         icon="/editoras-icon.svg" 
-        texto="editoras" 
+        texto="Editoras" 
+        onClick={() => navigate("/editoras")}
       />
       <ModalEmprestimoLivro
         isOpen={isModalOpen}
