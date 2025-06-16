@@ -35,8 +35,8 @@ class Usuario extends Authenticatable
     public function emprestimosVencidos()
     {
         return $this->emprestimo()
-            ->where('emp_status', 2)
-            ->where('dataFim', '<', Carbon::now());
+            ->where('emp_status', '=',2)
+            ->where('emp_dataFim', '<', Carbon::now());
     }
 
 

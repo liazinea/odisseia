@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DTOs\UsuarioDTO;
+use App\Http\Requests\PlanilhaRequest;
 use App\Http\Requests\UpdateUsuarioRequest;
 use App\Http\Requests\UsuarioRequest;
 use App\Http\Resources\UsuarioCollection;
@@ -12,6 +13,11 @@ use Illuminate\Http\Request;
 use App\Services\UsuarioService;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Shared\Date as ExcelDate;
 
 class UsuarioController extends Controller
 {
@@ -36,7 +42,7 @@ class UsuarioController extends Controller
     {
         if ($usuario->usu_status == 1) {
             return response()->json([
-                'usuario' => $usuario->load('emprestimo.livro.autores','emprestimo.livro.generos','emprestimo.livro.editora'),
+                'usuario' => $usuario->load('emprestimo.livro.autores', 'emprestimo.livro.generos', 'emprestimo.livro.editora'),
             ], 200);
         }
         return response()->json([
@@ -44,7 +50,7 @@ class UsuarioController extends Controller
         ], 400);
     }
 
-    public function check(Request $request):JsonResponse
+    public function check(Request $request): JsonResponse
     {
         return response()->json([
             'status' => $this->usuarioService->checkSenha($request->password)
@@ -127,5 +133,58 @@ class UsuarioController extends Controller
                 'message' => $e->getMessage()
             ], 400);
         }
+    }
+
+    public function planilha(PlanilhaRequest $request): JsonResponse
+    {
+        $path = $request->file('arquivo')->getRealPath();
+        $spreadsheet = IOFactory::load($path);
+        $sheet = $spreadsheet->getActiveSheet();
+        $linhas = $sheet->toArray();
+
+
+        Usuario::where('usu_nivel', 0)->update(['usu_status' => 0]);
+
+        foreach (array_slice($linhas, 1) as $linha) {
+            [$nome, $dataNasc, $ra, $email] = $linha;
+
+
+            try {
+                if (is_numeric($dataNasc)) {
+                    $dataFormatada = ExcelDate::excelToDateTimeObject($dataNasc)->format('Y-m-d');
+                } else {
+                    $dataFormatada = Carbon::parse($dataNasc)->format('Y-m-d');
+                }
+            } catch (Exception $e) {
+                Log::error("Erro ao converter data para o RA {$ra}: " . json_encode($linha) . " - Erro: " . $e->getMessage());
+                continue;
+            }
+
+
+            $usuario = Usuario::where('email','=', $email)->first();
+
+            if ($usuario) {
+
+                $usuario->update([
+                    'usu_status' => 1,
+                    'usu_nome' => $nome,
+                    'usu_dataNasc' => $dataFormatada,
+                    'email' => $email,
+                ]);
+            } else {
+
+                Usuario::create([
+                    'usu_nome' => $nome,
+                    'usu_dataNasc' => $dataFormatada,
+                    'email' => $email,
+                    'usu_ra' => $ra,
+                    'usu_nivel' => 0,
+                    'usu_status' => 1,
+                    'password' => Hash::make('senha123'),
+                ]);
+            }
+        }
+
+        return response()->json(['mensagem' => 'Importação concluída com sucesso.'], 200);
     }
 }

@@ -58,6 +58,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::patch('/usuarios/{usuario}/desativar', 'desativar');
         Route::patch('/usuarios/{usuario}/reativar', 'reativar');
         Route::put('/usuarios/{usuario}', 'update');
+        Route::post('/usuarios/importar-planilha', 'planilha');
     });
 
     Route::controller(EmprestimoController::class)->group(function () {
