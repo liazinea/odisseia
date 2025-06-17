@@ -161,7 +161,7 @@ class UsuarioController extends Controller
             }
 
 
-            $usuario = Usuario::where('email','=', $email)->first();
+            $usuario = Usuario::where('email', '=', $email)->first();
 
             if ($usuario) {
 
@@ -186,5 +186,20 @@ class UsuarioController extends Controller
         }
 
         return response()->json(['mensagem' => 'Importação concluída com sucesso.'], 200);
+    }
+
+    public function punir(Usuario $usuario):JsonResponse
+    {
+        if ($usuario->usu_status == 1) {
+            $usuario->usu_status = 3;
+            $usuario->save();
+            return response()->json(['message' => 'Usuário punido'], 200);
+        } else if ($usuario->usu_status == 3) {
+            $usuario->usu_status = 1;
+            $usuario->save();
+            return response()->json(['message' => 'Usuário liberado'], 200);
+        }
+
+          return response()->json(['message' => 'Erro ao punir usuário'], 400);
     }
 }
