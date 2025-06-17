@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import useLivros from "../../hooks/useLivros"; // ajuste o caminho se necessário
-import CardLivrosMaisEmprestados from "../../components/Cards/CardLivrosMaisEmprestados";
+import CardPesquisa from "../../components/Cards/CardPesquisa";
 import styles from "./index.module.scss";
 import HeaderHome from "../../components/layout/HeaderHome";
 
@@ -17,7 +17,7 @@ const PaginaPesquisa = () => {
     const fetchLivros = async () => {
       setCarregando(true);
       const todosLivros = await buscaLivros();
-      console.log("oi")
+      console.log(todosLivros)
       const termoNormalizado = termo.toLowerCase();
 
       const filtrados = todosLivros.filter((livro) =>
@@ -51,7 +51,7 @@ const PaginaPesquisa = () => {
               key={livro.id}
               className={styles.cards}
             >
-              <CardLivrosMaisEmprestados livro={livro} />
+              <CardPesquisa livro={livro} />
             </Link>
           ))}
         </div>

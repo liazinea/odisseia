@@ -1,0 +1,116 @@
+@use "../../../styles/cores/cores" as color;
+
+.card {
+  display: flex;
+  background-color: color.$laranja-claro;
+  padding: 1rem;
+  border-radius: 8px;
+  gap: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .imagem {
+    flex: 0 0 120px;
+  }
+
+  .conteudo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%; // Para garantir que ocupe o espaço total do card
+
+    .header {
+      margin-bottom: 0.3rem;
+
+      .titulo {
+        color: color.$azul-escuro;
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin-bottom: 0.2rem;
+      }
+
+      .autores {
+        font-size: 1.1rem;
+        color: color.$azul-escuro;
+      }
+    }
+
+    .infoExtra {
+      font-size: 0.95rem;
+      color: color.$cinza;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 0.8rem 0;
+
+      span::after {
+        content: "•";
+        margin-left: 0.4rem;
+      }
+
+      span:last-child::after {
+        content: "";
+        margin: 0;
+      }
+    }
+
+    .sinopse {
+      color: color.$cinza;
+      font-size: 1rem;
+      line-height: 1.6;
+      flex-grow: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 7; /* Número de linhas desejadas */
+      line-clamp: 7;
+      -webkit-box-orient: vertical;
+      margin-bottom: 1rem;
+    }
+
+    .generos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: auto; // Garante que fique sempre grudado no final
+
+      .genero {
+        background-color: color.$azul-escuro;
+        color: color.$branco;
+        padding: 0.4rem 0.8rem;
+        border-radius: 12px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        white-space: nowrap;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .infoExtra {
+        justify-content: center;
+      }
+      .generos {
+        justify-content: center;
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    .imagem {
+      margin-bottom: 1rem;
+    }
+  }
+}

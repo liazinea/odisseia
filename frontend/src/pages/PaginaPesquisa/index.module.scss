@@ -2,13 +2,15 @@
 
 .container {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 2rem;
-  padding: 2%;
-  margin-bottom: 5%;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  width: 100%;
 
   .cards {
     display: flex;
+    width: 100%;
   }
 }
 
