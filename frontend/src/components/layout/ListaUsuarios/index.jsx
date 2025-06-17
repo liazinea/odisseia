@@ -116,6 +116,35 @@ const ListaUsuarios = ({
     }
   };
 
+  const handleConfirmPunishment = async (data) => {
+    const response = await api.get(`/check-senha?password=${data.password}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response.data.status) {
+      const responseBan = await api.patch(
+        `/usuarios/${usuario.usu_id}/punicao`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setMessage(responseBan.data.message);
+      console.log(response)
+      setModalMensagemAberto(true);
+      const dados = await buscaUsuarios();
+      setUsuarios(dados);
+      closePasswordModal();
+    } else {
+      setPasswordMessage("Senha incorreta");
+    }
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setEditedData((prevData) => ({
@@ -312,7 +341,7 @@ const ListaUsuarios = ({
         <ModalConfirmarSenha
           isOpen={isPasswordModalOpen}
           onClose={closePasswordModal}
-          onSubmit={handleConfirmDelete}
+          onSubmit={isPunishmentModalOpen ? handleConfirmPunishment : handleConfirmDelete}
           handleSubmit={handleSubmit}
           register={register}
           errors={errors}

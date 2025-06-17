@@ -22,7 +22,7 @@ class EditoraRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'edi_nome' => ''
+            'edi_nome' => 'required|string|max:255|unique:edi_editora,edi_nome'
         ];
     }
 
@@ -31,7 +31,8 @@ class EditoraRequest extends FormRequest
         return [
             'edi_nome.required' => 'É obrigatório o envio do nome da editora.',
             'edi_nome.string' => 'O campo deve ser do tipo string.',
-            'edi_nome.max' => 'O campo não pode ter mais de 255 caracteres.'
+            'edi_nome.max' => 'O campo não pode ter mais de 255 caracteres.',
+            'edi_nome.unique' => 'Já existe uma editora com este nome.',
         ];
     }
 }

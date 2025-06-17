@@ -25,6 +25,9 @@ class EmprestimoService
     public function criaEmprestimo(int $idAluno, int $idLivro):Emprestimo
     {
         $aluno = $this->usuarioService->buscaPorId($idAluno);
+        if($aluno->usu_status == 3){
+            throw new Exception('Usuário penalizado, assim não podendo criar uma reserva/empréstimo');
+        }
         $livro = $this->livroService->buscaPorId($idLivro);
 
         if(!$this->verificaSeAlunoTemEmprestimo($idAluno)){

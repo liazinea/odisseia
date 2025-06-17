@@ -336,9 +336,6 @@ const Usuarios = () => {
 
           <div className={styles["botao"]}>
             <BotaoPlanilha
-              campo="planilha_usuario"
-              required={true}
-              register={register}
             />
             {/* <p className={styles.error}>
               {errors?.[campo] && errors[campo]?.message}
