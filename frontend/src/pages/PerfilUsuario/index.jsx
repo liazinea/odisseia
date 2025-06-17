@@ -19,6 +19,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import api from "../../services/api";
+import useEmprestimos from "../../hooks/useEmprestimos";
 
 const PerfilUsuario = () => {
   const [message, setMessage] = useState(null);
@@ -29,9 +30,7 @@ const PerfilUsuario = () => {
   const { logout } = useAuth();
   const [usuario, setUsuario] = useState([])
   const { buscaUsuario } = useUsuario(user)
-
-
-
+  const { buscaEmprestimos } = useEmprestimos()
 
   // Estado para controlar o modal de senha
   const [modalSenhaAberto, setModalSenhaAberto] = useState(false);
@@ -59,14 +58,15 @@ const PerfilUsuario = () => {
   useEffect(() => {
     const carregaUsuario = async () => {
       const dados = await buscaUsuario();
+      const todosEmprestimos = await buscaEmprestimos();
 
+      console.log(todosEmprestimos)
+      console.log(dados.data.usuario)
       setUsuario(dados.data.usuario)
-      setEmprestimos(dados.data.usuario.emprestimo)
+      setEmprestimos(todosEmprestimos.filter(emprestimo => emprestimo.aluno.usu_id == dados.data.usuario.usu_id))
     };
     carregaUsuario();
   }, [passwordMessage]);
-
-
 
   // Função para abrir o modal de senha
   const abrirModalSenha = () => {
@@ -133,7 +133,7 @@ const PerfilUsuario = () => {
 
   };
 
-  console.log(emprestimos)
+  // console.log(emprestimos)
 
   const columns = [
     {

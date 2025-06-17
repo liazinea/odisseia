@@ -56,7 +56,7 @@ const ModalInfoDetalhada = ({
         break;
       default:
         setLabelData("Data do Empréstimo:");
-        setLabelPrazo("Data do Empréstimo:");
+        setLabelPrazo("Data de Devolução:");
         break;
     }
   }, [emprestimo.emp_status]);
@@ -120,21 +120,10 @@ const ModalInfoDetalhada = ({
             <label className={styles.nomeLivro} htmlFor="nomeLivro">
               Nome do Livro:
             </label>
-
             <p>{emprestimo.livro.liv_nome}</p>
-
-            <label className={styles.nomeLivro} htmlFor="genero">
-              Gênero:
-            </label>
-            <div className={styles.generos}>
-              {emprestimo.livro.generos.map((genero) => (
-                <span key={genero.gen_id}>{genero.gen_nome}</span>
-              ))}
-            </div>
           </div>
-
           <div className={styles.dupla}>
-            <label className={styles.nomeLivro} htmlFor="nomeAutor">
+          <label className={styles.nomeLivro} htmlFor="nomeAutor">
               Nome do Autor:
             </label>
             <div className={styles.generos}>
@@ -143,13 +132,28 @@ const ModalInfoDetalhada = ({
                   <span key={autor.aut_id}>{autor.aut_nome}</span>
                 ))}
             </div>
-
+          </div>
+        </div>
+        <div className={styles.Alinhadupla}>
+          <div className={styles.dupla}>
+          <label className={styles.nomeLivro} htmlFor="genero">
+              Gênero:
+            </label>
+            <div className={styles.generos}>
+              {emprestimo.livro.generos.map((genero) => (
+                <p key={genero.gen_id}>{genero.gen_nome}</p>
+              ))}
+            </div>
+            
+          </div>
+          <div className={styles.dupla}>
             <label className={styles.nomeLivro} htmlFor="nomeAutor">
               Editora:
             </label>
             <p>{emprestimo.livro.editora.edi_nome}</p>
           </div>
         </div>
+
         <div>
           <div>
             <h3 className={styles.titulo}>{tituloPrazo}</h3>

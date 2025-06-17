@@ -60,7 +60,7 @@ const Usuarios = () => {
   useEffect(() => {
     setColumnFilters([{ id: "usu_status", value: statusFilter }]);
   }, [statusFilter]);
-
+  
   const onSubmit = async (data) => {
     try {
       const response = await api.post("/usuarios", data, {
@@ -68,18 +68,18 @@ const Usuarios = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-
+      
       setMessage(response.data.message || "Usuário cadastrado com sucesso");
       setModalMensagemAberto(true);
       reset(); // limpa o formulário
-
+      
       // Atualizar lista
       const dados = await buscaUsuarios();
       setUsuarios(dados);
     } catch (error) {
       const apiErrors = error.response?.data?.errors;
       const apiMessage = error.response?.data?.message;
-
+      
       if (apiErrors) {
         Object.keys(apiErrors).forEach((campo) => {
           setError(campo, {
@@ -93,7 +93,8 @@ const Usuarios = () => {
       }
     }
   };
-
+  
+  
   const columns = [
     {
       accessorKey: "usu_nome",
@@ -176,6 +177,9 @@ const Usuarios = () => {
                 </option>
                 <option className={styles["status-option"]} value="0">
                   Inativo
+                </option>
+                <option className={styles["status-option"]} value="3">
+                  Punido
                 </option>
               </select>
             </div>

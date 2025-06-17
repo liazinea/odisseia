@@ -9,6 +9,7 @@ import { IoPencil, IoTrash, IoCheckmarkCircleSharp } from "react-icons/io5";
 import ModalConfirmarSenha from "../../Modal/ModalConfirmarSenha";
 import ModalExcluir from "../../Modal/ModalExcluir";
 import { MdBlock } from "react-icons/md";
+import { FaC, FaCheck } from "react-icons/fa6";
 
 const ListaUsuarios = ({
   usuario,
@@ -19,6 +20,7 @@ const ListaUsuarios = ({
 }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isPunishmentModalOpen, setIsPunishmentModalOpen] = useState(false);
+  const [isUnbanModalOpen, setIsUnbanModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isActivateModalOpen, setIsActivateModalOpen] = useState(false);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
@@ -56,6 +58,9 @@ const ListaUsuarios = ({
   const handlePunishmentClick = () => {
     setIsPunishmentModalOpen(true);
   };
+  const handleUnbanClick = () => {
+    setIsUnbanModalOpen(true);
+  };
 
   const closeEditModal = () => {
     setIsEditModalOpen(false);
@@ -67,6 +72,9 @@ const ListaUsuarios = ({
   };
   const closePunishmentModal = () => {
     setIsPunishmentModalOpen(false);
+  };
+  const closeUnbanModal = () => {
+    setIsUnbanModalOpen(false);
   };
 
   const openPasswordModal = () => {
@@ -222,7 +230,7 @@ const ListaUsuarios = ({
             <IoCheckmarkCircleSharp />
             Ativar
           </div>
-        ) : (
+        ) : usuario.usu_status == "1" ? (
           <>
             <div
               className={styles.editar}
@@ -241,6 +249,36 @@ const ListaUsuarios = ({
               }}
             >
               <MdBlock />
+            </div>
+            <div
+              className={styles.excluir}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleDeleteClick();
+              }}
+            >
+              <IoTrash />
+            </div>
+          </>
+        ) : (
+          <>
+            <div
+              className={styles.editar}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleEditClick();
+              }}
+            >
+              <IoPencil />
+            </div>
+            <div
+              className={styles.punir}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleUnbanClick();
+              }}
+            >
+              <FaCheck />
             </div>
             <div
               className={styles.excluir}
@@ -337,11 +375,24 @@ const ListaUsuarios = ({
         />
       )}
 
+      {isUnbanModalOpen && (
+        <ModalExcluir
+          isOpen={isUnbanModalOpen}
+          onClose={closeUnbanModal}
+          onConfirm={openPasswordModal}
+          titulo="Tirar Punição de Usuário"
+          mensagem="Tem certeza de que deseja liberar o usuário"
+          nome={usuario.usu_nome}
+          confirmLabel="Liberar"
+          cancelLabel="Cancelar"
+        />
+      )}
+
       {isPasswordModalOpen && (
         <ModalConfirmarSenha
           isOpen={isPasswordModalOpen}
           onClose={closePasswordModal}
-          onSubmit={isPunishmentModalOpen ? handleConfirmPunishment : handleConfirmDelete}
+          onSubmit={isPunishmentModalOpen ? handleConfirmPunishment : isUnbanModalOpen ? handleConfirmPunishment : handleConfirmDelete}
           handleSubmit={handleSubmit}
           register={register}
           errors={errors}
@@ -349,7 +400,7 @@ const ListaUsuarios = ({
           setPassword={setPassword}
           passwordMessage={passwordMessage}
           mensagem="Por favor, digite sua senha:"
-          titulo="Confirmar Exclusão"
+          titulo={isPunishmentModalOpen ? "Confirmar Punição" : isUnbanModalOpen ? "Confirmar Liberação" : "Confirmar Exclusão"}
         />
       )}
 

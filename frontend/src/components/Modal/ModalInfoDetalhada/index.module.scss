@@ -32,20 +32,18 @@
     justify-content: space-between;
 
     .dupla {
-      width: 50%;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+      width: 48%;
+      .generos{
+        width: 100%;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
     }
 
     .nomeLivro {
       font-weight: 900;
 
-    }
-    .generos{
-      width: 100%;
-      display: flex;
-      gap: 10px;
     }
   }
 
