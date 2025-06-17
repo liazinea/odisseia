@@ -3,7 +3,7 @@ import styles from "./index.module.scss";
 import { useAuth } from "../../../context/AuthContext";
 import api from "../../../services/api";
 
-const BotaoPlanilha = () => {
+const BotaoPlanilha = ({setMessage, setModalMensagemAberto}) => {
   const { token } = useAuth();
 
   const handleFileChange = async (e) => {
@@ -15,21 +15,19 @@ const BotaoPlanilha = () => {
     formData.append("arquivo", file);
 
     try {
-      const response = await api.post(
-        "/usuarios/importar-planilha",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await api.post("/usuarios/importar-planilha", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-      alert(response.data.mensagem || "Planilha importada com sucesso!");
+      setMessage(response.data.mensagem || "Planilha importada com sucesso!");
+      setModalMensagemAberto(true);
     } catch (error) {
       console.error("Erro ao enviar planilha:", error);
-      alert("Falha no envio da planilha!");
+      setMessage(error.response?.data?.message || "Erro ao importar a planilha.");
+      setModalMensagemAberto(true);
     }
   };
 

@@ -336,10 +336,9 @@ const Usuarios = () => {
 
           <div className={styles["botao"]}>
             <BotaoPlanilha
+              setMessage={setMessage}
+              setModalMensagemAberto={setModalMensagemAberto}
             />
-            {/* <p className={styles.error}>
-              {errors?.[campo] && errors[campo]?.message}
-            </p> */}
             <Button type="submit" nomeBotao="cadastrar" texto="Criar usuário" />
           </div>
         </form>
