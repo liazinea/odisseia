@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import useLivros from '../../hooks/useLivros'; // ajuste o caminho se necessário
-import CardLivrosMaisEmprestados from '../../components/Cards/CardLivrosMaisEmprestados';
-import styles from './index.module.scss';
-import HeaderHome from '../../components/layout/HeaderHome';
+import React, { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import useLivros from "../../hooks/useLivros"; // ajuste o caminho se necessário
+import CardLivrosMaisEmprestados from "../../components/Cards/CardLivrosMaisEmprestados";
+import styles from "./index.module.scss";
+import HeaderHome from "../../components/layout/HeaderHome";
 
 const PaginaPesquisa = () => {
   const { termo } = useParams();
@@ -12,40 +12,51 @@ const PaginaPesquisa = () => {
   const [carregando, setCarregando] = useState(true);
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchLivros = async () => {
       setCarregando(true);
       const todosLivros = await buscaLivros();
+      console.log("oi")
       const termoNormalizado = termo.toLowerCase();
 
       const filtrados = todosLivros.filter((livro) =>
-        livro.titulo.toLowerCase().includes(termoNormalizado)
+        livro.nome.toLowerCase().includes(termoNormalizado)
       );
 
-      setResultados(filtrados);
-      setCarregando(false);
+      if (isMounted) {
+        setResultados(filtrados);
+        setCarregando(false);
+      }
     };
 
     fetchLivros();
-  }, [termo, buscaLivros]);
+
+    return () => {
+      isMounted = false;
+    };
+  }, [termo]);
 
   return (
     <div>
-<HeaderHome/>
-      <h3>Resultados para: "{termo}"</h3>
+      <HeaderHome />
+      <h3 className={styles["termo-pesquisa"]}>Resultados para: "{termo}"</h3>
       {carregando ? (
-        <p>Carregando...</p>
+        <p className="pesquisa">Carregando...</p>
       ) : resultados.length > 0 ? (
         <div className={styles.container}>
-
           {resultados.map((livro) => (
-            <div className={styles.cards}>
-            <CardLivrosMaisEmprestados key={livro.id} livro={livro} />
-            </div>
+            <Link
+              to={`/livro/${livro.id}`}
+              key={livro.id}
+              className={styles.cards}
+            >
+              <CardLivrosMaisEmprestados livro={livro} />
+            </Link>
           ))}
         </div>
-        
       ) : (
-        <p>Nenhum livro encontrado.</p>
+        <p className="pesquisa">Nenhum livro encontrado.</p>
       )}
     </div>
   );
