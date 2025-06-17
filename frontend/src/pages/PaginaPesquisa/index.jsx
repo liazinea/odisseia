@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import useLivros from "../../hooks/useLivros"; // ajuste o caminho se necessário
 import CardPesquisa from "../../components/Cards/CardPesquisa";
 import styles from "./index.module.scss";
 import HeaderHome from "../../components/layout/HeaderHome";
+import { useAuth } from "../../context/AuthContext";
 
 const PaginaPesquisa = () => {
+  const { token, userType } = useAuth();
+  const navigate = useNavigate();
+
   const { termo } = useParams();
   const { buscaLivros } = useLivros();
   const [resultados, setResultados] = useState([]);
@@ -14,10 +18,16 @@ const PaginaPesquisa = () => {
   useEffect(() => {
     let isMounted = true;
 
-    const fetchLivros = async () => {
+    const verificarAutenticacaoEBuscar = async () => {
+      // Primeiro valida a autenticação
+      if (!token || userType == 1) {
+        navigate("/");
+        return;
+      }
+
+      // Só busca os livros se o usuário for permitido
       setCarregando(true);
       const todosLivros = await buscaLivros();
-      console.log(todosLivros)
       const termoNormalizado = termo.toLowerCase();
 
       const filtrados = todosLivros.filter((livro) =>
@@ -30,7 +40,7 @@ const PaginaPesquisa = () => {
       }
     };
 
-    fetchLivros();
+    verificarAutenticacaoEBuscar();
 
     return () => {
       isMounted = false;

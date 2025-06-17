@@ -30,11 +30,11 @@ const CardPesquisa = ({ livro }) => {
           {livro?.qtdPaginas && <span>{livro.qtdPaginas} páginas</span>}
         </div>
 
-        <p className={styles.sinopse}>
+        <div className={styles.sinopse}>
           <p className={styles.sinopse}>
             {livro?.sinopse ? livro.sinopse : "Sinopse não disponível."}
           </p>
-        </p>
+        </div>
 
         {livro?.generos && livro.generos.length > 0 && (
           <div className={styles.generos}>
