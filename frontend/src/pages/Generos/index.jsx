@@ -19,6 +19,7 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import Carregando from "../../components/layout/Carregando";
 
 const Generos = () => {
   const [globalFilter, setGlobalFilter] = useState("");
@@ -118,9 +119,18 @@ const Generos = () => {
     getPaginationRowModel: getPaginationRowModel(),
   });
 
+  if(generos.length === 0){
+      return (
+        <div>
+          <HeaderPagina titulo={'Gêneros'} />
+          <Carregando/>
+        </div>
+    )
+    }
+
   return (
     <>
-      <HeaderPagina titulo="Gêneros de Livros" />
+      <HeaderPagina titulo="Gêneros" />
       <div className={styles.divPesquisa}>
         <div className={styles.pesquisa}>
           <input

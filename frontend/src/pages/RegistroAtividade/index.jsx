@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import useEmprestimos from "../../hooks/useEmprestimos";
 import {useNavigate} from 'react-router-dom';
 import TabelaRegistros from "../../components/Tabelas/TabelaRegistros";
+import Carregando from "../../components/layout/Carregando";
 
 const RegistroAtividade = () => {
   const [emprestimos, setEmprestimos] = useState([])
@@ -27,6 +28,15 @@ const RegistroAtividade = () => {
   }, []);
 
   console.log(emprestimos)
+
+  if(emprestimos.length === 0){
+    return (
+      <div>
+        <HeaderPagina titulo={'Registro de Atividades'} />
+        <Carregando/>
+      </div>
+  )
+  }
 
   return (
     <>

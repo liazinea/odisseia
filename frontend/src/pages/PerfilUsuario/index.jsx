@@ -20,6 +20,7 @@ import {
 } from "@tanstack/react-table";
 import api from "../../services/api";
 import useEmprestimos from "../../hooks/useEmprestimos";
+import Carregando from "../../components/layout/Carregando";
 
 const PerfilUsuario = () => {
   const [message, setMessage] = useState(null);
@@ -176,6 +177,15 @@ const PerfilUsuario = () => {
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
+
+  if (!usuario || emprestimos.length === 0) {
+    return (
+      <div>
+        <HeaderPagina titulo="Perfil do aluno" />
+        <Carregando/>
+      </div>
+    );
+  }
 
   return (
     <>

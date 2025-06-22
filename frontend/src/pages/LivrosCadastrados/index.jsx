@@ -7,6 +7,7 @@ import {
   useNavigate
 } from 'react-router-dom';
 import useLivros from "../../hooks/useLivros";
+import Carregando from "../../components/layout/Carregando";
 
 
 const LivrosCadastrados = () => {
@@ -30,6 +31,15 @@ const LivrosCadastrados = () => {
     };
     carregarivros();
   }, []);
+
+  if(livros.length === 0){
+      return (
+        <div>
+          <HeaderPagina titulo={'Livros Cadastrados'} />
+          <Carregando/>
+        </div>
+    )
+    }
 
   return (
     <div className={styles.principal}>

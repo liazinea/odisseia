@@ -1,56 +1,61 @@
-import React from 'react';
-import InfosLivro from '../../components/Livro/InfosLivro';
-import InfoAdicionais from '../../components/Livro/InfosAdicionais';
-import styles from './index.module.scss';
-import HeaderPagina from '../../components/layout/HeaderPagina';
-import { useParams } from 'react-router-dom';
-import useLivro from '../../hooks/useLivro';
-import { useEffect, useState } from 'react';
-import { useAuth } from '../../context/AuthContext';
-import api from '../../services/api';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import InfosLivro from "../../components/Livro/InfosLivro";
+import InfoAdicionais from "../../components/Livro/InfosAdicionais";
+import styles from "./index.module.scss";
+import HeaderPagina from "../../components/layout/HeaderPagina";
+import { useParams } from "react-router-dom";
+import useLivro from "../../hooks/useLivro";
+import { useEffect, useState } from "react";
+import { useAuth } from "../../context/AuthContext";
+import api from "../../services/api";
+import { useNavigate } from "react-router-dom";
+import Carregando from "../../components/layout/Carregando";
 
 const InformacoesDetalhadas = () => {
   const { id } = useParams();
-  const [livro, setLivro] = useState(null)
-  const { buscaLivro } = useLivro(id)
-   const navigate = useNavigate()
-  const { token, userType } = useAuth()
+  const [livro, setLivro] = useState(null);
+  const { buscaLivro } = useLivro(id);
+  const navigate = useNavigate();
+  const { token, userType } = useAuth();
   useEffect(() => {
     if (!token) {
-      navigate('/')
+      navigate("/");
     }
-  }, [token])
+  }, [token]);
 
   useEffect(() => {
-    if(!livro){
-       const carregaLivro = async () => {
-      try {
-        const response = await api.get(`/livros/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`, // Inclui o token no header
-          },
-        });
-        setLivro(response.data.livro); // Armazena os dados do livro no estado
-      } catch (error) {
-        console.error('Erro ao carregar livro:', error);
+    if (!livro) {
+      const carregaLivro = async () => {
+        try {
+          const response = await api.get(`/livros/${id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          setLivro(response.data.livro);
+        } catch (error) {
+          console.error("Erro ao carregar livro:", error);
+        }
+      };
+
+      if (id) {
+        carregaLivro();
       }
-    };
-
-    if (id) {
-      carregaLivro(); // Chama a função apenas se o ID for válido
     }
-    }
-  }, [livro]); // A dependênc
+  }, [livro]);
 
-  
   if (!livro) {
-    return <div>Carregando...</div>; // Exibe um texto ou loader enquanto o livro está sendo carregado
+    return (
+      <div>
+        <HeaderPagina titulo={"Informações Detalhadas"} />
+        <Carregando/>
+      </div>
+    );
   }
 
   return (
     <div>
-      <HeaderPagina titulo={'Informações Detalhadas'} />
+      <HeaderPagina titulo={"Informações Detalhadas"} />
       <div className={styles.container}>
         <div className={styles.parteLaranja}>
           <InfosLivro livro={livro} />
@@ -60,7 +65,7 @@ const InformacoesDetalhadas = () => {
             <InfoAdicionais
               paginas={livro.qtdPaginas}
               edicao={livro.edicao}
-              editora={livro.editora} 
+              editora={livro.editora}
               data={livro.dataPubli}
               id={livro.id}
             />
@@ -72,4 +77,3 @@ const InformacoesDetalhadas = () => {
 };
 
 export default InformacoesDetalhadas;
-

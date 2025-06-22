@@ -1,3 +1,18 @@
+@import '../../styles/index.scss';
+
+.carregando{
+  height: 30vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  span{
+    background-color: $azul-escuro;
+    padding: 30px;
+    color: $branco;
+    border-radius: 12px;
+  }
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -8,7 +23,7 @@
       position: relative;
     }
     
-    /* Parte laranja (vai invadir pra cima e ficar por cima da azul) */
+    
     .parteAzul {
       margin-top: -30px;
       z-index: 2;
