@@ -19,6 +19,7 @@ import {
 } from "@tanstack/react-table";
 import ModalMensagem from "../../components/Modal/ModalMensagem";
 import BotaoPlanilha from "../../components/Botao/BotaoPlanilha";
+import Carregando from "../../components/layout/Carregando";
 
 const Usuarios = () => {
   const [globalFilter, setGlobalFilter] = useState("");
@@ -141,6 +142,14 @@ const Usuarios = () => {
     getPaginationRowModel: getPaginationRowModel(),
   });
 
+  if(usuarios.length === 0){
+    return (
+      <div>
+        <HeaderPagina titulo={'Lista de Usuários'} />
+        <Carregando/>
+      </div>
+  )
+  }
   return (
     <>
       <HeaderPagina titulo="Lista de usuários" />

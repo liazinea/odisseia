@@ -19,6 +19,7 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import Carregando from "../../components/layout/Carregando";
 
 const Autores = () => {
   const [globalFilter, setGlobalFilter] = useState("");
@@ -126,6 +127,15 @@ const Autores = () => {
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
+
+  if(autores.length === 0){
+      return (
+        <div>
+          <HeaderPagina titulo={'Autores'} />
+          <Carregando/>
+        </div>
+    )
+    }
 
   return (
     <>

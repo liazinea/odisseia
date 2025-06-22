@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 import CardLivrosMaisEmprestados from '../../Cards/CardLivrosMaisEmprestados';
 import useLivros from '../../../hooks/useLivros';
+import Carregando from '../Carregando';
 
 function getRandomItems(array, n) {
   if (!array) return [];
@@ -28,6 +29,12 @@ const LivrosMaisEmprestados = () => {
     fetchLivros();
   
   }, []);
+
+  if (livrosAleatorios.length === 0) {
+    return (
+        <Carregando/>
+    );
+  }
 
   return (
     <div className={styles.container}>
