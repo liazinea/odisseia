@@ -29,6 +29,9 @@
       width: 90%;
 
       .inputs {
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
         label{
           font-size: 1.2rem;
         }
@@ -99,6 +102,34 @@
         .linha {
           margin-bottom: 5px;
         }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 992px) {
+  .container-geral{
+    display: block;
+    .container-historico{
+      .titulo-historico{
+        width: 90%;
+      }
+      .tabela{
+        width: 90%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container-geral{
+    display: block;
+    .container-historico{
+      .titulo-historico{
+        width: 90%;
+      }
+      .tabela{
+        width: 90%;
       }
     }
   }
