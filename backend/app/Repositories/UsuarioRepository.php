@@ -18,7 +18,7 @@ class UsuarioRepository implements UsuarioRepositoryInterface
 
     public function buscaPorId(int $id): ?Usuario
     {
-    return Usuario::where('usu_status', 1)
+    return Usuario::where('usu_status', '!=', 0)
         ->where('usu_id', $id)
         ->with([
             'emprestimo.livro.generos',

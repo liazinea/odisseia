@@ -38,6 +38,7 @@ class LoginService
 
     public function geraToken(Usuario $usuarioAutenticado): string
     {
+       if($usuarioAutenticado->usu_status != 0){
         if ($usuarioAutenticado->usu_nivel == 0) {
             $emprestimosVencidos = Emprestimo::where('emp_status', '=', 2)->where('emp_dataFim', '<', Carbon::now())->where('usu_id', '=', $usuarioAutenticado->usu_id)->get();
             if ($emprestimosVencidos->count() > 0) {
@@ -47,5 +48,7 @@ class LoginService
             return $this->loginRepository->geraTokenAluno($usuarioAutenticado);
         }
         return $this->loginRepository->geraTokenProfessorSalaDeLeitura($usuarioAutenticado);
+       }
+       throw new \Exception('Erro ao logar');
     }
 }

@@ -12,6 +12,7 @@ const BotaoReserva = ({ texto, idLivro }) => {
     const [message, setMessage] = useState(null);
 
   const handleSubmit = async () => {
+    console.log('uar')
     try {
       const response = await api.post(
         '/emprestimos',
@@ -25,6 +26,7 @@ const BotaoReserva = ({ texto, idLivro }) => {
           },
         }
       );
+      console.log(response.data)
       setMessage("Reserva cadastrada com sucesso!");
       setModalMensagemAberto(true);
       console.log('Empréstimo criado com sucesso:', response.data);

@@ -40,7 +40,7 @@ class UsuarioController extends Controller
 
     public function show(Usuario $usuario): JsonResponse
     {
-        if ($usuario->usu_status == 1) {
+        if ($usuario->usu_status != 0) {
             return response()->json([
                 'usuario' => $usuario->load('emprestimo.livro.autores', 'emprestimo.livro.generos', 'emprestimo.livro.editora'),
             ], 200);

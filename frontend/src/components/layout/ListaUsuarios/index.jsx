@@ -142,9 +142,9 @@ const ListaUsuarios = ({
         }
       );
 
-      setMessage(responseBan.data.message);
       console.log(response)
       setModalMensagemAberto(true);
+      setMessage(responseBan.data.message);
       const dados = await buscaUsuarios();
       setUsuarios(dados);
       closePasswordModal();
