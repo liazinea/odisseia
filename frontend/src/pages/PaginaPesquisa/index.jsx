@@ -14,6 +14,27 @@ const PaginaPesquisa = () => {
   const { buscaLivros } = useLivros();
   const [resultados, setResultados] = useState([]);
   const [carregando, setCarregando] = useState(true);
+  const [paginaAtual, setPaginaAtual] = useState(0);
+  const [tamanhoPagina, setTamanhoPagina] = useState(10);
+
+  const totalPaginas = Math.ceil(resultados.length / tamanhoPagina);
+
+  const livrosPaginados = resultados.slice(
+    paginaAtual * tamanhoPagina,
+    (paginaAtual + 1) * tamanhoPagina
+  );
+
+  const irParaAnterior = () => {
+    if (paginaAtual > 0) setPaginaAtual(paginaAtual - 1);
+  };
+
+  const irParaProxima = () => {
+    if (paginaAtual < totalPaginas - 1) setPaginaAtual(paginaAtual + 1);
+  };
+
+  useEffect(() => {
+    setPaginaAtual(0);
+  }, [tamanhoPagina]);
 
   useEffect(() => {
     let isMounted = true;
@@ -24,6 +45,8 @@ const PaginaPesquisa = () => {
         navigate("/");
         return;
       }
+
+      setPaginaAtual(0);
 
       // Só busca os livros se o usuário for permitido
       setCarregando(true);
@@ -55,19 +78,61 @@ const PaginaPesquisa = () => {
         <p className="pesquisa">Carregando...</p>
       ) : resultados.length > 0 ? (
         <div className={styles.container}>
-          {resultados.map((livro) => (
-            <Link
-              to={`/livro/${livro.id}`}
-              key={livro.id}
-              className={styles.cards}
-            >
+          {livrosPaginados.map((livro) => (
+            <Link to={`/livro/${livro.id}`} key={livro.id} className={styles.cards}>
               <CardPesquisa livro={livro} />
             </Link>
           ))}
+
         </div>
       ) : (
         <p className="pesquisa">Nenhum livro encontrado.</p>
       )}
+
+      <div className={styles.paginacao}>
+        <div className={styles["botoes-paginacao"]}>
+          <button
+            className={styles["botao-paginacao"]}
+            onClick={irParaAnterior}
+            disabled={paginaAtual === 0}
+          >
+            Anterior
+          </button>
+
+          <span className={styles["info-paginacao"]}>
+            Página {paginaAtual + 1} de {totalPaginas}
+          </span>
+
+          <button
+            className={styles["botao-paginacao"]}
+            onClick={irParaProxima}
+            disabled={paginaAtual >= totalPaginas - 1}
+          >
+            Próxima
+          </button>
+        </div>
+
+        <div className={styles["detalhes-paginacao"]}>
+          <span className={styles["info-paginacao"]}>
+            Total de itens: {resultados.length}
+          </span>
+
+          <div className={styles["seletor-tamanho-pagina"]}>
+            <label htmlFor="pageSize">Itens por página:</label>
+            <select
+              id="pageSize"
+              value={tamanhoPagina}
+              onChange={(e) => setTamanhoPagina(Number(e.target.value))}
+            >
+              {[5, 10, 20, 50].map((size) => (
+                <option key={size} value={size}>
+                  {size}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
