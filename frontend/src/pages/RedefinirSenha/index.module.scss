@@ -1,0 +1,78 @@
+@import "../../styles/index.scss";
+
+.principal {
+  background-color: $azul-escuro;
+  display: flex;
+
+  .logo {
+    height: 100vh;
+    position: relative;
+
+    .logoFundo {
+      width: 100vw;
+      height: 60vh;
+      background-image: url("../../../public/forma-recuperacao.svg");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: bottom;
+    }
+    .logoTexto {
+      width: 25vw;
+      position: fixed;
+      bottom: 0;
+      margin-bottom: 30px;
+
+      .centraliza {
+        display: flex;
+        justify-content: center;
+        .logoImagem {
+          width: 60px;
+        }
+      }
+      .logoTitulo {
+        font-family: Montserrat;
+        font-size: 3rem;
+        color: $branco;
+        text-align: center;
+      }
+      .logoSubtitulo {
+        z-index: 1;
+        font-family: Poppins;
+        font-size: 2rem;
+        color: $branco;
+        text-align: center;
+      }
+    }
+  }
+  .form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    .cardFundo {
+      min-height: 50vh;
+      padding: 30px 50px;
+      background-color: $branco-rosado;
+      border-top-left-radius: 40px;
+      border-bottom-right-radius: 40px;
+      flex-direction: column;
+      display: flex;
+      justify-content: space-around;
+
+      .cardTitulo {
+        color: $azul-escuro;
+        text-align: center;
+        font-weight: bolder;
+        font-family: Poppins;
+        font-size: 3rem;
+      }
+      .botao {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 35px;
+      }
+    }
+  }
+}

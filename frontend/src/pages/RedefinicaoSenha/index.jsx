@@ -45,7 +45,7 @@ const RedefinicaoSenha = () => {
             tituloCard={'Esqueci minha senha'}
             typeInput={'email'}
             nomeCampoInput={'email'}
-            placeholder={'Digite seu e-mail institucional'}
+            placeholder={'Digite seu e-mail'}
             required={true}
             nomeBotao={'enviar'}
             textoBotao={'Enviar Código'}
