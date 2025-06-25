@@ -1,4 +1,4 @@
-import CardAcesso from '../../components/Cards/CardPrimeiroAcesso';
+import CardAcesso from '../../components/Cards/CardPrimeiroAcesso'
 import styles from './index.module.scss';
 
 const PrimeiroAcesso = () => {

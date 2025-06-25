@@ -26,6 +26,6 @@ class GeneroRequest extends FormRequest
             'gen_nome.string'=>'O campo deve ser do tipo string.',
             'gen_nome.max'=>'O campo não pode ter mais de 255 caracteres.',
             'gen_unique'=>'Já existe um gênero com tal nome.'
-        ];
+\        ];
     }
 }

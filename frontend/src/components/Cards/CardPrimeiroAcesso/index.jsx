@@ -11,24 +11,32 @@ const CardAcesso = ({
   required,
   nomeBotao,
   textoBotao,
+  register,
+  errors
 }) => {
   return (
     <div className={styles.form}>
-      <form action="" className={styles.cardFundo}>
+      <div className={styles.cardFundo}>
         <h1 className={styles.cardTitulo}>{tituloCard}</h1>
+
         <InputFormAcesso
           type={typeInput}
           nomeCampo={nomeCampoInput}
           placeholder={placeholder}
           required={required}
+          register={register}
+          error={errors[nomeCampoInput]}
         />
+
+
         <div className={styles.botao}>
-          <BotaoFormLogin type={"submit"} nomeBotao={nomeBotao} texto={textoBotao} />
+          <BotaoFormLogin type="submit" nomeBotao={nomeBotao} texto={textoBotao} />
         </div>
+
         <Link className={styles.texto} to={`/`}>
           <p>Voltar para Login</p>
         </Link>
-      </form>
+      </div>
     </div>
   );
 };

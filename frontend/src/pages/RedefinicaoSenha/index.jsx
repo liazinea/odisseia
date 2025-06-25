@@ -1,7 +1,29 @@
-import CardAcesso from '../../components/Cards/CardPrimeiroAcesso';
-import styles from './index.module.scss';
+import { useForm } from 'react-hook-form'
+import axios from 'axios'
+import { useState } from 'react'
+import CardAcesso from '../../components/Cards/CardPrimeiroAcesso'
+import styles from './index.module.scss'
+import api from '../../services/api'
 
 const RedefinicaoSenha = () => {
+  const { register, handleSubmit, formState: { errors } } = useForm()
+  const [mensagem, setMensagem] = useState('')
+  const [erro, setErro] = useState('')
+
+  const onSubmit = async (data) => {
+    try {
+      const response = await api.post('/usuarios/enviar-codigo', {
+        email: data.email
+      })
+
+      setMensagem(response.data.message)
+      setErro('')
+    } catch (err) {
+      setErro(err.response?.data?.message || 'Erro ao enviar o código.')
+      setMensagem('')
+    }
+  }
+
   return (
     <div className={styles.principal}>
       <div className={styles.logo}>
@@ -16,8 +38,24 @@ const RedefinicaoSenha = () => {
           </div>
         </div>
       </div>
+
       <div className={styles.form}>
-        <CardAcesso tituloCard={'Esqueci minha senha'} typeInput={'email'} nomeCampoInput={'email'} placeholder={'Digite seu e-mail institucional'} required={true} nomeBotao={'enviar'} textoBotao={'Enviar Código'}/>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <CardAcesso
+            tituloCard={'Esqueci minha senha'}
+            typeInput={'email'}
+            nomeCampoInput={'email'}
+            placeholder={'Digite seu e-mail institucional'}
+            required={true}
+            nomeBotao={'enviar'}
+            textoBotao={'Enviar Código'}
+            register={register}
+            errors={errors}
+          />
+
+          {mensagem && <p style={{ color: 'green', marginTop: '1rem' }}>{mensagem}</p>}
+          {erro && <p style={{ color: 'red', marginTop: '1rem' }}>{erro}</p>}
+        </form>
       </div>
     </div>
   )
