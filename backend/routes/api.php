@@ -7,10 +7,16 @@ use App\Http\Controllers\GeneroController;
 use App\Http\Controllers\LivroController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UsuarioController;
+use App\Models\Usuario;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(LoginController::class)->group(function () {
     Route::post('/login', 'autenticar');
+});
+
+Route::controller(UsuarioController::class)->group(function(){
+    Route::post('/usuarios/enviar-codigo', 'enviarCodigoRedefinicao');
+    Route::post('/usuarios/redefinir-senha', 'redefinirSenha');
 });
 
 Route::middleware('auth:sanctum')->group(function () {

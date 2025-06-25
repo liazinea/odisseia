@@ -16,8 +16,10 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Password;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Shared\Date as ExcelDate;
+use Illuminate\Support\Str;
 
 class UsuarioController extends Controller
 {
@@ -119,6 +121,45 @@ class UsuarioController extends Controller
         }
     }
 
+    public function enviarCodigoRedefinicao(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+
+        return $status === Password::RESET_LINK_SENT
+            ? response()->json(['message' => 'Link de redefinição enviado para o e-mail.'])
+            : response()->json(['message' => 'Não foi possível enviar o link.'], 400);
+    }
+
+    public function redefinirSenha(Request $request)
+    {
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|confirmed|min:6',
+        ]);
+
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user, $password) {
+                $user->forceFill([
+                    'password' => Hash::make($password),
+                    'remember_token' => Str::random(60),
+                ])->save();
+            }
+        );
+
+        return $status === Password::PASSWORD_RESET
+            ? response()->json(['message' => 'Senha redefinida com sucesso.'])
+            : response()->json(['message' => 'Erro ao redefinir a senha.'], 400);
+    }
+
+
     public function reativar(Usuario $usuario): JsonResponse
     {
         try {
@@ -188,7 +229,7 @@ class UsuarioController extends Controller
         return response()->json(['mensagem' => 'Importação concluída com sucesso.'], 200);
     }
 
-    public function punir(Usuario $usuario):JsonResponse
+    public function punir(Usuario $usuario): JsonResponse
     {
         if ($usuario->usu_status == 1) {
             $usuario->usu_status = 3;
@@ -200,6 +241,6 @@ class UsuarioController extends Controller
             return response()->json(['message' => 'Usuário liberado'], 200);
         }
 
-          return response()->json(['message' => 'Erro ao punir usuário'], 400);
+        return response()->json(['message' => 'Erro ao punir usuário'], 400);
     }
 }

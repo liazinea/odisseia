@@ -1,25 +1,34 @@
-import {useState} from 'react'
-import styles from './index.module.scss'
+import { useState } from 'react';
+import styles from './index.module.scss';
 
-const InputFormAcesso = ({type, nomeCampo, placeholder, required}) => {
-    const isRequired = required;
-      const [filled, setFilled] = useState(false);
-    
-      const toggleFilled = () =>{
-    
-        if(document.getElementById(nomeCampo).value != ''){
-          setFilled(true)
-        }else{
-          setFilled(false)
-        }
-      }
+const InputFormAcesso = ({ type, nomeCampo, placeholder, required, register, error }) => {
+  const [filled, setFilled] = useState(false);
+
+  const handleChange = (e) => {
+    setFilled(e.target.value !== '');
+  };
+
   return (
     <label className={styles.label}>
-        <input type={type} className={`${styles.input} ${filled ? styles.filled : null}`} 
-        name={nomeCampo} id={nomeCampo} onChange={toggleFilled} {...(isRequired ? { required: true } : {})}/>
-        <span className={styles.placeholder}>{placeholder}</span>
-    </label>
-  )
-}
+      <input
+        id={nomeCampo}
+        name={nomeCampo}
+        type={type}
+        className={`${styles.input} ${filled ? styles.filled : ''}`}
+        onChange={handleChange}
+        {...register(nomeCampo, {
+          required: required ? 'Campo obrigatório' : false,
+        })}
+      />
+      <span className={styles.placeholder}>{placeholder}</span>
 
-export default InputFormAcesso
+      {error && (
+        <span style={{ color: 'red', fontSize: '0.85rem', marginTop: '5px', display: 'block' }}>
+          {error.message}
+        </span>
+      )}
+    </label>
+  );
+};
+
+export default InputFormAcesso;

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\ResetPasswordNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -35,7 +36,7 @@ class Usuario extends Authenticatable
     public function emprestimosVencidos()
     {
         return $this->emprestimo()
-            ->where('emp_status', '=',2)
+            ->where('emp_status', '=', 2)
             ->where('emp_dataFim', '<', Carbon::now());
     }
 
@@ -50,5 +51,10 @@ class Usuario extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token));
     }
 }
