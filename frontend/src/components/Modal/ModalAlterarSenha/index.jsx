@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./index.module.scss";
 import Input from "../../Inputs/Input";
 
@@ -12,11 +12,22 @@ const ModalAlterarSenha = ({
   passwordMessage,
   titulo = "Editar senha",
 }) => {
+  const [loading, setLoading] = useState(false);
+
   if (!isOpen) return null;
+
+  const submitHandler = async (data) => {
+    setLoading(true);
+    try {
+      await onSubmit(data);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className={styles.modalOverlay}>
-      <form onSubmit={handleSubmit(onSubmit)} className={styles.modalSenha}>
+      <form onSubmit={handleSubmit(submitHandler)} className={styles.modalSenha}>
         <h3 className={styles.titulo}>{titulo}</h3>
         {passwordMessage && <p style={{ color: "red" }}>{passwordMessage}</p>}
         <div>
@@ -68,10 +79,19 @@ const ModalAlterarSenha = ({
           )}
         </div>
         <div className={styles.botoes}>
-          <button type="submit" className={styles.saveButton}>
-            Alterar Senha
+          <button
+            type="submit"
+            className={styles.saveButton}
+            disabled={loading}
+          >
+            {loading ? "Salvando..." : "Alterar Senha"}
           </button>
-          <button onClick={onClose} className={styles.closeButton} type="button">
+          <button
+            onClick={onClose}
+            className={styles.closeButton}
+            type="button"
+            disabled={loading}
+          >
             Cancelar
           </button>
         </div>
