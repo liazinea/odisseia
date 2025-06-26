@@ -9,7 +9,7 @@ const BotaoReserva = ({ texto, idLivro }) => {
   const { token, user } = useAuth();
 
   const [modalMensagemAberto, setModalMensagemAberto] = useState(false);
-    const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState(null);
 
   const handleSubmit = async () => {
     console.log('uar')
@@ -18,7 +18,7 @@ const BotaoReserva = ({ texto, idLivro }) => {
         '/emprestimos',
         {
           liv_id: idLivro,
-          usu_id: user, // já é o ID do usuário
+          usu_id: user,
         },
         {
           headers: {
@@ -32,10 +32,12 @@ const BotaoReserva = ({ texto, idLivro }) => {
       console.log('Empréstimo criado com sucesso:', response.data);
       // Aqui você pode exibir um toast ou feedback para o usuário
     } catch (error) {
-      setMessage(response.data.message);
+      const mensagemErro = error.response?.data?.message || "Erro ao fazer empréstimo do livro.";
+      setMessage(mensagemErro);
       setModalMensagemAberto(true);
       console.error('Erro ao fazer empréstimo do livro:', error);
     }
+
   };
 
   return (
