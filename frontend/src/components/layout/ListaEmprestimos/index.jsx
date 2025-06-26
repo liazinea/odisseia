@@ -63,6 +63,8 @@ const ListaEmprestimos = ({
         errors={errors}
         passwordMessage={passwordMessage}
         emprestimo={emprestimo}
+        setEmprestimos={setEmprestimos}
+        usuarioId={emprestimo.aluno.usu_id}
       />
     </div>
   );
