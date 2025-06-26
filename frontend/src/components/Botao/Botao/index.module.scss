@@ -18,4 +18,10 @@
   &:active {
     transform: scale(0.98);
   }
+
+  &:disabled {
+    background-color: color.$azul-escuro;
+    color: color.$branco;
+    cursor: not-allowed;
+  }
 }

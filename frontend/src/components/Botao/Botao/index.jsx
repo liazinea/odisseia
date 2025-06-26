@@ -1,14 +1,29 @@
+import { useState } from "react";
 import styles from "./index.module.scss";
 
-const BotaoForm = ({ type, nomeBotao, texto, onClick }) => {
+const BotaoForm = ({ type = "button", nomeBotao, texto, onClick }) => {
+  const [loading, setLoading] = useState(false);
+
+  const handleClick = async () => {
+    setLoading(true);
+    try {
+      await onClick(); // executa a função recebida
+    } catch (err) {
+      console.error("Erro no BotaoForm:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <button
       className={styles.botao}
       type={type}
       name={nomeBotao}
-      onClick={onClick} // Adicionado suporte para eventos de clique
+      onClick={handleClick}
+      disabled={loading}
     >
-      {texto}
+      {loading ? "Salvando..." : texto}
     </button>
   );
 };
