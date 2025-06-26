@@ -10,9 +10,10 @@ const BotaoReserva = ({ texto, idLivro }) => {
 
   const [modalMensagemAberto, setModalMensagemAberto] = useState(false);
   const [message, setMessage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
-    console.log('uar')
+    setLoading(true);
     try {
       const response = await api.post(
         '/emprestimos',
@@ -29,22 +30,23 @@ const BotaoReserva = ({ texto, idLivro }) => {
       console.log(response.data)
       setMessage("Reserva cadastrada com sucesso!");
       setModalMensagemAberto(true);
-      console.log('Empréstimo criado com sucesso:', response.data);
-      // Aqui você pode exibir um toast ou feedback para o usuário
     } catch (error) {
       const mensagemErro = error.response?.data?.message || "Erro ao fazer empréstimo do livro.";
       setMessage(mensagemErro);
       setModalMensagemAberto(true);
       console.error('Erro ao fazer empréstimo do livro:', error);
+    } finally {
+      setLoading(false);
     }
-
   };
+
 
   return (
     <div>
-      <button onClick={handleSubmit} type="button" className={styles.btn}>
-        {texto}
+      <button onClick={handleSubmit} type="button" className={styles.btn} disabled={loading}>
+        {loading ? 'Aguarde...' : texto}
       </button>
+
       <ModalMensagem
         mensagemModal={message}
         modalAberto={modalMensagemAberto}

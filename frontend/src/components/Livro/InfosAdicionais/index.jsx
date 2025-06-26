@@ -15,7 +15,7 @@ const InfoAdicionais = ({
   data,
   id
 }) => {
-  const {userType} = useAuth();
+  const { userType } = useAuth();
 
   return (
     <div className={styles.container}>
@@ -51,8 +51,8 @@ const InfoAdicionais = ({
         />
       </div>
 
-    <div className={`${userType == 1 ? styles.desativado : styles.botaoWrapper}`}>
-        <BotaoReserva texto="Realizar Reserva" idLivro={id}/>
+      <div className={`${userType == 1 ? styles.desativado : styles.botaoWrapper}`}>
+        <BotaoReserva texto="Realizar Reserva" idLivro={id} />
       </div>
     </div>
   );
