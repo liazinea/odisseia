@@ -16,4 +16,10 @@
   &:active {
     transform: scale(0.98);
   }
+
+  &:disabled {
+    background-color: $cinza;
+    color: $branco;
+    cursor: not-allowed;
+  }
 }

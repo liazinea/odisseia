@@ -101,7 +101,7 @@ const CardCadastro = () => {
       setMessage(response.data.message)
       setModalMensagemAberto(true);
       closeEditModal();
-      
+
     } catch (error) {
       if (error.response) {
         console.error("Erro na resposta da API:", error.response.data);
@@ -279,11 +279,12 @@ const CardCadastro = () => {
 
                 <div className={styles.btn}>
                   <BotaoForm
-                    type={"submit"}
-                    nomeBotao={"cadastrar"}
-                    texto={"Cadastrar"}
-                    mensagemModal={'Livro cadastrado com'}
+                    type="button"
+                    nomeBotao="cadastrar"
+                    texto="Cadastrar"
+                    onClick={handleSubmit(onSubmit)} // ← Isso é essencial para o loading funcionar!
                   />
+
                 </div>
               </div>
             </div>
@@ -291,10 +292,10 @@ const CardCadastro = () => {
         </form>
       </div>
       <ModalMensagem
-          mensagemModal={message}
-          modalAberto={modalMensagemAberto}
-          closeModal={() => setModalMensagemAberto(false)}
-        />
+        mensagemModal={message}
+        modalAberto={modalMensagemAberto}
+        closeModal={() => setModalMensagemAberto(false)}
+      />
     </div>
   );
 };
