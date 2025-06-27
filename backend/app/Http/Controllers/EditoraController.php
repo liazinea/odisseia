@@ -31,6 +31,12 @@ class EditoraController extends Controller
         ], 200);
     }
 
+    public function nomes():JsonResponse
+    {
+        return response()->json(Editora::where('edi_status_ativo', '=', 1)->pluck('edi_nome'), 200);
+    }
+
+
     public function store(EditoraRequest $request): JsonResponse
     {
         $editora = $this->editoraService->salvar(new EditoraDTO($request->validated('edi_nome'), 1));

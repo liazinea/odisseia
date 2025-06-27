@@ -17,6 +17,8 @@ import ModalMensagem from "../../Modal/ModalMensagem";
 const CardCadastro = () => {
   const [generos, setGeneros] = useState([]);
   const [autores, setAutores] = useState([]);
+  const [editoras, setEditoras] = useState([]);
+
   const [modalMensagemAberto, setModalMensagemAberto] = useState(false);
   const [message, setMessage] = useState(null);
   const { token } = useAuth();
@@ -57,6 +59,20 @@ const CardCadastro = () => {
     };
 
     carregarAutores();
+  }, []);
+
+  useEffect(() => {
+    const carregarEditoras = async () => {
+      const dados = await api.get("/editoras/nomes", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setEditoras(dados.data);
+    };
+
+    carregarEditoras();
   }, []);
 
   const onSubmit = async (data) => {
@@ -187,13 +203,14 @@ const CardCadastro = () => {
               <div className={styles.dupla}>
                 <div className={styles.input}>
                   {/* Select editora */}
-                  <InputLivro
-                    type="text"
+                  <SelectCriavel
                     nomeCampo="liv_editora"
                     placeholder="Editora"
-                    required={true}
-                    register={register}
-                    errors={errors}
+                    values={editoras}
+                    control={control}
+                    rules={{ required: "Campo obrigatório" }}
+                    error={errors?.liv_editora}
+                    isMulti={false}
                   />
                 </div>
                 <div className={styles.input}>
