@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-
 import styles from "./index.module.scss";
 import Input from "../../Inputs/Input";
 import api from "../../../services/api";
@@ -26,6 +25,7 @@ const ListaUsuarios = ({
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [password, setPassword] = useState("");
   const [passwordMessage, setPasswordMessage] = useState(null);
+  const [loadingEdit, setLoadingEdit] = useState(false);
   const { token } = useAuth();
 
   const {
@@ -163,6 +163,7 @@ const ListaUsuarios = ({
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    setLoadingEdit(true);
     try {
       await api.put(
         `/usuarios/${usuario.usu_id}`,
@@ -184,11 +185,33 @@ const ListaUsuarios = ({
       setMessage("Usuário atualizado com sucesso");
       setModalMensagemAberto(true);
     } catch (error) {
-      console.error(
-        "Erro ao atualizar usuário:",
-        error.response?.data || error.message
-      );
+    console.error("Erro ao atualizar usuário:", error);
+
+    // Tenta pegar a resposta da API
+    const responseData = error.response?.data;
+
+    if (responseData) {
+      if (responseData.errors) {
+        const validationMessages = Object.values(responseData.errors)
+          .flat()
+          .join("\n");
+        setMessage(validationMessages);
+      }
+      else if (responseData.message) {
+        setMessage(responseData.message);
+      } else {
+        setMessage("Erro desconhecido ao atualizar usuário.");
+      }
+    } else if (error.message) {
+      setMessage(`Erro: ${error.message}`);
+    } else {
+      setMessage("Erro desconhecido ao atualizar usuário.");
     }
+
+    setModalMensagemAberto(true);
+  } finally {
+    setLoadingEdit(false);
+  }
   };
 
   const handleActivateClick = async () => {
@@ -297,6 +320,7 @@ const ListaUsuarios = ({
         <div className={styles.modal}>
           <form onSubmit={onSubmit} className={styles.modalEdicao}>
             <h3 className={styles.titulo}>Editar usuário</h3>
+            {/* Campos de input */}
             <div>
               <label htmlFor="nome">Nome</label>
               <Input
@@ -304,6 +328,7 @@ const ListaUsuarios = ({
                 name="nome"
                 value={editedData.nome}
                 onChange={handleInputChange}
+                disabled={loadingEdit}
               />
             </div>
             <div>
@@ -313,15 +338,17 @@ const ListaUsuarios = ({
                 name="email"
                 value={editedData.email}
                 onChange={handleInputChange}
+                disabled={loadingEdit}
               />
             </div>
             <div>
               <label htmlFor="dataNascimento">Data de nascimento</label>
               <Input
-                type="text"
+                type="date"
                 name="dataNascimento"
                 value={editedData.dataNascimento}
                 onChange={handleInputChange}
+                disabled={loadingEdit}
               />
             </div>
             <div>
@@ -331,16 +358,24 @@ const ListaUsuarios = ({
                 name="rg"
                 value={editedData.rg}
                 onChange={handleInputChange}
+                disabled={loadingEdit}
               />
             </div>
+
+            {/* Indicador de loading */}
+            {loadingEdit && (
+              <p style={{ color: "#333", marginTop: "10px" }}>Carregando...</p>
+            )}
+
             <div className={styles.botoes}>
-              <button type="submit" className={styles.saveButton}>
+              <button type="submit" className={styles.saveButton} disabled={loadingEdit}>
                 Salvar
               </button>
               <button
                 onClick={closeEditModal}
                 type="button"
                 className={styles.closeButton}
+                disabled={loadingEdit}
               >
                 Cancelar
               </button>

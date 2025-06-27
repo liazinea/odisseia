@@ -15,6 +15,8 @@ const ModalInfoDetalhada = ({
   errors,
   passwordMessage,
   emprestimo,
+  setEmprestimos,
+  usuarioId
 }) => {
   if (!isOpen) return null;
 
@@ -74,7 +76,7 @@ const ModalInfoDetalhada = ({
   const handleFunction = async (id) => {
     try {
       if (emprestimo.emp_status === 2) {
-        const response = await api.patch(
+        await api.patch(
           `/renova-emprestimo/${id}`,
           {},
           {
@@ -83,9 +85,9 @@ const ModalInfoDetalhada = ({
             },
           }
         );
-        console.log("Empréstimo renovado:", response.data);
+        console.log("Empréstimo renovado");
       } else if (emprestimo.emp_status === 1) {
-        const response = await api.patch(
+        await api.patch(
           `/emprestimos/${id}`,
           { valor: 0 },
           {
@@ -94,14 +96,27 @@ const ModalInfoDetalhada = ({
             },
           }
         );
-        console.log("Reserva cancelada:", response.data);
+        console.log("Reserva cancelada");
       }
+
+      // Atualiza os empréstimos
+      const response = await api.get("/emprestimos", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const emprestimosAtualizados = response.data.emprestimos.filter(
+        (e) => e.aluno.usu_id === usuarioId
+      );
+      setEmprestimos(emprestimosAtualizados);
+
+      // Fecha os modais
       setCancelarReserva(false);
-      onClose(); // Fechar modal após ação
+      onClose();
+
     } catch (error) {
       console.error("Erro ao atualizar:", error);
     }
   };
+
 
   return (
     <div className={styles.modalOverlay}>

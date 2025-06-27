@@ -15,7 +15,7 @@ class GeneroRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'gen_nome'=>'required|string|max:255|unique:gen_autor,gen_nome',
+            'gen_nome'=>'required|string|max:255|unique:gen_genero,gen_nome',
         ];
     }
 
@@ -25,7 +25,7 @@ class GeneroRequest extends FormRequest
             'gen_nome.required'=>'É obrigatório o envio do nome do gênero.',
             'gen_nome.string'=>'O campo deve ser do tipo string.',
             'gen_nome.max'=>'O campo não pode ter mais de 255 caracteres.',
-            'gen_unique'=>'Já existe um gênero com tal nome.'
-\        ];
+            'gen_nome.unique'=>'Já existe um gênero com tal nome.'
+        ];
     }
 }

@@ -54,6 +54,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/editoras', 'store');
         Route::patch('/editoras/{editora}', 'delete');
         Route::put('/editoras/{editora}', 'update');
+        Route::get('/editoras/nomes', [EditoraController::class, 'nomes']);
     });
 
     Route::controller(UsuarioController::class)->group(function () {

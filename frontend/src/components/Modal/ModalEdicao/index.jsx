@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./index.module.scss";
 import Input from "../../Inputs/Input";
 
 const ModalEdicao = ({
   isOpen,
   onClose,
-  onSubmit,
-  handleSubmit,
+  onSubmit, // função async passada pelo pai
+  handleSubmit, // hook-form
   register,
   errors,
   titulo,
@@ -18,11 +18,27 @@ const ModalEdicao = ({
   disabledNovo = false,
   registerOptions = {},
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   if (!isOpen) return null;
+
+  const handleInternalSubmit = async (data) => {
+    setIsLoading(true);
+    try {
+      await onSubmit(data); // executa a função do componente pai
+    } catch (error) {
+      console.error("Erro ao submeter:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className={styles.modal}>
-      <form onSubmit={handleSubmit(onSubmit)} className={styles.modalEdicao}>
+      <form
+        onSubmit={handleSubmit(handleInternalSubmit)}
+        className={styles.modalEdicao}
+      >
         <h3 className={styles.titulo}>{titulo}</h3>
         <div>
           <label>{labelAtual}</label>
@@ -41,10 +57,19 @@ const ModalEdicao = ({
           )}
         </div>
         <div className={styles.botoes}>
-          <button type="submit" className={styles.saveButton}>
-            Salvar
+          <button
+            type="submit"
+            className={styles.saveButton}
+            disabled={isLoading}
+          >
+            {isLoading ? "Salvando..." : "Salvar"}
           </button>
-          <button onClick={onClose} type="button" className={styles.closeButton}>
+          <button
+            onClick={onClose}
+            type="button"
+            className={styles.closeButton}
+            disabled={isLoading}
+          >
             Cancelar
           </button>
         </div>
