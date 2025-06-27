@@ -1,59 +1,60 @@
 @import '../../../styles/index.scss';
 
 .modal {
-    width: 100%;
-    height: 100%;
-    color: $azul-escuro;
+  width: 100%;
+  color: $azul-escuro;
+  display: flex;
+  flex-direction: column;
+  height: 100%;   // Para preencher o container
+
+  .header {
+    padding: 10px;
     display: flex;
-    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 
-    .header {
-        padding: 10px;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        position: sticky;
-        top: 0;
-        z-index: 10;
+    .icon {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-        .icon {
-            width: 32px; // ou o tamanho que quiser
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 8px;
+      transition: background-color 0.2s;
 
-            cursor: pointer;
-            padding: 6px;
-            border-radius: 8px;
-            transition: background-color 0.2s;
+      &:hover {
+        background-color: $vermelho;
+        color: $branco-rosado;
+      }
 
-            &:hover {
-                background-color: $vermelho;
-                color: $branco-rosado;
-            }
-
-            svg {
-                font-size: 18px; // ajuste o tamanho do ícone aqui se necessário
-            }
-        }
-
+      svg {
+        font-size: 18px;
+      }
     }
+  }
 
-    .body {
-        flex: 1; // ocupa o espaço restante do modal
-        display: flex;
-        align-items: flex-start;
-        justify-content: center;
-        text-align: center;
-        padding: 0 20px;
-        overflow-y: auto;
-        max-height: calc(100vh - 60px); // altura máxima (subtraindo o header, se necessário)
+  .body {
+    padding: 20px;
+    overflow-y: auto;    // Scroll dentro do body
+    text-align: center;
 
-        .titulo {
-            word-break: break-word;
-            max-width: 100%;
-        }
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    flex: 1;             // Ocupa o espaço restante dentro do modal
+    min-height: 50px;    // Altura mínima para o conteúdo
+    max-height: 280px;   // Limite máximo da área de conteúdo
+
+    .titulo {
+      word-break: break-word;
+      max-width: 100%;
     }
-
+  }
 }

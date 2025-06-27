@@ -14,11 +14,11 @@ const ModalMensagem = ({ mensagemModal, closeModal, modalAberto }) => {
           width: "90%",
           maxWidth: "400px",
           margin: "auto",
-          padding: "0", // sem padding no content, padding será no conteúdo interno
+          padding: "0",
           borderRadius: "12px",
           backgroundColor: "#DDC1A7",
-          maxHeight: "50vh",
-          overflow: "hidden", // oculta overflow externo, scroll interno será em .body
+          maxHeight: "320px",   // Limita a altura total do modal
+          overflow: "hidden",   // Oculta excesso para o modal
           display: "flex",
           flexDirection: "column",
         },
