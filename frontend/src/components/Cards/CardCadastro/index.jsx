@@ -98,19 +98,22 @@ const CardCadastro = () => {
       });
 
       console.log("Resposta da API:", response.data);
-      setMessage(response.data.message)
+      setMessage(response.data.message || "Livro cadastrado com sucesso!");
       setModalMensagemAberto(true);
-      closeEditModal();
 
     } catch (error) {
       if (error.response) {
         console.error("Erro na resposta da API:", error.response.data);
         console.error("Status:", error.response.status);
+        setMessage(error.response?.data?.message || "Erro ao cadastrar livro.");
       } else if (error.request) {
         console.error("Erro na requisição, sem resposta:", error.request);
+        setMessage("Erro na comunicação com o servidor.");
       } else {
         console.error("Erro ao configurar a requisição:", error.message);
+        setMessage(`Erro inesperado: ${error.message}`);
       }
+      setModalMensagemAberto(true);
     }
   };
 
