@@ -27,15 +27,16 @@ const CardCarrossel = () => {
     };
 
     carregarlivros();
-  }, [livros == 0]);
+  }, []);
 
   useEffect(() => {
     if (generos.length === 0) return;
     const intervalo = setInterval(() => {
-      trocarGenero((generoAtual + 1) % generos.length);
+      setGeneroAtual(oldIndex => (oldIndex + 1) % generos.length);
     }, 9000);
     return () => clearInterval(intervalo);
-  }, [generoAtual, generos]);
+  }, [generos]);
+
 
   const trocarGenero = (novoIndice) => {
     setAnimating(true);
@@ -68,7 +69,7 @@ const CardCarrossel = () => {
 
         <div className={`${styles.cardContainer} ${animating ? styles.animating : ""}`}>
           {livrosDoGenero.map((livro, index) => (
-            <div key={index} className={styles.card} onClick={() => navigate(`/livro/${livro.liv_id}`)}>
+            <div key={livro.liv_id} className={styles.card} onClick={() => navigate(`/livro/${livro.liv_id}`)}>
               <CapaLivro imagemCapa={livro.liv_capa} classificacao={livro.liv_classIndicativa} />
             </div>
           ))}
