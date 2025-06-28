@@ -1,17 +1,41 @@
 @use '../../../styles/cores/cores' as color;
 
-.container{
-    background-color: color.$branco-rosado;
-    padding: 5vh 5vh;
+.container {
+  background-color: color.$branco-rosado;
+  padding: 3vh 4vw;
 
-    .titulo{
-        color: color.$azul-escuro;
-        font-weight: bold;
-        font-size: 50px;
-    }
-    .cards_container{
-        display: flex;
-        padding: 5vh;
-        justify-content: space-around;
-    }
+
+
+  .titulo {
+    color: color.$azul-escuro;
+    font-weight: bold;
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 4vh;
+  }
+
+  .cards_container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 3vh 2vw;
+    padding: 0;
+  }
 }
+@media (max-width: 768px) {
+  .container {  
+    padding: 2vh 4vw;
+
+    .titulo {
+      font-size: 1.8rem;
+      margin-bottom: 2vh;
+    }
+
+    .cards_container {
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+  }
+}
+

@@ -4,13 +4,10 @@ import CelulaTabelaRegistros from "../CelulaTabelaRegistros";
 import BotaoVerMais from "../../Botao/BotaoVerMais";
 import { IoSearch } from "react-icons/io5";
 import {
-  flexRender,
   getCoreRowModel,
   getFilteredRowModel,
-  getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-// import useLivros from "../../../hooks/useLivros";
 
 const TabelaRegistros = ({ emprestimos }) => {
   const [emprestimo, setEmprestimo] = useState([]);
@@ -19,9 +16,20 @@ const TabelaRegistros = ({ emprestimos }) => {
   const [modalMensagemAberto, setModalMensagemAberto] = useState(false);
   const itemsPerPage = 7;
 
-    useEffect(() => {
-      setEmprestimo(emprestimos);
-    }, [emprestimos]);
+  // Map para traduzir o status numérico
+  const statusMap = {
+    0: "CANCELADO",
+    1: "RESERVADO",
+    2: "EMPRESTADO",
+    3: "DEVOLVIDO",
+  };
+
+  useEffect(() => {
+    const emprestimosOrdenados = [...emprestimos].sort((a, b) => {
+      return new Date(b.created_at) - new Date(a.created_at);
+    });
+    setEmprestimo(emprestimosOrdenados);
+  }, [emprestimos]);
 
   const formatarData = (dataString) => {
     const data = new Date(dataString);
@@ -38,19 +46,19 @@ const TabelaRegistros = ({ emprestimos }) => {
   };
 
   const globalFilterFunction = (row, columnId, filterValue) => {
+    const statusString = statusMap[row.original.emp_status];
     const valuesToCheck = [
-      row.original.titulo,
-      row.original.numEmprestimo,
-      row.original.status,
+      row.original.livro?.liv_nome,
+      row.original.emp_id,
+      statusString,
       row.original.aluno?.usu_nome,
-      row.original.aluno?.usu_ra
+      row.original.aluno?.usu_ra,
     ];
-  
+
     return valuesToCheck.some((value) =>
       value?.toString().toLowerCase().includes(filterValue.toLowerCase())
     );
   };
-  
 
   const columns = [
     {
@@ -68,45 +76,41 @@ const TabelaRegistros = ({ emprestimos }) => {
       id: "emp_id",
       header: "Número Empréstimo",
       cell: (props) => (
-        <p className={styles.status}>
-          {props.row.original.emp_id}
-        </p>
+        <p className={styles.status}>{props.row.original.emp_id}</p>
       ),
     },
     {
-      accessorKey: "livro.liv_titulo",
+      accessorKey: "livro.liv_nome",
       id: "liv_titulo",
       header: "Título",
       cell: (props) => (
-        <p className={styles.status}>{props.row.original.livro.liv_nome}</p>
+        <p className={styles.status}>{props.row.original.livro?.liv_nome}</p>
       ),
     },
     {
-      accessorKey: "liv_isbn",
+      accessorKey: "livro.liv_isbn",
       id: "isbn",
       header: "ISBN",
       cell: (props) => (
-        <div className={styles.status}>{props.row.original.livro.liv_isbn}</div>
+        <div className={styles.status}>
+          {props.row.original.livro?.liv_isbn}
+        </div>
       ),
     },
     {
-      accessorKey: "status",
+      accessorKey: "emp_status",
       id: "status",
       header: "Status",
-      cell: (props) => {
-        const statusMap = {
-          0: "CANCELADO",
-          1: "RESERVADO",
-          2: "EMPRESTADO",
-          3: "DEVOLVIDO",
-        };
-        return <div className={styles.status}>{statusMap[props.row.original.emp_status]}</div>;
-      }
+      cell: (props) => (
+        <div className={styles.status}>
+          {statusMap[props.row.original.emp_status]}
+        </div>
+      ),
     },
   ];
 
   const table = useReactTable({
-    data: emprestimos,
+    data: emprestimo,
     columns,
     state: {
       globalFilter,
@@ -114,9 +118,13 @@ const TabelaRegistros = ({ emprestimos }) => {
     onGlobalFilterChange: setGlobalFilter,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
     globalFilterFn: globalFilterFunction,
   });
+
+  const filteredRows = table
+    .getRowModel()
+    .rows.slice(0, pagesLoaded * itemsPerPage);
+  const hasNoResults = filteredRows.length === 0;
 
   return (
     <div className={styles.principal}>
@@ -136,65 +144,26 @@ const TabelaRegistros = ({ emprestimos }) => {
         </div>
         <p className={styles.filtrar}>FILTRAR POR:</p>
         <div className={styles.filtros}>
-          <div className={styles.status}>
-            <p
-              className={`${styles.filtroBotao} ${
-                globalFilter == "" ? styles.botaoAtivo : null
-              }`}
-              onClick={() => setGlobalFilter("")}
-            >
-              Todos
-            </p>
-          </div>
-          <div className={styles.status}>
-            <p
-              className={`${styles.filtroBotao} ${
-                globalFilter == "RESERVADO" ? styles.botaoAtivo : null
-              }`}
-              onClick={() => setGlobalFilter("RESERVADO")}
-            >
-              Reservados
-            </p>
-          </div>
-          <div className={styles.status}>
-            <p
-              className={`${styles.filtroBotao} ${
-                globalFilter == "EMPRESTADO" ? styles.botaoAtivo : null
-              }`}
-              onClick={() => setGlobalFilter("EMPRESTADO")}
-            >
-              Emprestados
-            </p>
-          </div>
-          <div className={styles.status}>
-            <p
-              className={`${styles.filtroBotao} ${
-                globalFilter == "DEVOLVIDO" ? styles.botaoAtivo : null
-              }`}
-              onClick={() => setGlobalFilter("DEVOLVIDO")}
-            >
-              Devolvidos
-            </p>
-          </div>
-          <div className={styles.status}>
-            <p
-              className={`${styles.filtroBotao} ${
-                globalFilter == "CANCELADO" ? styles.botaoAtivo : null
-              }`}
-              onClick={() => setGlobalFilter("CANCELADO")}
-            >
-              Cancelados
-            </p>
-          </div>
+          {["", "RESERVADO", "EMPRESTADO", "DEVOLVIDO", "CANCELADO"].map(
+            (status) => (
+              <div className={styles.status} key={status}>
+                <p
+                  className={`${styles.filtroBotao} ${
+                    globalFilter === status ? styles.botaoAtivo : ""
+                  }`}
+                  onClick={() => setGlobalFilter(status)}
+                >
+                  {status === "" ? "Todos" : status}
+                </p>
+              </div>
+            )
+          )}
         </div>
         <div className={styles.linha}></div>
         {table.getHeaderGroups().map((headerGroup) => (
           <div className={styles.head} key={headerGroup.id}>
             {headerGroup.headers.map((header) => (
-              <p
-                className={`${styles.status}`}
-                key={header.id}
-              >
+              <p className={styles.status} key={header.id}>
                 {header.column.columnDef.header}
               </p>
             ))}
@@ -204,20 +173,23 @@ const TabelaRegistros = ({ emprestimos }) => {
           .getRowModel()
           .rows.slice(0, pagesLoaded * itemsPerPage)
           .map((row, i) => (
-            <div>
-              {/* {console.log(row.original)} */}
+            <div className={styles.celula} key={row.original.emp_id}>
               <CelulaTabelaRegistros
-                key={row.original.emprestimo_id}
                 emprestimo={row.original}
-                aluno={emprestimos[i].aluno}
-                livro={emprestimos[i].livro}
-                onDelete={(id) => {
-                  setEmprestimo((prev) => prev.filter((emprestimo) => emprestimo.id !== id));
-                }}
+                aluno={row.original.aluno}
+                livro={row.original.livro}
+                onDelete={(id) =>
+                  setEmprestimo((prev) => prev.filter((e) => e.emp_id !== id))
+                }
                 setModalMensagemAberto={setModalMensagemAberto}
               />
             </div>
           ))}
+        {hasNoResults && (
+          <div className={styles.semResultados}>
+            <p>Não há itens nessa categoria.</p>
+          </div>
+        )}
         <div className={styles.botao}>
           {pagesLoaded * itemsPerPage < table.getRowModel().rows.length && (
             <BotaoVerMais

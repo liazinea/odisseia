@@ -46,28 +46,35 @@ const ListaEmprestimos = ({
     2: "EMPRESTADO",
     3: "DEVOLVIDO",
   };
-  return (
-    <div className={styles.row}>
-      <div className={styles.nome}>{emprestimo.livro.liv_nome}</div>
-      <div className={styles.status}>{statusMap[emprestimo.emp_status]}</div>
-      <div className={styles.opcoes}>
-        <div className={styles.visualizar} onClick={abrirModalSenha}>
-          <IoPencil />
-        </div>
+
+  if(emprestimo == ["Não há emprestimos"]){
+    return (
+      <div className={styles.row}>
+        <div className={styles.semEmprestimo}>{emprestimo}</div>
       </div>
-      <ModalInfoDetalhada
-        isOpen={modalSenhaAberto}
-        onClose={fecharModalSenha}
-        handleSubmit={handleSubmit}
-        register={register}
-        errors={errors}
-        passwordMessage={passwordMessage}
-        emprestimo={emprestimo}
-        setEmprestimos={setEmprestimos}
-        usuarioId={emprestimo.aluno.usu_id}
-      />
-    </div>
-  );
+    );
+  }else{
+    return (
+      <div className={styles.row}>
+        <div className={styles.nome}>{emprestimo.livro.liv_nome}</div>
+        <div className={styles.status}>{statusMap[emprestimo.emp_status]}</div>
+        <div className={styles.opcoes}>
+          <div className={styles.visualizar} onClick={abrirModalSenha}>
+            <IoPencil />
+          </div>
+        </div>
+        <ModalInfoDetalhada
+          isOpen={modalSenhaAberto}
+          onClose={fecharModalSenha}
+          handleSubmit={handleSubmit}
+          register={register}
+          errors={errors}
+          passwordMessage={passwordMessage}
+          emprestimo={emprestimo}
+        />
+      </div>
+    );
+  }
 };
 
 export default ListaEmprestimos;

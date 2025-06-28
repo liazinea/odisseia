@@ -8,10 +8,18 @@
     align-items: center;
     justify-content: center;
     background-color: transparent;
-  
+@media (max-width: 1400px){
+        width: 12.135vw;
+      height: 26vw;
+}
+
     @media (max-width: 768px){
       width: 198px;
       height: 317px;
+    }
+        @media (max-width: 576px){
+      width: 173px;
+      height: 280px;
     }
   }
   

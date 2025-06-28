@@ -18,6 +18,7 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import Carregando from "../../components/layout/Carregando";
 
 const Editoras = () => {
   const [globalFilter, setGlobalFilter] = useState("");
@@ -63,7 +64,6 @@ const Editoras = () => {
     carregarEditoras();
   }, []);
 
-
   const onSubmit = async (data) => {
     try {
       const response = await api.post("/editoras", data, {
@@ -77,8 +77,10 @@ const Editoras = () => {
       const dados = await buscaEditoras();
       setEditoras(dados);
     } catch (error) {
-      console.error("Erro:", error.response?.data || error.message);
-
+      setMessage(
+        error.response?.data?.message || "Erro ao cadastrar a editora."
+      );
+      setModalMensagemAberto(true);
     }
   };
 
@@ -114,7 +116,17 @@ const Editoras = () => {
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    autoResetPageIndex: false,
   });
+
+  if(editoras.length === 0){
+        return (
+          <div>
+            <HeaderPagina titulo={'Editoras'} />
+            <Carregando/>
+          </div>
+      )
+      }
 
   return (
     <>

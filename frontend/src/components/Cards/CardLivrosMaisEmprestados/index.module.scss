@@ -6,14 +6,13 @@
   background-color: $laranja;
   padding: 4vh 2vw;
   justify-content: flex-start;
-  max-width: 350px;
   width: 100%;
+  max-width: 350px;
+  min-width: 220px;
+  min-height: 420px;
   gap: 10px;
   border-radius: 0px 20px 0px 20px;
   box-sizing: border-box;
-  min-width: 220px;
-  height: 100%;
-  min-height: 420px;
 
   .titulo {
     text-align: center;
@@ -34,7 +33,6 @@
     margin-bottom: 8px;
   }
 
-  /* Scrollbar styles */
   .paragrafo::-webkit-scrollbar {
     width: 8px;
   }
@@ -51,7 +49,6 @@
   }
 
   .imagem {
-    flex: 0 0 auto;
     display: flex;
     justify-content: center;
     align-items: flex-end;
@@ -61,19 +58,23 @@
   }
 }
 
-/* Responsividade */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .card {
-    padding: 3vh 2vw;
-    max-width: 98vw;
+    padding: 2vh 3vw;
+    max-width: 50vw;
     min-width: 0;
-    border-radius: 0px 10px 0px 10px;
-    min-height: 320px;
+    min-height: 300px;
+    border-radius: 10px;
+
+    .titulo {
+      font-size: 1rem;
+    }
 
     .paragrafo {
-      max-height: 80px;
-      font-size: 0.95rem;
+      max-height: 70px;
+      font-size: 0.9rem;
     }
+
     .imagem {
       min-height: 80px;
     }
