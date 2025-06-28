@@ -73,18 +73,23 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+
+    &:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      border-color: lighten($laranja, 10%);
+    }
   }
 }
 
-@media (max-width: 1400px){
-        .carrosselContainer {
+@media (max-width: 1400px) {
+  .carrosselContainer {
     min-height: 50vh
   }
 }
-@media (max-width: 992px){
-       
-}
-  
+
+@media (max-width: 992px) {}
+
 
 @media (max-width: 768px) {
   .carrosselContainer {
@@ -135,6 +140,3 @@
     }
   }
 }
-
-
-
