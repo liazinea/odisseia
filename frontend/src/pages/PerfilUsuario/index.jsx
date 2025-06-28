@@ -281,7 +281,7 @@ const PerfilUsuario = () => {
               {table.getRowModel().rows.map((row) => (
                 <div
                   className={styles["linha"]}
-                  key={row.original.id}
+                  key={row.original.emp_id}
                 >
                   <ListaEmprestimos
                     emprestimo={row.original}
