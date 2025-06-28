@@ -17,10 +17,10 @@ class EmprestimoController extends Controller
         protected EmprestimoService $empretimoService,
     ) {}
 
-    public function index():JsonResponse
+    public function index(): JsonResponse
     {
         return response()->json([
-            'emprestimos'=> $this->empretimoService->buscarTodos(),
+            'emprestimos' => $this->empretimoService->buscarTodos(),
         ], 200);
     }
     public function store(EmprestimoRequest $request): JsonResponse
@@ -38,7 +38,7 @@ class EmprestimoController extends Controller
         }
     }
 
-    public function atualizaEmprestimo(Emprestimo $emprestimo, Request $request):JsonResponse
+    public function atualizaEmprestimo(Emprestimo $emprestimo, Request $request): JsonResponse
     {
         try {
 
@@ -55,7 +55,7 @@ class EmprestimoController extends Controller
         }
     }
 
-    public function renovaEmprestimo(Emprestimo $emprestimo):JsonResponse
+    public function renovaEmprestimo(Emprestimo $emprestimo): JsonResponse
     {
         try {
             $this->empretimoService->renovaEmprestimo($emprestimo);
@@ -66,6 +66,21 @@ class EmprestimoController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'message' => $e->getMessage(),
+            ], 400);
+        }
+    }
+
+    public function emprestimosPorUsuario(int $usuario): JsonResponse
+    {
+        try {
+            $emprestimos = $this->empretimoService->buscarPorUsuario($usuario);
+
+            return response()->json([
+                'emprestimos' => $emprestimos
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
             ], 400);
         }
     }

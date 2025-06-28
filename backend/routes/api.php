@@ -14,7 +14,7 @@ Route::controller(LoginController::class)->group(function () {
     Route::post('/login', 'autenticar');
 });
 
-Route::controller(UsuarioController::class)->group(function(){
+Route::controller(UsuarioController::class)->group(function () {
     Route::post('/usuarios/enviar-codigo', 'enviarCodigoRedefinicao');
     Route::post('/usuarios/redefinir-senha', 'redefinirSenha');
 });
@@ -74,5 +74,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/emprestimos', 'store');
         Route::patch('/emprestimos/{emprestimo}', 'atualizaEmprestimo');
         Route::patch('/renova-emprestimo/{emprestimo}', 'renovaEmprestimo');
+        Route::get('/emprestimos/usuario/{usuario}', 'emprestimosPorUsuario');
     });
 });

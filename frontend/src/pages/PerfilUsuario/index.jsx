@@ -31,7 +31,7 @@ const PerfilUsuario = () => {
   const { logout } = useAuth();
   const [usuario, setUsuario] = useState([])
   const { buscaUsuario } = useUsuario(user)
-  const { buscaEmprestimos } = useEmprestimos()
+  const { buscaEmprestimosPorUsuario } = useEmprestimos()
 
   // Estado para controlar o modal de senha
   const [modalSenhaAberto, setModalSenhaAberto] = useState(false);
@@ -60,12 +60,11 @@ const PerfilUsuario = () => {
   useEffect(() => {
     const carregaUsuario = async () => {
       const dados = await buscaUsuario();
-      const todosEmprestimos = await buscaEmprestimos();
+      const emprestimosUsuario = await buscaEmprestimosPorUsuario(dados.data.usuario.usu_id);
 
-      console.log(todosEmprestimos)
-      console.log(dados.data.usuario)
-      setUsuario(dados.data.usuario)
-      setEmprestimos(todosEmprestimos.filter(emprestimo => emprestimo.aluno.usu_id == dados.data.usuario.usu_id))
+      setUsuario(dados.data.usuario);
+      setEmprestimos(emprestimosUsuario);
+
       setCarregando(false);
     };
     carregaUsuario();
@@ -113,10 +112,10 @@ const PerfilUsuario = () => {
           `/usuarios/${usuario.usu_id}`,
           {
             usu_nome: userAtt.usu_nome,
-            usu_dataNasc :userAtt.usu_dataNasc,
+            usu_dataNasc: userAtt.usu_dataNasc,
             email: userAtt.email,
             usu_ra: userAtt.usu_ra,
-            password:data.novaSenha   
+            password: data.novaSenha
           },
           {
             headers: {
@@ -183,12 +182,12 @@ const PerfilUsuario = () => {
     return (
       <div>
         <HeaderPagina titulo="Perfil do aluno" />
-        <Carregando/>
+        <Carregando />
       </div>
     );
   }
 
-  if(emprestimos.length === 0){
+  if (emprestimos.length === 0) {
     setEmprestimos(['Não há emprestimos'])
   }
 

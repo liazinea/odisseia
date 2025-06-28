@@ -15,22 +15,21 @@ class EmprestimoService
         protected EmprestimoRepository $emprestimoRepository,
         protected UsuarioService $usuarioService,
         protected LivroService $livroService,
-    )
-    {}
+    ) {}
 
-    public function buscarTodos():Collection
+    public function buscarTodos(): Collection
     {
         return $this->emprestimoRepository->buscarTodos();
     }
-    public function criaEmprestimo(int $idAluno, int $idLivro):Emprestimo
+    public function criaEmprestimo(int $idAluno, int $idLivro): Emprestimo
     {
         $aluno = $this->usuarioService->buscaPorId($idAluno);
-        if($aluno->usu_status == 3){
+        if ($aluno->usu_status == 3) {
             throw new Exception('Usuário penalizado, assim não podendo criar uma reserva/empréstimo');
         }
         $livro = $this->livroService->buscaPorId($idLivro);
 
-        if(!$this->verificaSeAlunoTemEmprestimo($idAluno)){
+        if (!$this->verificaSeAlunoTemEmprestimo($idAluno)) {
             $emprestimoDTO = new EmprestimoDTO(
                 dataInicio: Carbon::now()->toDateString(),
                 dataFim: Carbon::now()->addMonth()->toDateString(),
@@ -47,24 +46,29 @@ class EmprestimoService
         throw new Exception('O aluno já tem um empréstimo');
     }
 
-    public function atualizaEmprestimo(int $estadoAtual, Emprestimo $emprestimo):bool
+    public function atualizaEmprestimo(int $estadoAtual, Emprestimo $emprestimo): bool
     {
-        if($result = $this->emprestimoRepository->atualizaEmprestimo($estadoAtual, $emprestimo)){
+        if ($result = $this->emprestimoRepository->atualizaEmprestimo($estadoAtual, $emprestimo)) {
             return $result;
         }
         throw new Exception('Erro ao atualizar um empréstimo');
     }
 
-    public function renovaEmprestimo(Emprestimo $emprestimo):bool
+    public function renovaEmprestimo(Emprestimo $emprestimo): bool
     {
-        if($result = $this->emprestimoRepository->renovaEmprestimo($emprestimo)){
+        if ($result = $this->emprestimoRepository->renovaEmprestimo($emprestimo)) {
             return $result;
         }
         throw new Exception('Erro ao atualizar um empréstimo');
     }
 
-    public function verificaSeAlunoTemEmprestimo(int $idAluno):bool
+    public function verificaSeAlunoTemEmprestimo(int $idAluno): bool
     {
         return $this->emprestimoRepository->verificaSeAlunoTemEmprestimo($idAluno);
+    }
+
+    public function buscarPorUsuario(int $usuarioId)
+    {
+        return $this->emprestimoRepository->buscarPorUsuario($usuarioId);
     }
 }
