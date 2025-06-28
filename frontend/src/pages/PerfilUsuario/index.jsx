@@ -40,6 +40,7 @@ const PerfilUsuario = () => {
   // Estado para o modal de mensagem
   const [modalMensagemAberto, setModalMensagemAberto] = useState(false);
   const [mensagemModal, setMensagemModal] = useState("");
+  const [carregando, setCarregando] = useState(true);
 
   // react-hook-form para o modal
   const {
@@ -65,6 +66,7 @@ const PerfilUsuario = () => {
       console.log(dados.data.usuario)
       setUsuario(dados.data.usuario)
       setEmprestimos(todosEmprestimos.filter(emprestimo => emprestimo.aluno.usu_id == dados.data.usuario.usu_id))
+      setCarregando(false);
     };
     carregaUsuario();
   }, [passwordMessage]);
@@ -175,16 +177,19 @@ const PerfilUsuario = () => {
     onGlobalFilterChange: setGlobalFilter,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
   });
 
-  if (!usuario || emprestimos.length === 0) {
+  if (carregando) {
     return (
       <div>
         <HeaderPagina titulo="Perfil do aluno" />
         <Carregando/>
       </div>
     );
+  }
+
+  if(emprestimos.length === 0){
+    setEmprestimos(['Não há emprestimos'])
   }
 
   return (
