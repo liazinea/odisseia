@@ -18,6 +18,8 @@ return new class extends Migration
             $table->integer('usu_nivel')->default(0);
             $table->integer('usu_ra');
             $table->integer('usu_status');
+            $table->string('usu_token_acesso')->nullable()->default(null);
+                $table->timestamp('first_access_code_expires_at')->nullable()->default(null);
             $table->rememberToken();
             $table->timestamps();
         });

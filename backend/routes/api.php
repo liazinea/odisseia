@@ -6,6 +6,7 @@ use App\Http\Controllers\EmprestimoController;
 use App\Http\Controllers\GeneroController;
 use App\Http\Controllers\LivroController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PrimeiroAcessoController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,6 +14,9 @@ Route::controller(LoginController::class)->group(function () {
     Route::post('/login', 'autenticar');
 });
 
+Route::controller(PrimeiroAcessoController::class)->group(function(){
+    Route::post('/criar-token', 'createToken');
+});
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout']);
 
