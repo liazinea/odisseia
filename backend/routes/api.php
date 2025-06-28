@@ -14,7 +14,7 @@ Route::controller(LoginController::class)->group(function () {
     Route::post('/login', 'autenticar');
 });
 
-Route::controller(UsuarioController::class)->group(function(){
+Route::controller(UsuarioController::class)->group(function () {
     Route::post('/usuarios/enviar-codigo', 'enviarCodigoRedefinicao');
     Route::post('/usuarios/redefinir-senha', 'redefinirSenha');
 });
@@ -24,6 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::controller(LivroController::class)->group(function () {
         Route::get('/livros', 'index');
+        Route::get('/livros/mais-emprestados', 'livrosMaisEmprestados');
         Route::post('/livros', 'store');
         Route::delete('/livros/{livro}', 'delete');
         Route::get('/livros/{livro}', 'show');
