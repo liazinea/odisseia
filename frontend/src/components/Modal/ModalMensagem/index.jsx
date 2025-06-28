@@ -2,51 +2,43 @@ import Modal from "react-modal";
 import styles from "./index.module.scss";
 import { IoClose } from "react-icons/io5";
 
-const ModalMensagem = ({
-  mensagemModal,
-  closeModal,
-  modalAberto,
-}) => {
+const ModalMensagem = ({ mensagemModal, closeModal, modalAberto }) => {
   return (
     <Modal
       isOpen={modalAberto}
       onRequestClose={closeModal}
-      contentLabel="Confirmar Exclusão"
+      contentLabel="Mensagem"
       shouldCloseOnOverlayClick={false}
       style={{
         content: {
-          width: "90%", // Adaptação para dispositivos menores
-          maxWidth: "400px", // Limita a largura máxima
+          width: "90%",
+          maxWidth: "400px",
           margin: "auto",
-          padding: "20px",
+          padding: "0",
           borderRadius: "12px",
-          textAlign: "center",
-          backgroundColor: "#DDC1A7", // Fundo branco
-          maxHeight: "40vh", // Limita a altura do modal para 90% da altura da viewport
-          overflowY: "auto", // Adiciona rolagem se o conteúdo ultrapassar a altura
+          backgroundColor: "#DDC1A7",
+          maxHeight: "320px",   // Limita a altura total do modal
+          overflow: "hidden",   // Oculta excesso para o modal
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
         },
         overlay: {
-          backgroundColor: "rgba(0, 0, 0, 0.3)", // Fundo mais escuro para foco no modal
-          display: "flex", // Centralização
+          backgroundColor: "rgba(0, 0, 0, 0.3)",
+          display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          zIndex: "1000", // Garantir prioridade sobre outros elementos
+          zIndex: "1000",
         },
       }}
     >
-      <div className={`${styles.modal}`}>
-        <div className={styles.conteudoModal}>
-          <div className={styles.close} onClick={closeModal}>
-            <div className={styles.icon}>
+      <div className={styles.modal}>
+        <div className={styles.header}>
+          <div className={styles.icon} onClick={closeModal}>
             <IoClose />
-            </div>
           </div>
-          <div className={styles.header}>
-            <h2 className={styles.titulo}>{mensagemModal}</h2>
-          </div>
+        </div>
+        <div className={styles.body}>
+          <h2 className={styles.titulo}>{mensagemModal}</h2>
         </div>
       </div>
     </Modal>

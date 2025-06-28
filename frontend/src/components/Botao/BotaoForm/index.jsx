@@ -1,14 +1,33 @@
 import { useState } from 'react';
-import ModalMensagem from '../../Modal/ModalMensagem';
-import styles from './index.module.scss'
+import styles from './index.module.scss';
 
-const BotaoForm = ({type, nomeBotao, texto, mensagemModal}) => {
- 
+const BotaoForm = ({ type = "button", nomeBotao, texto, onClick }) => {
+  const [loading, setLoading] = useState(false);
+
+  const handleClick = async () => {
+    setLoading(true);
+    try {
+      await onClick();
+    } catch (err) {
+      console.error("Erro no BotaoForm:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div>
-      <button className={styles.botao} type={type} name={nomeBotao}>{texto}</button>
-    </div>
-  )
-}
+    <>
+      <button
+        className={styles.botao}
+        type={type}
+        name={nomeBotao}
+        onClick={handleClick}
+        disabled={loading}
+      >
+        {texto}
+      </button>
+    </>
+  );
+};
 
-export default BotaoForm
+export default BotaoForm;

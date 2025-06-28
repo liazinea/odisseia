@@ -25,6 +25,8 @@ const ModalEmprestimoLivro = ({
 
   const [modalMensagemAberto, setModalMensagemAberto] = useState(false);
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
   // Normaliza alunos e livros para { label, value }
   const selectAlunoValue = useMemo(
     () =>
@@ -46,21 +48,22 @@ const ModalEmprestimoLivro = ({
     [livros]
   );
 
-// Função para fechar modal
-const handleClose = () => {
-  reset(); // limpa o formulário
-  onClose();
-};
+  // Função para fechar modal
+  const handleClose = () => {
+    reset(); // limpa o formulário
+    onClose();
+  };
 
 
   // Quando envia o formulário
   const onSubmit = async (data) => {
+    setLoading(true);
     try {
       const response = await api.post(
         "/emprestimos",
         {
           liv_id: data.livro,
-          usu_id: data.aluno, // já é o ID do usuário
+          usu_id: data.aluno,
         },
         {
           headers: {
@@ -72,12 +75,16 @@ const handleClose = () => {
       console.log("Empréstimo criado com sucesso:", response.data);
       setMessage("Empréstimo cadastrado com sucesso!");
       setModalMensagemAberto(true);
+      reset(); // Limpa o formulário após sucesso
     } catch (error) {
       console.error("Erro ao fazer empréstimo do livro:", error);
       setMessage("Falha ao cadastrar empréstimo!");
       setModalMensagemAberto(true);
+    } finally {
+      setLoading(false);
     }
   };
+
 
   if (!isOpen) return null;
 
@@ -116,17 +123,19 @@ const handleClose = () => {
 
         {/* Botões */}
         <div className={styles.botoes}>
-          <button type="submit" className={styles.saveButton}>
-            Cadastrar
+          <button type="submit" className={styles.saveButton} disabled={loading}>
+            {loading ? "Aguarde..." : "Cadastrar"}
           </button>
           <button
             type="button"
             onClick={handleClose}
             className={styles.closeButton}
+            disabled={loading}
           >
             Cancelar
           </button>
         </div>
+
       </form>
       <ModalMensagem
         mensagemModal={message}

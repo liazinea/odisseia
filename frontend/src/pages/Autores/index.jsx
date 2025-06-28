@@ -84,9 +84,11 @@ const Autores = () => {
       setAutores(dados);
     } catch (error) {
       console.error("Erro:", error.response?.data || error.message);
-      setRegisterMessage(
+
+      setMessage(
         error.response?.data?.message || "Erro ao cadastrar autor."
       );
+      setModalMensagemAberto(true); 
     }
   };
 
@@ -128,14 +130,14 @@ const Autores = () => {
     getPaginationRowModel: getPaginationRowModel(),
   });
 
-  if(autores.length === 0){
-      return (
-        <div>
-          <HeaderPagina titulo={'Autores'} />
-          <Carregando/>
-        </div>
+  if (autores.length === 0) {
+    return (
+      <div>
+        <HeaderPagina titulo={'Autores'} />
+        <Carregando />
+      </div>
     )
-    }
+  }
 
   return (
     <>
@@ -261,9 +263,10 @@ const Autores = () => {
           </div>
           <div className={styles["botao"]}>
             <Button
-              type="submit"
+              type="button"
               nomeBotao="cadastrar"
               texto="Adicionar Autor"
+              onClick={handleSubmit(onSubmit)}
             />
           </div>
         </form>

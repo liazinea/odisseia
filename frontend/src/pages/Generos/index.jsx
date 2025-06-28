@@ -82,6 +82,11 @@ const Generos = () => {
       setRegisterMessage(
         error.response?.data?.message || "Erro ao cadastrar gênero."
       );
+
+      setMessage(
+        error.response?.data?.message || "Erro ao cadastrar autor."
+      );
+      setModalMensagemAberto(true);
     }
   };
 
@@ -119,14 +124,14 @@ const Generos = () => {
     getPaginationRowModel: getPaginationRowModel(),
   });
 
-  if(generos.length === 0){
-      return (
-        <div>
-          <HeaderPagina titulo={'Gêneros'} />
-          <Carregando/>
-        </div>
+  if (generos.length === 0) {
+    return (
+      <div>
+        <HeaderPagina titulo={'Gêneros'} />
+        <Carregando />
+      </div>
     )
-    }
+  }
 
   return (
     <>
@@ -252,9 +257,10 @@ const Generos = () => {
           </div>
           <div className={styles["botao"]}>
             <Button
-              type="submit"
+              type="button"
               nomeBotao="cadastrar"
               texto="Adicionar Gênero"
+              onClick={handleSubmit(onSubmit)}
             />
           </div>
         </form>

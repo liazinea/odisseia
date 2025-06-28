@@ -61,7 +61,7 @@ const Usuarios = () => {
   useEffect(() => {
     setColumnFilters([{ id: "usu_status", value: statusFilter }]);
   }, [statusFilter]);
-  
+
   const onSubmit = async (data) => {
     try {
       const response = await api.post("/usuarios", data, {
@@ -69,18 +69,21 @@ const Usuarios = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      
+
       setMessage(response.data.message || "Usuário cadastrado com sucesso");
       setModalMensagemAberto(true);
       reset(); // limpa o formulário
-      
+
       // Atualizar lista
       const dados = await buscaUsuarios();
       setUsuarios(dados);
     } catch (error) {
       const apiErrors = error.response?.data?.errors;
-      const apiMessage = error.response?.data?.message;
-      
+      const apiMessage =
+        error.response?.data?.message || // Mensagem vinda do backend
+        error.message ||                 // Mensagem genérica JS
+        "Erro ao cadastrar usuário.";
+
       if (apiErrors) {
         Object.keys(apiErrors).forEach((campo) => {
           setError(campo, {
@@ -88,14 +91,15 @@ const Usuarios = () => {
             message: apiErrors[campo][0],
           });
         });
-      } else if (apiMessage) {
-        setMessage(apiMessage);
-        setModalMensagemAberto(true);
       }
+
+      // Exibir mensagem em qualquer caso
+      setMessage(apiMessage);
+      setModalMensagemAberto(true);
     }
   };
-  
-  
+
+
   const columns = [
     {
       accessorKey: "usu_nome",
@@ -142,13 +146,13 @@ const Usuarios = () => {
     getPaginationRowModel: getPaginationRowModel(),
   });
 
-  if(usuarios.length === 0){
+  if (usuarios.length === 0) {
     return (
       <div>
         <HeaderPagina titulo={'Lista de Usuários'} />
-        <Carregando/>
+        <Carregando />
       </div>
-  )
+    )
   }
   return (
     <>
@@ -326,7 +330,7 @@ const Usuarios = () => {
                 })}
               />
               <p className={styles["erro"]}>
-                {errors.usu_email && errors.usu_email.message}
+                {errors.email && errors.email.message}
               </p>
             </div>
 
@@ -352,7 +356,12 @@ const Usuarios = () => {
               setMessage={setMessage}
               setModalMensagemAberto={setModalMensagemAberto}
             />
-            <Button type="submit" nomeBotao="cadastrar" texto="Criar usuário" />
+            <Button
+              type="button"
+              nomeBotao="cadastrar"
+              texto="Criar usuário"
+              onClick={handleSubmit(onSubmit)}
+            />
           </div>
         </form>
         <ModalMensagem

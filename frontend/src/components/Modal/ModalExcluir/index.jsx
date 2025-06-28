@@ -1,7 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./index.module.scss";
-import api from "../../../services/api";
-import { useAuth } from "../../../context/AuthContext";
 
 const ModalExcluir = ({
   isOpen,
@@ -13,9 +11,20 @@ const ModalExcluir = ({
   confirmLabel = "Excluir",
   cancelLabel = "Cancelar",
   id,
-  status
+  status,
 }) => {
+  const [loading, setLoading] = useState(false);
+
   if (!isOpen) return null;
+
+  const handleConfirm = async () => {
+    setLoading(true);
+    try {
+      await onConfirm(); // Executa a função passada por props
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className={styles.modal}>
@@ -26,10 +35,18 @@ const ModalExcluir = ({
           {nome && <span className={styles.nome}> "{nome}"</span>}
         </p>
         <div className={styles.botoes}>
-          <button onClick={() => onConfirm()} className={styles.deleteButton}>
-            {confirmLabel}
+          <button
+            onClick={handleConfirm}
+            className={styles.deleteButton}
+            disabled={loading}
+          >
+            {loading ? "Aguarde..." : confirmLabel}
           </button>
-          <button onClick={onClose} className={styles.closeButton}>
+          <button
+            onClick={onClose}
+            className={styles.closeButton}
+            disabled={loading}
+          >
             {cancelLabel}
           </button>
         </div>

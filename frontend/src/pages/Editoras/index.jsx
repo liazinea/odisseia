@@ -4,7 +4,6 @@ import styles from "./index.module.scss";
 import Button from "../../components/Botao/Botao";
 import Input from "../../components/Inputs/Input";
 import useEditoras from "../../hooks/useEditoras";
-import BarraPesquisa from "../../components/layout/HeaderHome/BarraPesquisa";
 import { IoSearch } from "react-icons/io5";
 import ListaEditoras from "../../components/layout/ListaEditoras";
 import { useForm } from "react-hook-form";
@@ -31,10 +30,9 @@ const Editoras = () => {
     if (!token || userType != 1) {
       navigate("/");
     }
-  }, [token]);
+  }, [token, userType, navigate]);
 
   const [modalMensagemAberto, setModalMensagemAberto] = useState(false);
-  const [inputValue, setInputValue] = useState("");
 
   const {
     register,
@@ -46,17 +44,12 @@ const Editoras = () => {
       password: "",
     },
   });
-  const [registerMessage, setRegisterMessage] = useState(null);
+
   const [message, setMessage] = useState(null);
 
-  const handleInputChange = (value) => {
-    setInputValue(value);
-    setGlobalFilter(value.target.value);
-  };
 
   const [editoras, setEditoras] = useState([]);
   const { buscaEditoras } = useEditoras();
-  const [editorasBuscadas, setEditorasBuscadas] = useState([]);
 
   const buscaEditora = async () => {
     const response = await api.get(`/editoras`);
@@ -78,13 +71,11 @@ const Editoras = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setRegisterMessage(response.data.message);
       setMessage(response.data.message);
       setModalMensagemAberto(true);
 
       const dados = await buscaEditoras();
       setEditoras(dados);
-      reset();
     } catch (error) {
       setMessage(
         error.response?.data?.message || "Erro ao cadastrar a editora."
@@ -262,9 +253,10 @@ const Editoras = () => {
           </div>
           <div className={styles["botao"]}>
             <Button
-              type="submit"
+              type="button"
               nomeBotao="cadastrar"
               texto="Adicionar Editora"
+              onClick={handleSubmit(onSubmit)}
             />
           </div>
         </form>
