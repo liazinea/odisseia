@@ -3,6 +3,7 @@ import styles from "./index.module.scss";
 import Input from "../../Inputs/Input";
 import { IoClose } from "react-icons/io5";
 import ModalExcluir from "../ModalExcluir";
+import ModalRenovacao from "../ModalRenovacao";
 import api from "../../../services/api";
 import { useAuth } from "../../../context/AuthContext";
 
@@ -14,11 +15,14 @@ const ModalInfoDetalhada = ({
   errors,
   passwordMessage,
   emprestimo,
+  setEmprestimos,
+  usuarioId
 }) => {
   if (!isOpen) return null;
 
   const [modalCancelarReserva, setCancelarReserva] = useState(false);
   const closeDeleteModal = () => setCancelarReserva(false);
+
   const [tituloPrazo, setTituloPrazo] = useState("Prazos");
   const [labelData, setLabelData] = useState("Data:");
   const [labelPrazo, setLabelPrazo] = useState("Prazo:");
@@ -32,7 +36,7 @@ const ModalInfoDetalhada = ({
 
   useEffect(() => {
     switch (emprestimo.emp_status) {
-      case 1:
+      case 1: // Reserva
         setLabelData("Data da Reserva:");
         setLabelPrazo("Prazo de Retirada:");
         setLabelBtn("Alterar Status da Reserva");
@@ -42,21 +46,21 @@ const ModalInfoDetalhada = ({
         setConfirmLabel("Confirmar");
         setCancelLabel("Cancelar");
         break;
-      case 2:
+      case 2: // Empréstimo ativo
         setLabelData("Data do Empréstimo:");
         setLabelPrazo("Prazo de Devolução:");
         setLabelBtn("Renovar Empréstimo");
         setBtn("Renovar Empréstimo");
         setTituloModal("Confirmar renovação de empréstimo");
-        setMensagemModal(
-          "Tem certeza que deseja renovar o livro por mais um mês?"
-        );
+        setMensagemModal("Tem certeza que deseja renovar o livro por mais um mês?");
         setConfirmLabel("Confirmar");
         setCancelLabel("Cancelar");
         break;
       default:
         setLabelData("Data do Empréstimo:");
         setLabelPrazo("Data de Devolução:");
+        setBtn("");
+        setLabelBtn("");
         break;
     }
   }, [emprestimo.emp_status]);
@@ -70,9 +74,9 @@ const ModalInfoDetalhada = ({
   };
 
   const handleFunction = async (id) => {
-    if (status == 2) {
-      try {
-        const response = await api.patch(
+    try {
+      if (emprestimo.emp_status === 2) {
+        await api.patch(
           `/renova-emprestimo/${id}`,
           {},
           {
@@ -81,30 +85,38 @@ const ModalInfoDetalhada = ({
             },
           }
         );
-        console.log(response);
-      } catch (error) {
-        console.error(error);
-      }
-    } else if (status == 1) {
-      try {
-        const response = await api.patch(
+        console.log("Empréstimo renovado");
+      } else if (emprestimo.emp_status === 1) {
+        await api.patch(
           `/emprestimos/${id}`,
-          {
-            valor: 0,
-          },
+          { valor: 0 },
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
         );
-
-        console.log(response);
-      } catch (error) {
-        console.error(error);
+        console.log("Reserva cancelada");
       }
+
+      // Atualiza os empréstimos
+      const response = await api.get("/emprestimos", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const emprestimosAtualizados = response.data.emprestimos.filter(
+        (e) => e.aluno.usu_id === usuarioId
+      );
+      setEmprestimos(emprestimosAtualizados);
+
+      // Fecha os modais
+      setCancelarReserva(false);
+      onClose();
+
+    } catch (error) {
+      console.error("Erro ao atualizar:", error);
     }
   };
+
 
   return (
     <div className={styles.modalOverlay}>
@@ -115,6 +127,7 @@ const ModalInfoDetalhada = ({
             <IoClose />
           </div>
         </div>
+
         <div className={styles.Alinhadupla}>
           <div className={styles.dupla}>
             <label className={styles.nomeLivro} htmlFor="nomeLivro">
@@ -122,8 +135,9 @@ const ModalInfoDetalhada = ({
             </label>
             <p>{emprestimo.livro.liv_nome}</p>
           </div>
+
           <div className={styles.dupla}>
-          <label className={styles.nomeLivro} htmlFor="nomeAutor">
+            <label className={styles.nomeLivro} htmlFor="nomeAutor">
               Nome do Autor:
             </label>
             <div className={styles.generos}>
@@ -134,9 +148,10 @@ const ModalInfoDetalhada = ({
             </div>
           </div>
         </div>
+
         <div className={styles.Alinhadupla}>
           <div className={styles.dupla}>
-          <label className={styles.nomeLivro} htmlFor="genero">
+            <label className={styles.nomeLivro} htmlFor="genero">
               Gênero:
             </label>
             <div className={styles.generos}>
@@ -144,8 +159,8 @@ const ModalInfoDetalhada = ({
                 <p key={genero.gen_id}>{genero.gen_nome}</p>
               ))}
             </div>
-            
           </div>
+
           <div className={styles.dupla}>
             <label className={styles.nomeLivro} htmlFor="nomeAutor">
               Editora:
@@ -155,52 +170,66 @@ const ModalInfoDetalhada = ({
         </div>
 
         <div>
-          <div>
-            <h3 className={styles.titulo}>{tituloPrazo}</h3>
-            <div className={styles.Alinhadupla}>
-              <div className={styles.dupla}>
-                <label className={styles.nomeLivro} htmlFor="data">
-                  {labelData}
-                </label>
-                <p>{formatarData(emprestimo.emp_dataInicio)}</p>
+          <h3 className={styles.titulo}>{tituloPrazo}</h3>
+          <div className={styles.Alinhadupla}>
+            <div className={styles.dupla}>
+              <label className={styles.nomeLivro} htmlFor="data">
+                {labelData}
+              </label>
+              <p>{formatarData(emprestimo.emp_dataInicio)}</p>
 
-                <label className={styles.nomeLivro} htmlFor="alterar">
-                  {labelBtn}
-                </label>
-              </div>
+              <label className={styles.nomeLivro} htmlFor="alterar">
+                {labelBtn}
+              </label>
+            </div>
 
-              <div className={styles.dupla}>
-                <label className={styles.nomeLivro} htmlFor="prazo">
-                  {labelPrazo}
-                </label>
-                <p>{formatarData(emprestimo.emp_dataFim)}</p>
-              </div>
+            <div className={styles.dupla}>
+              <label className={styles.nomeLivro} htmlFor="prazo">
+                {labelPrazo}
+              </label>
+              <p>{formatarData(emprestimo.emp_dataFim)}</p>
             </div>
           </div>
         </div>
-        <div>
-          <div className={styles.botoes}>
-            <button
-              className={`${styles.saveButton} ${btn ? null : styles.none}`}
-              onClick={() => setCancelarReserva(true)}
-            >
-              {btn}
-            </button>
-          </div>
+
+        <div className={styles.botoes}>
+          <button
+            className={`${styles.saveButton} ${btn ? null : styles.none}`}
+            onClick={() => setCancelarReserva(true)}
+          >
+            {btn}
+          </button>
         </div>
       </div>
-      <ModalExcluir
-        isOpen={modalCancelarReserva}
-        onClose={closeDeleteModal}
-        onConfirm={handleFunction}
-        titulo={tituloModal}
-        mensagem={mensagemModal}
-        nome={emprestimo.emp_status == 2 ? null : emprestimo.livro.liv_nome}
-        confirmLabel={confirmLabel}
-        cancelLabel={cancelLabel}
-        id={emprestimo.emp_id}
-        status={emprestimo.emp_status}
-      />
+
+      {/* Renderiza modal correto de acordo com status */}
+      {emprestimo.emp_status === 2 ? (
+        <ModalRenovacao
+          isOpen={modalCancelarReserva}
+          onClose={closeDeleteModal}
+          onConfirm={() => handleFunction(emprestimo.emp_id)}
+          titulo={tituloModal}
+          mensagem={mensagemModal}
+          nome={null}
+          confirmLabel={confirmLabel}
+          cancelLabel={cancelLabel}
+          id={emprestimo.emp_id}
+          status={emprestimo.emp_status}
+        />
+      ) : (
+        <ModalExcluir
+          isOpen={modalCancelarReserva}
+          onClose={closeDeleteModal}
+          onConfirm={() => handleFunction(emprestimo.emp_id)}
+          titulo={tituloModal}
+          mensagem={mensagemModal}
+          nome={emprestimo.livro.liv_nome}
+          confirmLabel={confirmLabel}
+          cancelLabel={cancelLabel}
+          id={emprestimo.emp_id}
+          status={emprestimo.emp_status}
+        />
+      )}
     </div>
   );
 };

@@ -5,7 +5,6 @@
   flex-direction: column;
   gap: 2rem;
   padding: 2rem;
-  margin-bottom: 2rem;
   width: 100%;
 
   .cards {
@@ -28,4 +27,159 @@
   font-size: 1rem;
   color: color.$cinza;
   text-align: center;
+}
+
+.paginacao {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  width: 100%;
+
+  .botoes-paginacao {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    .botao-paginacao {
+      background-color: color.$laranja;
+      color: color.$azul-escuro;
+      padding: 0.6rem 1.8rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1rem;
+      transition: background-color 0.3s, transform 0.2s;
+
+      &:hover:not(:disabled) {
+        background-color: color.$laranja-claro;
+        transform: translateY(-2px);
+      }
+
+      &:disabled {
+        background-color: lighten(color.$laranja, 20%);
+        color: color.$azul-escuro;
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+
+    .info-paginacao {
+      font-weight: bold;
+      color: color.$azul-escuro;
+      font-size: 1.1rem;
+      text-align: center;
+    }
+  }
+
+  .detalhes-paginacao {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+
+    .info-paginacao {
+      font-weight: bold;
+      color: color.$azul-escuro;
+      font-size: 1rem;
+      text-align: center;
+    }
+
+    .seletor-tamanho-pagina {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+
+      label {
+        font-weight: bold;
+        color: color.$azul-escuro;
+      }
+
+      select {
+        padding: 0.4rem 0.6rem;
+        border-radius: 8px;
+        border: 1px solid color.$laranja;
+        background-color: color.$branco;
+        color: color.$azul-escuro;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.2s;
+
+        &:hover {
+          background-color: color.$branco-rosado;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+
+    .botoes-paginacao,
+    .detalhes-paginacao {
+      gap: 0.5rem;
+    }
+
+    .botao-paginacao {
+      padding: 0.4rem 1.2rem;
+      font-size: 0.9rem;
+    }
+
+    .info-paginacao {
+      font-size: 0.95rem;
+    }
+
+    .seletor-tamanho-pagina {
+      gap: 0.4rem;
+
+      label {
+        font-size: 0.9rem;
+      }
+
+      select {
+        font-size: 0.9rem;
+        padding: 0.3rem 0.5rem;
+      }
+    }
+  }
+
+  @media (max-width: 470px) {
+
+    .botoes-paginacao,
+    .detalhes-paginacao {
+      gap: 0.3rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .botao-paginacao {
+      padding: 0.2rem 0.8rem;
+      font-size: 0.75rem;
+    }
+
+    .info-paginacao {
+      font-size: 0.9rem;
+    }
+
+    .seletor-tamanho-pagina {
+      gap: 0.3rem;
+      min-width: 200px;
+      justify-content: center;
+
+      label {
+        font-size: 0.85rem;
+      }
+
+      select {
+        font-size: 0.85rem;
+        padding: 0.25rem 0.5rem;
+      }
+    }
+  }
+
 }

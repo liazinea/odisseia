@@ -8,6 +8,17 @@
     margin: 0 auto;
     width: 90%;
 
+    .celula{
+      cursor: pointer;
+    }
+
+    .semResultados{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 20px;
+    }
+
     .filtrar {
       margin-bottom: 20px;
       font-weight: 600;
@@ -115,7 +126,8 @@
       display: flex;
       justify-content: center;
       position: relative;
-      height: 75px;
+      height: 100px;
+      padding-top: 20px;
     }
   }
 }

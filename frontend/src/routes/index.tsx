@@ -18,6 +18,7 @@ import RegistroAtividade from "../pages/RegistroAtividade";
 import Autores from "../pages/Autores";
 import PerfilUsuario from "../pages/PerfilUsuario";
 import PaginaPesquisa from "../pages/PaginaPesquisa";   
+import RedefinirSenha from "../pages/RedefinirSenha/index.jsx";
 import Editoras from "../pages/Editoras";
 
 export const Paths = () => {
@@ -29,6 +30,7 @@ export const Paths = () => {
                     <Route index element={<Login />} />
                     <Route path={'/primeiro-acesso'} element={<PrimeiroAcesso />}/>
                     <Route path={'/esqueci-minha-senha'} element={<RedefinicaoSenha />}/>
+                     <Route path="/reset-password" element={<RedefinirSenha />} />
                     <Route path={'/'} element={<PageLayout />}>
 
                         <Route path={'/t'} element={<Teste />}/>

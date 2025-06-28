@@ -6,78 +6,143 @@
   color: $branco-rosado;
   text-align: center;
   min-height: 80vh;
-}
 
-.generoTitulo {
-  font-size: 1.5rem;
-  margin-bottom: 2rem;
-}
+  .generoTitulo {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
 
-.carrosselWrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  .carrosselWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 
-.seta {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 2rem;
-  background-color: $azul-escuro;
-  color: $branco-rosado;
-  border: none;
-  padding: 0.5rem 0.8rem;
-  cursor: pointer;
-  border-radius: 20%;
-  z-index: 2;
-  transition: background-color 0.3s;
+  .seta {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    background-color: $azul-escuro;
+    color: $branco-rosado;
+    border: none;
+    padding: 0.5rem 0.8rem;
+    cursor: pointer;
+    border-radius: 20%;
+    z-index: 2;
+    transition: background-color 0.3s;
 
-  &:hover {
-    background-color: $laranja
+    &:hover {
+      background-color: $laranja;
+    }
+  }
+
+  .esquerda {
+    left: 1rem;
+  }
+
+  .direita {
+    right: 1rem;
+  }
+
+  .cardContainer {
+    display: flex;
+    justify-content: center;
+    gap: 5rem;
+    margin-top: 4rem;
+    transition: all 0.3s ease-in-out;
+    opacity: 1;
+    transform: translateY(0);
+    flex-wrap: wrap;
+  }
+
+  .animating {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .card {
+    border: 2px solid $laranja;
+    border-radius: 1rem;
+    padding: 1rem;
+    width: 16vw;
+    height: 26vw;
+    background-color: $azul-escuro;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .cardImage {
+    width: 100%;
+    height: 10%;
+    background: url("/img/capalivro.png") center/contain no-repeat;
+    border-radius: 0.5rem;
   }
 }
 
-.esquerda {
-  left: 1rem;
+@media (max-width: 1400px){
+        .carrosselContainer {
+    min-height: 50vh
+  }
+}
+@media (max-width: 992px){
+       
+}
+  
+
+@media (max-width: 768px) {
+  .carrosselContainer {
+    padding: 2rem 1rem;
+
+    .generoTitulo {
+      font-size: 1.3rem;
+    }
+
+    .seta {
+      font-size: 1.5rem;
+      padding: 0.4rem 0.6rem;
+    }
+
+    .cardContainer {
+      gap: 10rem;
+    }
+
+    .card {
+      width: 40vw;
+      height: 60vw;
+    }
+  }
 }
 
-.direita {
-  right: 1rem;
+
+@media (max-width: 576px) {
+  .carrosselContainer {
+    padding: 2.5rem 0.5rem;
+
+    .generoTitulo {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .seta {
+      font-size: 1.2rem;
+      padding: 0.3rem 0.5rem;
+    }
+
+    .cardContainer {
+      gap: 1.5rem;
+    }
+
+    .card {
+      width: 60vw;
+      height: 80vw;
+    }
+  }
 }
 
-.cardContainer {
-  display: flex;
-  justify-content: center;
-  gap: 5rem;
-  margin-top: 4rem;
-  transition: all 0.3s ease-in-out;
-  opacity: 1;
-  transform: translateY(0);
-}
 
-.animating {
-  opacity: 0;
-  transform: translateY(20px);
-}
 
-.card {
-  border: 2px solid $laranja;
-  border-radius: 1rem;
-  padding: 1rem;
-  width: 16vw;
-  height: 26vw;
-  background-color: $azul-escuro;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer; // Adicionado
-}
-
-.cardImage {
-  width: 100%;
-  height: 100%;
-  background: url("/img/capalivro.png") center/contain no-repeat;
-  border-radius: 0.5rem;
-}

@@ -26,7 +26,7 @@
     height: 100%;
     border-radius: 18px;
     padding: 10px;
-    cursor: pointer; // deixa o cursor como ponteiro ao passar o mouse
+    cursor: pointer;
 
     &:hover {
       background-color: color.$laranja;
@@ -36,3 +36,30 @@
     }
   }
 }
+@media screen and (max-width: 768px) {
+  .barra {
+    width: 85%;
+    height: 42px;
+    padding: 4px 12px;
+
+    .pesquisa {
+      font-size: 0.85rem;
+    }
+.icon{
+  align-self: center;
+  width: 10%;
+  border-radius: 10px;
+}
+
+  }
+}
+
+@media screen and (max-width: 575.98px) {
+
+
+.icon{
+  align-self: center;
+  width: 15%;
+  border-radius: 10px;
+}
+  }

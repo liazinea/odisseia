@@ -1,39 +1,60 @@
 @import '../../../styles/index.scss';
 
-.modal{
-    width: 100%;
-    height: 100%;
-    color: $azul-escuro;
-    .conteudoModal{
-        width: 100%;
-        height: 100%;
-        flex-direction: column;
-        display: flex;
-        justify-content: space-around;
-        
-        .close{
-            height: 20%;
-            display: flex;
-            justify-content: end;
-            align-items: center;
-            .icon{
-                width: fit-content;
-                cursor: pointer;
-                padding: 10px 10px 5px;
-                border-radius: 12px;
+.modal {
+  width: 100%;
+  color: $azul-escuro;
+  display: flex;
+  flex-direction: column;
+  height: 100%;   // Para preencher o container
 
-                &:hover{
-                    background-color: $vermelho;
-                    color: $branco-rosado;
-                }
-            }
-        }
-        .header{
-            height: 80%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding-bottom: 50px;
-        }
+  .header {
+    padding: 10px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+
+    .icon {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 8px;
+      transition: background-color 0.2s;
+
+      &:hover {
+        background-color: $vermelho;
+        color: $branco-rosado;
+      }
+
+      svg {
+        font-size: 18px;
+      }
     }
+  }
+
+  .body {
+    padding: 20px;
+    overflow-y: auto;    // Scroll dentro do body
+    text-align: center;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    flex: 1;             // Ocupa o espaço restante dentro do modal
+    min-height: 50px;    // Altura mínima para o conteúdo
+    max-height: 280px;   // Limite máximo da área de conteúdo
+
+    .titulo {
+      word-break: break-word;
+      max-width: 100%;
+    }
+  }
 }

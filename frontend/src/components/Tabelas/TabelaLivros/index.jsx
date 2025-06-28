@@ -105,7 +105,6 @@ const TabelaLivros = ({ livros, setLivros }) => {
     onGlobalFilterChange: setGlobalFilter,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
   });
 
   return (

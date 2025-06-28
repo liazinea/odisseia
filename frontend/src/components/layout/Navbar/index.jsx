@@ -68,24 +68,48 @@ const Navbar = () => {
     </ul>
   );
 
-  const renderDropdownButtons = () => (
-    <ul
-      className={`${styles["navbar-button"]} ${
-        isMenuOpen ? styles.active : ""
-      }`}
-    >
-      <li>
-        <Link to="/generos">
-          <button className="btn-dropdown">Gêneros</button>
-        </Link>
-      </li>
-      <li>
-        <Link to="/em-breve">
-          <button className="btn-dropdown">Em breve</button>
-        </Link>
-      </li>
-    </ul>
-  );
+  const renderDropdownButtons = () => {
+    if (!token) return null;
+
+    return (
+      <ul
+        className={`${styles["navbar-button"]} ${isMenuOpen ? styles.active : ""
+          }`}
+      >
+        {userType == 1 ? (
+          <>
+            <li>
+              <Link to="/livros">Livros</Link>
+            </li>
+            <li>
+              <Link to="/livro/cadastro">Cadastrar Livro</Link>
+            </li>
+            <li>
+              <Link to="/generos">Gêneros</Link>
+            </li>
+            <li>
+              <Link to="/autores">Autores</Link>
+            </li>
+            <li>
+              <Link to="/editoras">Editoras</Link>
+            </li>
+
+            <li>
+              <Link to="/usuarios">Usuários</Link>
+            </li>
+          </>
+        ) : (
+          <>
+            <li>
+              <Link to="/perfil">
+                <button className="btn-dropdown">Meu perfil</button>
+              </Link>
+            </li>
+          </>
+        )}
+      </ul>
+    );
+  };
 
   const renderMenuToggle = () => (
     <button className={styles["navbar-menu-toggle"]} onClick={toggleMenu}>
@@ -104,9 +128,12 @@ const Navbar = () => {
       <div className={styles["navbar-container"]}>
         {renderLogo()}
         {token && userType == 1 ? renderAdminLinks() : renderUserLinks()}
-        {renderMenuToggle()}
+        <div className={styles.actions}>
+          {renderMenuToggle()}
+          {renderLogoutButton()}
+        </div>
         {renderDropdownButtons()}
-        {renderLogoutButton()}
+
       </div>
     </nav>
   );

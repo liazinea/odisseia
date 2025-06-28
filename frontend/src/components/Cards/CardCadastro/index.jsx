@@ -17,6 +17,8 @@ import ModalMensagem from "../../Modal/ModalMensagem";
 const CardCadastro = () => {
   const [generos, setGeneros] = useState([]);
   const [autores, setAutores] = useState([]);
+  const [editoras, setEditoras] = useState([]);
+
   const [modalMensagemAberto, setModalMensagemAberto] = useState(false);
   const [message, setMessage] = useState(null);
   const { token } = useAuth();
@@ -59,6 +61,20 @@ const CardCadastro = () => {
     carregarAutores();
   }, []);
 
+  useEffect(() => {
+    const carregarEditoras = async () => {
+      const dados = await api.get("/editoras/nomes", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setEditoras(dados.data);
+    };
+
+    carregarEditoras();
+  }, []);
+
   const onSubmit = async (data) => {
     console.log("Dados brutos:", data);
 
@@ -98,19 +114,22 @@ const CardCadastro = () => {
       });
 
       console.log("Resposta da API:", response.data);
-      setMessage(response.data.message)
+      setMessage(response.data.message || "Livro cadastrado com sucesso!");
       setModalMensagemAberto(true);
-      closeEditModal();
-      
+
     } catch (error) {
       if (error.response) {
         console.error("Erro na resposta da API:", error.response.data);
         console.error("Status:", error.response.status);
+        setMessage(error.response?.data?.message || "Erro ao cadastrar livro.");
       } else if (error.request) {
         console.error("Erro na requisição, sem resposta:", error.request);
+        setMessage("Erro na comunicação com o servidor.");
       } else {
         console.error("Erro ao configurar a requisição:", error.message);
+        setMessage(`Erro inesperado: ${error.message}`);
       }
+      setModalMensagemAberto(true);
     }
   };
 
@@ -184,13 +203,14 @@ const CardCadastro = () => {
               <div className={styles.dupla}>
                 <div className={styles.input}>
                   {/* Select editora */}
-                  <InputLivro
-                    type="text"
+                  <SelectCriavel
                     nomeCampo="liv_editora"
                     placeholder="Editora"
-                    required={true}
-                    register={register}
-                    errors={errors}
+                    values={editoras}
+                    control={control}
+                    rules={{ required: "Campo obrigatório" }}
+                    error={errors?.liv_editora}
+                    isMulti={false}
                   />
                 </div>
                 <div className={styles.input}>
@@ -279,11 +299,12 @@ const CardCadastro = () => {
 
                 <div className={styles.btn}>
                   <BotaoForm
-                    type={"submit"}
-                    nomeBotao={"cadastrar"}
-                    texto={"Cadastrar"}
-                    mensagemModal={'Livro cadastrado com'}
+                    type="button"
+                    nomeBotao="cadastrar"
+                    texto="Cadastrar"
+                    onClick={handleSubmit(onSubmit)} // ← Isso é essencial para o loading funcionar!
                   />
+
                 </div>
               </div>
             </div>
@@ -291,10 +312,10 @@ const CardCadastro = () => {
         </form>
       </div>
       <ModalMensagem
-          mensagemModal={message}
-          modalAberto={modalMensagemAberto}
-          closeModal={() => setModalMensagemAberto(false)}
-        />
+        mensagemModal={message}
+        modalAberto={modalMensagemAberto}
+        closeModal={() => setModalMensagemAberto(false)}
+      />
     </div>
   );
 };

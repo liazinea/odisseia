@@ -8,10 +8,16 @@ use App\Http\Controllers\LivroController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PrimeiroAcessoController;
 use App\Http\Controllers\UsuarioController;
+use App\Models\Usuario;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(LoginController::class)->group(function () {
     Route::post('/login', 'autenticar');
+});
+
+Route::controller(UsuarioController::class)->group(function(){
+    Route::post('/usuarios/enviar-codigo', 'enviarCodigoRedefinicao');
+    Route::post('/usuarios/redefinir-senha', 'redefinirSenha');
 });
 
 Route::controller(PrimeiroAcessoController::class)->group(function(){
@@ -52,6 +58,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/editoras', 'store');
         Route::patch('/editoras/{editora}', 'delete');
         Route::put('/editoras/{editora}', 'update');
+        Route::get('/editoras/nomes', [EditoraController::class, 'nomes']);
     });
 
     Route::controller(UsuarioController::class)->group(function () {

@@ -55,39 +55,31 @@ const ListaEditoras = ({
     reset({ password: "" });
   };
 
-  useEffect(() => {
-    const carregarEditoras = async () => {
-      const dados = await buscaEditoras();
-      setEditoras(dados);
-    };
-    carregarEditoras();
-  }, [passwordMessage, isEditModalOpen]);
-
   const handleConfirmDelete = async (data) => {
-  const response = await api.get(`/check-senha?password=${data.password}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  if (response.data.status) {
-    await api.patch(`/editoras/${editora.id}`, {
+    const response = await api.get(`/check-senha?password=${data.password}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
 
-    // Atualize a lista aqui!
-    const dados = await buscaEditoras();
-    setEditoras(dados);
+    if (response.data.status) {
+      await api.patch(`/editoras/${editora.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-    closePasswordModal();
-    setMessage("Editora excluída com sucesso");
-    setModalMensagemAberto(true);
-  } else {
-    setPasswordMessage("Senha incorreta");
-  }
-};
+      // Atualize a lista aqui!
+      const dados = await buscaEditoras();
+      setEditoras(dados);
+
+      closePasswordModal();
+      setMessage("Editora excluída com sucesso");
+      setModalMensagemAberto(true);
+    } else {
+      setPasswordMessage("Senha incorreta");
+    }
+  };
 
 
   const onSubmit = async (data) => {
@@ -97,6 +89,10 @@ const ListaEditoras = ({
           Authorization: `Bearer ${token}`,
         },
       });
+
+      const dados = await buscaEditoras();
+      setEditoras(dados);
+
       setMessage(response.data.message);
       closeEditModal();
       setModalMensagemAberto(true);
@@ -123,24 +119,24 @@ const ListaEditoras = ({
 
       {/* Modal de Edição */}
       {isEditModalOpen && (
-      <ModalEdicao
-        isOpen={isEditModalOpen}
-        onClose={closeEditModal}
-        onSubmit={onSubmit}
-        handleSubmit={handleSubmit}
-        register={register}
-        errors={errors}
-        titulo="Editar Editora"
-        labelAtual="Nome atual"
-        valorAtual={editora.nome}
-        labelNovo="Novo nome"
-        nomeCampoNovo="edi_nome"
-        valorNovo={editora.nome}
-        registerOptions={{
-          required: "O novo nome da editora é obrigatório",
-        }}
-      />
-    )}
+        <ModalEdicao
+          isOpen={isEditModalOpen}
+          onClose={closeEditModal}
+          onSubmit={onSubmit}
+          handleSubmit={handleSubmit}
+          register={register}
+          errors={errors}
+          titulo="Editar Editora"
+          labelAtual="Nome atual"
+          valorAtual={editora.nome}
+          labelNovo="Novo nome"
+          nomeCampoNovo="edi_nome"
+          valorNovo={editora.nome}
+          registerOptions={{
+            required: "O novo nome da editora é obrigatório",
+          }}
+        />
+      )}
 
       {/* Modal de Exclusão */}
       {isDeleteModalOpen && (

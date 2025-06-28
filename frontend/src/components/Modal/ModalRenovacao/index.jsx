@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import styles from "./index.module.scss";
 
-const ModalExcluir = ({
+const ModalRenovacao = ({
   isOpen,
   onClose,
   onConfirm,
   titulo,
   mensagem,
   nome,
-  confirmLabel = "Excluir",
+  confirmLabel = "Confirmar",
   cancelLabel = "Cancelar",
-  id,
-  status,
 }) => {
   const [loading, setLoading] = useState(false);
 
@@ -20,7 +18,7 @@ const ModalExcluir = ({
   const handleConfirm = async () => {
     setLoading(true);
     try {
-      await onConfirm(); // Executa a função passada por props
+      await onConfirm(); // Executa a função passada como prop
     } finally {
       setLoading(false);
     }
@@ -28,7 +26,7 @@ const ModalExcluir = ({
 
   return (
     <div className={styles.modal}>
-      <div className={styles.modalExcluir}>
+      <div className={styles.modalRenovacao}>
         <h3 className={styles.titulo}>{titulo}</h3>
         <p className={styles.mensagem}>
           {mensagem}
@@ -37,14 +35,14 @@ const ModalExcluir = ({
         <div className={styles.botoes}>
           <button
             onClick={handleConfirm}
-            className={styles.deleteButton}
+            className={styles.confirmButton}
             disabled={loading}
           >
             {loading ? "Aguarde..." : confirmLabel}
           </button>
           <button
             onClick={onClose}
-            className={styles.closeButton}
+            className={styles.cancelButton}
             disabled={loading}
           >
             {cancelLabel}
@@ -55,4 +53,4 @@ const ModalExcluir = ({
   );
 };
 
-export default ModalExcluir;
+export default ModalRenovacao;
