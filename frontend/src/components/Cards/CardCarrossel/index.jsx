@@ -7,8 +7,7 @@ import useLivrosEGeneros from "../../../hooks/useLivrosEGeneros";
 const CardCarrossel = () => {
   const [livros, setLivros] = useState([]);
   const [generos, setGeneros] = useState([]);
-  // console.log(generos)
-  //  console.log(livros)
+
   const [generoAtual, setGeneroAtual] = useState(0);
   const [animating, setAnimating] = useState(false);
   const { buscaLivrosEGeneros } = useLivrosEGeneros();
