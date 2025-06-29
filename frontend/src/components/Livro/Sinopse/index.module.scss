@@ -14,7 +14,7 @@
 
 .texto {
     font-family: Inter, sans-serif;
-    font-size: 16px; //deixar 24 e depois alterar na hora de montar o layout da pagina inteira
+    font-size: 18px; //deixar 24 e depois alterar na hora de montar o layout da pagina inteira
     font-weight: 400;
     text-align: justify;
     line-height: 1.6;
@@ -22,6 +22,31 @@
     white-space: pre-line;
     
 }
+
+
+@media (max-width: 1367px) {
+
+    .texto {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .sinopseContainer {
+        margin-right: 20px;
+    }
+}
+
+@media (max-width: 992px) {
+    .sinopseContainer {
+        width: 90%;
+    }
+
+    .texto {
+        font-size: 16px;
+    }
+}
+
 
 @media (max-width: 768px) {
     .sinopseContainer {

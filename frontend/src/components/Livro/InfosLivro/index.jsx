@@ -14,23 +14,29 @@ const InfosLivro = ({ livro }) => {
         <div className={styles.capaContainer}>
           <CapaLivro imagemCapa={livro.capa} classificacao={livro.classificacaoIndicativa} />
         </div>
+
         <div className={styles.textos}>
-          <div className={styles.qtdWrapper}>
-            <BotaoQtd quantidade={1} />
-          </div>
-
-          <TituloDescricao titulo={livro.nome}
-            autores={livro.autores} />
-
-          <div className={styles.generos}>
-            {livro.generos.map((genero, i) => (
-              <BotaoGenero key={i} texto={genero.nome} />
-            ))}
+          <div className={styles.titulos}>
+            <TituloDescricao titulo={livro.nome} autores={livro.autores} />
+            <div className={styles.generosTitulo}>
+              {livro.generos.map((genero, i) => (
+                <BotaoGenero key={i} texto={genero.nome} />
+              ))}
+            </div>
           </div>
         </div>
 
+        <div className={styles.containerQtd}>
+          <div className={styles.qtdWrapper}>
+            <BotaoQtd quantidade={1} />
+          </div>
+        </div>
       </div>
-
+       <div className={styles.generos}>
+              {livro.generos.map((genero, i) => (
+                <BotaoGenero key={i} texto={genero.nome} />
+              ))}
+            </div>
       <div className={styles.sinopse}>
         <Sinopse sinopse={livro.sinopse} />
       </div>
