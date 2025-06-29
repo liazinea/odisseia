@@ -18,7 +18,21 @@ function useLivros() {
         }
     }
 
-    return { buscaLivros }
+    const buscaLivrosMaisEmprestados = async () => {
+        try {
+            const response = await api.get(`/livros/mais-emprestados`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            return response.data.livros;
+        } catch (error) {
+            console.error("Erro ao buscar livros mais emprestados:", error);
+            return [];
+        }
+    };
+
+    return { buscaLivros, buscaLivrosMaisEmprestados }
 }
 
 export default useLivros

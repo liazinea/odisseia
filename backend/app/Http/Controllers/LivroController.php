@@ -34,7 +34,7 @@ class LivroController extends Controller
     {
         return response()->json([
             'livros' => $this->livroService->buscaLivrosPorGenero(),
-            'message'=>'ai'
+            'message' => 'ai'
         ]);
     }
 
@@ -147,6 +147,23 @@ class LivroController extends Controller
             return response()->json([
                 'error' => $e->getMessage(),
                 'status' => 500
+            ], 500);
+        }
+    }
+
+    public function livrosMaisEmprestados(): JsonResponse
+    {
+        try {
+            $livros = $this->livroService->livrosMaisEmprestados(3);
+
+            return response()->json([
+                'livros' => LivroResource::collection($livros),
+                'message' => 'Lista dos livros mais emprestados',
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+                'status' => 500,
             ], 500);
         }
     }
