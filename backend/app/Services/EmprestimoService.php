@@ -34,9 +34,9 @@ class EmprestimoService
             $emprestimoDTO = new EmprestimoDTO(
                 dataInicio: Carbon::now()->toDateString(),
                 dataFim: Carbon::now()->addMonth()->toDateString(),
-                status: 1,
+                status: $status,
                 quantRenovacao: 0,
-                statusAtivo: $status,
+                statusAtivo: 1,
                 livroId: $livro->liv_id,
                 usuarioId: $aluno->usu_id
             );
