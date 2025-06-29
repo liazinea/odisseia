@@ -17,14 +17,33 @@
     align-items: flex-start;
     gap: 20px;
 
+    .capaContainer {
+      width: 200px; // define a largura fixa ou variável conforme necessidade
+      height: auto; // altura automática para manter proporção da imagem
+      max-height: 350px; // limitar a altura máxima
+      margin-right: 1.5rem; // um espaçamento à direita para separar do texto
+
+      @media (max-width: 768px) {
+        width: 150px;
+        max-height: 250px;
+        margin-right: 1rem;
+      }
+
+      @media (max-width: 480px) {
+        width: 120px;
+        max-height: 200px;
+        margin-right: 0.8rem;
+      }
+    }
+
+
     .textos {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       position: relative;
       flex: 1;
-      margin-left: 60px;
-      
+
       .qtdWrapper {
         position: absolute;
         top: 0;
@@ -39,11 +58,11 @@
       margin-top: 60px;
     }
   }
-  
+
   .sinopse {
     margin-top: 20px;
     font-size: 14px;
-  
+
     h4 {
       font-weight: bold;
       margin-bottom: 10px;
@@ -85,7 +104,7 @@
     top: 0;
     right: 0;
   }
-  
+
 
   .card :global(button[class*="qtd"]) {
     font-size: 13px;

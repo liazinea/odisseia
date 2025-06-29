@@ -83,4 +83,19 @@ class EmprestimoController extends Controller
             ], 400);
         }
     }
+
+    public function emprestimosPorUsuario(int $usuario): JsonResponse
+    {
+        try {
+            $emprestimos = $this->empretimoService->buscarPorUsuario($usuario);
+
+            return response()->json([
+                'emprestimos' => $emprestimos
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 400);
+        }
+    }
 }

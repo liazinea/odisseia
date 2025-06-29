@@ -45,4 +45,17 @@ class EmprestimoRepository implements EmprestimoRepositoryInterface
     {
         return Emprestimo::create($emprestimoDTO->toArray());
     }
+
+    public function buscarPorUsuario(int $usuarioId): Collection
+    {
+        return Emprestimo::where('usu_id', $usuarioId)
+            ->with([
+                'aluno',
+                'livro',
+                'livro.generos',
+                'livro.editora',
+                'livro.autores',
+            ])
+            ->get();
+    }
 }

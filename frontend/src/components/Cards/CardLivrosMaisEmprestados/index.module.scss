@@ -1,82 +1,117 @@
-@import "../../../styles/index.scss";
+@use '../../../styles/cores/cores' as color;
 
 .card {
   display: flex;
   flex-direction: column;
-  background-color: $laranja;
-  padding: 4vh 2vw;
+  background-color: color.$laranja;
+  padding: 1.5rem 1.2rem;
   justify-content: flex-start;
   width: 100%;
   max-width: 350px;
   min-width: 220px;
   min-height: 420px;
-  gap: 10px;
-  border-radius: 0px 20px 0px 20px;
+  gap: 1rem;
+  border-radius: 15px;
   box-sizing: border-box;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+  }
 
   .titulo {
     text-align: center;
-    color: $azul-escuro;
-    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    color: color.$azul-escuro;
+    font-weight: 700;
+    font-size: clamp(1.3rem, 2vw, 1.6rem);
     word-break: break-word;
-    margin-bottom: 4px;
+    margin-bottom: 0.5rem;
   }
 
   .paragrafo {
-    flex: 1 1 120px;
+    flex: 1 1 auto;
     padding-right: 10px;
     text-align: justify;
-    max-height: 120px;
+    max-height: 140px;
     overflow-y: auto;
-    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
-    line-height: 1.4;
-    margin-bottom: 8px;
-  }
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    line-height: 1.5;
+    margin-bottom: 0;
 
-  .paragrafo::-webkit-scrollbar {
-    width: 8px;
-  }
-  .paragrafo::-webkit-scrollbar-track {
-    background: $laranja;
-    border-radius: 10px;
-  }
-  .paragrafo::-webkit-scrollbar-thumb {
-    background: lighten($laranja, 5%);
-    border-radius: 10px;
-  }
-  .paragrafo::-webkit-scrollbar-thumb:hover {
-    background: darken($laranja, 10%);
+    /* Scrollbar customizado */
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f5f5f5;
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: color.$laranja;
+      border-radius: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: darken(color.$laranja, 10%);
+    }
   }
 
   .imagem {
     display: flex;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
     width: 100%;
-    min-height: 120px;
-    margin-top: auto;
+    min-height: 180px;
+    margin-top: 1rem;
+
   }
 }
 
 @media (max-width: 768px) {
   .card {
-    padding: 2vh 3vw;
-    max-width: 50vw;
+    padding: 1rem 1rem;
+    max-width: 90vw;
     min-width: 0;
-    min-height: 300px;
-    border-radius: 10px;
+    min-height: 350px;
+    border-radius: 12px;
 
     .titulo {
-      font-size: 1rem;
+      font-size: 1.25rem;
     }
 
     .paragrafo {
-      max-height: 70px;
-      font-size: 0.9rem;
+      max-height: 100px;
+      font-size: 1rem;
     }
 
     .imagem {
-      min-height: 80px;
+      min-height: 140px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 1rem 0.8rem;
+    min-height: 300px;
+
+    .titulo {
+      font-size: 1.1rem;
+    }
+
+    .paragrafo {
+      max-height: 80px;
+      font-size: 0.95rem;
+    }
+
+    .imagem {
+      min-height: 120px;
     }
   }
 }

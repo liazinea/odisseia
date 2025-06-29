@@ -19,7 +19,21 @@ function useGeneros() {
         }
     }
 
-    return { buscaGeneros }
+    const buscaGenerosComLivros = async () => {
+        try {
+            const response = await api.get(`/generos/com-livros`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            return response.data.generos
+        } catch (error) {
+            console.error("Erro ao buscar gêneros com livros:", error)
+            return []
+        }
+    }
+
+    return { buscaGeneros, buscaGenerosComLivros }
 }
 
 export default useGeneros

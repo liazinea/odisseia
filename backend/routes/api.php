@@ -15,7 +15,7 @@ Route::controller(LoginController::class)->group(function () {
     Route::post('/login', 'autenticar');
 });
 
-Route::controller(UsuarioController::class)->group(function(){
+Route::controller(UsuarioController::class)->group(function () {
     Route::post('/usuarios/enviar-codigo', 'enviarCodigoRedefinicao');
     Route::post('/usuarios/redefinir-senha', 'redefinirSenha');
 });
@@ -29,6 +29,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::controller(LivroController::class)->group(function () {
         Route::get('/livros', 'index');
+        Route::get('/livros/mais-emprestados', 'livrosMaisEmprestados');
         Route::post('/livros', 'store');
         Route::delete('/livros/{livro}', 'delete');
         Route::get('/livros/{livro}', 'show');
@@ -48,6 +49,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::controller(GeneroController::class)->group(function () {
         Route::get('/generos', 'index');
         Route::get('/generos/nomes', 'nomes');
+        Route::get('/generos/com-livros', 'generosComLivros');
         Route::get('/generos/{genero}', 'show');
         Route::post('/generos', 'store');
         Route::patch('/generos/{genero}', 'delete');
@@ -79,5 +81,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/emprestimos', 'store');
         Route::patch('/emprestimos/{emprestimo}', 'atualizaEmprestimo');
         Route::patch('/renova-emprestimo/{emprestimo}', 'renovaEmprestimo');
+        Route::get('/emprestimos/usuario/{usuario}', 'emprestimosPorUsuario');
     });
 });
