@@ -29,7 +29,9 @@ class EmprestimoService
             throw new Exception('Usuário penalizado, assim não podendo criar uma reserva/empréstimo');
         }
         $livro = $this->livroService->buscaPorId($idLivro);
-
+        if(Emprestimo::where('liv_id', '=', $livro->id)->exists()){
+         throw new Exception('Livro já esmprestado');
+        }
         if(!$this->verificaSeAlunoTemEmprestimo($idAluno)){
             $emprestimoDTO = new EmprestimoDTO(
                 dataInicio: Carbon::now()->toDateString(),
