@@ -6,6 +6,7 @@ import ModalExcluir from "../ModalExcluir";
 import ModalRenovacao from "../ModalRenovacao";
 import api from "../../../services/api";
 import { useAuth } from "../../../context/AuthContext";
+import ModalMensagem from "../ModalMensagem";
 
 const ModalInfoDetalhada = ({
   isOpen,
@@ -33,6 +34,11 @@ const ModalInfoDetalhada = ({
   const [confirmLabel, setConfirmLabel] = useState("");
   const [cancelLabel, setCancelLabel] = useState("");
   const { token } = useAuth();
+  const [modalMensagemAberto, setModalMensagemAberto] = useState(false);
+  const fecharModalMensagem = () => {
+    setModalMensagemAberto(false);
+    setMensagemModal("");
+  };
 
   useEffect(() => {
     switch (emprestimo.emp_status) {
@@ -76,7 +82,7 @@ const ModalInfoDetalhada = ({
   const handleFunction = async (id) => {
     try {
       if (emprestimo.emp_status === 2) {
-        await api.patch(
+        const response = await api.patch(
           `/renova-emprestimo/${id}`,
           {},
           {
@@ -85,9 +91,11 @@ const ModalInfoDetalhada = ({
             },
           }
         );
-        console.log("Empréstimo renovado");
+        console.log(response.data.message);
+        setMensagemModal(response.data.message)
+        setModalMensagemAberto(true)
       } else if (emprestimo.emp_status === 1) {
-        await api.patch(
+        const response = await api.patch(
           `/emprestimos/${id}`,
           { valor: 0 },
           {
@@ -97,8 +105,11 @@ const ModalInfoDetalhada = ({
           }
         );
         console.log("Reserva cancelada");
+        console.log(response.data.message);
+        setMensagemModal(response.data.message)
+        setModalMensagemAberto(true)
       }
-
+      
       // Atualiza os empréstimos
       const response = await api.get("/emprestimos", {
         headers: { Authorization: `Bearer ${token}` },
@@ -107,13 +118,15 @@ const ModalInfoDetalhada = ({
         (e) => e.aluno.usu_id === usuarioId
       );
       setEmprestimos(emprestimosAtualizados);
-
+      
       // Fecha os modais
       setCancelarReserva(false);
       onClose();
-
+      
     } catch (error) {
+      setMensagemModal(response.data.message)
       console.error("Erro ao atualizar:", error);
+      console.error("Erro ao atualizar:", response.data.message);
     }
   };
 
@@ -230,6 +243,11 @@ const ModalInfoDetalhada = ({
           status={emprestimo.emp_status}
         />
       )}
+      <ModalMensagem
+              mensagemModal={mensagemModal}
+              closeModal={fecharModalMensagem}
+              modalAberto={modalMensagemAberto}
+            />
     </div>
   );
 };

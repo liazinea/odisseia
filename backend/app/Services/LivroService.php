@@ -32,18 +32,28 @@ class LivroService
 
     public function buscaLivrosPorGenero(): array
     {
+        $generosComLivros = [];
+
         $generos = $this->generoService->buscarTodos();
-        $livrosPorGenero = [];
 
         foreach ($generos as $genero) {
-            $livrosPorGenero[] = [
-                'genero' => $genero->gen_nome,
-                'livros' => $this->livroRepository->buscaLivrosPorGenero($genero->gen_nome),
-            ];
+            $livros = $genero->livros()
+                ->where('liv_status_ativo', 1)
+                ->take(4)
+                ->get();
+
+            if ($livros->isNotEmpty()) {
+                $generosComLivros[] = [
+                    'genero' => $genero->gen_nome,
+                    'livros' => $livros
+                ];
+            }
         }
 
-        return $livrosPorGenero;
+        return $generosComLivros;
     }
+
+
 
     public function retorna(Livro $livo): Livro
     {
@@ -82,5 +92,13 @@ class LivroService
         }
 
         throw new \Exception('Erro ao salvar a capa do livro.');
+    }
+
+
+    // Em LivroService.php
+
+    public function livrosMaisEmprestados(int $limite = 3): Collection
+    {
+        return $this->livroRepository->livrosMaisEmprestados($limite);
     }
 }

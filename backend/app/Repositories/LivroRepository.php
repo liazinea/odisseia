@@ -7,6 +7,8 @@ use App\Models\Livro;
 use App\Repositories\LivroRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\DB;
+
 
 class LivroRepository implements LivroRepositoryInterface
 {
@@ -80,5 +82,38 @@ class LivroRepository implements LivroRepositoryInterface
     public function salvarCapa(UploadedFile $capa): string
     {
         return $path = $capa->store('capas_livros', 'public');
+    }
+
+
+    public function livrosMaisEmprestados(int $limite = 3): Collection
+    {
+        $livrosMaisEmprestados = Livro::select('liv_livro.*', DB::raw('COUNT(emp_emprestimo.emp_id) as total_emprestimos'))
+            ->join('emp_emprestimo', 'liv_livro.liv_id', '=', 'emp_emprestimo.liv_id')
+            ->where('liv_livro.liv_status_ativo', 1)
+            ->groupBy('liv_livro.liv_id')
+            ->orderByDesc('total_emprestimos')
+            ->take($limite)
+            ->get();
+
+        // Carregar relações manualmente para evitar conflito com join
+        $livrosMaisEmprestados->load(['autores', 'editora', 'generos']);
+
+        if ($livrosMaisEmprestados->count() < $limite) {
+            $faltando = $limite - $livrosMaisEmprestados->count();
+
+            $livrosIds = $livrosMaisEmprestados->pluck('liv_id')->toArray();
+
+            $aleatorios = Livro::where('liv_status_ativo', 1)
+                ->whereNotIn('liv_id', $livrosIds)
+                ->inRandomOrder()
+                ->take($faltando)
+                ->get();
+
+            $aleatorios->load(['autores', 'editora', 'generos']);
+
+            return $livrosMaisEmprestados->merge($aleatorios);
+        }
+
+        return $livrosMaisEmprestados;
     }
 }

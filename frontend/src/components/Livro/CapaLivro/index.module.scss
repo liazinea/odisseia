@@ -1,55 +1,41 @@
 .capaLivro {
-    position: relative;
-    width: 233px;
-    height: 373px;
-    border-radius: 0; // ou 10px, se quiser bordas suaves
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: transparent;
-@media (max-width: 1400px){
-        width: 12.135vw;
-      height: 26vw;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 0; // ou 10px, se quiser bordas suaves
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
 }
 
-    @media (max-width: 768px){
-      width: 198px;
-      height: 317px;
-    }
-        @media (max-width: 576px){
-      width: 173px;
-      height: 280px;
-    }
+
+.imagemCapa {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+
+.skeleton {
+  display: flex;
+  background-color: #e0e0e0;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    color: gray;
   }
-  
-  
-  .imagemCapa {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-  
-  
-  .skeleton {
-    display: flex;
-    background-color: #e0e0e0;
-    width: 100%;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-  
-    span {
-      color: gray;
-    }
-  }
-  
-  /* Posicionamento absoluto da classificação */
-  .classIndicativa {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 10;
-  }
-  
+}
+
+/* Posicionamento absoluto da classificação */
+.classIndicativa {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}

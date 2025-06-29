@@ -11,7 +11,6 @@ function useUsuario(id) {
                     Authorization: `Bearer ${token}`
                 }
             })
-            console.log(response)
             return response
         } catch (error) {
             console.error("Erro ao buscar usuários:", error)

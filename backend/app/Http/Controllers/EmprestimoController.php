@@ -28,14 +28,14 @@ class EmprestimoController extends Controller
         try {
             if (!$request->query('status')) {
                 $emprestimo = $this->empretimoService
-                    ->criaEmprestimo($request->validated('usu_id'), $request->validated('liv_id'), $request->query('status'));
+                    ->criaEmprestimo($request->validated('usu_id'), $request->validated('liv_id'));
                 return response()->json([
                     'message' => 'Empréstimo criado com sucesso'
                 ], 200);
             }
 
             $emprestimo = $this->empretimoService
-                ->criaEmprestimo($request->validated('usu_id'), $request->validated('liv_id'));
+                ->criaEmprestimo($request->validated('usu_id'), $request->validated('liv_id'), $request->query('status'));
             return response()->json([
                 'message' => 'Empréstimo criado com sucesso'
             ], 200);
@@ -80,6 +80,21 @@ class EmprestimoController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'message' => $e->getMessage(),
+            ], 400);
+        }
+    }
+
+    public function emprestimosPorUsuario(int $usuario): JsonResponse
+    {
+        try {
+            $emprestimos = $this->empretimoService->buscarPorUsuario($usuario);
+
+            return response()->json([
+                'emprestimos' => $emprestimos
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
             ], 400);
         }
     }
