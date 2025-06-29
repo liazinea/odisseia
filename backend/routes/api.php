@@ -22,6 +22,7 @@ Route::controller(UsuarioController::class)->group(function(){
 
 Route::controller(PrimeiroAcessoController::class)->group(function(){
     Route::post('/criar-token', 'createToken');
+    Route::post('/confirmar-codigo', 'validaToken');
 });
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout']);

@@ -14,12 +14,12 @@ return new class extends Migration
             $table->string('usu_nome');
             $table->date('usu_dataNasc');
             $table->string('email')->unique();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->integer('usu_nivel')->default(0);
             $table->integer('usu_ra');
             $table->integer('usu_status');
             $table->string('usu_token_acesso')->nullable()->default(null);
-                $table->timestamp('first_access_code_expires_at')->nullable()->default(null);
+            $table->timestamp('usu_token_code_expires_at')->nullable()->default(null);
             $table->rememberToken();
             $table->timestamps();
         });

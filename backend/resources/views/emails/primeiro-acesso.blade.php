@@ -1,11 +1,18 @@
-@component('mail::message')
-# Código de Primeiro Acesso
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Código de Primeiro Acesso</title>
+</head>
+<body>
+    <h1>Código de Primeiro Acesso</h1>
 
-Seu código de acesso é:
+    <p>Seu código de acesso é:</p>
 
-# {{ $code }}
+    <h2>{{ $code }}</h2>
 
-Este código é válido por 15 minutos.
+    <p>Este código é válido por 15 minutos.</p>
 
-Obrigado!
-@endcomponent
+    <p>Obrigado!</p>
+</body>
+</html>

@@ -24,6 +24,7 @@ class Usuario extends Authenticatable
         'usu_nivel',
         'usu_ra',
         'usu_status',
+        'usu_token_acesso'
     ];
 
     public function emprestimo(): HasMany

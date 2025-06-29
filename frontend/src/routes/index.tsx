@@ -20,6 +20,7 @@ import PerfilUsuario from "../pages/PerfilUsuario";
 import PaginaPesquisa from "../pages/PaginaPesquisa";   
 import RedefinirSenha from "../pages/RedefinirSenha/index.jsx";
 import Editoras from "../pages/Editoras";
+import ValidarCodigo from "../pages/ValidarCodigo/index.jsx";
 
 export const Paths = () => {
     return (
@@ -29,6 +30,7 @@ export const Paths = () => {
 
                     <Route index element={<Login />} />
                     <Route path={'/primeiro-acesso'} element={<PrimeiroAcesso />}/>
+                    <Route path={'/primeiro-acesso/validar-codigo'} element={<ValidarCodigo />}/>
                     <Route path={'/esqueci-minha-senha'} element={<RedefinicaoSenha />}/>
                      <Route path="/reset-password" element={<RedefinirSenha />} />
                     <Route path={'/'} element={<PageLayout />}>
