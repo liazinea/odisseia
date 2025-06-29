@@ -66,7 +66,7 @@ class UsuarioController extends Controller
                 $request->validated('usu_nome'),
                 $request->validated('usu_dataNasc'),
                 $request->validated('email'),
-                'senha123',
+                null,
                 0,
                 $request->validated('usu_ra'),
                 1,

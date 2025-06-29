@@ -6,6 +6,7 @@ use App\Http\Controllers\EmprestimoController;
 use App\Http\Controllers\GeneroController;
 use App\Http\Controllers\LivroController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PrimeiroAcessoController;
 use App\Http\Controllers\UsuarioController;
 use App\Models\Usuario;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,10 @@ Route::controller(UsuarioController::class)->group(function () {
     Route::post('/usuarios/redefinir-senha', 'redefinirSenha');
 });
 
+Route::controller(PrimeiroAcessoController::class)->group(function(){
+    Route::post('/criar-token', 'createToken');
+    Route::post('/confirmar-codigo', 'validaToken');
+});
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout']);
 

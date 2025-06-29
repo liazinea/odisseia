@@ -12,7 +12,8 @@ const CardAcesso = ({
   nomeBotao,
   textoBotao,
   register,
-  errors
+  errors,
+  isSubmitting
 }) => {
   return (
     <div className={styles.form}>
@@ -25,12 +26,16 @@ const CardAcesso = ({
           placeholder={placeholder}
           required={required}
           register={register}
-          error={errors[nomeCampoInput]}
+          error={errors?.[nomeCampoInput]}
         />
-
+        s
 
         <div className={styles.botao}>
-          <BotaoFormLogin type="submit" nomeBotao={nomeBotao} texto={textoBotao} />
+          <BotaoFormLogin
+            type="submit"
+            nomeBotao={nomeBotao}
+            texto={isSubmitting ? "Enviando..." : textoBotao}
+          />
         </div>
 
         <Link className={styles.texto} to={`/`}>

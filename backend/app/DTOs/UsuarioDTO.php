@@ -8,7 +8,7 @@ class UsuarioDTO
         readonly string $nome,
         readonly string $dataNascimento,
         readonly string $email,
-        readonly string $senha,
+        readonly string|null $senha,
         readonly int $nivel,
         readonly string $ra,
         readonly int $status,
