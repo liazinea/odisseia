@@ -117,4 +117,10 @@ class LivroRepository implements LivroRepositoryInterface
 
         return $livrosMaisEmprestados;
     }
+
+    public function quantidadeLivro(string $nome): int
+    {
+        return Livro::whereRaw('LOWER(liv_nome) = ?', [strtolower($nome)])
+            ->count();
+    }
 }
