@@ -60,7 +60,7 @@ const ModalEmprestimoLivro = ({
     setLoading(true);
     try {
       const response = await api.post(
-        "/emprestimos",
+        "/emprestimos?status=2",
         {
           liv_id: data.livro,
           usu_id: data.aluno,

@@ -46,9 +46,8 @@ class LivroRepository implements LivroRepositoryInterface
 
     public function deletar(Livro $livro): bool
     {
-        $livro->autores()->detach();
-        $livro->generos()->detach();
-        return $livro->delete();
+        $livro->liv_status_ativo = 0;
+        return $livro->save();
     }
 
     public function buscarTodos(): Collection

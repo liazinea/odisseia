@@ -26,8 +26,16 @@ class EmprestimoController extends Controller
     public function store(EmprestimoRequest $request): JsonResponse
     {
         try {
+            if (!$request->query('status')) {
+                $emprestimo = $this->empretimoService
+                    ->criaEmprestimo($request->validated('usu_id'), $request->validated('liv_id'));
+                return response()->json([
+                    'message' => 'Empréstimo criado com sucesso'
+                ], 200);
+            }
+
             $emprestimo = $this->empretimoService
-                ->criaEmprestimo($request->validated('usu_id'), $request->validated('liv_id'));
+                ->criaEmprestimo($request->validated('usu_id'), $request->validated('liv_id'), $request->query('status'));
             return response()->json([
                 'message' => 'Empréstimo criado com sucesso'
             ], 200);
@@ -57,6 +65,12 @@ class EmprestimoController extends Controller
 
     public function renovaEmprestimo(Emprestimo $emprestimo): JsonResponse
     {
+        if ($emprestimo->emp_quantRenovacao > 0) {
+            return response()->json([
+                'message' => 'Você atingiu a quantidade máxima de renovação.'
+            ], 200);
+        }
+
         try {
             $this->empretimoService->renovaEmprestimo($emprestimo);
 
