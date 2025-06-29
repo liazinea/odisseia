@@ -22,7 +22,7 @@ class EmprestimoService
     {
         return $this->emprestimoRepository->buscarTodos();
     }
-    public function criaEmprestimo(int $idAluno, int $idLivro):Emprestimo
+    public function criaEmprestimo(int $idAluno, int $idLivro, int $status = 1):Emprestimo
     {
         $aluno = $this->usuarioService->buscaPorId($idAluno);
         if($aluno->usu_status == 3){
@@ -36,7 +36,7 @@ class EmprestimoService
                 dataFim: Carbon::now()->addMonth()->toDateString(),
                 status: 1,
                 quantRenovacao: 0,
-                statusAtivo: 1,
+                statusAtivo: $status,
                 livroId: $livro->liv_id,
                 usuarioId: $aluno->usu_id
             );
