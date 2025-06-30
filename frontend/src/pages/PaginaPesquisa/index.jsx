@@ -5,6 +5,7 @@ import CardPesquisa from "../../components/Cards/CardPesquisa";
 import styles from "./index.module.scss";
 import HeaderHome from "../../components/layout/HeaderHome";
 import { useAuth } from "../../context/AuthContext";
+import Carregando from "../../components/layout/Carregando";
 
 const PaginaPesquisa = () => {
   const { token, userType } = useAuth();
@@ -73,66 +74,71 @@ const PaginaPesquisa = () => {
   return (
     <div>
       <HeaderHome />
-      <h3 className={styles["termo-pesquisa"]}>Resultados para: "{termo}"</h3>
       {carregando ? (
-        <p className="pesquisa">Carregando...</p>
+        <Carregando/>
       ) : resultados.length > 0 ? (
         <div className={styles.container}>
+          <h3 className={styles["termo-pesquisa"]}>Resultados para: "{termo}"</h3>
           {livrosPaginados.map((livro) => (
-            <Link to={`/livro/${livro.id}`} key={livro.id} className={styles.cards}>
+            <Link
+              to={`/livro/${livro.id}`}
+              key={livro.id}
+              className={styles.cards}
+            >
               <CardPesquisa livro={livro} />
             </Link>
           ))}
-
         </div>
       ) : (
         <p className="pesquisa">Nenhum livro encontrado.</p>
       )}
+     {!carregando && resultados.length > 0 && (
+  <div className={styles.paginacao}>
+    <div className={styles["botoes-paginacao"]}>
+      <button
+        className={styles["botao-paginacao"]}
+        onClick={irParaAnterior}
+        disabled={paginaAtual === 0}
+      >
+        Anterior
+      </button>
 
-      <div className={styles.paginacao}>
-        <div className={styles["botoes-paginacao"]}>
-          <button
-            className={styles["botao-paginacao"]}
-            onClick={irParaAnterior}
-            disabled={paginaAtual === 0}
-          >
-            Anterior
-          </button>
+      <span className={styles["info-paginacao"]}>
+        Página {paginaAtual + 1} de {totalPaginas}
+      </span>
 
-          <span className={styles["info-paginacao"]}>
-            Página {paginaAtual + 1} de {totalPaginas}
-          </span>
+      <button
+        className={styles["botao-paginacao"]}
+        onClick={irParaProxima}
+        disabled={paginaAtual >= totalPaginas - 1}
+      >
+        Próxima
+      </button>
+    </div>
 
-          <button
-            className={styles["botao-paginacao"]}
-            onClick={irParaProxima}
-            disabled={paginaAtual >= totalPaginas - 1}
-          >
-            Próxima
-          </button>
-        </div>
+    <div className={styles["detalhes-paginacao"]}>
+      <span className={styles["info-paginacao"]}>
+        Total de itens: {resultados.length}
+      </span>
 
-        <div className={styles["detalhes-paginacao"]}>
-          <span className={styles["info-paginacao"]}>
-            Total de itens: {resultados.length}
-          </span>
-
-          <div className={styles["seletor-tamanho-pagina"]}>
-            <label htmlFor="pageSize">Itens por página:</label>
-            <select
-              id="pageSize"
-              value={tamanhoPagina}
-              onChange={(e) => setTamanhoPagina(Number(e.target.value))}
-            >
-              {[5, 10, 20, 50].map((size) => (
-                <option key={size} value={size}>
-                  {size}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
+      <div className={styles["seletor-tamanho-pagina"]}>
+        <label htmlFor="pageSize">Itens por página:</label>
+        <select
+          id="pageSize"
+          value={tamanhoPagina}
+          onChange={(e) => setTamanhoPagina(Number(e.target.value))}
+        >
+          {[5, 10, 20, 50].map((size) => (
+            <option key={size} value={size}>
+              {size}
+            </option>
+          ))}
+        </select>
       </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };
