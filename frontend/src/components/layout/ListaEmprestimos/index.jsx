@@ -46,6 +46,7 @@ const ListaEmprestimos = ({
     2: "EMPRESTADO",
     3: "DEVOLVIDO",
   };
+  console.log(emprestimo)
 
   if(emprestimo == ["Não há emprestimos"]){
     return (
@@ -71,6 +72,8 @@ const ListaEmprestimos = ({
           errors={errors}
           passwordMessage={passwordMessage}
           emprestimo={emprestimo}
+          setEmprestimos={setEmprestimos}
+          usuarioId={emprestimo.aluno.usu_id}
         />
       </div>
     );

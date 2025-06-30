@@ -5,11 +5,19 @@ import api from "../../services/api";
 import styles from "./index.module.scss";
 import InputForm from "../../components/Inputs/InputForm";
 import BotaoFormLogin from "../../components/Botao/BotaoFormLogin";
+import ModalMensagem from "../../components/Modal/ModalMensagem";
 
 const RedefinirSenha = () => {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
   const email = searchParams.get("email");
+  const [modalMensagemAberto, setModalMensagemAberto] = useState(false);
+  const [mensagemModal, setMensagemModal] = useState("");
+
+  const fecharModalMensagem = () => {
+    setModalMensagemAberto(false);
+    setMensagemModal("");
+  };
 
   const {
     register,
@@ -25,7 +33,7 @@ const RedefinirSenha = () => {
     setMsgErro("");
 
     try {
-      const response = await api.post('/usuarios/redefinir-senha', {
+      const response = await api.post("/usuarios/redefinir-senha", {
         token,
         email,
         password: data.password,
@@ -33,8 +41,12 @@ const RedefinirSenha = () => {
       });
 
       setMsgSucesso(response.data.message);
+      setMensagemModal(response.data.message)
+      setModalMensagemAberto(true);
     } catch (error) {
-      setMsgErro(error.response?.data?.message || 'Erro ao redefinir senha.');
+      setMsgErro(error.response?.data?.message || "Erro ao redefinir senha.");
+      setMensagemModal(error.response?.data?.message || "Erro ao redefinir senha.")
+      setModalMensagemAberto(true);
     }
   };
 
@@ -65,14 +77,6 @@ const RedefinirSenha = () => {
           <h2 className={styles.cardTitulo}>Redefinir Senha</h2>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div>
-              {/* <label>Nova senha:</label>
-                <input
-                  type="password"
-                  {...register("password", {
-                    required: "A senha é obrigatória",
-                    minLength: { value: 6, message: "Mínimo 6 caracteres" },
-                  })}
-                /> */}
               <InputForm
                 type={"password"}
                 nomeCampo={"senha"}
@@ -88,17 +92,7 @@ const RedefinirSenha = () => {
                 <p style={{ color: "red" }}>{errors.password.message}</p>
               )}
             </div>
-
             <div>
-              {/* <label>Confirme a senha:</label> */}
-              {/* <input
-                  type="password"
-                  {...register("passwordConfirmation", {
-                    required: "Confirmação obrigatória",
-                    validate: (value) =>
-                      value === watch("password") || "As senhas não conferem",
-                  })}
-                /> */}
               <InputForm
                 type={"password"}
                 nomeCampo={"confirmaSenha"}
@@ -117,8 +111,6 @@ const RedefinirSenha = () => {
                 </p>
               )}
             </div>
-
-            {/* <button type="submit">Redefinir</button> */}
             <div className={styles.botao}>
               <BotaoFormLogin
                 type={"submit"}
@@ -128,10 +120,10 @@ const RedefinirSenha = () => {
             </div>
           </form>
         </div>
-
-        {msgSucesso && <p style={{ color: "green" }}>{msgSucesso}</p>}
-        {msgErro && <p style={{ color: "red" }}>{msgErro}</p>}
       </div>
+      <ModalMensagem mensagemModal={mensagemModal}
+        closeModal={fecharModalMensagem}
+        modalAberto={modalMensagemAberto} />
     </div>
   );
 };

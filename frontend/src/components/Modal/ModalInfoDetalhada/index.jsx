@@ -117,6 +117,7 @@ const ModalInfoDetalhada = ({
       const emprestimosAtualizados = response.data.emprestimos.filter(
         (e) => e.aluno.usu_id === usuarioId
       );
+      console.log(emprestimosAtualizados)
       setEmprestimos(emprestimosAtualizados);
       
       // Fecha os modais
