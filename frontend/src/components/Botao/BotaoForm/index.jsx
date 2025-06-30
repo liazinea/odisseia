@@ -24,7 +24,7 @@ const BotaoForm = ({ type = "button", nomeBotao, texto, onClick }) => {
         onClick={handleClick}
         disabled={loading}
       >
-        {texto}
+        {loading ? "Carregando..." : texto}
       </button>
     </>
   );
