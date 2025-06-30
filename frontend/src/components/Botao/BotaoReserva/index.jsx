@@ -32,7 +32,7 @@ const BotaoReserva = ({ texto, idLivro }) => {
       console.log('Empréstimo criado com sucesso:', response.data);
       // Aqui você pode exibir um toast ou feedback para o usuário
     } catch (error) {
-      setMessage(response.data.message);
+      setMessage(error.response.data.message);
       setModalMensagemAberto(true);
       console.error('Erro ao fazer empréstimo do livro:', error);
     }

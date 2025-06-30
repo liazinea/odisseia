@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useState } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import api from "../../services/api";
 import styles from "./index.module.scss";
@@ -13,10 +13,12 @@ const RedefinirSenha = () => {
   const email = searchParams.get("email");
   const [modalMensagemAberto, setModalMensagemAberto] = useState(false);
   const [mensagemModal, setMensagemModal] = useState("");
+  const navigate = useNavigate();
 
   const fecharModalMensagem = () => {
     setModalMensagemAberto(false);
     setMensagemModal("");
+    navigate('/')
   };
 
   const {
@@ -41,11 +43,13 @@ const RedefinirSenha = () => {
       });
 
       setMsgSucesso(response.data.message);
-      setMensagemModal(response.data.message)
+      setMensagemModal(response.data.message);
       setModalMensagemAberto(true);
     } catch (error) {
       setMsgErro(error.response?.data?.message || "Erro ao redefinir senha.");
-      setMensagemModal(error.response?.data?.message || "Erro ao redefinir senha.")
+      setMensagemModal(
+        error.response?.data?.message || "Erro ao redefinir senha."
+      );
       setModalMensagemAberto(true);
     }
   };
@@ -113,17 +117,20 @@ const RedefinirSenha = () => {
             </div>
             <div className={styles.botao}>
               <BotaoFormLogin
-                type={"submit"}
+                type={"button"}
                 nomeBotao={"submit"}
                 texto={"Redefinir senha"}
+                onClick={handleSubmit(onSubmit)}
               />
             </div>
           </form>
         </div>
       </div>
-      <ModalMensagem mensagemModal={mensagemModal}
+      <ModalMensagem
+        mensagemModal={mensagemModal}
         closeModal={fecharModalMensagem}
-        modalAberto={modalMensagemAberto} />
+        modalAberto={modalMensagemAberto}
+      />
     </div>
   );
 };

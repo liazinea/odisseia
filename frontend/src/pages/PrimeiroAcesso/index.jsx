@@ -1,10 +1,20 @@
 import { useForm } from "react-hook-form";
-import api
-  from "../../services/api";
+import api from "../../services/api";
 import CardAcesso from "../../components/Cards/CardPrimeiroAcesso";
 import styles from "./index.module.scss";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import ModalMensagem from "../../components/Modal/ModalMensagem";
+
 const PrimeiroAcesso = () => {
+  const [mensagemModal, setMensagemModal] = useState();
+  const [modalMensagemAberto, setModalMensagemAberto] = useState();
+
+  const fecharModalMensagem = () => {
+    setModalMensagemAberto(false);
+    setMensagemModal("");
+  };
+  
   const navigate = useNavigate();
   const {
     register,
@@ -18,12 +28,13 @@ const PrimeiroAcesso = () => {
       await api.post("/criar-token", {
         email: data.email,
       });
-      navigate('/primeiro-acesso/validar-codigo', {
-        state: { email: data.email }
+      navigate("/primeiro-acesso/validar-codigo", {
+        state: { email: data.email },
       });
     } catch (error) {
       console.error(error);
-      alert("Erro ao enviar código!");
+      setMensagemModal(error.response.data.message);
+      setModalMensagemAberto(true)
     }
   };
 
@@ -53,16 +64,21 @@ const PrimeiroAcesso = () => {
             tituloCard="Primeiro Acesso"
             typeInput="email"
             nomeCampoInput="email"
-            placeholder="Digite seu e-mail institucional"
+            placeholder="E-mail institucional"
             required={true}
             nomeBotao="enviar"
             textoBotao="Enviar Código"
             register={register}
             errors={errors}
-            isSubmitting={isSubmitting}
+            onClick={handleSubmit(onSubmit)}
           />
         </form>
       </div>
+      <ModalMensagem
+        mensagemModal={mensagemModal}
+        closeModal={fecharModalMensagem}
+        modalAberto={modalMensagemAberto}
+      />
     </div>
   );
 };

@@ -69,6 +69,7 @@ const RedefinicaoSenha = () => {
             required={true}
             nomeBotao={"enviar"}
             textoBotao={"Enviar Código"}
+            onClick={handleSubmit(onSubmit)}
             register={register}
             errors={errors}
           />

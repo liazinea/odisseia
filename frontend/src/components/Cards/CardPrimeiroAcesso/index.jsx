@@ -13,7 +13,7 @@ const CardAcesso = ({
   textoBotao,
   register,
   errors,
-  isSubmitting
+  onClick
 }) => {
   return (
     <div className={styles.form}>
@@ -31,9 +31,10 @@ const CardAcesso = ({
 
         <div className={styles.botao}>
           <BotaoFormLogin
-            type="submit"
-            nomeBotao={nomeBotao}
-            texto={isSubmitting ? "Enviando..." : textoBotao}
+           type={"button"} 
+           nomeBotao={nomeBotao} 
+           texto={textoBotao} 
+           onClick={onClick}
           />
         </div>
 

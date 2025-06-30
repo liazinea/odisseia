@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import styles from './index.module.scss';
 
-const InputForm = ({ type, nomeCampo, placeholder, required, onChange, ...props }) => {
+const InputForm = ({ type, nomeCampo, placeholder, required, onChange, filledInput, ...props }) => {
   const isRequired = required;
-  const [filled, setFilled] = useState(false);
+  const [filled, setFilled] = useState(filledInput ? filledInput : false);
 
   const handleChange = (e) => {
     setFilled(e.target.value.trim() !== '');

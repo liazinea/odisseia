@@ -81,16 +81,19 @@ const PaginaPesquisa = () => {
           <h3 className={styles["termo-pesquisa"]}>Resultados para: "{termo}"</h3>
           {livrosPaginados.map((livro) => (
             <Link
-              to={`/livro/${livro.id}`}
-              key={livro.id}
-              className={styles.cards}
+            to={`/livro/${livro.id}`}
+            key={livro.id}
+            className={styles.cards}
             >
               <CardPesquisa livro={livro} />
             </Link>
           ))}
         </div>
       ) : (
-        <p className="pesquisa">Nenhum livro encontrado.</p>
+        <div>
+          <h3 className={styles["termo-pesquisa"]}>Resultados para: "{termo}"</h3>
+          <p className={styles.pesquisa}>Nenhum livro encontrado.</p>
+        </div>
       )}
      {!carregando && resultados.length > 0 && (
   <div className={styles.paginacao}>
