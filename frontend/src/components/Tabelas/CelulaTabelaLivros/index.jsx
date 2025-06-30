@@ -9,7 +9,7 @@ import { api } from '../../../config/api';
 import { useAuth } from "../../../context/AuthContext";
 import { useForm } from "react-hook-form";
 
-const CelulaTabelaLivros = ({ livro, onDelete }) => {
+const CelulaTabelaLivros = ({ livro, onDelete, onUpdateLivro }) => {
   const [livroSelecionado, setLivroSelecionado] = useState(null);
   const [modalEditarAberto, setModalEditarAberto] = useState(false);
   const [modalExcluirAberto, setModalExcluirAberto] = useState(false);
@@ -156,6 +156,7 @@ const CelulaTabelaLivros = ({ livro, onDelete }) => {
         modalEditarAberto={modalEditarAberto}
         showModal={showModalEditar}
         livro={livro}
+        onUpdateLivro={onUpdateLivro}
       />
     </div>
   );

@@ -148,6 +148,11 @@ const TabelaLivros = ({ livros, setLivros }) => {
               onDelete={(id) => {
                 setLivro((prev) => prev.filter((livro) => livro.id !== id));
               }}
+              onUpdateLivro={(livroAtualizado) => {
+                setLivro((prevLivros) =>
+                  prevLivros.map((l) => (l.id === livroAtualizado.id ? livroAtualizado : l))
+                );
+              }}
               setModalMensagemAberto={setModalMensagemAberto}
             />
           ))}
