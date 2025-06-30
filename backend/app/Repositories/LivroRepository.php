@@ -116,4 +116,13 @@ class LivroRepository implements LivroRepositoryInterface
 
         return $livrosMaisEmprestados;
     }
+
+    public function quantidadeLivro(string $nome): int
+    {
+        return  DB::table('liv_livro')
+            ->leftJoin('emp_emprestimo', 'liv_livro.liv_id', '=', 'emp_emprestimo.liv_id')
+            ->whereRaw('LOWER(liv_livro.liv_nome) = ?', [strtolower($nome)])
+            ->whereNull('emp_emprestimo.liv_id')
+            ->count();
+    }
 }

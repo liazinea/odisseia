@@ -167,4 +167,21 @@ class LivroController extends Controller
             ], 500);
         }
     }
+
+    public function quantidadePorNome(string $nome): JsonResponse
+    {
+        try {
+            $quantidade = $this->livroService->quantidadeLivro($nome);
+
+            return response()->json([
+                'quantidade' => $quantidade,
+                'nome' => $nome,
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+                'status' => 500,
+            ], 500);
+        }
+    }
 }

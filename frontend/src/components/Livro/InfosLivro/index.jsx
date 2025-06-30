@@ -1,12 +1,23 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 import CapaLivro from '../CapaLivro';
 import TituloDescricao from '../TituloDescricao';
 import Sinopse from '../Sinopse';
 import BotaoGenero from '../../Botao/BotaoGenero';
 import BotaoQtd from '../../Botao/BotaoQtd';
+import useLivros from '../../../hooks/useLivros';
 
 const InfosLivro = ({ livro }) => {
+
+
+  const { buscaQuantidadePorNome } = useLivros();
+  const [quantidade, setQuantidade] = useState(0);
+
+  useEffect(() => {
+    if (livro?.nome) {
+      buscaQuantidadePorNome(livro.nome).then(setQuantidade);
+    }
+  }, [livro?.nome]);
 
   return (
     <div className={styles.card}>
@@ -16,7 +27,7 @@ const InfosLivro = ({ livro }) => {
         </div>
         <div className={styles.textos}>
           <div className={styles.qtdWrapper}>
-            <BotaoQtd quantidade={1} />
+            <BotaoQtd quantidade={quantidade} />
           </div>
 
           <TituloDescricao titulo={livro.nome}
