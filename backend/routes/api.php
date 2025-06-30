@@ -20,7 +20,7 @@ Route::controller(UsuarioController::class)->group(function () {
     Route::post('/usuarios/redefinir-senha', 'redefinirSenha');
 });
 
-Route::controller(PrimeiroAcessoController::class)->group(function(){
+Route::controller(PrimeiroAcessoController::class)->group(function () {
     Route::post('/criar-token', 'createToken');
     Route::post('/confirmar-codigo', 'validaToken');
 });
@@ -35,6 +35,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/livros/{livro}', 'show');
         Route::put('/livros/{livro}', 'update');
         Route::get('/livros-por-genero', 'livrosPorGenero');
+        Route::get('/livros/quantidade/{nome}', [LivroController::class, 'quantidadePorNome']);
     });
 
     Route::controller(AutorController::class)->group(function () {

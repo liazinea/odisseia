@@ -1,22 +1,22 @@
-import { useAuth } from "../context/AuthContext"
-import { api } from "../config/api"
+import { useAuth } from "../context/AuthContext";
+import { api } from "../config/api";
 
 function useLivros() {
-    const { token } = useAuth()
+    const { token } = useAuth();
 
     const buscaLivros = async () => {
         try {
             const response = await api.get(`/livros`, {
                 headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-            return response.data.livros.data
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            return response.data.livros.data;
         } catch (error) {
-            console.error("Erro ao buscar livros:", error)
-            return []
+            console.error("Erro ao buscar livros:", error);
+            return [];
         }
-    }
+    };
 
     const buscaLivrosMaisEmprestados = async () => {
         try {
@@ -32,7 +32,25 @@ function useLivros() {
         }
     };
 
-    return { buscaLivros, buscaLivrosMaisEmprestados }
+    const buscaQuantidadePorNome = async (nome) => {
+        try {
+            const response = await api.get(`/livros/quantidade/${encodeURIComponent(nome)}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            return response.data.quantidade;
+        } catch (error) {
+            console.error("Erro ao buscar quantidade de livros por nome:", error);
+            return 0;
+        }
+    };
+
+    return {
+        buscaLivros,
+        buscaLivrosMaisEmprestados,
+        buscaQuantidadePorNome,
+    };
 }
 
-export default useLivros
+export default useLivros;
