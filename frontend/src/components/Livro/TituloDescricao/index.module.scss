@@ -9,16 +9,16 @@
     align-items: left;
   }
 
-   @media (max-width: 768px) {
-    align-items: center; 
-    text-align: center; 
+  @media (max-width: 768px) {
+    align-items: center;
+    text-align: center;
   }
 }
 
 .titulo {
   font-family: Poppins;
   color: $azul-escuro;
-  font-size: 3.50rem; 
+  font-size: 3.50rem;
   font-weight: 900;
   letter-spacing: -0.030em;
   white-space: pre-line;
@@ -58,6 +58,24 @@
     margin-bottom: 1.25rem; // Reduz a margem inferior
     text-align: center; // Centraliza o título em telas pequenas
   }
+
+  @media (max-width: 540px) {
+    margin-top: 40px;
+  }
+
+  @media (max-width: 412px) {
+    font-size: 1.8em;
+    display: flex;
+    margin: 10px;
+    padding: 0;
+  }
+
+   @media (max-width: 375px) {
+    font-size: 1.5rem;
+    text-align: center;
+    display: flex;
+  }
+
 }
 
 .autor {
@@ -79,8 +97,8 @@
     font-size: 2rem;
   }
 
-    @media (max-width: 992px) {
-    font-size: 1.5rem; 
+  @media (max-width: 992px) {
+    font-size: 1.5rem;
   }
 
   @media (max-width: 1024px) {
@@ -88,8 +106,17 @@
   }
 
   @media (max-width: 768px) {
-    font-size: 2rem; 
-    text-align: center; 
+    font-size: 2rem;
+    text-align: center;
+    display: flex;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+
+  @media (max-width: 414px) {
+    font-size: 1.8em;
     display: flex;
   }
 }
