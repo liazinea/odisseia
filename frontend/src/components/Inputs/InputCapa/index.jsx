@@ -2,12 +2,18 @@ import styles from './index.module.scss';
 import { FaUpload } from "react-icons/fa6";
 import { useState } from 'react';
 
-const InputCapa = ({ campo, errors, errorsApi, register, required = true }) => {
+const InputCapa = ({
+  campo,
+  errors,
+  errorsApi,
+  register,
+  required = true,
+  imagemAtual = null, // ← nova prop para imagem do servidor
+}) => {
   const [preview, setPreview] = useState(null);
 
   const handlePreview = (event) => {
     const file = event.target.files[0];
-    console.log(file)
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -16,6 +22,10 @@ const InputCapa = ({ campo, errors, errorsApi, register, required = true }) => {
       reader.readAsDataURL(file);
     }
   };
+
+  const imagemServidor = imagemAtual
+    ? `http://127.0.0.1:8000/storage/${imagemAtual}`
+    : null;
 
   return (
     <div className={styles.imageinput}>
@@ -27,6 +37,12 @@ const InputCapa = ({ campo, errors, errorsApi, register, required = true }) => {
             <img
               src={preview}
               alt="Preview da capa do livro"
+              className={styles.previewImage}
+            />
+          ) : imagemServidor ? (
+            <img
+              src={imagemServidor}
+              alt="Capa atual do livro"
               className={styles.previewImage}
             />
           ) : (
@@ -46,7 +62,13 @@ const InputCapa = ({ campo, errors, errorsApi, register, required = true }) => {
           onChange: (e) => handlePreview(e),
         })}
       />
-        <p className={styles.error}>{errors?.[campo] && (errors[campo]?.message)}</p>
+
+      {errors?.[campo] && (
+        <p className={styles.error}>{errors[campo]?.message}</p>
+      )}
+      {errorsApi?.[campo] && (
+        <p className={styles.error}>{errorsApi[campo]}</p>
+      )}
     </div>
   );
 };

@@ -20,3 +20,12 @@
     color: color.$branco;
   }
 }
+
+@media screen and (max-width: 584px) {
+  .principal {
+    height: 20vh;
+    .titulo {
+      font-size: 3rem;
+    }
+  }
+}

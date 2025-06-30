@@ -115,7 +115,7 @@ const Usuarios = () => {
       header: "Opções",
       cell: (props) => (
         <div>
-          <p className={styles.status}>punir</p>
+          <p className={styles.status}>penalizar</p>
           <p className={styles.status}>editar</p>
           <p className={styles.status}>excluir</p>
         </div>
@@ -192,7 +192,7 @@ const Usuarios = () => {
                   Inativo
                 </option>
                 <option className={styles["status-option"]} value="3">
-                  Punido
+                  Penalizado
                 </option>
               </select>
             </div>

@@ -1,10 +1,8 @@
 @use '../../../styles/cores/cores' as color;
 
-.container {
+.principal{
   background-color: color.$branco-rosado;
-  padding: 3vh 4vw;
-
-
+  padding: 4vh 4vw;
 
   .titulo {
     color: color.$azul-escuro;
@@ -13,28 +11,35 @@
     text-align: center;
     margin-bottom: 4vh;
   }
-
-  .cards_container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 3vh 2vw;
-    padding: 0;
+  .container {
+    padding-top: 4vh;
+  
+    .cards_container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 3vh 2vw;
+      padding: 0;
+    }
   }
 }
 @media (max-width: 768px) {
-  .container {  
-    padding: 2vh 4vw;
-
+  .principal{
     .titulo {
       font-size: 1.8rem;
       margin-bottom: 2vh;
+      text-align: center;
     }
-
-    .cards_container {
-      flex-direction: column;
-      align-items: center;
-      gap: 1.5rem;
+    .container {
+      width: 80%;
+      margin: 0 auto;
+  
+  
+      .cards_container {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+      }
     }
   }
 }

@@ -1,5 +1,11 @@
 @import "../../../styles/index.scss";
 
+.carregando{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+}
 .fundo {
   width: 100%;
   background-color: $azul-escuro;

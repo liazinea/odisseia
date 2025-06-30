@@ -10,6 +10,7 @@ const ModalEditarLivro = ({
   closeModal,
   showModal,
   formModal,
+  onUpdateLivro,
   livro,
 }) => {
 
@@ -43,6 +44,7 @@ const ModalEditarLivro = ({
             </div>
           </div>
           <FormModal
+          onUpdateLivro={onUpdateLivro}
             modalEditarAberto={modalEditarAberto}
             livro={livro}
             closeModal={closeModal}

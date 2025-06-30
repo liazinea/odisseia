@@ -9,12 +9,14 @@ import api from "../../../services/api";
 import { useAuth } from "../../../context/AuthContext";
 import { useState, useEffect } from "react";
 import ModalMensagem from "../../Modal/ModalMensagem";
+import Carregando from "../../layout/Carregando";
 
 const FormModal = ({
   modalEditarAberto = false,
   livro = {},
   closeModal,
-  errorsApi
+  errorsApi,
+  onUpdateLivro,
 }) => {
   const {
     register,
@@ -72,6 +74,9 @@ const FormModal = ({
           Authorization: `Bearer ${token}`,
         },
       });
+
+      const livroAtualizado = response.data.livro || { ...livro, ...data };
+      onUpdateLivro?.(livroAtualizado);
       setMessage(response.data.message);
       setModalMensagemAberto(true);
       console.log("Resposta da API:", response.data);
@@ -120,8 +125,15 @@ const FormModal = ({
   }, []);
 
   useEffect(() => {
-    preencheModal();
-  }, [autores, generos, livro]);
+    if (
+      modalEditarAberto &&
+      autores.length > 0 &&
+      generos.length > 0 &&
+      livro?.id
+    ) {
+      preencheModal();
+    }
+  }, [modalEditarAberto, autores, generos, livro]);
 
   function preencheModal() {
     setValue("liv_nome", livro.nome);
@@ -142,8 +154,18 @@ const FormModal = ({
     setValue("liv_localizacao", livro.localizacao);
     setValue("liv_classIndicativa", livro.classificacaoIndicativa);
     setValue("liv_sinopse", livro.sinopse);
-    setValue("liv_capa", livro.capa);
     console.log(livro);
+  }
+
+  if (
+    modalEditarAberto &&
+    (autores.length === 0 || generos.length === 0 || !livro?.id)
+  ) {
+    return (
+      <div className={styles.carregando}>
+        <Carregando />
+      </div>
+    );
   }
 
   return (
@@ -321,10 +343,12 @@ const FormModal = ({
                   register={register}
                   errors={errors}
                   errorsApi={errorsApi}
+                  imagemAtual={livro.capa}
                 />
                 <div className={styles.btn}>
                   <BotaoForm
-                    type={"submit"}
+                    type={"button"}
+                    onClick={handleSubmit(onSubmit)}
                     nomeBotao={"atualizar"}
                     texto={"Atualizar"}
                   />

@@ -59,6 +59,10 @@ const CardCarrossel = () => {
   const genero = generos[generoAtual] || '';
   const livrosDoGenero = livros.filter(livro => livro.genero === genero);
 
+  if (livros.length === 0 || generos.length === 0) {
+    return <></>;
+  }
+
   return (
     <div className={styles.carrosselContainer}>
       <h2 className={styles.generoTitulo}>{genero}</h2>
