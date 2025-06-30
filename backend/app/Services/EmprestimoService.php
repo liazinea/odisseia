@@ -8,6 +8,7 @@ use App\Repositories\EmprestimoRepository;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 
 class EmprestimoService
 {
@@ -21,18 +22,18 @@ class EmprestimoService
     {
         return $this->emprestimoRepository->buscarTodos();
     }
-    public function criaEmprestimo(int $idAluno, int $idLivro, int $status = 1):Emprestimo
+    public function criaEmprestimo(int $idAluno, int $idLivro, int $status = 1): Emprestimo
     {
         $aluno = $this->usuarioService->buscaPorId($idAluno);
         if ($aluno->usu_status == 3) {
             throw new Exception('Usuário penalizado, assim não podendo criar uma reserva/empréstimo');
         }
-        $livro = $this->livroService->buscaPorId($idLivro);
-      
-        if(Emprestimo::where('liv_id', '=', $livro->liv_id)->exists()){
-         throw new Exception('Livro já esmprestado');
+        $livro = $this->buscarLivroDisponivelOuLancarExcecao($idLivro);
+
+        if (Emprestimo::where('liv_id', '=', $livro->liv_id)->exists()) {
+            throw new Exception('Livro já esmprestado');
         }
-        if(!$this->verificaSeAlunoTemEmprestimo($idAluno)){
+        if (!$this->verificaSeAlunoTemEmprestimo($idAluno)) {
             $emprestimoDTO = new EmprestimoDTO(
                 dataInicio: Carbon::now()->toDateString(),
                 dataFim: Carbon::now()->addMonth()->toDateString(),
@@ -48,6 +49,36 @@ class EmprestimoService
 
         throw new Exception('O aluno já tem um empréstimo');
     }
+
+    public function buscarLivroDisponivelOuLancarExcecao($livroOriginal)
+    {
+
+        $livroEmprestado = Emprestimo::where('liv_id', $livroOriginal->liv_id)
+            ->whereNotIn('emp_status', [0, 3])
+            ->exists();
+        if (!$livroEmprestado) {
+            return $livroOriginal;
+        }
+
+        $livroDisponivel = DB::table('liv_livro')
+            ->leftJoin('emp_emprestimo', 'liv_livro.liv_id', '=', 'emp_emprestimo.liv_id')
+            ->whereRaw('LOWER(liv_livro.liv_nome) = ?', [strtolower($livroOriginal->liv_nome)])
+            ->where(function ($query) {
+                $query->whereNull('emp_emprestimo.liv_id')
+                    ->orWhereIn('emp_emprestimo.emp_status', [0, 3]);
+            })
+            ->where('liv_livro.liv_id', '<>', $livroOriginal->liv_id)
+            ->select('liv_livro.*')
+            ->first();
+
+        if ($livroDisponivel) {
+
+            return $livroDisponivel;
+        }
+
+        throw new Exception('Não há exemplares disponíveis deste livro no momento.');
+    }
+
 
     public function atualizaEmprestimo(int $estadoAtual, Emprestimo $emprestimo): bool
     {
