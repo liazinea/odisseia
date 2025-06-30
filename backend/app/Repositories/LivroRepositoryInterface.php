@@ -18,4 +18,5 @@ interface LivroRepositoryInterface
     public function buscaPorId(int $id): Livro;
     public function salvarCapa(UploadedFile $capa): string;
     public function salvar(LivroDTO $livroSTO): Livro;
+    public function quantidadeLivro(string $nome): int;
 }

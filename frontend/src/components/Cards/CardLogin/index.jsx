@@ -80,7 +80,7 @@ const CardLogin = () => {
           />
           <p className={styles.error}>{error && error}</p>
           <div className={styles.botao}>
-            <BotaoForm type={"submit"} nomeBotao={"entrar"} texto={"Entrar"} />
+            <BotaoForm type={"button"} nomeBotao={"entrar"} texto={"Entrar"} onClick={handleSubmit(onSubmit)} />
           </div>
           <div className={styles.texto}>
             <Link to={`/primeiro-acesso`}>

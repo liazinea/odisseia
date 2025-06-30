@@ -94,11 +94,13 @@ class LivroService
         throw new \Exception('Erro ao salvar a capa do livro.');
     }
 
-
-    // Em LivroService.php
-
     public function livrosMaisEmprestados(int $limite = 3): Collection
     {
         return $this->livroRepository->livrosMaisEmprestados($limite);
+    }
+
+    public function quantidadeLivro(string $nome): int
+    {
+        return $this->livroRepository->quantidadeLivro($nome);
     }
 }

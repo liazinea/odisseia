@@ -73,12 +73,12 @@ const ModalEmprestimoLivro = ({
       );
 
       console.log("Empréstimo criado com sucesso:", response.data);
-      setMessage("Empréstimo cadastrado com sucesso!");
+      setMessage(response.data.message);
       setModalMensagemAberto(true);
       reset(); // Limpa o formulário após sucesso
     } catch (error) {
       console.error("Erro ao fazer empréstimo do livro:", error);
-      setMessage("Falha ao cadastrar empréstimo!");
+      setMessage(error.response.data.message);
       setModalMensagemAberto(true);
     } finally {
       setLoading(false);
