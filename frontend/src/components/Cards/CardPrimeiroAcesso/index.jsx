@@ -28,7 +28,6 @@ const CardAcesso = ({
           register={register}
           error={errors?.[nomeCampoInput]}
         />
-        s
 
         <div className={styles.botao}>
           <BotaoFormLogin
