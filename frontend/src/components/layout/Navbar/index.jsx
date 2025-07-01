@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import styles from "./index.module.scss";
@@ -7,6 +7,17 @@ import { useAuth } from "../../../context/AuthContext";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { token, userType, logout } = useAuth();
+
+  const [isMobile576, setIsMobile576] = useState(window.innerWidth <= 576);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile576(window.innerWidth <= 576);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const toggleMenu = () => setIsMenuOpen((prevState) => !prevState);
 
@@ -31,7 +42,7 @@ const Navbar = () => {
             />
           </svg>
         </div>
-        <span>Odisseia</span>
+        <span className={styles.odisseia}>Odisseia</span>
       </Link>
     </div>
   );
@@ -61,7 +72,6 @@ const Navbar = () => {
       <li>
         <Link to="/editoras">Editoras</Link>
       </li>
-
       <li>
         <Link to="/usuarios">Usuários</Link>
       </li>
@@ -72,40 +82,31 @@ const Navbar = () => {
     if (!token) return null;
 
     return (
-      <ul
-        className={`${styles["navbar-button"]} ${isMenuOpen ? styles.active : ""
-          }`}
-      >
+      <ul className={`${styles["navbar-button"]} ${isMenuOpen ? styles.active : ""}`}>
         {userType == 1 ? (
           <>
-            <li>
-              <Link to="/livros">Livros</Link>
-            </li>
-            <li>
-              <Link to="/livro/cadastro">Cadastrar Livro</Link>
-            </li>
-            <li>
-              <Link to="/generos">Gêneros</Link>
-            </li>
-            <li>
-              <Link to="/autores">Autores</Link>
-            </li>
-            <li>
-              <Link to="/editoras">Editoras</Link>
-            </li>
-
-            <li>
-              <Link to="/usuarios">Usuários</Link>
-            </li>
+            <li><Link to="/livros">Livros</Link></li>
+            <li><Link to="/livro/cadastro">Cadastrar Livro</Link></li>
+            <li><Link to="/generos">Gêneros</Link></li>
+            <li><Link to="/autores">Autores</Link></li>
+            <li><Link to="/editoras">Editoras</Link></li>
+            <li><Link to="/usuarios">Usuários</Link></li>
           </>
         ) : (
-          <>
-            <li>
-              <Link to="/perfil">
-                <button className="btn-dropdown">Meu perfil</button>
-              </Link>
-            </li>
-          </>
+          <li>
+            <Link to="/perfil">
+              <button className="btn-dropdown">Meu perfil</button>
+            </Link>
+          </li>
+        )}
+
+        {/* Botão de logout no dropdown para telas pequenas */}
+        {isMobile576 && (
+          <li>
+            <button className={styles["logout-button"]} onClick={logout}>
+              Logout
+            </button>
+          </li>
         )}
       </ul>
     );
@@ -117,11 +118,16 @@ const Navbar = () => {
     </button>
   );
 
-  const renderLogoutButton = () => (
-    <button className={styles["logout-button"]} onClick={logout}>
-      Logout
-    </button>
-  );
+  const renderLogoutButton = () => {
+    // Em telas pequenas, o botão vai para o dropdown
+    if (isMobile576) return null;
+
+    return (
+      <button className={styles["logout-button"]} onClick={logout}>
+        Logout
+      </button>
+    );
+  };
 
   return (
     <nav className={`${styles.navbar} ${isMenuOpen ? styles.open : ""}`}>
@@ -133,7 +139,6 @@ const Navbar = () => {
           {renderLogoutButton()}
         </div>
         {renderDropdownButtons()}
-
       </div>
     </nav>
   );

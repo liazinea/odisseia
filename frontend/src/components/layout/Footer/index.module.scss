@@ -5,12 +5,23 @@
   bottom: 0;
   width: 100%;
 
+  @media (max-width: 360px) {
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+  }
+
   .footer-container {
     display: flex;
     justify-content: space-between;
     padding: 2rem 2rem;
 
     @media (max-width: 679px) {
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    @media (max-width: 360px) {
       flex-direction: column;
       gap: 20px;
     }

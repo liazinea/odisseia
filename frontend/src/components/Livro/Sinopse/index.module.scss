@@ -1,52 +1,95 @@
-@import '../../../styles/index.scss';
+@import "../../../styles/index.scss";
 
 .sinopseContainer {
-    animation: fadeIn 0.5s ease-in-out;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
 .titulo {
-    font-family: Inter, sans-serif;
-    color: $azul-escuro;
-    font-size: 18px; //deixar 24 e depois alterar na hora de montar o layout da pagina inteira
-    font-weight: 500;
-    margin-bottom: 10px;
+  font-family: Inter, sans-serif;
+  color: $azul-escuro;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 10px;
 }
 
 .texto {
-    font-family: Inter, sans-serif;
-    font-size: 16px; //deixar 24 e depois alterar na hora de montar o layout da pagina inteira
-    font-weight: 400;
-    text-align: justify;
-    line-height: 1.6;
-    color: $preto;
-    white-space: pre-line;
-    
+  font-family: Inter, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  text-align: justify;
+  line-height: 1.6;
+  color: $preto;
+  white-space: pre-line;
+}
+
+@media (max-width: 1367px) {
+  .texto {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 992px) {
+  .sinopseContainer {
+    width: 100%;
+  }
+
+  .texto {
+    font-size: 16px;
+  }
 }
 
 @media (max-width: 768px) {
-    .sinopseContainer {
-        margin: 0 20px;
-    }
+  .sinopseContainer {
+    margin: 0;
+    width: 100%;
+  }
 
-    .texto {
-        font-size: 15px;
-    }
+  .texto {
+    font-size: 15px;
+    padding-bottom: 20px;
+  }
 }
 
 @media (max-width: 576px) {
-    .texto {
-        font-size: 14px;
-        line-height: 1.4;
-    }
+  .texto {
+    font-size: 14px;
+    line-height: 1.4;
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-width: 540px) {
+  .texto {
+    width: 96%;
+    line-height: 1.4;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-width: 430px) {
+  .texto {
+    width: 90%;
+    line-height: 1.4;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-width: 320px) {
+  .texto {
+    width: 85%;
+  }
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

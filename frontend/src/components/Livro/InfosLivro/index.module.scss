@@ -5,11 +5,78 @@
   padding: 40px 60px;
   border-radius: 00px 20px 0px 20px;
   color: $azul-escuro;
-  display: flex;
+  display: grid;
   flex-direction: column;
   gap: 20px;
   position: relative;
   margin-inline: 10%;
+
+  @media (max-width: 992px) {
+    .card {
+      padding: 20px;
+
+      .topo {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 20px;
+      }
+
+      .textos {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .titulos {
+          width: 100%;
+
+          .generosTitulo {
+            display: none;
+          }
+        }
+      }
+
+      .containerQtd {
+        position: static;
+        margin-top: 20px;
+        align-self: center;
+      }
+
+      :global(button[class*="qtd"]) {
+        position: static;
+        margin: 0 auto;
+        padding: 8px 12px;
+        font-size: 13px;
+      }
+
+      .generos {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 10px;
+        margin-top: 30px;
+        overflow-x: auto;
+        justify-content: flex-start;
+        width: 100%;
+        padding-bottom: 10px;
+
+        :global(button) {
+          flex-shrink: 0;
+          font-size: 12px;
+          padding: 6px 10px;
+        }
+      }
+    }
+  }
+
+  .generos {
+    display: none;
+
+    @media (max-width: 1121px) {
+      display: flex;
+      gap: 20px;
+    }
+  }
 
   .topo {
     display: flex;
@@ -17,50 +84,56 @@
     align-items: flex-start;
     gap: 20px;
 
+    @media (max-width: 750px) {
+      margin-top: 8%;
+    }
+
     .capaContainer {
-      width: 200px; // define a largura fixa ou variável conforme necessidade
+      width: 250px; // define a largura fixa ou variável conforme necessidade
       height: auto; // altura automática para manter proporção da imagem
       max-height: 350px; // limitar a altura máxima
       margin-right: 1.5rem; // um espaçamento à direita para separar do texto
 
-      @media (max-width: 768px) {
-        width: 150px;
+      @media (max-width: 1107px) {
+        width: 250px;
+      }
+
+      @media (max-width: 540px) {
+        width: 200px;
         max-height: 250px;
-        margin-right: 1rem;
+        margin-right: 0.8rem;
       }
 
       @media (max-width: 480px) {
-        width: 120px;
-        max-height: 200px;
+        width: 150px;
+        max-height: 250px;
         margin-right: 0.8rem;
       }
     }
 
-
     .textos {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      position: relative;
       flex: 1;
 
-      .qtdWrapper {
-        position: absolute;
-        top: 0;
-        right: 0;
+      .containerQtd {
+        align-self: flex-start;
       }
     }
 
-    .generos {
+    .generosTitulo {
       display: flex;
       flex-wrap: wrap;
       gap: 15px;
       margin-top: 60px;
+      @media (max-width: 1121px) {
+        display: none;
+      }
     }
   }
 
   .sinopse {
-    margin-top: 20px;
+    margin-top: 50px;
     font-size: 14px;
 
     h4 {
@@ -71,7 +144,6 @@
 }
 
 .card :global(button[class*="qtd"]) {
-  position: absolute;
   top: 10px;
   right: 20px;
   padding: 10px 15px;
@@ -80,7 +152,7 @@
   border-radius: 10px;
 }
 
-@media (max-width: 1240px) {
+@media (max-width: 1367px) {
   .card {
     padding: 30px 40px;
     gap: 15px;
@@ -94,40 +166,43 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
-    margin-left: 10px;
     flex-wrap: wrap;
-    gap: 10px;
   }
-
-  .qtdWrapper {
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
-
 
   .card :global(button[class*="qtd"]) {
     font-size: 13px;
     padding: 8px 12px;
   }
 
-  .generos {
+  .generosTitulo {
     width: 100%;
-    margin-top: 20px;
     justify-content: flex-start;
+    flex-wrap: wrap;
   }
-
 }
 
+@media (max-width: 1121px) {
+  .generosTitulo {
+    display: none;
+
+    :global(button) {
+      width: auto;
+    }
+  }
+
+  .titulos {
+    margin-top: 10;
+  }
+}
 
 @media (max-width: 768px) {
   .topo {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+    margin: 0;
+    padding: 0;
+    gap: 20px !important;
   }
 
-  .generos {
+  .generosTitulo {
     justify-content: center;
     margin-top: 50px;
   }
@@ -136,5 +211,153 @@
     position: static;
     margin-top: 15px;
     align-self: center;
+  }
+}
+
+@media (max-width: 1107px) {
+  .textos {
+    .titulos {
+      .generosTitulo {
+        display: none;
+      }
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .textos {
+    .titulos {
+      .generosTitulo {
+        display: none;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    padding: 20px 15px;
+    gap: 20px;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center; // <- centraliza todo o conteúdo horizontalmente
+    text-align: center;
+
+    .topo {
+      flex-direction: column;
+      align-items: center;
+      gap: 60px;
+      width: 100%;
+    }
+
+    .capaContainer {
+      width: 150px;
+      max-height: 250px;
+      display: flex;
+      align-items: center;
+    }
+
+    .textos {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .titulos {
+        width: 100%;
+
+        .generosTitulo {
+          display: none;
+        }
+      }
+    }
+
+    .sinopse {
+      width: 90%;
+      margin-left: 20px;
+      font-size: 16px;
+      text-align: justify;
+    }
+  }
+}
+
+@media (max-width: 750px) {
+  .topo {
+    margin: 0;
+    padding: 0;
+    gap: 20px !important;
+  }
+
+  .card {
+    padding: 0;
+    gap: 0px;
+  }
+}
+@media (max-width: 540px) {
+  .card {
+    margin-inline: 20px;
+  }
+  .topo {
+    margin: 0;
+    padding: 0;
+    gap: 20px !important;
+  }
+
+  .card {
+    padding: 0;
+    gap: 0px;
+  }
+}
+
+@media (max-width: 430px) {
+  .card {
+    .generos {
+      display: block;
+
+      :global(button) {
+        font-size: 14px; // reduzido 20%
+        padding: 25px; // menor padding
+      }
+    }
+  }
+
+  .topo {
+    margin: 0;
+    padding: 0;
+    gap: 20px !important;
+  }
+
+  .card {
+    padding: 0;
+    gap: 0px;
+  }
+}
+
+@media (max-width: 320px) {
+  .card {
+    .generos {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      padding-left: 50px;
+      padding-right: 50px;
+      margin-top: 10px;
+      justify-items: center;
+
+      :global(button) {
+        font-size: 14px; // reduzido 20%
+      }
+    }
+  }
+
+  .topo {
+    margin: 0;
+    padding: 0;
+    gap: 20px !important;
+  }
+
+  .card {
+    padding: 0;
+    gap: 0px;
   }
 }

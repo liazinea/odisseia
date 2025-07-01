@@ -16,12 +16,33 @@
   justify-content: center;
   min-width: 273px; // bom tamanho mínimo
   max-width: 100%;
-  height: 100px ;
+  height: 100px;
   margin: 20px auto;
 
   &:hover {
     background-color: $laranja-claro;
     color: $azul-escuro;
     border: solid $laranja-claro 2px;
+  }
+
+@media (max-width: 768px) {
+    font-size: 16px;
+    min-width: 200px;
+    height: 70px;
+    padding: 10px 24px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 14px;
+    min-width: 160px;
+    height: 60px;
+    padding: 8px 20px;
+  }
+
+
+  @media (max-width: 375px) {
+    font-size: 16px;
+    min-width: 150px;
+    height: 80px;
   }
 }
