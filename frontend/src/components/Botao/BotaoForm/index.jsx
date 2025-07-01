@@ -16,7 +16,6 @@ const BotaoForm = ({ type = "button", nomeBotao, texto, onClick }) => {
   };
 
   return (
-    <>
       <button
         className={styles.botao}
         type={type}
@@ -26,7 +25,6 @@ const BotaoForm = ({ type = "button", nomeBotao, texto, onClick }) => {
       >
         {loading ? "Carregando..." : texto}
       </button>
-    </>
   );
 };
 

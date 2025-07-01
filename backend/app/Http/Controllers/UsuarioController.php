@@ -234,7 +234,7 @@ class UsuarioController extends Controller
         if ($usuario->usu_status == 1) {
             $usuario->usu_status = 3;
             $usuario->save();
-            return response()->json(['message' => 'Usuário punido'], 200);
+            return response()->json(['message' => 'Usuário penalizado'], 200);
         } else if ($usuario->usu_status == 3) {
             $usuario->usu_status = 1;
             $usuario->save();

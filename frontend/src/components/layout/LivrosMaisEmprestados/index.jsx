@@ -21,13 +21,15 @@ const LivrosMaisEmprestados = () => {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={styles.principal}>
       <h1 className={styles.titulo}>Livros Mais Emprestados</h1>
+    <div className={styles.container}>
       <div className={styles.cards_container}>
         {livros.map((livro) => (
           <CardLivrosMaisEmprestados key={livro.liv_id} livro={livro} />
         ))}
       </div>
+    </div>
     </div>
   );
 };

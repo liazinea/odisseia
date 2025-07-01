@@ -282,6 +282,7 @@ const PerfilUsuario = () => {
                 <div
                   className={styles["linha"]}
                   key={row.original.emp_id}
+                  onClick={()=>console.log(row.original.emp_id)}
                 >
                   <ListaEmprestimos
                     emprestimo={row.original}

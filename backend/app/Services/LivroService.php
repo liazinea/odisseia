@@ -39,7 +39,7 @@ class LivroService
         foreach ($generos as $genero) {
             $livros = $genero->livros()
                 ->where('liv_status_ativo', 1)
-                ->take(4)
+                ->take(3)
                 ->get();
 
             if ($livros->isNotEmpty()) {

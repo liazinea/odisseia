@@ -114,7 +114,7 @@ const ListaUsuarios = ({
         }
       );
 
-      setMessage("Usuário excluído com sucesso");
+      setMessage("Usuário desativado com sucesso");
       setModalMensagemAberto(true);
       const dados = await buscaUsuarios();
       setUsuarios(dados);
@@ -389,10 +389,10 @@ const ListaUsuarios = ({
           isOpen={isDeleteModalOpen}
           onClose={closeDeleteModal}
           onConfirm={openPasswordModal}
-          titulo="Excluir Usuário"
-          mensagem="Tem certeza de que deseja excluir permanentemente o usuário"
+          titulo="Desativar Usuário"
+          mensagem="Tem certeza de que deseja desativar o usuário"
           nome={usuario.usu_nome}
-          confirmLabel="Excluir"
+          confirmLabel="Desativar"
           cancelLabel="Cancelar"
         />
       )}
@@ -402,10 +402,10 @@ const ListaUsuarios = ({
           isOpen={isPunishmentModalOpen}
           onClose={closePunishmentModal}
           onConfirm={openPasswordModal}
-          titulo="Punir Usuário"
-          mensagem="Tem certeza de que deseja punir o usuário"
+          titulo="Penalizar Usuário"
+          mensagem="Tem certeza de que deseja penalizar o usuário"
           nome={usuario.usu_nome}
-          confirmLabel="Punir"
+          confirmLabel="Penalizar"
           cancelLabel="Cancelar"
         />
       )}
@@ -415,7 +415,7 @@ const ListaUsuarios = ({
           isOpen={isUnbanModalOpen}
           onClose={closeUnbanModal}
           onConfirm={openPasswordModal}
-          titulo="Tirar Punição de Usuário"
+          titulo="Tirar Penalidade de Usuário"
           mensagem="Tem certeza de que deseja liberar o usuário"
           nome={usuario.usu_nome}
           confirmLabel="Liberar"
@@ -435,7 +435,7 @@ const ListaUsuarios = ({
           setPassword={setPassword}
           passwordMessage={passwordMessage}
           mensagem="Por favor, digite sua senha:"
-          titulo={isPunishmentModalOpen ? "Confirmar Punição" : isUnbanModalOpen ? "Confirmar Liberação" : "Confirmar Exclusão"}
+          titulo={isPunishmentModalOpen ? "Confirmar Penalização" : isUnbanModalOpen ? "Confirmar Liberação" : "Confirmar Desativação"}
         />
       )}
 

@@ -1,53 +1,102 @@
-@import '../../styles/index.scss';
+@import "../../styles/index.scss";
 
-.principal{
-    background-color: $azul-escuro;
-    display: flex;
+.principal {
+  background-color: $azul-escuro;
+  display: flex;
 
-    .logo{
-        height: 100vh;
-        position: relative;
+  .logo {
+    height: 100vh;
+    position: relative;
 
-        .logoFundo{
-            width: 100vw;
-            height: 60vh;
-            background-image: url('../../../public/forma-recuperacao.svg');
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: bottom;
-        }
-        .logoTexto{
-            width: 25vw;
-            position: fixed;
-            bottom: 0;
-            margin-bottom: 30px;
-
-            .centraliza{
-                display: flex;
-                justify-content: center;
-                .logoImagem{
-                    width: 60px;
-                }
-            }
-            .logoTitulo{
-                font-family: Montserrat;
-                font-size: 3rem;
-                color: $branco;
-                text-align: center;
-            }
-            .logoSubtitulo{
-                z-index: 1;
-                font-family: Poppins;
-                font-size: 2rem;
-                color: $branco;
-                text-align: center;
-            }
-        }
+    .logoFundo {
+      width: 100vw;
+      height: 60vh;
+      background-image: url("../../../public/forma-recuperacao.svg");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: bottom;
     }
-    .form{
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+
+    .logoTexto {
+      width: 40vw;
+      position: fixed;
+      bottom: 0;
+      margin-bottom: 30px;
+
+      .centraliza {
+        padding-left: 140px;
+        .logoImagem {
+          width: 40px;
+        }
+      }
+      .logoTitulo {
+        font-family: Montserrat;
+        font-size: 2rem;
+        color: $branco;
+        padding-left: 80px;
+      }
+      .logoSubtitulo {
+        z-index: 1;
+        font-family: Poppins;
+        font-size: 1.7rem;
+        color: $branco;
+        padding-left: 20px;
+      }
     }
+  }
+  .form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .principal {
+    .logo {
+      .logoTexto {
+        width: 100vw;
+        .centraliza {
+          padding: 0;
+          display: flex;
+          justify-content: center;
+        }
+        .logoTitulo {
+          font-size: 1.5rem;
+          text-align: center;
+          padding-left: 0;
+        }
+        .logoSubtitulo {
+          font-size: 1rem;
+          text-align: center;
+          padding-left: 0;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .principal {
+    .logo {
+      .logoTexto {
+        .centraliza {
+          .logoImagem {
+            width: 40px;
+          }
+        }
+        .logoTitulo {
+          font-size: 1.5rem;
+          text-align: center;
+          padding-left: 0;
+        }
+        .logoSubtitulo {
+          font-size: 1rem;
+          text-align: center;
+          padding-left: 0;
+        }
+      }
+    }
+  }
 }

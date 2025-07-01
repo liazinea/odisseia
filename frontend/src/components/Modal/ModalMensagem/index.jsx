@@ -14,12 +14,10 @@ const ModalMensagem = ({ mensagemModal, closeModal, modalAberto }) => {
           width: "90%",
           maxWidth: "400px",
           margin: "auto",
-          padding: "0",
           borderRadius: "12px",
           backgroundColor: "#DDC1A7",
-          maxHeight: "320px",   // Limita a altura total do modal
-          overflow: "hidden",   // Oculta excesso para o modal
-          display: "flex",
+          maxHeight: "320px",
+          overflow: "hidden",
           flexDirection: "column",
         },
         overlay: {

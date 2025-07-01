@@ -5,14 +5,12 @@
   margin-bottom: 20px;
 
   .cardFundo {
-    min-height: 50vh;
     padding: 30px 50px;
     background-color: $branco-rosado;
     border-top-left-radius: 40px;
     border-bottom-right-radius: 40px;
     flex-direction: column;
     display: flex;
-    justify-content: space-around;
 
     .cardTitulo {
       color: $azul-escuro;
@@ -36,6 +34,7 @@
     }
   }
 }
+
 @media screen and (max-width: 992px) {
   .form {
     width: 60vw;
@@ -70,6 +69,7 @@
     }
   }
 }
+
 @media screen and (max-width: 768px) {
   .form {
     width: 80vw;
@@ -104,12 +104,29 @@
     }
   }
 }
+
 @media screen and (max-width: 576px) {
   .form {
     .cardFundo {
+      .cardTitulo{
+        font-size: 1.7rem;
+      }
       .texto {
         display: block;
         text-align: center;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 358px) {
+  .form {
+    .cardFundo {
+      .cardTitulo{
+        font-size: 1.5rem;
+      }
+      .texto {
+        font-size: 15px;
       }
     }
   }

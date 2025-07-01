@@ -21,19 +21,22 @@ class EmprestimoService
     {
         return $this->emprestimoRepository->buscarTodos();
     }
-    public function criaEmprestimo(int $idAluno, int $idLivro): Emprestimo
+    public function criaEmprestimo(int $idAluno, int $idLivro, int $status = 1):Emprestimo
     {
         $aluno = $this->usuarioService->buscaPorId($idAluno);
         if ($aluno->usu_status == 3) {
             throw new Exception('Usuário penalizado, assim não podendo criar uma reserva/empréstimo');
         }
         $livro = $this->livroService->buscaPorId($idLivro);
-
-        if (!$this->verificaSeAlunoTemEmprestimo($idAluno)) {
+      
+        if(Emprestimo::where('liv_id', '=', $livro->liv_id)->exists()){
+         throw new Exception('Livro já esmprestado');
+        }
+        if(!$this->verificaSeAlunoTemEmprestimo($idAluno)){
             $emprestimoDTO = new EmprestimoDTO(
                 dataInicio: Carbon::now()->toDateString(),
                 dataFim: Carbon::now()->addMonth()->toDateString(),
-                status: 1,
+                status: $status,
                 quantRenovacao: 0,
                 statusAtivo: 1,
                 livroId: $livro->liv_id,
