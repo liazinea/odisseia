@@ -54,7 +54,7 @@ class EmprestimoController extends Controller
             $this->empretimoService->atualizaEmprestimo($estadoAtual, $emprestimo);
 
             return response()->json([
-                'message' => 'Empréstimo atualizado com sucesso'
+                'message' => 'Status atualizado com sucesso'
             ], 200);
         } catch (Exception $e) {
             return response()->json([
