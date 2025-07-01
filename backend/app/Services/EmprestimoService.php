@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\DTOs\EmprestimoDTO;
 use App\Models\Emprestimo;
+use App\Models\Livro;
 use App\Repositories\EmprestimoRepository;
 use Carbon\Carbon;
 use Exception;
@@ -58,22 +59,22 @@ class EmprestimoService
 
     public function buscarLivroDisponivelOuLancarExcecao($livroOriginal)
     {
-
-        $livroEmprestado = Emprestimo::where('liv_id', $livroOriginal->liv_id)
+        $livroBuscado = Livro::where('liv_id', $livroOriginal)->first();
+        $livroEmprestado = Emprestimo::where('liv_id', $livroBuscado->liv_id)
             ->whereNotIn('emp_status', [0, 3])
             ->exists();
         if (!$livroEmprestado) {
-            return $livroOriginal;
+            return $livroBuscado;
         }
 
         $livroDisponivel = DB::table('liv_livro')
             ->leftJoin('emp_emprestimo', 'liv_livro.liv_id', '=', 'emp_emprestimo.liv_id')
-            ->whereRaw('LOWER(liv_livro.liv_nome) = ?', [strtolower($livroOriginal->liv_nome)])
+            ->whereRaw('LOWER(liv_livro.liv_nome) = ?', [strtolower($livroBuscado->liv_nome)])
             ->where(function ($query) {
                 $query->whereNull('emp_emprestimo.liv_id')
                     ->orWhereIn('emp_emprestimo.emp_status', [0, 3]);
             })
-            ->where('liv_livro.liv_id', '<>', $livroOriginal->liv_id)
+            ->where('liv_livro.liv_id', '<>', $livroBuscado->liv_id)
             ->select('liv_livro.*')
             ->first();
 

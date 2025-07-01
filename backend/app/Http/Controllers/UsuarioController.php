@@ -138,10 +138,11 @@ class UsuarioController extends Controller
 
     public function redefinirSenha(Request $request)
     {
+
         $request->validate([
             'token' => 'required',
             'email' => 'required|email',
-            'password' => 'required|confirmed|min:6',
+            'password' => 'required|confirmed'
         ]);
 
         $status = Password::reset(
@@ -221,7 +222,7 @@ class UsuarioController extends Controller
                     'usu_ra' => $ra,
                     'usu_nivel' => 0,
                     'usu_status' => 1,
-                    'password' => Hash::make('senha123'),
+                    'password' => null,
                 ]);
             }
         }

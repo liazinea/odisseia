@@ -119,13 +119,20 @@ class LivroRepository implements LivroRepositoryInterface
 
     public function quantidadeLivro(string $nome): int
     {
-        return DB::table('liv_livro')
-            ->leftJoin('emp_emprestimo', 'liv_livro.liv_id', '=', 'emp_emprestimo.liv_id')
-            ->whereRaw('LOWER(liv_livro.liv_nome) = ?', [strtolower($nome)])
-            ->where(function ($query) {
-                $query->whereNull('emp_emprestimo.liv_id')
-                    ->orWhereIn('emp_emprestimo.emp_status', [0, 3]);
-            })
-            ->count();
+        $ids = DB::table('liv_livro')
+    ->where('liv_status_ativo', 1)
+    ->whereRaw('LOWER(liv_nome) = ?', [strtolower($nome)])
+    ->pluck('liv_id');
+
+$totalLivros = $ids->count();
+
+$emprestimosAtivosCount = DB::table('emp_emprestimo')
+    ->whereIn('liv_id', $ids)
+    ->whereIn('emp_status', [1, 2])
+    ->count();
+
+$livrosDisponiveis = $totalLivros - $emprestimosAtivosCount;
+return $livrosDisponiveis;
+
     }
 }
