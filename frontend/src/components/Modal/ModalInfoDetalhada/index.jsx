@@ -35,9 +35,11 @@ const ModalInfoDetalhada = ({
   const [cancelLabel, setCancelLabel] = useState("");
   const { token } = useAuth();
   const [modalMensagemAberto, setModalMensagemAberto] = useState(false);
+
   const fecharModalMensagem = () => {
     setModalMensagemAberto(false);
     setMensagemModal("");
+    onClose(); // Agora o fechamento acontece aqui, após o clique no "X"
   };
 
   useEffect(() => {
@@ -91,9 +93,8 @@ const ModalInfoDetalhada = ({
             },
           }
         );
-        console.log(response.data.message);
-        setMensagemModal(response.data.message)
-        setModalMensagemAberto(true)
+        setMensagemModal(response.data.message);
+        setModalMensagemAberto(true);
       } else if (emprestimo.emp_status === 1) {
         const response = await api.patch(
           `/emprestimos/${id}`,
@@ -104,33 +105,27 @@ const ModalInfoDetalhada = ({
             },
           }
         );
-        console.log("Reserva cancelada");
-        console.log(response.data.message);
-        setMensagemModal(response.data.message)
-        setModalMensagemAberto(true)
+        setMensagemModal(response.data.message);
+        setModalMensagemAberto(true);
       }
-      
-      // Atualiza os empréstimos
+
       const response = await api.get("/emprestimos", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const emprestimosAtualizados = response.data.emprestimos.filter(
         (e) => e.aluno.usu_id === usuarioId
       );
-      console.log(emprestimosAtualizados)
       setEmprestimos(emprestimosAtualizados);
-      
-      // Fecha os modais
+
+      // Fecha apenas o modal de confirmação
       setCancelarReserva(false);
-      onClose();
-      
+
     } catch (error) {
-      setMensagemModal(response.data.message)
       console.error("Erro ao atualizar:", error);
-      console.error("Erro ao atualizar:", response.data.message);
+      setMensagemModal("Erro ao atualizar empréstimo.");
+      setModalMensagemAberto(true);
     }
   };
-
 
   return (
     <div className={styles.modalOverlay}>
@@ -144,16 +139,12 @@ const ModalInfoDetalhada = ({
 
         <div className={styles.Alinhadupla}>
           <div className={styles.dupla}>
-            <label className={styles.nomeLivro} htmlFor="nomeLivro">
-              Nome do Livro:
-            </label>
+            <label className={styles.nomeLivro}>Nome do Livro:</label>
             <p>{emprestimo.livro.liv_nome}</p>
           </div>
 
           <div className={styles.dupla}>
-            <label className={styles.nomeLivro} htmlFor="nomeAutor">
-              Nome do Autor:
-            </label>
+            <label className={styles.nomeLivro}>Nome do Autor:</label>
             <div className={styles.generos}>
               {emprestimo.livro.autores &&
                 emprestimo.livro.autores.map((autor) => (
@@ -165,9 +156,7 @@ const ModalInfoDetalhada = ({
 
         <div className={styles.Alinhadupla}>
           <div className={styles.dupla}>
-            <label className={styles.nomeLivro} htmlFor="genero">
-              Gênero:
-            </label>
+            <label className={styles.nomeLivro}>Gênero:</label>
             <div className={styles.generos}>
               {emprestimo.livro.generos.map((genero) => (
                 <p key={genero.gen_id}>{genero.gen_nome}</p>
@@ -176,9 +165,7 @@ const ModalInfoDetalhada = ({
           </div>
 
           <div className={styles.dupla}>
-            <label className={styles.nomeLivro} htmlFor="nomeAutor">
-              Editora:
-            </label>
+            <label className={styles.nomeLivro}>Editora:</label>
             <p>{emprestimo.livro.editora.edi_nome}</p>
           </div>
         </div>
@@ -187,20 +174,14 @@ const ModalInfoDetalhada = ({
           <h3 className={styles.titulo}>{tituloPrazo}</h3>
           <div className={styles.Alinhadupla}>
             <div className={styles.dupla}>
-              <label className={styles.nomeLivro} htmlFor="data">
-                {labelData}
-              </label>
+              <label className={styles.nomeLivro}>{labelData}</label>
               <p>{formatarData(emprestimo.emp_dataInicio)}</p>
 
-              <label className={styles.nomeLivro} htmlFor="alterar">
-                {labelBtn}
-              </label>
+              <label className={styles.nomeLivro}>{labelBtn}</label>
             </div>
 
             <div className={styles.dupla}>
-              <label className={styles.nomeLivro} htmlFor="prazo">
-                {labelPrazo}
-              </label>
+              <label className={styles.nomeLivro}>{labelPrazo}</label>
               <p>{formatarData(emprestimo.emp_dataFim)}</p>
             </div>
           </div>
@@ -216,7 +197,7 @@ const ModalInfoDetalhada = ({
         </div>
       </div>
 
-      {/* Renderiza modal correto de acordo com status */}
+      {/* Modais de confirmação */}
       {emprestimo.emp_status === 2 ? (
         <ModalRenovacao
           isOpen={modalCancelarReserva}
@@ -244,11 +225,13 @@ const ModalInfoDetalhada = ({
           status={emprestimo.emp_status}
         />
       )}
+
+      {/* Modal de Mensagem Final */}
       <ModalMensagem
-              mensagemModal={mensagemModal}
-              closeModal={fecharModalMensagem}
-              modalAberto={modalMensagemAberto}
-            />
+        mensagemModal={mensagemModal}
+        closeModal={fecharModalMensagem}
+        modalAberto={modalMensagemAberto}
+      />
     </div>
   );
 };

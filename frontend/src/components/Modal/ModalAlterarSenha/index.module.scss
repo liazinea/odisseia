@@ -11,11 +11,17 @@
   justify-content: center;
   font-weight: lighter;
 
+  
   .titulo {
     font-size: 32px;
     font-weight: bold;
   }
-
+  @media screen and (max-width: 576px) {
+    width: 300px;
+    .titulo{
+      font-size: 25px;
+    }
+  }
 
   .botoes {
     display: flex;
@@ -31,7 +37,14 @@
       cursor: pointer;
       font-weight: bold;
     }
-
+    
+    @media screen and (max-width: 576px) {
+      .closeButton,
+      .saveButton {
+        margin: 0;
+        padding: 10px 15px;
+      }
+    }
     .closeButton {
       background-color: color.$azul-escuro;
       color: color.$branco;

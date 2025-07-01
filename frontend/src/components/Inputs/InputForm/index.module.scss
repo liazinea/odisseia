@@ -91,21 +91,14 @@
     padding-top: 10px;
 
     .placeholder {
-      top: calc(65% + 10px);
-      left: 7px;
-      transform: translateY(-100%);
-      margin-top: 2px !important;
-    }
-    // .input {
-    //   &:focus {
-    //     + .placeholder {
-    //       top: 10px;
-    //       left: 10px;
-    //       font-size: 10px;
-    //       color: $azul-escuro;
-    //       background-color: $branco-rosado;
-    //     }
-    //   }
-    // }
+        top: calc(75% + 10px);
+        left: 7px;
+        transform: translateY(-100%);
+        margin-top: 2px !important;
+
+      }
+      .input{
+        font-size: 15px !important;
+      }
   }
 }

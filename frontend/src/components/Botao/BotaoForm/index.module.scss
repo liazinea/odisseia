@@ -23,3 +23,9 @@
     cursor: not-allowed;
   }
 }
+
+@media screen and (max-width: 400px) {
+  .botao{
+    font-size: 1rem;
+  }
+}

@@ -134,3 +134,37 @@
     }
   }
 }
+
+@media screen and (max-width: 400px) {
+  .container-geral{
+    display: block;
+    .container-informacoes {
+      .titulo-container {
+        .titulo {
+          padding-top: 20px;
+          font-size: 1.7rem;
+          text-align: center;
+        }
+      }
+      .container-inputs{
+        display: block;
+      }
+      .container-botao{
+        justify-content: center;
+      }
+    }
+    .container-historico{
+      .titulo-historico{
+        width: 90%;
+        .tituloFonte{
+          padding-top: 20px;
+          font-size: 1.7rem;
+          text-align: center;
+        }
+      }
+      .tabela{
+        width: 90%;
+      }
+    }
+  }
+}

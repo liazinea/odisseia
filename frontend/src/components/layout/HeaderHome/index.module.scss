@@ -71,7 +71,7 @@
 
 @media screen and (max-width:992px) and (min-width: 769px){
     .principal{
-        
+        height: 60vh;
         .titulo{
             font-size: 3rem;
         }
@@ -86,7 +86,7 @@
 
 @media screen and (max-width:768px) {
     .principal{
-        height: 25vh;
+        height: 40vh;
         
         .titulo{
             font-size: 1.5rem;
@@ -123,9 +123,10 @@
         }
     }
 }
+
 @media screen and (max-width: 575.98px) {
   .principal {
-    height: 25vh;
+    height: 30vh;
     background-position: 0vh -5vh;
 
     .titulo {

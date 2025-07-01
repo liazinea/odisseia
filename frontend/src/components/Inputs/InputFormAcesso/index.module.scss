@@ -78,10 +78,14 @@
     padding-top: 10px;
 
     .placeholder {
-        top: calc(63% + 10px);
+        top: calc(75% + 10px);
         left: 7px;
-        transform: translateY(-60%);
+        transform: translateY(-100%);
         margin-top: 2px !important;
+
+      }
+      .input{
+        font-size: 15px !important;
       }
   }
 }
