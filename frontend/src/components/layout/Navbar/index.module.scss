@@ -26,24 +26,34 @@
       @media (min-width: 768px) {
         margin-left: auto;
       }
-    }
 
-    .logout-button {
-      background-color: color.$azul-escuro;
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 14px;
-      transition: background-color 0.3s ease;
+      // Botão de logout fora do dropdown
+      .logout-button {
+        background-color: color.$azul-escuro;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        transition: background-color 0.3s ease;
 
-      &:hover {
-        background-color: color.$vermelho;
+        &:hover {
+          background-color: color.$azul-escuro; // default, muda no @media
+        }
+
+        @media (min-width: 576px) {
+          font-size: 1rem;
+          font-weight: bold;
+
+          &:hover {
+            background-color: color.$vermelho;
+          }
+        }
       }
     }
   }
-
 
   .navbar-logo {
     display: flex;
@@ -62,6 +72,10 @@
       font-size: 1.5rem;
       font-family: Montserrat, sans-serif;
       font-weight: bold;
+
+      @media (max-width: 576px) {
+        display: none;
+      }
     }
 
     a {
@@ -96,24 +110,48 @@
     }
   }
 
-.navbar-button {
-  list-style: none;
-  display: none;
-  gap: 10px;
-  padding: 0;
-  margin: 0;
-  background-color: color.$laranja-claro;
+  .navbar-button {
+    list-style: none;
+    display: none;
+    gap: 10px;
+    padding: 0;
+    margin: 0;
+    background-color: color.$laranja-claro;
 
-  li {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-
-    a {
+    li {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       width: 100%;
-      text-decoration: none;
 
+      a {
+        width: 100%;
+        text-decoration: none;
+
+        button {
+          width: 100%;
+          background-color: color.$azul-escuro;
+          color: color.$branco;
+          border: none;
+          padding: 0.5rem 1rem;
+          border-radius: 5px;
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: background-color 0.3s ease, transform 0.2s ease;
+
+          &:hover {
+            background-color: color.$laranja;
+            transform: scale(1.05);
+          }
+
+          &:active {
+            transform: scale(0.95);
+          }
+        }
+      }
+
+      // Botão direto no <li> sem <a>
       button {
         width: 100%;
         background-color: color.$azul-escuro;
@@ -136,69 +174,67 @@
         }
       }
     }
+
+    @media (max-width: 982px) {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      padding: 12px;
+      box-sizing: border-box;
+      border-top: 2px solid color.$azul-escuro;
+      background-color: color.$laranja-claro;
+      z-index: 10;
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, opacity 0.3s ease;
+
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+
+      &.active {
+        max-height: 1000px;
+        opacity: 1;
+        animation: slideDown 0.5s ease-in-out forwards;
+      }
+
+      & li:nth-child(odd):last-child {
+        grid-column: span 2;
+        justify-self: center;
+      }
+    }
   }
 
-  @media (max-width: 982px) {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    padding: 12px;
-    box-sizing: border-box;
-    border-top: 2px solid color.$azul-escuro;
-    background-color: color.$laranja-claro;
-    z-index: 10;
-    opacity: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease, opacity 0.3s ease;
+  .navbar-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: color.$azul-escuro;
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    transition: color 0.3s ease-in-out;
+    align-items: center;
 
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    svg {
+      font-size: 1.5rem;
+      transition: transform 0.3s ease-in-out;
 
-    &.active {
-      max-height: 1000px; // maior valor para prevenir corte
-      opacity: 1;
-      animation: slideDown 0.5s ease-in-out forwards;
+      &:hover {
+        transform: scale(1.1);
+      }
     }
-
-    & li:nth-child(odd):last-child {
-      grid-column: span 2;
-      justify-self: center;
-    }
-  }
-}
-
-.navbar-menu-toggle {
-  display: none;
-  background: none;
-  border: none;
-  color: color.$azul-escuro;
-  cursor: pointer;
-  width: 28px;
-  height: 28px;
-  transition: color 0.3s ease-in-out;
-  align-items: center;
-
-  svg {
-    font-size: 1.5rem;
-    transition: transform 0.3s ease-in-out;
 
     &:hover {
-      transform: scale(1.1);
+      color: color.$branco;
+    }
+
+    @media (max-width: 981px) {
+      display: flex;
     }
   }
-
-  &:hover {
-    color: color.$branco;
-  }
-
-  @media (max-width: 981px) {
-    display: flex;
-  }
-}
-
 }
 
 @keyframes slideDown {
@@ -206,7 +242,6 @@
     max-height: 0;
     opacity: 0;
   }
-
   to {
     max-height: 500px;
     opacity: 1;

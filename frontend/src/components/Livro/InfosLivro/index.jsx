@@ -1,15 +1,13 @@
-import { useEffect, useState } from 'react';
-import styles from './index.module.scss';
-import CapaLivro from '../CapaLivro';
-import TituloDescricao from '../TituloDescricao';
-import Sinopse from '../Sinopse';
-import BotaoGenero from '../../Botao/BotaoGenero';
-import BotaoQtd from '../../Botao/BotaoQtd';
-import useLivros from '../../../hooks/useLivros';
+import { useEffect, useState } from "react";
+import styles from "./index.module.scss";
+import CapaLivro from "../CapaLivro";
+import TituloDescricao from "../TituloDescricao";
+import Sinopse from "../Sinopse";
+import BotaoGenero from "../../Botao/BotaoGenero";
+import BotaoQtd from "../../Botao/BotaoQtd";
+import useLivros from "../../../hooks/useLivros";
 
 const InfosLivro = ({ livro }) => {
-
-
   const { buscaQuantidadePorNome } = useLivros();
   const [quantidade, setQuantidade] = useState(0);
 
@@ -23,7 +21,10 @@ const InfosLivro = ({ livro }) => {
     <div className={styles.card}>
       <div className={styles.topo}>
         <div className={styles.capaContainer}>
-          <CapaLivro imagemCapa={livro.capa} classificacao={livro.classificacaoIndicativa} />
+          <CapaLivro
+            imagemCapa={livro.capa}
+            classificacao={livro.classificacaoIndicativa}
+          />
         </div>
 
         <div className={styles.textos}>
@@ -43,11 +44,11 @@ const InfosLivro = ({ livro }) => {
           </div>
         </div>
       </div>
-       <div className={styles.generos}>
-              {livro.generos.map((genero, i) => (
-                <BotaoGenero key={i} texto={genero.nome} />
-              ))}
-            </div>
+      <div className={styles.generos}>
+        {livro.generos.map((genero, i) => (
+          <BotaoGenero key={i} texto={genero.nome} />
+        ))}
+      </div>
       <div className={styles.sinopse}>
         <Sinopse sinopse={livro.sinopse} />
       </div>

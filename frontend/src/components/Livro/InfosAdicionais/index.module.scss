@@ -48,10 +48,7 @@
 }
 
 
-// / Media Queries /
-
-// / Para telas menores que 992px /
-@media (max-width: 992px) {
+@media (max-width: 1070px) {
 
   .container {
     display: grid;
@@ -69,7 +66,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     justify-items: center;
-    margin-inline: 30px;
+    // margin-inline: 30px;
     gap: 0%;
   }
 }
@@ -106,6 +103,11 @@
 }
 
 @media (max-width: 540px) {
+  .container{
+    // width: 100%;
+    width: calc(100% - 40px);
+    margin-inline: 20px;
+  }
   .titulo {
     font-size: 24px;
     margin-top: 20px;
@@ -115,13 +117,14 @@
 
   .itens {
     grid-template-columns: repeat(2, 1fr);
-    justify-items: center;
-    align-items: center;
-    justify-content: center;
+    // justify-items: center;
+    // align-items: center;
+    // justify-content: center;
     font-size: 14px;
   }
 }
-@media (max-width: 412px) {
+
+@media (max-width: 500px) {
 
   .titulo {
     font-size: 18px;
