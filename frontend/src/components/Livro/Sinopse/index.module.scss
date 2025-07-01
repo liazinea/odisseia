@@ -7,20 +7,20 @@
 .titulo {
     font-family: Inter, sans-serif;
     color: $azul-escuro;
-    font-size: 18px; //deixar 24 e depois alterar na hora de montar o layout da pagina inteira
+    font-size: 18px;
     font-weight: 500;
     margin-bottom: 10px;
 }
 
 .texto {
     font-family: Inter, sans-serif;
-    font-size: 18px; //deixar 24 e depois alterar na hora de montar o layout da pagina inteira
+    font-size: 18px;
     font-weight: 400;
     text-align: justify;
     line-height: 1.6;
     color: $preto;
     white-space: pre-line;
-    
+
 }
 
 
@@ -60,18 +60,19 @@
         font-size: 14px;
         line-height: 1.4;
         padding-bottom: 20px;
-    } 
+    }
 }
 
 @media (max-width: 540px) {
     .texto {
-       
+
         width: 96%;
         line-height: 1.4;
         margin-bottom: 20px;
         padding-bottom: 20px;
     }
 }
+
 @media (max-width: 430px) {
     .texto {
         width: 90%;
@@ -92,6 +93,7 @@
         opacity: 0;
         transform: translateY(10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);

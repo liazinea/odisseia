@@ -6,10 +6,10 @@
   width: 100%;
 
   @media (max-width: 360px) {
-      flex-direction: column;
-      gap: 20px;
-      width: 100%;
-    }
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+  }
 
   .footer-container {
     display: flex;
@@ -42,6 +42,3 @@
     }
   }
 }
-
-
-

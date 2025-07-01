@@ -1,11 +1,12 @@
 @import '../../styles/index.scss';
 
-.carregando{
+.carregando {
   height: 30vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  span{
+
+  span {
     background-color: $azul-escuro;
     padding: 30px;
     color: $branco;
@@ -18,8 +19,8 @@
   flex-direction: column;
   position: relative;
   margin: 20px;
-  overflow-x: hidden; 
-  max-width: 100vw; 
+  overflow-x: hidden;
+  max-width: 100vw;
 
   .parteLaranja {
     z-index: 10;
@@ -37,8 +38,8 @@
   }
 }
 
-  
-  /* Parte azul (ficará por baixo) */
+
+/* Parte azul (ficará por baixo) */
 
 @media (max-width: 990px) {
   .container {
@@ -86,7 +87,8 @@
     overflow-x: hidden;
   }
 }
-  @media (max-width: 360px) {
+
+@media (max-width: 360px) {
   .container {
     width: 100%;
     margin: 0;
@@ -101,8 +103,3 @@
     overflow-x: hidden;
   }
 }
-
-  
-  
-  
-  

@@ -44,29 +44,29 @@
   @media (max-width: 412px) {
 
     .lista-de-contatos {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; 
-  gap: 20px;
-}
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+    }
 
-.contato-item {
-  display: flex;
-  justify-content: flex-start;
-  width: 100%;
-}
+    .contato-item {
+      display: flex;
+      justify-content: flex-start;
+      width: 100%;
+    }
 
-.contato-line {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+    .contato-line {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-.icon-svg {
-  width: 30px;
-  height: 30px;
-  display: block;
-}
+    .icon-svg {
+      width: 30px;
+      height: 30px;
+      display: block;
+    }
   }
 
   @media (max-width: 375px) {
