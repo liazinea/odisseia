@@ -30,9 +30,15 @@ class EmprestimoService
         }
         $livro = $this->buscarLivroDisponivelOuLancarExcecao($idLivro);
 
-        if (Emprestimo::where('liv_id', '=', $livro->liv_id)->exists()) {
-            throw new Exception('Livro já esmprestado');
+        if (Emprestimo::where('liv_id', $livro->liv_id)
+            ->whereNotIn('emp_status', [0, 3])
+            ->exists()
+        ) {
+            throw new Exception('Livro já emprestado');
         }
+
+
+
         if (!$this->verificaSeAlunoTemEmprestimo($idAluno)) {
             $emprestimoDTO = new EmprestimoDTO(
                 dataInicio: Carbon::now()->toDateString(),
