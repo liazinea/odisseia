@@ -17,7 +17,7 @@
     @media (max-width: 679px) {
       display: none;
     }
-   }
+  }
 
   .lista-de-contatos {
     width: 100%;
@@ -27,7 +27,7 @@
     align-items: center;
     text-align: center;
     gap: 20px;
-    
+
     @media (max-width: 979px) {
       flex-direction: column;
       justify-content: center;
@@ -38,6 +38,65 @@
       flex-direction: row;
       align-items: center;
 
+    }
+  }
+
+  @media (max-width: 412px) {
+
+    .lista-de-contatos {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+  gap: 20px;
+}
+
+.contato-item {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.contato-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon-svg {
+  width: 30px;
+  height: 30px;
+  display: block;
+}
+  }
+
+  @media (max-width: 375px) {
+
+    .lista-de-contatos {
+      flex-direction: column;
+      align-items: flex-start !important;
+      padding-top: 20px;
+      gap: 30px;
+    }
+
+    .contato-item {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+
+  @media (max-width: 360px) {
+
+    .lista-de-contatos {
+      flex-direction: column;
+      align-items: flex-start !important;
+      padding-top: 20px;
+      gap: 30px;
+    }
+
+    .contato-item {
+      width: 100%;
+      height: auto;
     }
   }
 }

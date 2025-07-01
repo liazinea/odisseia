@@ -81,6 +81,12 @@
     }
 }
 
+@media (max-width: 320px) {
+    .texto {
+        width: 85%;
+    }
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
