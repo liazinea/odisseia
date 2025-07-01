@@ -1,7 +1,9 @@
+
 import Modal from "react-modal";
 import styles from "./index.module.scss";
 import { IoClose } from "react-icons/io5";
 
+Modal.setAppElement("#root");
 const ModalMensagem = ({ mensagemModal, closeModal, modalAberto }) => {
   return (
     <Modal
@@ -9,25 +11,8 @@ const ModalMensagem = ({ mensagemModal, closeModal, modalAberto }) => {
       onRequestClose={closeModal}
       contentLabel="Mensagem"
       shouldCloseOnOverlayClick={false}
-      style={{
-        content: {
-          width: "90%",
-          maxWidth: "400px",
-          margin: "auto",
-          borderRadius: "12px",
-          backgroundColor: "#DDC1A7",
-          maxHeight: "320px",
-          overflow: "hidden",
-          flexDirection: "column",
-        },
-        overlay: {
-          backgroundColor: "rgba(0, 0, 0, 0.3)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          zIndex: "1000",
-        },
-      }}
+      className={styles.modalContent}
+      overlayClassName={styles.modalOverlay}
     >
       <div className={styles.modal}>
         <div className={styles.header}>
